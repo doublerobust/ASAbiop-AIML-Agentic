@@ -16,12 +16,12 @@ By bridging the gap between cutting-edge AI research and rigorous biostatistical
 
 Agentic AI represents a shift from passive models to autonomous or semi-autonomous "agents" capable of using tools, reasoning through complex tasks, and collaborating to solve multi-step problems. In the context of clinical development, these workflows have the potential to:
 
-* **Automate Protocol Design:** Utilizing historical data and simulation agents to optimize study parameters.
+* **Automate trial Design:** Utilizing historical data and simulation agents to optimize trial parameters. Leverage statistical design agent skills, including human-in-the-loop stakeholder inputs. 
 * **Enhance Trial Monitoring:** Deploying agents to identify data trends or safety signals in real-time.
 * **Streamline Analysis & Reporting:** Developing "skills" for agents to produce TLF mockups from protocol/SAP, generate programming specs for ADaM setups, use synthetic data to conduct dry-runs, and eventually produce TLFs (Tables, Listings, and Figures) and draft clinical study reports (CSRs) with human-in-the-loop validation.
 * **AI-enabled Cohereance and Interpretation Engine** Developing a topological "mental map" system that dynamically interconnects and validates the entire suite of study tables, listings, and figures to guide reviewers through a coherent, cross-referenced interpretation of clinical trial results.
 * **Standardize Workflows:** Creating reproducible agentic frameworks for CDISC data transformations and statistical programming.
-
+* **Regulatory Interaction & Ecosystem Engagement:** Defining best practices for leveraging agentic AI in regulatory preparation, including standard health authority meeting briefings (e.g., FDA Type B / Type C meetings). We actively explore future horizons of AI-to-AI interaction (e.g., sponsor-to-regulator AI ecosystems) while rigidly preserving a human-in-the-loop oversight layer.
 ---
 
 ## 👥 Our Team
