@@ -1,0 +1,1039 @@
+# Test Case Design — Agentic AI Benchmark for TFL Programming
+
+**Version:** 0.1 (Day 2 expansion, corrected for WG alignment)
+**Date:** 2026-05-26
+**Status:** 🟡 Draft — TFL-focused, multilingual (R + SAS + Python)
+
+---
+
+## 1. Design Principles for Test Cases
+
+### TCD-P1. Clinically Realistic, Legally Clean
+Every test case must be based on realistic clinical trial scenarios but use **synthetic, non-proprietary data**. No patient data, no confidential protocol information. All datasets must be reproducible from `simstudy` or `random.cdisc.data`.
+
+### TCD-P2. Unambiguous Ground Truth, Multi-Language
+Each test case must have a **single correct answer** or a **well-defined equivalence class** of acceptable answers. Ground truth must be computable in **R, SAS, and Python** independently, and results must cross-validate across languages. Discrepancies between languages should be documented and resolved in the scoring criteria.
+
+### TCD-P3. Human-Verifiable
+A practicing biostatistician with 3+ years of experience should be able to review and confirm the ground truth within 30 minutes. If they can't, the test case is too complex for a benchmark (save it for the white paper's case studies).
+
+### TCD-P4. Tool-Agnostic Specification
+Test cases must be specified in **domain language**, not in any programming language. The agent should be free to solve them in R, SAS, Python, or any other tool. The scoring checks the output, not the implementation path. **Per-language scores** are reported independently, plus an aggregate score.
+
+### TCD-P5. Individually Scoped, Composably Chained
+Level 1 and Level 2 tasks should be independently scorable. Level 3 tasks may chain multiple Level 1/2 tasks together, but each sub-step should remain independently verifiable to allow partial credit.
+
+### TCD-P6. Contamination-Resistant
+Test case parameters (sample sizes, effect sizes, number of strata) should be **parametrizable** so the same scenario can be generated in multiple variants. This prevents agents from memorizing answers to public benchmark cases.
+
+---
+
+## 2. Test Case Template
+
+Every test case in the library uses the following template:
+
+```yaml
+id: TC-<NNN>
+title: <Short descriptive name>
+level: 1 | 2 | 3
+domain: <safety | efficacy | design | reporting | regulatory>
+statistical_methods: [<list of methods required>]
+data_requirements:
+  format: <SDTM | ADaM | raw>
+  source: <simstudy | random.cdisc.data | custom>
+  n_subjects: <approximate>
+n_variants: <number of parametrizations available>
+description: |
+  <Full natural language description of the task>
+inputs:
+  - <file or parameter specification>
+  - <additional inputs>
+expected_output:
+  type: <dataset | table | figure | listing | section | code | report>
+  format: <specific format requirements>
+ground_truth_method: <R | SAS | Python | Manual review | Hybrid>
+scoring:
+  exact_match_weight: <0-1>
+  functional_equiv_weight: <0-1>
+  partial_credit: <yes | no>
+  tolerance: <numerical tolerance if applicable>
+estimated_human_time: <minutes>
+estimated_agent_time_reference: <minutes>
+contamination_risk: <low | medium | high>
+parametrizable_params: [<list of parameters that can vary>]
+```
+
+---
+
+## 3. Level 1 Test Cases (Single-Step, Well-Specified)
+
+### TC-001: Kaplan-Meier Median PFS Estimation
+
+```yaml
+id: TC-001
+title: "Kaplan-Meier estimate of median PFS for a single treatment arm"
+level: 1
+domain: efficacy
+statistical_methods: [Kaplan-Meier estimation]
+data_requirements:
+  format: ADaM
+  source: random.cdisc.data (ADTTE)
+  n_subjects: 200
+n_variants: 10
+description: |
+  Given an ADaM ADTTE dataset with a single treatment arm (TRT01PN = 1),
+  compute the Kaplan-Meier estimate of the median progression-free survival
+  (PFS) with 95% confidence interval using the log-log transformation method.
+  
+  Population: ITT (ITTFL = "Y")
+  Event of interest: PFS event (CNSR = 0)
+  Time variable: AVAL (months)
+  
+  Return: median PFS, 95% CI (lower, upper), and number of events observed.
+inputs:
+  - dataset: adtte_adam.sas7bdat (or .rds / .parquet)
+  - specification: "Single arm PFS analysis per ITT population"
+expected_output:
+  type: structured result
+  format: |
+    Median PFS: X.X months
+    95% CI: (Y.Y, Z.Z)
+    Events: N / N_total (%)
+ground_truth_method: |
+  Verified R output from survival::survfit() with conf.type="log-log".
+  Cross-validated against SAS PROC LIFETEST.
+scoring:
+  exact_match_weight: 0.8
+  functional_equiv_weight: 0.2
+  partial_credit: no
+  tolerance: 1e-4
+estimated_human_time: 5 min
+estimated_agent_time_reference: 2 min
+contamination_risk: low
+parametrizable_params: [censoring_rate, sample_size, median_survival]
+```
+
+**Ground Truth — R:**
+```r
+library(survival)
+library(pharmaverseadam)
+
+# Load or generate synthetic ADTTE
+data(adtte, package = "pharmaverseadam")
+fit <- survfit(Surv(AVAL, 1 - CNSR) ~ 1, data = adtte, conf.type = "log-log")
+median_ci <- with(summary(fit), cbind(median, `0.95LCL`, `0.95UCL`))
+cat(paste0("Median PFS: ", round(median_ci[1], 1), " months\n"))
+cat(paste0("95% CI: (", round(median_ci[2], 1), ", ", round(median_ci[3], 1), ")\n"))
+cat(paste0("Events: ", fit$nevent, " / ", fit$n, "\n"))
+```
+
+**Ground Truth — SAS:**
+```sas
+proc lifetest data=adtte plots=(s) outs=outs;
+   time aval*cnsr(1);
+   strata trt01pn / test=logrank;
+run;
+
+proc sql;
+   select median, lowerlimit, upperlimit
+   from outs
+   where trt01pn = 1 and quantile = 0.5;
+quit;
+```
+
+**Ground Truth — Python:**
+```python
+import pandas as pd
+from lifelines import KaplanMeierFitter
+
+adtte = pd.read_sas('adtte_adam.sas7bdat')
+trt_arm = adtte[adtte['TRT01PN'] == 1]
+kmf = KaplanMeierFitter()
+kmf.fit(durations=trt_arm['AVAL'], event_observed=1 - trt_arm['CNSR'])
+median_idx = (kmf.survival_function_ <= 0.5).idxmax()
+ci = kmf.confidence_interval_
+print(f"Median PFS: {kmf.median_survival_time_:.1f} months")
+print(f"95% CI: ({ci.loc[median_idx, 'KM_estimate_lower_0.95']:.1f}, "
+      f"{ci.loc[median_idx, 'KM_estimate_upper_0.95']:.1f})")
+```
+
+---
+
+### TC-002: Baseline Demographics Table (Safety Population)
+
+```yaml
+id: TC-002
+title: "Descriptive summary of baseline demographics by treatment arm"
+level: 1
+domain: reporting
+statistical_methods: [descriptive statistics, frequency tables]
+data_requirements:
+  format: ADaM
+  source: random.cdisc.data (ADSL)
+  n_subjects: 400
+n_variants: 8
+description: |
+  Given an ADaM ADSL dataset with at least two treatment arms, produce a
+  descriptive table of baseline demographics by treatment arm for the
+  safety population (SAFFL = "Y").
+  
+  Required variables:
+  - Age (AGE): n, mean, SD, median, min, max
+  - Sex (SEX): n and % female/male
+  - Race (RACE): n and % per category
+  - Region (REGION1): n and % per region
+  - Baseline ECOG (ECOG): n and % per score
+  
+  Format: Table with treatment arms as columns, a total column, and
+  p-value column for between-arm comparison (chi-square for categorical,
+  ANOVA for continuous).
+inputs:
+  - dataset: adsl_adam.sas7bdat
+  - specification: "Baseline demographics by arm, safety population"
+expected_output:
+  type: table
+  format: |
+    ┌────────────────────┬──────────┬──────────┬──────────┬──────────┐
+    │                    │ Placebo  │ Active   │ Total    │ p-value  │
+    │                    │ (N=XXX)  │ (N=XXX)  │ (N=XXX)  │          │
+    ├────────────────────┼──────────┼──────────┼──────────┼──────────┤
+    │ Age (years)        │          │          │          │          │
+    │  Mean (SD)         │ XX.X     │ XX.X     │ XX.X     │  0.XXX   │
+    │  Median            │ XX.X     │ XX.X     │ XX.X     │          │
+    │  Min, Max          │ XX, XX   │ XX, XX   │ XX, XX   │          │
+    ├────────────────────┼──────────┼──────────┼──────────┼──────────┤
+    │ Sex, n (%)         │          │          │          │          │
+    │  Female            │ XX (XX%) │ XX (XX%) │ XX (XX%) │  0.XXX   │
+    │  Male              │ XX (XX%) │ XX (XX%) │ XX (XX%) │          │
+    └────────────────────┴──────────┴──────────┴──────────┴──────────┘
+ground_truth_method: |
+  R with dplyr + tableone or gtsummary for generation.
+  Cross-check via SAS PROC FREQ + PROC MEANS.
+scoring:
+  exact_match_weight: 0.6
+  functional_equiv_weight: 0.3
+  partial_credit: yes
+  tolerance: N/A (categorical)
+estimated_human_time: 10 min
+estimated_agent_time_reference: 3 min
+contamination_risk: low
+parametrizable_params: [n_arms, variables_included, population_filter]
+```
+
+**Ground Truth — R (Tplyr):**
+```r
+library(Tplyr)
+library(dplyr)
+
+t <- tplyr_table(adsl, TRT01PN) %>%
+  add_layer(
+    group_desc(AGE, by = vars("Age (years)"))
+  ) %>%
+  add_layer(
+    group_count(SEX, by = vars("Sex")) %>%
+      set_format_strings(f_str("xx (xx%)", n, pct))
+  ) %>%
+  add_layer(
+    group_count(RACE, by = vars("Race")) %>%
+      set_format_strings(f_str("xx (xx%)", n, pct))
+  ) %>%
+  add_total_group() %>%
+  build()
+```
+
+**Ground Truth — SAS:**
+```sas
+proc tabulate data=adsl format=8.1;
+   where saffl = 'Y';
+   class trt01pn sex race;
+   var age;
+   table age*(n mean std min max)
+         sex*(n pctn)
+         race*(n pctn),
+         trt01pn all / box='Variable';
+run;
+
+proc freq data=adsl;
+   where saffl = 'Y';
+   table (sex race)*trt01pn / chisq;
+run;
+```
+
+**Ground Truth — Python:**
+```python
+import pandas as pd
+import numpy as np
+from gtsummary import tbl_summary
+
+adsl = pd.read_sas('adsl_adam.sas7bdat')
+safety = adsl[adsl['SAFFL'] == 'Y']
+
+summary = safety.groupby('TRT01PN').agg({
+    'AGE': ['count', 'mean', 'std', 'min', 'max'],
+    'SEX': lambda x: x.value_counts().to_dict(),
+    'RACE': lambda x: x.value_counts().to_dict()
+})
+```
+
+---
+
+### TC-003: Stratified Log-Rank Test
+
+```yaml
+id: TC-003
+title: "Stratified log-rank test for treatment comparison with 2 stratification factors"
+level: 1
+domain: efficacy
+statistical_methods: [log-rank test, stratified analysis]
+data_requirements:
+  format: ADaM
+  source: random.cdisc.data (ADTTE)
+  n_subjects: 400
+n_variants: 12
+description: |
+  Given an ADaM ADTTE dataset with two treatment arms (TRT01PN = 0, 1),
+  perform a stratified log-rank test comparing PFS between arms.
+  
+  Stratification factors:
+  1. Sex (SEX): Male, Female
+  2. Baseline ECOG score (ECOG): 0, 1
+  
+  Population: ITT (ITTFL = "Y")
+  
+  Return: chi-square statistic, degrees of freedom, p-value.
+inputs:
+  - dataset: adtte_adam.sas7bdat
+  - specification: "Stratified log-rank test with SEX and ECOG strata"
+expected_output:
+  type: structured result
+  format: |
+    Method: Stratified log-rank test
+    Stratification factors: SEX, ECOG
+    Chi-square: X.XXX
+    DF: 1
+    p-value: 0.XXXX
+ground_truth_method: |
+  R survival::survdiff() with strata(SEX, ECOG).
+  Cross-validated against SAS PROC LIFETEST STRATA statement.
+scoring:
+  exact_match_weight: 0.8
+  functional_equiv_weight: 0.2
+  partial_credit: no
+  tolerance: 1e-4
+estimated_human_time: 5 min
+estimated_agent_time_reference: 2 min
+contamination_risk: low
+parametrizable_params: [effect_size, stratification_factors, sample_size]
+```
+
+**Ground Truth — R:**
+```r
+library(survival)
+
+survdiff(Surv(AVAL, 1 - CNSR) ~ TRT01PN + strata(SEX, ECOG),
+         data = adtte, subset = ITTFL == "Y")
+```
+
+**Ground Truth — SAS:**
+```sas
+proc lifetest data=adtte plots=(s);
+   time aval*cnsr(1);
+   strata sex ecog / group=trt01pn test=logrank;
+run;
+```
+
+**Ground Truth — Python:**
+```python
+from lifelines import multivariate_logrank_test
+
+adtte_itt = adtte[adtte['ITTFL'] == 'Y']
+result = multivariate_logrank_test(
+    adtte_itt['AVAL'],
+    adtte_itt['TRT01PN'],
+    adtte_itt['CNSR'],
+    strata=adtte_itt[['SEX', 'ECOG']]
+)
+print(f"Chi-square: {result.test_statistic:.3f}")
+print(f"p-value: {result.p_value:.4f}")
+```
+
+---
+
+## 4. Level 2 Test Cases (Multi-Step, Moderately Ambiguous)
+
+### TC-004: SAP Section for Primary Efficacy Analysis
+
+```yaml
+id: TC-004
+title: "Draft the primary efficacy analysis section of an SAP"
+level: 2
+domain: design
+statistical_methods: [sample size calculation, group sequential design, log-rank test, interim analysis]
+data_requirements:
+  format: none (spec-driven)
+  source: N/A (design parameters provided)
+  n_subjects: N/A
+n_variants: 10
+description: |
+  Write the "Primary Efficacy Analysis" section of a Statistical Analysis
+  Plan for a Phase 3 oncology trial with the following design parameters:
+  
+  - Indication: First-line metastatic non-small cell lung cancer
+  - Endpoint: Overall survival (OS)
+  - Design: 1:1 randomization, active control
+  - Sample size: 600 patients (300 per arm)
+  - Interim analysis: 1 interim at 60% of target events
+  - Final analysis: At 331 events (90% power, HR = 0.75, two-sided alpha = 0.05)
+  - Group sequential method: O'Brien-Fleming spending function
+  - Stratification factors: PD-L1 expression (≥50%, 1-49%, <1%), ECOG (0, 1)
+  - Primary analysis method: Stratified log-rank test
+  - Sensitivity analyses: Unstratified log-rank, Cox PH with stratification factors, RMST
+  
+  The section must follow ICH E9 structure and include:
+  1. Analysis population definition (ITT)
+  2. Primary endpoint definition with estimand (per ICH E9(R1))
+  3. Statistical hypothesis
+  4. Analysis method specification
+  5. Handling of intercurrent events (treatment switching, death without event)
+  6. Sensitivity and supplementary analyses
+  7. Subgroup analyses (pre-specified)
+  
+inputs:
+  - protocol_summary: "<provided specifications above>"
+  - template: "Standard SAP template per company X"
+expected_output:
+  type: document section (prose)
+  format: Structured text following ICH E9 / E9(R1) conventions
+ground_truth_method: |
+  Expert review by 2+ practicing biostatisticians with oncology SAP
+  experience. Ground truth criteria defined as a checklist of required
+  elements.
+scoring:
+  exact_match_weight: 0.0
+  functional_equiv_weight: 0.0
+  partial_credit: yes
+  tolerance: N/A
+estimated_human_time: 120 min
+estimated_agent_time_reference: 15 min
+contamination_risk: medium
+parametrizable_params: [indication, endpoint, sample_size, design_parameters]
+```
+
+**Scoring Checklist for TC-004:**
+
+| Criteria | Weight | Check |
+|---|---|---|
+| ITT population clearly defined | 10% | ⬜ |
+| Estimand specified with 5 attributes (ICH E9(R1)) | 15% | ⬜ |
+| Primary hypothesis stated (H0, H1) with significance level | 10% | ⬜ |
+| Stratified log-rank test specified with strata | 10% | ⬜ |
+| OBF alpha spending function with IA timing | 10% | ⬜ |
+| Intercurrent events strategy described (treatment switching, death) | 10% | ⬜ |
+| At least 2 sensitivity analyses proposed | 10% | ⬜ |
+| Subgroup analysis plan with pre-specified subgroups | 5% | ⬜ |
+| Multiplicity control for secondary endpoints mentioned | 10% | ⬜ |
+| E9/E9(R1) terminology used throughout | 5% | ⬜ |
+| Sample size re-estimation / futility considerations (if any) | 5% | ⬜ |
+
+---
+
+### TC-005: TFL Package QC Review
+
+```yaml
+id: TC-005
+title: "Review a TFL package for SAP consistency"
+level: 2
+domain: reporting
+statistical_methods: [QC review, discrepancy detection]
+data_requirements:
+  format: ADaM + TFLs
+  source: random.cdisc.data (ADSL, ADTTE, ADLB, ADAE) + synthetic TFLs
+  n_subjects: 400
+n_variants: 15
+description: |
+  A TFL package (5 tables, 2 figures, 1 listing) has been produced from
+  an ADaM dataset. The SAP specifies:
+  
+  - Primary analysis: Stratified log-rank test with SEX and ECOG strata
+  - ITT population for efficacy
+  - Safety population for safety analyses
+  - Per-protocol population as sensitivity
+  - Subgroup analysis by age group (≤65, >65) and sex
+  - Multiplicity adjustment: Hochberg procedure for secondary endpoints
+  
+  The provided TFLs contain 3 deliberate errors:
+  1. Error in table vs. figure: Population mismatch (PP instead of ITT)
+  2. Error in analysis: Unstratified log-rank used instead of stratified
+  3. Error in reporting: Wrong p-value (from wrong model)
+  
+  Identify all discrepancies between the TFL package and the SAP.
+  For each discrepancy, assess severity (Critical / Major / Minor) and
+  propose a correction.
+inputs:
+  - sap_excerpt: "<key specifications>"
+  - tfl_package: ["table_14-1.rtf", "figure_14-2.png", "listing_16-1.txt", ...]
+expected_output:
+  type: QC report
+  format: |
+    ## TFL QC Review Report
+    
+    ### Discrepancies Found: 3
+    
+    | # | Type | Location | Issue | Severity | Correction |
+    |---|---|---|---|---|---|
+    | 1 | Population | Table 14-3 | PP used instead of ITT | Critical | Re-run with ITTFL="Y" |
+    | 2 | Method | Figure 14-2 | Unstratified log-rank | Critical | Add STRATA statement |
+    | 3 | Value | Table 14-4 | Wrong p-value (0.043 vs 0.052) | Major | Regenerate from Cox model |
+ground_truth_method: |
+  Preseeded errors with known corrections. Ground truth is the
+  discrepancy catalog used to create the test case.
+scoring:
+  exact_match_weight: 0.0
+  functional_equiv_weight: 0.5
+  partial_credit: yes
+  tolerance: N/A
+estimated_human_time: 30 min
+estimated_agent_time_reference: 8 min
+contamination_risk: medium
+parametrizable_params: [error_locations, error_types, dataset_variant]
+```
+
+---
+
+### TC-006: Sample Size Re-Estimation at Interim
+
+```yaml
+id: TC-006
+title: "Sample size re-estimation based on blinded interim data"
+level: 2
+domain: design
+statistical_methods: [sample size re-estimation, conditional power, blinded interim]
+data_requirements:
+  format: ADaM
+  source: custom simstudy data (partial enrollment data)
+  n_subjects: 200 (enrolled so far, of planned 600)
+n_variants: 10
+description: |
+  A Phase 3 trial is ongoing with a planned enrollment of 600 patients.
+  The DMC has requested a blinded sample size re-estimation at the current
+  point (200 patients enrolled, 120 events observed).
+  
+  Original design assumptions:
+  - Median PFS in control: 6 months
+  - Target HR: 0.75
+  - Power: 90% at two-sided alpha = 0.05
+  - Required events: 331
+  
+  Current blinded data shows:
+  - Pooled median PFS: 5.2 months (95% CI: 4.6-5.9)
+  - 120 events observed across both arms
+  
+  Tasks:
+  1. Estimate the pooled event rate from blinded data
+  2. Re-estimate the required sample size under the original design assumptions,
+     adjusting the control median downward if the pooled data suggests lower event rate
+  3. Assess conditional power under three scenarios:
+     a. Original HR assumption (0.75)
+     b. More modest HR (0.80)
+     c. Optimistic HR (0.70)
+  4. Recommend: Continue as planned, increase sample size, or consider futility
+  5. Document assumptions and limitations of the re-estimation
+  
+inputs:
+  - enrollment_data: "enrollment_progress.csv"
+  - event_data: "interim_events.csv"
+  - design_parameters: "<original assumptions>"
+expected_output:
+  type: structured report with recommendation
+  format: |
+    ## Sample Size Re-Estimation Report
+    
+    ### Current Status
+    Enrolled: 200 / 600 (33.3%)
+    Events observed: 120
+    
+    ### Blinded Event Rate Estimation
+    Pooled median PFS: 5.2 months
+    Estimated control median: X.X months
+    Estimated event rate: X events/month
+    
+    ### Revised Sample Size Estimates
+    | Scenario | HR | Events Needed | Total N Needed | Recommendation |
+    |---|---|---|---|---|
+    | Original | 0.75 | 331 | 600 | Continue |
+    | Modest | 0.80 | XXX | XXX | Increase |
+    | Optimistic | 0.70 | XXX | XXX | Consider reduction |
+    
+    ### Conditional Power
+    At current info fraction (XX%):
+    - Under original assumption: XX%
+    - Under modest: XX%
+    - Under optimistic: XX%
+    
+    ### Recommendation
+    [Structured recommendation with rationale]
+ground_truth_method: |
+  R gsDesign::ssrCP() for conditional power, gsDesign::nEvents()
+  for event count re-estimation. Cross-validated against SAS PROC SEQDESIGN.
+scoring:
+  exact_match_weight: 0.4
+  functional_equiv_weight: 0.4
+  partial_credit: yes
+  tolerance: 1e-3
+estimated_human_time: 45 min
+estimated_agent_time_reference: 10 min
+contamination_risk: medium
+parametrizable_params: [observed_events, original_assumptions, enrollment_rate]
+```
+
+---
+
+## 5. Level 3 Test Cases (Full Workflow, Realistic Ambiguity)
+
+### TC-007: Regulatory Response to Reviewer Query on ITT vs. PP Discrepancy
+
+```yaml
+id: TC-007
+title: "Regulatory response analyzing ITT vs. PP discrepancy in primary endpoint"
+level: 3
+domain: regulatory
+statistical_methods: [ITT analysis, per-protocol analysis, sensitivity analysis, tipping point analysis]
+data_requirements:
+  format: ADaM + SDTM
+  source: random.cdisc.data + custom synthetic data
+  n_subjects: 500
+n_variants: 8
+description: |
+  You are the lead biostatistician responding to a regulatory authority
+  review query. The reviewer has noted that the ITT analysis shows
+  a significant treatment effect for PFS (HR = 0.72, p = 0.023) while
+  the per-protocol analysis does not reach significance (HR = 0.84,
+  p = 0.12). The reviewer asks whether this discrepancy undermines
+  the primary conclusion.
+  
+  The study has:
+  - 500 patients randomized 1:1
+  - 87 patients excluded from PP (43 in arm A, 44 in arm B)
+  - Reasons for exclusion: major protocol violations (28), early
+    discontinuation before first post-baseline assessment (35),
+    prohibited medication use (24)
+  - More exclusions in the PP had events (60% vs. 45% in ITT)
+  
+  Tasks:
+  1. Analyze the discrepancy between ITT and PP results
+  2. Assess whether the exclusion pattern is imbalanced and could
+     explain the discrepancy
+  3. Perform a tipping point analysis: how many events in the excluded
+     patients would need to be reclassified to change the ITT conclusion?
+  4. Propose at least 2 additional sensitivity analyses
+  5. Draft a formal response memo to the reviewer addressing their
+     concern with appropriate statistical justification
+inputs:
+  - adsl: "adsl_adam.sas7bdat"
+  - adtte: "adtte_adam.sas7bdat"
+  - pp_analysis: "pp_results.sas7bdat"
+  - reviewer_query_text: "<provided>"
+expected_output:
+  type: regulatory response memo
+  format: |
+    ## Response to Reviewer Query: ITT vs. PP Discrepancy in PFS Analysis
+    
+    ### Reviewer Comment
+    [Quoted comment]
+    
+    ### Background
+    [Study description, analysis populations]
+    
+    ### Analysis of Discrepancy
+    [Systematic analysis including exclusion pattern, event distribution]
+    
+    ### Tipping Point Analysis
+    [Results showing how many reclassifications needed to negate ITT result]
+    
+    ### Sensitivity Analyses
+    1. [Sensitivity analysis 1: e.g., multiple imputation for early dropouts]
+    2. [Sensitivity analysis 2: e.g., composite outcome including dropout]
+    
+    ### Conclusion
+    [Whether the primary conclusion is robust]
+    
+    ### Attachments
+    [Supporting tables and figures]
+ground_truth_method: |
+  Expert review by multiple biostatisticians. Ground truth for numerical
+  analyses (tipping point) from R/gsDesign. Qualitative judgments
+  scored against an expert consensus rubric.
+scoring:
+  exact_match_weight: 0.0
+  functional_equiv_weight: 0.0
+  partial_credit: yes
+  tolerance: N/A
+estimated_human_time: 180 min
+estimated_agent_time_reference: 25 min
+contamination_risk: high
+parametrizable_params: [effect_size_discrepancy, exclusion_pattern, treatment_effect]
+```
+
+**Expert Review Rubric for TC-007:**
+
+| Domain | Criterion | Weight | Score (0-5) |
+|---|---|---|---|
+| **Statistical** | Correct analysis of exclusion pattern and event distribution | 15% | ⬜ |
+| **Statistical** | Tipping point analysis correctly performed and interpreted | 15% | ⬜ |
+| **Statistical** | Appropriate sensitivity analyses proposed | 10% | ⬜ |
+| **Regulatory** | Response structured per regulatory expectation | 10% | ⬜ |
+| **Regulatory** | Language appropriate for regulatory submission | 10% | ⬜ |
+| **Communication** | Clear explanation accessible to non-statistician reviewer | 10% | ⬜ |
+| **Communication** | Appropriate use of tables/figures to support argument | 10% | ⬜ |
+| **Judgment** | Appropriate conclusion drawn from evidence | 10% | ⬜ |
+| **Completeness** | All required elements present and well-integrated | 10% | ⬜ |
+
+---
+
+### TC-008: End-to-End Dose-Finding Study Design
+
+```yaml
+id: TC-008
+title: "Design a Phase 2 dose-finding study for a novel immunotherapy"
+level: 3
+domain: design
+statistical_methods: [dose-finding, Bayesian methods, model-assisted designs, sample size, historical control]
+data_requirements:
+  format: summary data
+  source: synthetic historical data from 3 prior trials
+  n_subjects: 300 (historical)
+n_variants: 6
+description: |
+  Design a Phase 2 dose-finding study for a novel bispecific T-cell engager
+  immunotherapy in relapsed/refractory multiple myeloma.
+  
+  Available information:
+  - Historical control data from 3 prior trials (pooled ORR: 26%, n=124)
+  - 2 doses of the experimental agent to evaluate: Dose A (low) and Dose B (high)
+  - Primary endpoint: Overall response rate (ORR) per IMWG criteria
+  - Key secondary: Duration of response, PFS, safety (CRS, ICANS)
+  - Target ORR: ≥45% for Dose A, ≥55% for Dose B (experimental treatment effect)
+  
+  Constraints:
+  - Maximum 80 patients total (40 per dose)
+  - Must include at least one interim analysis for futility
+  - Historical data may be used via Bayesian borrowing (power prior or MAP prior)
+  
+  Deliverables:
+  1. Recommended study design with sample size justification
+  2. Analysis method with null and alternative hypotheses
+  3. Stopping rules (futility and, if applicable, early efficacy)
+  4. Mock SAP outline for the primary analysis
+  5. Operating characteristics (Type I error, power) under at least 3 scenarios
+  6. Discussion of historical data borrowing approach and its sensitivity
+  7. Simulation code demonstrating operating characteristics
+inputs:
+  - historical_data_summary.csv
+  - trial_design_brief.txt
+expected_output:
+  type: design protocol + simulation code
+  format: |
+    ## Phase 2 Dose-Finding Study Design
+    
+    ### Design Overview
+    [Design type: e.g., two-arm, Bayesian optimal phase 2 (BOP2), etc.]
+    
+    ### Sample Size Justification
+    [Power analysis, operating characteristics]
+    
+    ### Analysis Method
+    [Primary analysis, historical borrowing approach]
+    
+    ### Stopping Rules
+    [Futility: ...; Early efficacy: ...]
+    
+    ### SAP Outline
+    [Mock table of contents]
+    
+    ### Operating Characteristics
+    | Scenario | True ORR A | True ORR B | Go Probability A | Go Probability B |
+    |---|---|---|---|---|
+    | Null | 26% | 26% | X% | X% |
+    | Target A | 45% | 55% | X% | X% |
+    | Target B | 45% | 45% | X% | X% |
+    | Safety concern | 45% | 55% | X% (w/ safety stop) | X% (w/ safety stop) |
+ground_truth_method: |
+  Simulation-based ground truth using R packages: dosfind, bcrm,
+  trialr, gsDesign, and BayesCTDesign. Operating characteristics
+  generated from 10,000 simulated trials per scenario.
+scoring:
+  exact_match_weight: 0.0
+  functional_equiv_weight: 0.0
+  partial_credit: yes
+  tolerance: N/A
+estimated_human_time: 240 min
+estimated_agent_time_reference: 30 min
+contamination_risk: high
+parametrizable_params: [historical_control_rate, target_rates, max_sample_size, borrowing_strength]
+```
+
+---
+
+### TC-009: Complete Safety Signal Evaluation with DMC Report
+
+```yaml
+id: TC-009
+title: "Complete safety signal evaluation and DMC report for Phase 3 trial"
+level: 3
+domain: safety
+statistical_methods: [safety monitoring, AE tabulation, MedDRA coding, exposure-adjusted rates, statistical signal detection]
+data_requirements:
+  format: SDTM + ADaM
+  source: random.cdisc.data (ADSL, ADAE, ADLB, ADVS) + custom safety data
+  n_subjects: 600
+n_variants: 8
+description: |
+  A Phase 3 oncology trial has completed enrollment and the DMC is
+  convening for a scheduled safety review. As the study statistician,
+  produce a comprehensive safety evaluation report covering:
+  
+  Data cut: 6 months after last patient enrolled
+  Treatment: 1:1 randomization (300 per arm)
+  Median follow-up: 14 months (range 6-24)
+  
+  Areas to evaluate:
+  1. **AE Overview** — Overall AE rates, SAEs, AEs leading to discontinuation,
+     deaths on study, by arm
+  2. **Exposure-Adjusted AE Rates** — AE rate per 100 patient-years for
+     common AEs (≥5% in either arm), by MedDRA preferred term and SOC
+  3. **Grade 3+ Events** — Tabulation of severe AEs with risk difference
+      and 95% CI vs. control
+  4. **Laboratory Abnormalities** — Shift tables for key labs (ALT, AST,
+     bilirubin, creatinine, hemoglobin, platelets), CTCAE grade shifts
+  5. **Time-to-Event Safety** — Time to first Grade 3+ AE (KM plot)
+  6. **AE of Special Interest** — Immune-related AEs (irAEs), infusion
+     reactions, with onset timing and outcome
+  7. **Signal Detection** — Statistical signal detection using:
+     a. Empirical Bayes (MGPS) for disproportionate reporting
+     b. Confidence interval for risk difference
+  8. **Safety Recommendation** — Based on totality of evidence, provide
+     a recommendation on trial continuation
+
+inputs:
+  - adsl: "adsl_adam.sas7bdat"
+  - adae: "adae_adam.sas7bdat"
+  - adlb: "adlb_adam.sas7bdat"
+  - advs: "advs_adam.sas7bdat"
+  - dmc_charter: <provided>
+expected_output:
+  type: comprehensive safety report
+  format: |
+    ## DMC Safety Review Report - Data Cut DD-MMM-YYYY
+    
+    ### 1. Executive Summary
+    [One-page summary for DMC]
+    
+    ### 2. Patient Disposition and Exposure
+    [Exposure summary table, follow-up duration]
+    
+    ### 3. Adverse Event Overview
+    [Table 3-1: Overall AE summary by arm]
+    
+    ### 4. Common AEs (Exposure-Adjusted)
+    [Table 4-1: AEs ≥5% by PT, rates per 100 PY]
+    
+    ### 5. Severe AEs (Grade 3+)
+    [Table 5-1: Grade 3+ with risk differences]
+    
+    ### 6. Laboratory Safety
+    [Shift tables, CTCAE grade migrations]
+    
+    ### 7. AEs of Special Interest
+    [irAE analysis with onset plots]
+    
+    ### 8. Statistical Signal Detection
+    [MGPS results, signals flagged]
+    
+    ### 9. Recommendation
+    [Continue as planned / Modify / Pause]
+ground_truth_method: |
+  R with safety packages: safetyData, safetyGraphics, tidyCDISC,
+  PhV (pharmacovigilance), and custom code for signal detection.
+  Cross-validation against SAS Clinical Standards Toolkit.
+scoring:
+  exact_match_weight: 0.0
+  functional_equiv_weight: 0.0
+  partial_credit: yes
+  tolerance: 1e-3
+estimated_human_time: 480 min (full day)
+estimated_agent_time_reference: 45 min
+contamination_risk: high
+parametrizable_params: [event_rates, ae_distribution, follow_up_duration]
+```
+
+---
+
+### TC-010: CSR Section — Statistical Methods and Results
+
+```yaml
+id: TC-010
+title: "Draft the statistical methods and results section of a CSR"
+level: 3
+domain: reporting
+statistical_methods: [full CSR statistical section, ICH E3 compliance, data presentation]
+data_requirements:
+  format: ADaM + TFLs
+  source: random.cdisc.data + pre-computed TFLs
+  n_subjects: 400
+n_variants: 6
+description: |
+  Draft the Statistical Methods (Section 9) and Statistical Results
+  (Section 11) sections of an ICH E3-compliant Clinical Study Report
+  for a Phase 3 randomized trial.
+  
+  The CSR is for a completed Phase 3 study of Drug X vs. Placebo in
+  advanced solid tumors. Primary endpoint is PFS per RECIST 1.1.
+  
+  Provided:
+  - Study protocol summary
+  - SAP
+  - ADaM datasets (ADSL, ADTTE, ADRS, ADAE, ADLB)
+  - TFL package (12 tables, 4 figures, 3 listings)
+  - Blinding has been broken; unblinded results available
+  
+  Requirements:
+  1. **Section 9 (Statistical Methods):** Copy the SAP analysis methods
+     and add actual handling details (software version, data cutoff,
+     population definitions used)
+  2. **Section 11.1 (Patient Disposition):** Summary of randomization,
+     treatment exposure, study completion, major protocol deviations
+  3. **Section 11.2 (Demographics):** Baseline characteristics table
+  4. **Section 11.4 (Efficacy Results):** Primary analysis results,
+     sensitivity analyses, subgroup analyses, graphical display
+  5. **Section 11.5 (Safety Results):** AE summary, deaths, SAEs,
+     laboratory findings
+  6. Ensure all references to tables and figures are accurate
+  7. Ensure all conclusions are supported by the data presented
+  8. Flag any inconsistencies between text, tables, and listings
+
+inputs:
+  - protocol.pdf
+  - sap.pdf
+  - adsl: "adsl_adam.sas7bdat"
+  - adtte: "adtte_adam.sas7bdat"
+  - adrs: "adrs_adam.sas7bdat"
+  - adae: "adae_adam.sas7bdat"
+  - adlb: "adlb_adam.sas7bdat"
+  - tfl_package/
+expected_output:
+  type: CSR sections
+  format: ICH E3-compliant CSR text (Sections 9 and 11)
+ground_truth_method: |
+  Expert review by 2+ biostatisticians with regulatory submission
+  experience. Numerical values cross-checked against verified R output.
+  Checklist-based scoring using ICH E3 requirements.
+scoring:
+  exact_match_weight: 0.0
+  functional_equiv_weight: 0.0
+  partial_credit: yes
+  tolerance: N/A
+estimated_human_time: 480 min (full day)
+estimated_agent_time_reference: 45 min
+contamination_risk: high
+parametrizable_params: [study_parameters, treatment_effect, safety_profile]
+```
+
+---
+
+## 6. Test Case Distribution Matrix
+
+| Test Case | Level | Domain | Statistical Methods | Scoring Type | Param. Variants | Est. Human Time |
+|---|---|---|---|---|---|---|
+| TC-001: KM Median PFS | 1 | Efficacy | KM estimation | Auto (numerical) | 10 | 5 min |
+| TC-002: Demographics Table | 1 | Reporting | Descriptive stats | Auto (tabular) | 8 | 10 min |
+| TC-003: Stratified Log-Rank | 1 | Efficacy | Log-rank, stratification | Auto (numerical) | 12 | 5 min |
+| TC-004: SAP Section | 2 | Design | GS design, log-rank, estimands | Checklist | 10 | 120 min |
+| TC-005: TFL QC Review | 2 | Reporting | QC, discrepancy detection | Partial auto | 15 | 30 min |
+| TC-006: Sample Size Re-Est. | 2 | Design | Conditional power, SSR | Auto + rubric | 10 | 45 min |
+| TC-007: Reg. Response ITT/PP | 3 | Regulatory | Tipping point, sensitivity | Expert rubric | 8 | 180 min |
+| TC-008: Dose-Finding Design | 3 | Design | Bayesian, OCs, simulation | Expert rubric | 6 | 240 min |
+| TC-009: Safety/DMC Report | 3 | Safety | Safety monitoring, signal detection | Expert rubric | 8 | 480 min |
+| TC-010: CSR Section | 3 | Reporting | CSR writing, ICH E3 | Expert rubric | 6 | 480 min |
+
+**Coverage Summary:**
+- **Domains:** Efficacy (2), Design (2), Reporting (3), Safety (1), Regulatory (1), Cross-cutting (1)
+- **Levels:** Level 1 (3), Level 2 (3), Level 3 (4)
+- **Auto-scorable:** 3 (Level 1) + 1 partial (Level 2)
+- **Expert-review needed:** 3 (Level 2) + 4 (Level 3)
+- **Total parametrizable variants:** 93 across all test cases
+
+---
+
+## 7. Data Generation Strategy
+
+### 7.1 Synthetic Dataset Specifications
+
+Each test case needs reproducible synthetic data. The generation strategy:
+
+| Test Case | Data Required | Generation Method | Random Seed |
+|---|---|---|---|
+| TC-001 | ADTTE dataset | `random.cdisc.data::radtte()` with custom parameters | Parametrized per variant |
+| TC-002 | ADSL dataset | `random.cdisc.data::radsl()` | Parametrized per variant |
+| TC-003 | ADTTE dataset | `random.cdisc.data::radtte()` + custom event rates | Parametrized per variant |
+| TC-004 | None (design spec) | N/A | N/A |
+| TC-005 | ADSL, ADTTE, ADLB, ADAE | `random.cdisc.data::radsl/adtte/adlb/adae()` | Fixed seed per variant |
+| TC-006 | Partial enrollment + events | `simstudy::simstudy()` for staggered enrollment | Parametrized per variant |
+| TC-007 | ADSL, ADTTE with seeded PP exclusions | Custom simulation w/ `simstudy` | Fixed seed per variant |
+| TC-008 | Historical trial summary | Synthetic summary stats | Fixed seed |
+| TC-009 | ADSL, ADAE, ADLB, ADVS | `random.cdisc.data` + custom AE rates | Fixed seed per variant |
+| TC-010 | Full ADaM suite | `random.cdisc.data` family | Fixed seed per variant |
+
+### 7.2 Reproducibility Rules
+
+1. **Every test case variant** must be fully reproducible by R code in `references/ground-truth/`
+2. **Seeds** must be documented in the variant metadata
+3. **Variant parameters** must produce meaningfully different scenarios (different censorship rates, effect sizes, etc.)
+4. **A no-data-needed label** must be recorded for test cases that are purely specification-based (TC-004)
+
+---
+
+## 8. Contamination Mitigation
+
+| Strategy | Applied To | Mechanism |
+|---|---|---|
+| **Parametric variants** | All TC except TC-004, TC-008 | Each run samples a different parameter set |
+| **Seed randomization** | All data-generating TCs | Seed = function of variant ID + run date |
+| **Error injection randomization** | TC-005 | Error types and locations randomly sampled from pool |
+| **Variable renaming** | TC-001, TC-002, TC-003 | Column names standardized to ADaM but seed-dependent |
+| **Structural perturbation** | TC-009 | AE distribution parameters vary across variants |
+| **Held-out variants** | All | 20% of variants reserved for final validation only |
+
+---
+
+## 9. Scoring Automation Feasibility
+
+| Test Case | Auto-Score Feasibility | Method | Tooling Required |
+|---|---|---|---|
+| TC-001 | ✅ Full | Numerical comparison + JSON output | R `testthat` + Python `pytest` |
+| TC-002 | ✅ Full | Tabular comparison (categorical match) | R `testthat` + `arsenal` |
+| TC-003 | ✅ Full | Numerical comparison + method check | R `testthat` |
+| TC-004 | ⚠️ Partial | Checklist via GPT-as-judge + human verification | PromptFoo / DeepEval |
+| TC-005 | ✅ Full | Pre-seeded error catalog matching | Python script |
+| TC-006 | ⚠️ Partial | Numerical check for SSR + rubric for recommendation | R + human review |
+| TC-007 | ❌ Expert only | Expert review rubric | Human panel |
+| TC-008 | ❌ Expert only | Expert review rubric + simulation run check | Human panel + R |
+| TC-009 | ⚠️ Partial | Auto-checks for tables + signal detection + expert for narrative | Python + human |
+| TC-010 | ❌ Expert only | Expert review + ICH E3 checklist | Human panel |
+
+---
+
+## 10. Next Steps
+
+1. **WG Review:** Present TC-001 through TC-010 to the WG for feedback on:
+   - Clinical realism
+   - Difficulty calibration (are Level 3 tasks appropriately hard?)
+   - Missing domains or methods
+   - Scoring preferences
+
+2. **Implement ground truth:** For auto-scorable TCs (TC-001 through TC-003, TC-005, TC-006 partial), create verified R reference implementations in `references/ground-truth/`
+
+3. **Build data generation pipeline:** Create R scripts using `random.cdisc.data` and `simstudy` to generate synthetic datasets for all parametrizable variants
+
+4. **Develop scoring harness:** Start with the 3 auto-scorable Level 1 test cases (TC-001, TC-002, TC-003) as the pilot evaluation
+
+5. **Human baseline study:** Recruit 2-3 WG biostatisticians to complete TC-001 through TC-003 and record time/accuracy as the human performance baseline
