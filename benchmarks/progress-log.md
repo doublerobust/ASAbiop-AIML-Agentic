@@ -141,3 +141,35 @@ benchmark/
 3. Research: SAS vs R vs Python cross-validation frameworks in pharma
 
 ---
+
+## 2026-05-25 — Day 1.5: Framework Rewrite (Incorporating Yue's Private Notes)
+
+### 📝 What Changed
+Found 3 private notes files in `workspace/notes/` that were Yue's earlier blueprint:
+- `benchmark-blueprint-outline.md` — complete outline with 3 deliverables
+- `benchmark-blueprint-wechat.md` — Chinese version of same outline
+- `benchmark-notes-private.md` — raw WG discussion notes (WeChat/Telegram)
+
+### 🔄 Framework Rewrite (v0.1 → v0.2)
+
+**Major structural changes based on Yue's notes:**
+
+| v0.1 (my draft) | v0.2 (corrected to match Yue's vision) |
+|---|---|
+| 6 generic scoring dimensions | **3 concrete deliverables**: Error Taxonomy, Example Cases, Scoring Methodology |
+| Composite Benchmark Score (CBS) | **TPP-style curves** — detection rate × false positive rate |
+| Academic framework model | **"Exam" framing** — like MMLU/GSM8K but for TFL review |
+| "What should agents do" | **"Define the exam, not the curriculum"** |
+| R-only ground truth | **R + SAS + Python multilingual** |
+| Benchmark as standalone deliverable | **"Error Taxonomy" as first published paper deliverable** |
+
+**Key concepts added from WG discussion:**
+- Error taxonomy: Class A (critical), B (major), C (minor) severity
+- Certification model — WG as "industry AI union" (Eric's proposal)
+- Human validation as gold standard (Rodman 2025, NEJM AI)
+- TPP-style interpretation (Parsa 2026, NEJM AI)
+- Test dataset tension: public synthetic + private internal
+- Three-publication path: error taxonomy → scoring methodology → case studies
+
+### ✅ Git Push (Correct Repo)
+Committed and pushed to `doublerobust/ASAbiop-AIML-Agentic/benchmarks/` 

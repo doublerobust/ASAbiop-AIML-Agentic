@@ -1,350 +1,451 @@
-# Benchmark Framework v1 — Agentic AI for TFL Programming
+# An Evaluation Framework for AI-Assisted Clinical Trial Output Review: A Benchmark Blueprint
 
-**Version:** 0.1 (initial draft, corrected per WG feedback)
+**Working title** (per WG discussion)
+**Version:** 0.2 — incorporating WG design principles & error taxonomy
 **Date:** 2026-05-25
-**Author:** Natasha (on behalf of Yue Shentu / ASA Biopharm Agentic AI WG)
+**Author:** Yue Shentu, with contributions from Eric (平野), xjw1001001, 侃儿, and WG members
+**Editorial:** Natasha (on behalf of ASA Biopharm AI/ML Working Group — Agentic AI Workstream)
 
-## Priority Scope: TFL Programming
+---
 
-Per WG direction, the benchmark **starts with TFL generation and review**
-as the initial test suite — the most concrete, most in-demand use case
-across pharma biostatistics. Trial design and CSR writing come later.
+## Priority Scope: TFL Review
 
-## Language Support
+Per WG direction, the benchmark **starts with TFL review** (Tables, Figures,
+Listings) — evaluating AI agents that check clinical trial output for
+correctness, consistency, and regulatory compliance. SDTM/ADaM review is
+secondary scope for later phases.
 
-**R + SAS + Python** — all three. TFL production is multilingual by nature:
-- **R** (pharmaverse: Tplyr, rtables, tern) — growing adoption
-- **SAS** (PROC TABULATE, PROC REPORT, PROC SGPLOT) — regulatory gold standard
-- **Python** (matplotlib, plotnine, statsmodels) — emerging
-
-The benchmark evaluates agents in all three and scores them independently.
+**Languages:** R + SAS + Python (multilingual)
 
 ---
 
 ## Table of Contents
 
-1. [Design Principles](#1-design-principles)
-2. [Benchmark Architecture](#2-benchmark-architecture)
-3. [Dimension 1: Task Fidelity](#3-dimension-1-task-fidelity)
-4. [Dimension 2: Workflow Completeness](#4-dimension-2-workflow-completeness)
-5. [Dimension 3: Statistical Correctness](#5-dimension-3-statistical-correctness)
-6. [Dimension 4: Regulatory Compliance](#6-dimension-4-regulatory-compliance)
-7. [Dimension 5: Operational Efficiency](#7-dimension-5-operational-efficiency)
-8. [Dimension 6: Safety & Robustness](#8-dimension-6-safety--robustness)
-9. [Scoring Framework](#9-scoring-framework)
-10. [Open Questions](#10-open-questions)
+1. [Introduction & Motivation](#1-introduction--motivation)
+2. [Guiding Principles](#2-guiding-principles)
+3. [Three Deliverables](#3-three-deliverables)
+4. [Deliverable 1: Error Taxonomy](#4-deliverable-1-error-taxonomy)
+5. [Deliverable 2: Example Cases](#5-deliverable-2-example-cases)
+6. [Deliverable 3: Scoring Methodology](#6-deliverable-3-scoring-methodology)
+7. [The "Exam" Framing](#7-the-exam-framing)
+8. [Implementation Guide](#8-implementation-guide)
+9. [Open Questions](#9-open-questions-wg-discussion)
+10. [Relationship to Prior Work](#10-relationship-to-prior-work)
+11. [Context: WG Discussions That Shaped This](#11-context-wg-discussions-that-shaped-this)
+12. [Dimension Reference (Previous v0.1)](#12-dimension-reference-previous-v01)
 
 ---
 
-## 1. Design Principles
+## 1. Introduction & Motivation
 
-### P1. Domain-Specific, Not General
-The benchmark must test capabilities unique to clinical trial statistics.
-General coding or QA benchmarks (SWE-bench, HumanEval) are necessary but not
-sufficient.
+### 1.1 The Problem
 
-### P2. Regulatory-Grade Ground Truth
-Every test case must have a known-correct reference solution that would pass
-regulatory review. "Close enough" is not acceptable.
+AI tools for SDTM/ADaM/TLF review are proliferating rapidly, but there is
+no standard way to evaluate them. Vendors make claims about accuracy;
+sponsors cannot compare across tools; and current evaluations focus on
+accuracy metrics that fail to reflect real-world review workflows.
 
-### P3. Multi-Dimensional Scoring
-An agent that produces perfect statistical output but costs $50/run is
-different from one that does the same for $0.50. Both correctness AND
-efficiency matter.
+### 1.2 Why the ASA WG Owns This
 
-### P4. Progressive Difficulty
-Tasks should be stratified by complexity:
-- **Level 1 (Basic):** Single-step, well-specified tasks
-- **Level 2 (Intermediate):** Multi-step, moderately ambiguous
-- **Level 3 (Advanced):** Full workflow, realistic ambiguity requiring judgment
+This working group is uniquely positioned:
+- **Pharma-led, not vendor-led** (as Yiwen noted: "从pharma的角度做这个evaluation的标准")
+- Built on domain expertise — practicing biostatisticians who understand
+  what errors matter and why
+- Credible to regulators — ASA Biopharm has existing relationships
+- Cross-industry — spans pharma, CRO, academia, and vendors
 
-### P5. Auditability Built In
-The benchmark must evaluate not just output quality but also the
-audit trail — can a reviewer reconstruct what the agent did and why?
+### 1.3 Scope: What This Is and Isn't
 
-### P6. Vendor-Neutral
-The benchmark must not favor any specific LLM, agent framework, or
-programming language.
-
----
-
-## 2. Benchmark Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    SCORING ENGINE                           │
-│  ┌─────────┐ ┌──────────┐ ┌──────────┐ ┌───────────────┐  │
-│  │Task     │ │Stat.     │ │Regulatory│ │Efficiency     │  │
-│  │Fidelity │ │Correct-  │ │Compliance│ │& Safety       │  │
-│  │Score    │ │ness Score│ │  Score   │ │   Score       │  │
-│  └────┬────┘ └────┬─────┘ └────┬─────┘ └───────┬───────┘  │
-│       └───────────┴────────────┴───────────────┘           │
-│                            │                                │
-│                    ┌───────┴────────┐                       │
-│                    │  COMPOSITE     │                       │
-│                    │  BENCHMARK     │                       │
-│                    │  SCORE (CBS)   │                       │
-│                    └────────────────┘                       │
-└─────────────────────────────────────────────────────────────┘
-         ▲                                       ▲
-         │                                       │
-┌────────┴──────────┐              ┌─────────────┴──────────┐
-│  TASK EXECUTOR    │              │  TEST CASE LIBRARY     │
-│  (Agent runs      │              │  ├─ SAP generation     │
-│   against test    │              │  ├─ TFL programming    │
-│   harness)        │              │  ├─ Sample size calc   │
-└───────────────────┘              │  ├─ Safety monitoring  │
-                                   │  ├─ CSR writing        │
-                                   │  └─ Regulatory mapping │
-                                   └────────────────────────┘
-```
-
-The benchmark evaluates agents along **six independent dimensions**,
-each scored 0-100. The Composite Benchmark Score (CBS) is a weighted
-average, with weights adjustable depending on the use case
-(e.g., regulatory submissions might weight compliance at 40%,
-while internal QC tools might weight efficiency at 35%).
-
----
-
-## 3. Dimension 1: Task Fidelity
-
-*Does the agent correctly understand and execute the requested task?*
-
-### Sub-Dimensions
-
-| Sub-Dimension | Description | Evaluation Method |
-|---|---|---|
-| **Instruction Parsing** | Can the agent correctly interpret a clinical task described in natural language? | Compare agent's task decomposition against gold-standard plan |
-| **Scope Adherence** | Does the agent stay within the specified scope without adding unsolicited modifications? | Diff analysis — flag additions outside spec |
-| **Edge Case Handling** | Does the agent correctly handle missing data, boundary conditions, known pathological cases? | Pre-seeded edge cases in test data |
-
-### Example Test Cases — TFL Focus (Level 1 — Basic)
-
-1. *"Generate a baseline demographics table (Table 14.1.1.1) by treatment arm for the safety population. Include age, sex, race, ethnicity, ECOG score, and disease stage. Use R (Tplyr) / SAS (PROC TABULATE) / Python (gt package)."*
-2. *"Produce the primary efficacy analysis TLF: Kaplan-Meier curves for PFS by treatment arm, with number-at-risk table below. Use R (survminer) / SAS (PROC SGPLOT) / Python (matplotlib)."*
-3. *"Create an adverse events summary table by SOC and PT, sorted by decreasing frequency in the active arm. SAS: PROC FREQ / R: Tplyr + gt / Python: pandas pivot."*
-
-### Example Test Cases — TFL Focus (Level 2 — Intermediate)
-
-4. *"Generate the complete Table 14 series (14.1.1.1 demographics, 14.2.1.1 disposition, 14.3.1.1 primary efficacy) for a phase 3 oncology trial. Input: ADaM datasets (ADSL, ADTTE, ADLB). Output: formatted RTF files ready for the CSR appendix."*
-5. *"Review this 5-table TFL package for consistency with the SAP shells. Flag any discrepancy in: (a) population flags used, (b) visit window labels, (c) baseline definition, (d) p-value formatting, (e) missing categories. Generate a review report."*
-6. *"Translate this TFL specification from SAS to R. Input: SAS program for Table 14.1.1.1 using PROC TABULATE. Output: equivalent R program using Tplyr, producing identical output."*
-
-### Example Test Cases — TFL Focus (Level 3 — Advanced)
-
-7. *"A regulatory reviewer has flagged inconsistencies between Table 14.1.1.1 and Listing 16.2.1.1 in your submission package. The count of randomized subjects differs by 2. Diagnose the root cause, fix both outputs, and document the discrepancy. Provide outputs in R and SAS for cross-validation."*
-8. *"Generate a complete TFL shell package for a phase 2 basket trial with 5 tumor types. Each tumor type has its own analysis population. Include: adverse events by tumor type, efficacy waterfall plot per tumor type, swimmer plot, and biomarker subgroup forest plot. Input: multi-tumor ADaM datasets. Output: RTF files."*
-9. *"Given the TFL package from a previous study, generate a submission-ready clinical study report section (Section 11 — Efficacy Evaluation) integrating the key tables and figures with narrative text. The output must match the ICH E3 CSR standard."*
-
----
-
-## 4. Dimension 2: Workflow Completeness
-
-*Does the agent execute the end-to-end workflow, not just isolated steps?*
-
-### Standard Workflow Model
-
-```
-Trial Design Phase:
-  Protocol review → SAP outline → Sample size calc → Randomization spec
-
-Analysis Phase:
-  Data ingest → SDTM mapping → ADaM programming → TFL generation
-
-Reporting Phase:
-  TFL QC/Review → CSR drafting → Submission package assembly
-
-Cross-cutting:
-  Safety monitoring → DMC reporting → Data cleaning flags
-```
-
-### Evaluation Criteria
-
-| Criterion | What to Check |
+| This IS | This IS NOT |
 |---|---|
-| **Sequencing** | Are steps executed in the correct order? |
-| **Artifact Handoff** | Does the output of step N feed correctly into step N+1? |
-| **Error Propagation** | If step 3 fails, does the agent recover or propagate the error gracefully? |
-| **Human-in-the-Loop** | Does the agent correctly identify decision points requiring human review? |
+| An evaluation framework — methodology + examples | A certification body |
+| A benchmark ("exam") for AI agents that review clinical trial output | A one-size-fits-all pass/fail test |
+| Public methodology; internal data stays private | A replacement for company-specific validation |
+| A shared vocabulary across companies and vendors | A guarantee of real-world performance |
 
 ---
 
-## 5. Dimension 3: Statistical Correctness
+## 2. Guiding Principles
 
-*This is the core dimension — does the agent produce statistically valid output?*
+### P1. Human Validation is the Gold Standard
 
-### Methodological Test Coverage
+As Rodman et al. (2025, *NEJM AI*) argue, synthetic-only benchmarks risk
+becoming "machine simulacra" — measuring performance on artificial tasks
+that don't reflect real-world complexity. Every component of this benchmark
+requires human adjudication:
 
-| Statistical Method | Test Cases | Ground Truth Source |
-|---|---|---|
-| **Kaplan-Meier estimation** | Single arm, two arms, competing risks | Verified R `survfit()` output |
-| **Log-rank test** | Stratified, unstratified, trend test | Verified R `survdiff()` output |
-| **Cox proportional hazards** | Univariable, multivariable, stratified, time-varying covariates | Verified R `coxph()` output |
-| **Logistic regression** | Univariable, multivariable, with/without interaction terms | Verified R `glm()` output |
-| **Sample size calculation** | Continuous, binary, time-to-event, non-inferiority, group sequential | Verified `gsDesign` / `lme4` output |
-| **Multiple comparisons** | Bonferroni, Holm, Hochberg, FDR, graphical approaches | Verified R `multcomp` / `p.adjust()` |
-| **Subgroup analysis** | Pre-specified, post-hoc, interaction tests | Verified with multiplicity adjustment |
-| **Missing data handling** | LOCF, MMRM, multiple imputation, pattern-mixture models | Verified SAS/R output |
-| **Non-inferiority / equivalence** | Margin specification, CI methods, switching non-inf ↔ superiority | Regulatory guidance alignment |
-| **Interim analysis** | Alpha spending, conditional power, futility boundaries | Verified `gsDesign` output |
+- **Error planting:** Human statisticians define realistic errors based on
+  actual QC experience
+- **Scoring:** Human experts validate automated scoring, especially for
+  context-dependent errors
+- **Threshold setting:** Based on real review practice, not arbitrary cutoffs
 
-### Verification Protocol
+### P2. Context-Dependent Performance Thresholds
 
-For each test case:
-1. Define the statistical problem with clear inputs
-2. Generate the gold-standard answer using verified R/SAS code
-3. Present the problem to the agent (in natural language or structured spec)
-4. Compare agent output to gold standard
-5. Score: exact match (100%), functionally equivalent with minor differences (80%), conceptually correct but different implementation (60%), partially correct (40%), incorrect (0%)
+As Parsa et al. (2026, *NEJM AI* — Health AI TPP framework) establish,
+"good enough" depends on context:
+- Reviewer time available
+- False positive burden the team can absorb
+- Study phase (Phase 1 vs. submission)
+- Criticality of the endpoint
 
-**Tolerance:** For numerical methods, allow floating-point differences < 1e-6.
-For methodological choices, require the same method (not just same result).
+The benchmark should show **where the tool lands on a (detection rate ×
+false positive rate) curve**. Each company calibrates their own threshold.
 
----
+### P3. Methodology Open, Test Data Private
 
-## 6. Dimension 4: Regulatory Compliance
+- Methodology is fully open and specified
+- Example cases are public and synthetic
+- Company-specific test instances built from internal data remain private
+- Prevents gaming while enabling informed evaluation
 
-*Does the agent produce output that meets regulatory submission standards?*
+### P4. Define the Exam, Not the Curriculum
 
-### Standards Coverage
+This framing emerged from WG discussion: the benchmark specifies what
+agents need to demonstrate, not how they should achieve it. Vendors and
+internal teams are free to implement however they choose. The market
+separates those who can deliver from those who just benchmark well.
 
-| Standard | Specific Requirements |
-|---|---|
-| **ICH E3** (CSR structure) | Correct section ordering, required content elements |
-| **ICH E9** (statistical principles) | ITT vs PP, missing data handling, sensitivity analyses |
-| **ICH E9(R1)** (estimands) | Estimand specification, intercurrent events handling |
-| **ICH E6(R2)** (GCP) | Audit trail, data integrity, version control |
-| **CDISC SDTM** | Domain naming, variable mapping, required metadata |
-| **CDISC ADaM** | ADSL, ADTTE, ADRS, ADLB structures, timing variables |
-| **Define-XML** | Metadata formatting, version compatibility |
-| **FDA Study Data Technical Conformance Guide** | Submission package structure |
+### P5. Pharma-Led Independence
 
-### Evaluation Criteria
-
-| Criterion | How to Test |
-|---|---|
-| **Standard Adherence** | Does the output comply with CDISC controlled terminology? |
-| **Document Completeness** | Are all required sections present? |
-| **Traceability** | Can each output element be traced back to its source data/specification? |
-| **Audit Trail Quality** | Is there a clear, human-readable log of all decisions and transformations? |
-| **Submission Readiness** | Would this pass a typical FDA technical review? |
+The benchmark must not favor any specific vendor, LLM, agent framework, or
+programming language. Independence is the core value proposition.
 
 ---
 
-## 7. Dimension 5: Operational Efficiency
+## 3. Three Deliverables
 
-*How fast, cheap, and scalable is the agent?*
+Per WG consensus (Eric's proposal, refined by xjw1001001 and 侃儿), the
+benchmark produces three deliverables:
 
-### Metrics
-
-| Metric | Definition | Target |
-|---|---|---|
-| **Wall Clock Time** | End-to-end execution time for standard task | ≤ human time for same task |
-| **Token Cost** | Total tokens consumed (input + output) | Benchmark reference (per task) |
-| **API Call Count** | Number of LLM calls per task | Minimize — fewer calls = better planning |
-| **Tool Call Efficiency** | Tool calls vs optimal calls | Ratio > 0.7 = good |
-| **Reproducibility** | Same task → same result? | 90%+ agreement across 5 runs |
-
----
-
-## 8. Dimension 6: Safety & Robustness
-
-*Does the agent fail safely?*
-
-### Stress Tests
-
-| Test | Description |
-|---|---|
-| **Missing Data** | Drop 10%, 25%, 50% of key variables |
-| **Label Corruption** | Reverse treatment labels, swap control/active |
-| **Adversarial Prompts** | Injection attempts, contradictory instructions |
-| **Out-of-Distribution Input** | Disease/endpoint combination not in training data |
-| **Resource Limits** | Timeout at 50%, 75%, 90% of expected runtime |
-
-### Safety Requirements
-
-| Requirement | Standard |
-|---|---|
-| **Refuse harmful actions** | Must not execute data deletion, unauthorized access |
-| **Confidence calibration** | Must flag low-confidence outputs |
-| **Escalation protocol** | Must identify when human review is needed |
-| **Containment** | Must not write outside designated directories/databases |
-
----
-
-## 9. Scoring Framework
-
-### Composite Benchmark Score (CBS)
-
-```
-CBS = w₁·S_task + w₂·S_workflow + w₃·S_stat + w₄·S_reg + w₅·S_eff + w₆·S_safety
-
-Default weights (regulatory use case):
-  w₁=0.15, w₂=0.15, w₃=0.25, w₄=0.25, w₅=0.10, w₆=0.10
-
-Efficiency-focused weights (internal QC use case):
-  w₁=0.10, w₂=0.10, w₃=0.20, w₄=0.10, w₅=0.35, w₆=0.15
-```
-
-### Minimum Passing Thresholds
-
-| Use Case | Min CBS | Per-Dimension Floor |
-|---|---|---|
-| Internal exploratory | 60 | None |
-| Internal production QC | 75 | S_stat ≥ 70, S_safety ≥ 60 |
-| Regulatory submission | 85 | S_stat ≥ 80, S_reg ≥ 80, S_safety ≥ 70 |
-
----
-
-## 10. Open Questions (for WG discussion)
-
-1. **Weight calibration:** Are the default weights right for a regulatory submission benchmark? Should different use cases have different weight profiles?
-
-2. **Language bias:** Should we require R, SAS, or Python? All three? The benchmark should be language-agnostic, but scoring needs a reference implementation. What's the ground truth language?
-
-3. **Data sourcing:** Where do we get realistic, non-proprietary clinical trial datasets? Synthetic data generation (e.g., `simstudy`, `random.cdisc.data`)? FDA公开 datasets? Pharmaverse synthetic data?
-
-4. **Task decomposition:** Should we build tasks around individual statistical methods (narrow, testable) or full workflow scenarios (realistic, harder to score)? Answer: both, with clear level stratification.
-
-5. **Human baseline:** What constitutes "expert-level" performance? Need to establish a human benchmark (e.g., "a statistician with 5+ years of oncology experience would score 90 on this task").
-
-6. **Contamination risk:** If we use public datasets and common statistical problems, how do we prevent benchmark contamination in frontier models?
-
-7. **Maintenance:** Who curates the test cases? How often are they updated (new methods, new regulatory guidance)?
-
-8. **Regulatory alignment:** Are we aiming for FDA endorsement? If so, what level of engagement do we need with CDER/ODE?
-
-9. **Zero-shot vs. tool-augmented:** Should the benchmark assume the agent has access to standard R packages, or should it test the agent's ability to write code from scratch?
-
-10. **Scoring automation:** How much of the scoring can be automated (test harness) vs. requiring expert human review?
-
----
-
-## Appendix A: Relationship to Existing Benchmarks
-
-| Benchmark | Domain | Gap Analyzed | Relevance to Our Benchmark |
+| # | Deliverable | Description | Visibility |
 |---|---|---|---|
-| **SWE-bench** | General Python coding | No statistical domain knowledge | Foundation for coding agent evaluation, but domain-inadequate |
-| **GAIA** | General AI assistants | No domain specialization | Useful for general tool-use patterns, not our domain |
-| **WebArena** | Web navigation | No statistical/mathematical reasoning | Complements but does not overlap |
-| **AgentBench** | Multi-environment | General-purpose, shallow in any domain | Reference architecture for multi-env evaluation |
-| **Terminal-Bench** | Shell/DevOps | Infrastructure tasks only | Useful for terminal interaction patterns |
-| **PHUSE Test Data Factory** | CDISC test data | Data generation, not agent evaluation | Source of realistic test datasets |
-| **Pharmaverse** | R packages for pharma | Tooling, not benchmarks | Reference implementation packages |
+| **1** | **Error Taxonomy** | Catalog of realistic TFL errors by severity class (A/B/C) | 📄 Published paper |
+| **2** | **Example Cases** | 2-3 full synthetic TFL packages with planted errors | 📦 Public dataset |
+| **3** | **Scoring Methodology** | How to measure and interpret agent performance | 📄 Published paper |
 
-## Appendix B: Glossary
+---
 
-| Term | Definition |
+## 4. Deliverable 1: Error Taxonomy
+
+A hierarchical catalog of errors that an AI agent might encounter when
+reviewing TFL packages in a clinical trial context.
+
+### 4.1 Severity Classification
+
+#### Class A — Critical
+*Would change the analysis conclusion or regulatory interpretation.*
+
+| ID | Error Type | Example |
+|---|---|---|
+| A-01 | Wrong statistical method | Cox PH instead of log-rank for primary analysis |
+| A-02 | Incorrect denominator | PP population used instead of ITT |
+| A-03 | Mis-specified covariate | Unstratified analysis when SAP specifies stratification |
+| A-04 | Wrong comparison / reference arm | Active vs. placebo comparison reversed |
+| A-05 | Missing multiplicity adjustment | No alpha correction when multiple endpoints tested |
+
+#### Class B — Major
+*Requires correction but is unlikely to change the analysis conclusion.*
+
+| ID | Error Type | Example |
+|---|---|---|
+| B-01 | Wrong population label | "Safety population" header on ITT-only analysis |
+| B-02 | Missing subgroup | SAP-specified subgroup analysis absent from TFL |
+| B-03 | Wrong reference arm label | "Active" instead of "Placebo" in figure legend |
+| B-04 | Incorrect visit window | Day 28 window labelled as Day 14 |
+| B-05 | Wrong confidence interval type | CI computed but not clearly labelled as 95% |
+| B-06 | N-count mismatch | Subject count differs between demographics and analysis tables |
+| B-07 | Missing category | "Unknown" race category dropped without footnote |
+
+#### Class C — Minor
+*Cosmetic/formatting issues with no analytical impact.*
+
+| ID | Error Type | Example |
+|---|---|---|
+| C-01 | Decimal places inconsistent | Mean reported as 5.2 in one table, 5.23 in another |
+| C-02 | Alignment error | Decimal alignment off in columns |
+| C-03 | Table title typo | "Demographics" misspelled |
+| C-04 | Missing footnote | Abbreviation not defined in footnotes |
+| C-05 | Font/size inconsistency | Header font differs from body |
+| C-06 | Missing page number | Multi-page table pages unnumbered |
+
+### 4.2 Calibration Approach
+
+The severity classification must be validated by the WG through:
+1. Survey of member companies — "Would this error change your analysis
+   conclusion? Require a re-run? Be caught in QC?"
+2. Calibration meeting — resolve edge cases (e.g., is a wrong footnote
+   that references a deleted table a B or a C?)
+3. Living document — updated as new error types emerge from practice
+
+---
+
+## 5. Deliverable 2: Example Cases
+
+### 5.1 Case Structure
+
+Each example case is a full TFL package representing a realistic analysis
+scope (typical interim analysis or final analysis for a Phase 2/3 study):
+
+```
+case-NNN/
+├── specs/
+│   ├── SAP-excerpt.md            # Relevant SAP sections
+│   ├── TFL-shells/               # Shell specifications for each TFL
+│   └── data-spec.md              # ADaM dataset descriptions
+├── data/
+│   ├── adsl.csv                  # Subject-level dataset (synthetic)
+│   ├── adtte.csv                 # Time-to-event (synthetic)
+│   ├── adlb.csv                  # Lab data (synthetic)
+│   └── adae.csv                  # AE data (synthetic)
+├── outputs/                      # TFL package to be reviewed
+│   ├── table-14-1-1-1.rtf
+│   ├── table-14-3-1-1.rtf
+│   ├── figure-14-3-1-1.rtf
+│   └── listing-16-2-1-1.rtf
+├── errors/                       # Ground truth
+│   ├── error-manifest.yaml       # List of all planted errors
+│   └── error-sources/            # Individual error specifications
+└── README.md                     # Case overview
+```
+
+### 5.2 Error Planting Methodology
+
+1. **Start with correct outputs:** Generate gold-standard TFLs from
+   verified R/SAS/Python code
+2. **Plant errors deliberately:** WG statisticians introduce errors
+   based on real QC experience, documented in error manifests
+3. **Blinded validation:** A second statistician reviews the planted
+   errors — any disputed plantings are removed
+4. **Difficulty gradient:**
+   - **Easy:** Obvious errors (wrong header, missing data, label typos)
+   - **Medium:** Subtle logic errors (wrong denominator in a subgroup,
+     missing adjustment for stratification factor)
+   - **Hard:** Context-dependent errors (wrong reference set for a
+     comparison that depends on SAP interpretation, inconsistent
+     handling of intercurrent events)
+
+### 5.3 Difficulty Levels (for Score Reporting)
+
+| Level | Description | Example |
+|---|---|---|
+| **Easy** | Surface-level, detectable by format checks | C-02 (alignment), C-04 (missing footnote) |
+| **Medium** | Needs statistical domain knowledge | B-04 (wrong visit window), A-02 (wrong population) |
+| **Hard** | Needs deep SAP interpretation + clinical context | A-04 (wrong comparison), B-07 (missing category with clinical relevance) |
+
+### 5.4 Data Strategy
+
+- All datasets generated via `random.cdisc.data` + custom `simstudy` scripts
+- Parameterized seed system enables multiple variants with same error
+  structure
+- 20% of variants reserved as held-out validation set
+- Forward-looking: member companies may contribute additional cases
+  derived from (anonymized) internal data
+
+---
+
+## 6. Deliverable 3: Scoring Methodology
+
+### 6.1 Primary Metrics
+
+| Metric | Definition | Range |
+|---|---|---|
+| **Detection Rate (DR)** | Errors flagged / total planted errors | 0-100% |
+| **DR-by-Severity** | Detection rate for Class A, B, C separately | 0-100% |
+| **False Positive Rate (FPR)** | Non-errors flagged / total non-error elements | 0-100% |
+| **F1 Score** | Harmonic mean of precision and recall | 0-1 |
+| **Review Time** | Wall clock time to complete review | Minutes |
+
+### 6.2 TPP-Style Interpretation (Parsa 2026)
+
+Instead of a single pass/fail score, the benchmark plots agent performance
+on a **detection rate × false positive rate** curve:
+
+```
+Detection Rate (y-axis, aim high)
+    ↑
+100% ┼──────────────────────────────────
+    │  🟢 Elite (DR≥95%, FPR≤5%)
+    │  🟡 Acceptable (DR≥85%, FPR≤15%)
+    │  🟠 Marginal (DR≥70%)
+    │  🔴 Below threshold
+    └──────────────────────────────────→ False Positive Rate (x-axis, aim low)
+    0%                               100%
+```
+
+Each company calibrates their own operating point:
+- **Small team, high workload:** May tolerate higher FPR in exchange for
+  higher DR (catch every error, accept some false alarms)
+- **Regulatory submission team:** May optimize for low FPR (cannot afford
+  wasted reviewer time on false flags)
+
+### 6.3 Class-Specific Reporting
+
+Critical for regulatory use cases:
+- Class A DR must meet a minimum floor (e.g., ≥ 95%) regardless of FPR
+- Class C errors may have lower DR requirements
+- Overall score is reported with breakouts
+
+### 6.4 Multi-Language Scoring
+
+Agents can execute in R, SAS, or Python. Scores are reported:
+
+```
+┌──────────────────────┬──────┬──────┬──────┬──────┐
+│ Metric               │ R    │ SAS  │ Py   │ Any  │
+├──────────────────────┼──────┼──────┼──────┼──────┤
+│ DR (Class A)         │ 95%  │ 100% │ 80%  │ 100% │
+│ DR (Class B)         │ 88%  │ 92%  │ 75%  │ 92%  │
+│ DR (Class C)         │ 70%  │ 65%  │ 60%  │ 70%  │
+│ FPR                  │ 8%   │ 5%   │ 12%  │ 8%   │
+└──────────────────────┴──────┴──────┴──────┴──────┘
+```
+
+"The "Any" column = error caught in at least one language."
+
+### 6.5 Scoring Automation
+
+| Dimension | Auto-score feasible? | Method |
+|---|---|---|
+| Detection rate (obvious errors) | ✅ Full | YAML manifest comparison |
+| Detection rate (subtle errors) | ⚠️ Partial | LLM-as-judge + human verification |
+| FPR | ⚠️ Partial | Automated count + human review of flagged-but-incorrect items |
+| Detection rate (context-dependent) | ❌ Expert | Human panel review |
+| Review time | ✅ Full | Wall clock measurement |
+
+---
+
+## 7. The "Exam" Framing
+
+### 7.1 Like LLM Benchmarks, But for TFL Review
+
+The mental model is how the LLM community benchmarks models:
+- **MMLU** measures knowledge across 57 subjects
+- **GSM8K** measures math reasoning
+- **SWE-bench** measures coding capability
+
+This benchmark is the equivalent for clinical TFL review — a standardized
+set of challenges that agents must pass before being qualified for
+production use.
+
+### 7.2 Certification Model (Eric's Proposal)
+
+The WG can serve an "industry AI union" function:
+- Vendors submit their agents for benchmark evaluation
+- Passing = certified for TFL review in a clinical trial context
+- WG members use certification to inform vendor selection
+- Vendors who pass attract more pharma partnerships
+
+### 7.3 Calibration Against Human Baseline
+
+A human baseline must be established:
+- Recruit 2-3 WG statisticians to review the example cases
+- Record their DR, FPR, and review time
+- Agent performance is relative to human baseline, not absolute
+
+---
+
+## 8. Implementation Guide
+
+### 8.1 For Member Companies
+
+- Build internal test instances using your own TFL packages and QC history
+- Calibrate the severity taxonomy to your team's standards
+- Use the public example cases for initial vendor screening
+- Run internal benchmark against vendors' agents before procurement
+
+### 8.2 For Vendors
+
+- Self-assess using the published example cases
+- Report: DR by class (A/B/C), FPR, scope of testing, language tested
+- Vendors are free to use the published examples for product development
+
+### 8.3 For the WG
+
+- Maintain and refresh example cases annually
+- Community contribution model for new error types
+- Publication path: methodology paper → ASA Biopharm proceedings /
+  stats journal
+
+---
+
+## 9. Open Questions (WG Discussion)
+
+| # | Question | Status |
+|---|---|---|
+| 1 | **Error taxonomy scope:** SDTM only? ADaM only? Full TLF? Start small? | 🔴 Open |
+| 2 | **Who builds the first example cases?** yilong/Keiji's team? Volunteers? | 🔴 Open |
+| 3 | **Severity calibration:** How do we reach consensus on A vs B vs C? Survey? | 🔴 Open |
+| 4 | **False positive tolerance:** What range is acceptable? Team-size dependent? | 🔴 Open |
+| 5 | **Publication:** ASA Biopharm proceedings? Stats journal? | 🔴 Open |
+| 6 | **Test dataset tension:** Synthetic public + private internal — what's the right balance? | 🔴 Open |
+| 7 | **Language coverage:** Should agents be tested in all 3 languages or just their primary? | 🔴 Open |
+| 8 | **Human baseline design:** What constitutes expert-level performance? 5+ years experience? | 🔴 Open |
+| 9 | **Case refresh cycle:** How often should example cases be updated? | 🔴 Open |
+| 10 | **Regulatory alignment:** FDA endorsement? CDER engagement level? | 🔴 Open |
+
+---
+
+## 10. Relationship to Prior Work
+
+### Prior Benchmark Framework (v0.1 — 6 Dimensions)
+
+The initial v0.1 framework proposed six scoring dimensions (Task Fidelity,
+Workflow Completeness, Statistical Correctness, Regulatory Compliance,
+Operational Efficiency, Safety & Robustness). The v0.2 framework in this
+document **builds on but supersedes** that architecture with:
+
+- **Error taxonomy** (Deliverable 1) replaces the generic multi-dimension
+  scoring with clinically meaningful error classification
+- **TPP curves** replace the composite CBS formula with context-dependent
+  interpretation
+- **"Exam" framing** replaces the academic evaluation model with a
+  production-qualification model
+
+The v0.1 statistical method coverage matrix remains useful reference and
+is preserved in `test-case-design.md`.
+
+### Existing General-Agent Benchmarks
+
+| Benchmark | Domain | Relationship |
+|---|---|---|
+| **SWE-bench** | General coding | Foundation for coding agent eval; domain-inadequate for clinical stats |
+| **GAIA** | General assistants | Useful tool-use patterns; no domain specialization |
+| **MMLU / GSM8K** | LLM knowledge/reasoning | Reference for the "exam" framing |
+| **PHUSE Test Data Factory** | CDISC test data | Data source, not agent eval |
+| **Pharmaverse** | R packages | Reference implementations for ground truth |
+
+### WG Source Documents
+
+- `notes/benchmark-blueprint-outline.md` — Yue's original outline
+- `notes/benchmark-notes-private.md` — WG discussion notes (WeChat/Telegram)
+
+---
+
+## 11. Context: WG Discussions That Shaped This
+
+This framework draws directly from WG member input:
+
+| Member | Key Contribution |
 |---|---|
-| **CBS** | Composite Benchmark Score — weighted average of 6 dimensions |
-| **Task Fidelity** | Correctness of task interpretation and execution |
-| **Workflow Completeness** | End-to-end coverage of the clinical workflow |
-| **Statistical Correctness** | Methodological and numerical accuracy |
-| **Regulatory Compliance** | Adherence to ICH, CDISC, FDA standards |
-| **Operational Efficiency** | Speed, cost, and scalability |
-| **Safety & Robustness** | Failure mode handling and containment |
-| **TFL** | Tables, Figures, Listings |
-| **SAP** | Statistical Analysis Plan |
-| **CSR** | Clinical Study Report |
-| **ADaM / SDTM** | CDISC analysis/submission data standards |
+| **Eric (平野)** | Proposed the benchmark-as-certification concept — "exam" framing |
+| **xjw1001001** | Emphasized benchmark is the most critical deliverable; noted test set needs internal pharma data |
+| **侃儿** | Deep-dive on TFL review fundamentals — dry run vs. with data, experience-dependent spotting |
+| **Yue (申屠)** | "We become the AI union — vendors need our benchmark certification." Methodology open, specifics internal. |
+| **Yiwen** | "从pharma的角度做这个evaluation的标准" — pharma-led independence |
+
+---
+
+## 12. Dimension Reference (Previous v0.1)
+
+For reference, the v0.1 scoring dimensions can be mapped onto the
+error-taxonomy framework:
+
+| v0.1 Dimension | Maps to v0.2 |
+|---|---|
+| Task Fidelity | Error planting methodology + instruction parsing |
+| Workflow Completeness | End-to-end TFL review workflow |
+| Statistical Correctness | Class A errors (would change conclusion) |
+| Regulatory Compliance | CDISC/ICH/FDA standard adherence — future extension |
+| Operational Efficiency | Review time metric |
+| Safety & Robustness | FPR + stress tests — future extension |
