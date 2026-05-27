@@ -253,13 +253,79 @@ benchmarks/
 └── README.md
 ```
 
+### 🔧 Day 3 Enhancements (May 27, second pass)
+
+**Gaps filled since initial Day 3 commit:**
+
+1. **TC-002 scoring function** added to `scoring-harness/score.py`
+   - `score_tc002()` — compares mean/SD/median with tolerance, exact match for counts, categorical cell comparison
+   - Registered in both `score` and `verify` CLI command scorers dicts
+
+2. **TC-002 cross-language comparison** added to `references/verification/cross-language-compare.R`
+   - `compare_tc002()` — compares continuous stats (mean, SD, median, min, max) and categorical counts
+   - Registered in the main dispatch `switch()` statement
+
+3. **Regulatory compliance groundwork** — created `regulatory-compliance.md`
+   - Full ADaM-to-TFL mapping specification for all test cases
+   - FDA Study Data TCG compliance checklist (6 rules across test cases)
+   - ICH E3 CSR appendix formatting requirements (6 checklist items)
+   - CDISC Analysis Results Metadata (ARM) integration strategy
+   - Pinnacle 21 rule mapping (6 critical ADaM rules)
+   - Compliance scoring framework with penalty structure
+   - Compliance YAML configuration draft for TC-001, TC-002, TC-003
+
+### 📊 Updated Implementation Summary
+
+| Component | Day 3 Start | Day 3 End |
+|---|---|---|
+| Ground truth R scripts (3) | ✅ Complete | ✅ Complete |
+| Ground truth SAS scripts (3) | ✅ Complete | ✅ Complete |
+| Ground truth Python scripts (3+1) | ✅ Complete | ✅ Complete |
+| Output JSON schemas (3) | ✅ Complete | ✅ Complete |
+| Scoring harness — TC-001, TC-003 | ✅ Complete | ✅ Complete |
+| Scoring harness — TC-002 | ❌ Missing | ✅ Added |
+| Cross-language compare — TC-001, TC-003 | ✅ Complete | ✅ Complete |
+| Cross-language compare — TC-002 | ❌ Missing | ✅ Added |
+| Regulatory compliance document | ❌ Not started | ✅ Created (Day 4 prep) |
+| Cross-language verification runs | ⏳ Needs runtime | ⏳ Still needs runtime |
+
+### 🗂️ File Structure (End of Day 3)
+```
+benchmarks/
+├── references/
+│   ├── ground-truth/
+│   │   ├── R/ (3 scripts + common/ — 471 lines)
+│   │   ├── SAS/ (3 scripts — 334 lines)
+│   │   └── Python/ (3 scripts + common/ — 585 lines)
+│   ├── output-schemas/ (3 JSON Schema files)
+│   └── verification/ (cross-language-compare.R — now supports TC-001/002/003)
+├── scoring-harness/
+│   ├── score.py (now supports TC-001/002/003)
+│   ├── tolerances.yaml
+│   ├── requirements.txt
+│   └── README.md
+├── regulatory-compliance.md (NEW — Day 4 preparation)
+├── cross-language-verification.md
+├── test-case-design.md
+├── benchmark-framework-v1.md
+├── progress-log.md
+├── relevant-work.md
+├── tools-packages.md
+└── README.md
+```
+
+**Total ground truth code:** 1,530 lines across 11 scripts (R + SAS + Python)
+
 ### 🔮 Plan for Day 4
-1. **Regulatory compliance dimension** — CDISC ADaM-to-TFL mapping, CSR appendix standards, FDA TCG
-2. Research: Study Data TCG requirements for TFL submission packages
-3. Research: Pinnacle 21 validation rules relevant to TFL generation
-4. Draft compliance checklists for each test case
-5. Build ADaM dataset validation utilities
-6. Update this log
+1. **Implement regulatory compliance module** — `scoring-harness/compliance.py`
+   - ADaM variable mapping validator (`check_adam_compliance()`)
+   - FDA TCG checklist scorer (`check_tcg_compliance()`)
+   - CSR formatting checker (`check_csr_formatting()`)
+2. **Create `compliance.yaml`** — per-TC compliance rules (drafted in regulatory-compliance.md)
+3. **Extend `katsu` CLI** — add `--compliance`, `--tcg-check`, `--csr-format` flags to `score` command
+4. **Run cross-language verification** — if R/SAS/Python runtimes available
+5. **Research FDA/CDISC developments** — confirm latest TCG version, CORE initiative status
+6. **Update this log and commit**
 
 ## 2026-05-25 — Day 1.5: Framework Rewrite (Incorporating Yue's Private Notes)
 

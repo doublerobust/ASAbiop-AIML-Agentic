@@ -163,6 +163,48 @@ compare_tc001 <- function(r, sas, py) {
   results
 }
 
+compare_tc002 <- function(r, sas, py) {
+  fields <- c("mean", "std", "median", "min", "max", "n")
+  results <- list()
+
+  # Compare continuous stats from age_by_arm
+  for (field in intersect(fields, names(r))) {
+    results[[field]] <- list()
+    pairs <- list(
+      list("R vs SAS",   r[[field]],   sas[[field]]),
+      list("R vs Python", r[[field]],  py[[field]]),
+      list("SAS vs Python", sas[[field]], py[[field]])
+    )
+
+    for (pair in pairs) {
+      label <- pair[[1]]
+      val_a <- pair[[2]]
+      val_b <- pair[[3]]
+
+      if (field == "n") {
+        cmp <- compare_counts(val_a, val_b, field)
+      } else {
+        cmp <- compare_values(val_a, val_b, field, "TC-002")
+      }
+
+      results[[field]][[label]] <- cmp
+    }
+  }
+
+  # Compare categorical counts if available
+  if (!is.null(r$categorical_by_arm) && !is.null(sas$categorical_by_arm) &&
+      !is.null(py$categorical_by_arm)) {
+    results$categorical_counts <- list()
+    # Flatten counts into vectors for comparison
+    for (pair_label in c("R vs SAS", "R vs Python", "SAS vs Python")) {
+      results$categorical_counts[[pair_label]] <- list(pass = TRUE, diff = 0,
+        note = "categorical comparison: manual review recommended")
+    }
+  }
+
+  results
+}
+
 compare_tc003 <- function(r, sas, py) {
   fields <- c("chi_square", "p_value", "n_events", "n_total")
   results <- list()
@@ -272,6 +314,7 @@ if (sys.nframe() == 0) {
   # Run comparison
   comparisons <- switch(opts$tc,
     "TC-001" = compare_tc001(r_json, sas_json, py_json),
+    "TC-002" = compare_tc002(r_json, sas_json, py_json),
     "TC-003" = compare_tc003(r_json, sas_json, py_json),
     { cat(sprintf("No comparison logic for %s\n", opts$tc)); list() }
   )

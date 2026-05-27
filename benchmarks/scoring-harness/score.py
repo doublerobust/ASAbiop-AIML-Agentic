@@ -212,6 +212,74 @@ def score_tc003(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
     }
 
 
+def score_tc002(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-002 (Baseline Demographics Table) agent output against ground truth."""
+    tol_spec = tolerances.get("TC-002", {}).get("tolerances", {})
+
+    component_scores = {}
+    total_weight = 0
+    weighted_sum = 0
+
+    # Continuous fields (age stats)
+    cont_fields = ["mean", "std", "median"]
+    for field in cont_fields:
+        field_tol = tol_spec.get(field, {"absolute": 0.05, "weight": 0.10})
+        weight = field_tol.get("weight", 0.10)
+        result = compare_numeric(
+            agent_output.get(field), ground_truth.get(field),
+            field_tol, field
+        )
+        component_scores[field] = result
+        weighted_sum += result["score"] * weight
+        total_weight += weight
+
+    # Counts (exact match)
+    count_fields = ["n_total"]
+    for field in count_fields:
+        field_tol = tol_spec.get(field, {"absolute": 0, "weight": 0.10})
+        weight = field_tol.get("weight", 0.10)
+        result = compare_count(agent_output.get(field), ground_truth.get(field))
+        component_scores[field] = result
+        weighted_sum += result["score"] * weight
+        total_weight += weight
+
+    # Categorical counts
+    agent_counts = agent_output.get("categorical_by_arm", [])
+    truth_counts = ground_truth.get("categorical_by_arm", [])
+
+    if agent_counts and truth_counts:
+        # Simple comparison: flatten and compare counts
+        agent_tuples = {(c.get("variable"), c.get("level"),
+                        c.get("TRT01PN"), c.get("n"))
+                       for c in agent_counts if "n" in c}
+        truth_tuples = {(c.get("variable"), c.get("level"),
+                        c.get("TRT01PN"), c.get("n"))
+                       for c in truth_counts if "n" in c}
+
+        common = agent_tuples & truth_tuples
+        all_cells = agent_tuples | truth_tuples
+        cat_score = len(common) / len(all_cells) if all_cells else 1.0
+
+        component_scores["categorical_counts"] = {
+            "score": cat_score,
+            "pass": cat_score == 1.0,
+            "note": f"{len(common)}/{len(all_cells)} categorical cells match exactly"
+        }
+        weighted_sum += cat_score * 0.20
+        total_weight += 0.20
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-002",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
 # ─────────────────────────────────────────────────────
 # CLI
 # ─────────────────────────────────────────────────────
@@ -239,6 +307,7 @@ def score(tc, agent, truth, output):
     tolerances = load_tolerances()
     scorers = {
         "TC-001": score_tc001,
+        "TC-002": score_tc002,
         "TC-003": score_tc003,
     }
 
@@ -300,6 +369,7 @@ def verify(tc, r_path, sas_path, python_path, output):
     tolerances = load_tolerances()
     scorers = {
         "TC-001": score_tc001,
+        "TC-002": score_tc002,
         "TC-003": score_tc003,
     }
 
