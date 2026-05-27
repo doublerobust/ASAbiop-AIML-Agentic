@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "TC-002: Baseline Demographics Output Schema",
+  "description": "Structured output from demographics table benchmark test case",
+  "type": "object",
+  "required": [
+    "test_case_id", "variant_id", "language", "package",
+    "population", "n_total", "age_by_arm", "categorical_by_arm", "seed"
+  ],
+  "properties": {
+    "test_case_id": {
+      "type": "string",
+      "const": "TC-002"
+    },
+    "variant_id": {
+      "type": "string",
+      "pattern": "^v\\d+$"
+    },
+    "language": {
+      "type": "string",
+      "enum": ["R", "SAS", "Python"]
+    },
+    "package": {
+      "type": "string"
+    },
+    "package_version": {
+      "type": "string"
+    },
+    "population": {
+      "type": "string",
+      "enum": ["SAFETY", "ITT", "ALL"],
+      "description": "Analysis population"
+    },
+    "n_total": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "age_by_arm": {
+      "type": "array",
+      "description": "Age statistics by treatment arm",
+      "items": {
+        "type": "object",
+        "required": ["TRT01PN", "count", "mean", "std", "median", "min", "max"],
+        "properties": {
+          "TRT01PN": {"type": "integer"},
+          "TRT01P": {"type": "string"},
+          "count": {"type": "integer"},
+          "mean": {"type": "number"},
+          "std": {"type": "number"},
+          "median": {"type": "number"},
+          "min": {"type": "number"},
+          "max": {"type": "number"}
+        }
+      }
+    },
+    "categorical_by_arm": {
+      "type": "array",
+      "description": "Categorical variable frequencies by treatment arm",
+      "items": {
+        "type": "object",
+        "required": ["TRT01PN", "variable", "level", "n", "pct"],
+        "properties": {
+          "TRT01PN": {"type": "integer"},
+          "TRT01P": {"type": "string"},
+          "variable": {"type": "string"},
+          "level": {"type": ["string", "number"]},
+          "n": {"type": "integer"},
+          "pct": {"type": "number"}
+        }
+      }
+    },
+    "seed": {
+      "type": "integer"
+    }
+  }
+}

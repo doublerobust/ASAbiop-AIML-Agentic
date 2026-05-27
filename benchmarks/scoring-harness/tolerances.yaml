@@ -1,0 +1,67 @@
+# tolerances.yaml — Per-test-case numerical tolerance specifications
+# Part of the ASA Biopharm AI/ML WG Agentic AI Benchmark
+# Reference: benchmarks/cross-language-verification.md §4.2
+
+TC-001:
+  description: "KM Median PFS Estimation"
+  tolerances:
+    median_pfs:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.40
+    ci_lower:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.20
+    ci_upper:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.20
+      allow_null: true   # NA when survival never crosses 0.5
+    n_events:
+      absolute: 0       # exact match
+      weight: 0.10
+    n_total:
+      absolute: 0       # exact match
+      weight: 0.10
+
+TC-002:
+  description: "Baseline Demographics Table"
+  tolerances:
+    mean:
+      absolute: 0.05
+      relative: 0.01
+      weight: 0.30
+    std:
+      absolute: 0.05
+      relative: 0.01
+      weight: 0.20
+    median:
+      absolute: 0.05
+      relative: 0.01
+      weight: 0.15
+    count:
+      absolute: 0       # exact match
+      weight: 0.20
+    pct:
+      absolute: 0.1
+      relative: 0.01
+      weight: 0.15
+
+TC-003:
+  description: "Stratified Log-Rank Test"
+  tolerances:
+    chi_square:
+      absolute: 0.01
+      relative: 0.001
+      weight: 0.40
+    p_value:
+      absolute: 0.001
+      relative: 0.01
+      weight: 0.40
+    n_events:
+      absolute: 0       # exact match
+      weight: 0.10
+    n_total:
+      absolute: 0       # exact match
+      weight: 0.10

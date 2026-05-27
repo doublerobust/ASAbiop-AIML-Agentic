@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "TC-001: KM Median PFS Output Schema",
+  "description": "Structured output from KM median PFS estimation benchmark test case",
+  "type": "object",
+  "required": [
+    "test_case_id", "variant_id", "language", "package",
+    "median_pfs", "ci_lower", "ci_upper", "n_events", "n_total",
+    "ci_method", "estimable", "seed"
+  ],
+  "properties": {
+    "test_case_id": {
+      "type": "string",
+      "const": "TC-001",
+      "description": "Test case identifier"
+    },
+    "variant_id": {
+      "type": "string",
+      "pattern": "^v\\d+$",
+      "description": "Variant identifier based on seed"
+    },
+    "language": {
+      "type": "string",
+      "enum": ["R", "SAS", "Python"],
+      "description": "Implementation language"
+    },
+    "package": {
+      "type": "string",
+      "description": "Primary package used"
+    },
+    "package_version": {
+      "type": "string",
+      "description": "Package version string"
+    },
+    "median_pfs": {
+      "type": ["number", "null"],
+      "description": "Median PFS in months (null if not estimable)"
+    },
+    "ci_lower": {
+      "type": ["number", "null"],
+      "description": "Lower bound of 95% confidence interval"
+    },
+    "ci_upper": {
+      "type": ["number", "null"],
+      "description": "Upper bound of 95% confidence interval (null if not estimable)"
+    },
+    "n_events": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of PFS events observed"
+    },
+    "n_total": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total subjects in analysis population"
+    },
+    "ci_method": {
+      "type": "string",
+      "description": "Confidence interval method used (e.g., log-log)"
+    },
+    "estimable": {
+      "type": "boolean",
+      "description": "Whether median was estimable (survival crossed 0.5)"
+    },
+    "seed": {
+      "type": "integer",
+      "description": "Random seed for data generation"
+    },
+    "computation_time_seconds": {
+      "type": ["number", "null"],
+      "description": "Time taken to compute result"
+    }
+  }
+}

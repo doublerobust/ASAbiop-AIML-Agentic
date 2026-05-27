@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "TC-003: Stratified Log-Rank Output Schema",
+  "description": "Structured output from stratified log-rank test benchmark test case",
+  "type": "object",
+  "required": [
+    "test_case_id", "variant_id", "language", "package",
+    "chi_square", "df", "p_value", "n_total", "n_events",
+    "strata_variables", "stratification_method", "seed"
+  ],
+  "properties": {
+    "test_case_id": {
+      "type": "string",
+      "const": "TC-003"
+    },
+    "variant_id": {
+      "type": "string",
+      "pattern": "^v\\d+$"
+    },
+    "language": {
+      "type": "string",
+      "enum": ["R", "SAS", "Python"]
+    },
+    "package": {
+      "type": "string"
+    },
+    "package_version": {
+      "type": "string"
+    },
+    "chi_square": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Chi-square test statistic"
+    },
+    "df": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Degrees of freedom"
+    },
+    "p_value": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Two-sided p-value"
+    },
+    "n_total": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total subjects in analysis"
+    },
+    "n_events": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total events observed"
+    },
+    "strata_variables": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Stratification variable names"
+    },
+    "n_strata_total": {
+      "type": "integer",
+      "description": "Total number of strata"
+    },
+    "n_strata_with_events": {
+      "type": "integer",
+      "description": "Strata with at least one event"
+    },
+    "stratification_method": {
+      "type": "string",
+      "description": "Stratum weighting scheme"
+    },
+    "seed": {
+      "type": "integer"
+    }
+  }
+}

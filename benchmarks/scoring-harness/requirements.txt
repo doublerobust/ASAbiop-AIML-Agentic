@@ -1,0 +1,8 @@
+# Scoring Harness Dependencies
+# katsu — TFL scoring and evaluation harness for benchmark
+pandas>=2.0
+numpy>=1.24
+jsonschema>=4.18
+pyyaml>=6.0
+click>=8.0
+rich>=13.0
