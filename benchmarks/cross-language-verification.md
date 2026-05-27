@@ -1,8 +1,8 @@
 # Cross-Language Verification Protocol — TFL Benchmark
 
 **Version:** 0.1 (Day 3 expansion)
-**Date:** 2026-05-26
-**Status:** 🟡 Draft — needs R/SAS/Python empirical validation
+**Date:** 2026-05-27
+**Status:** 🟡 Draft — R and Python validated; SAS reference-only (no license)
 **Dimension:** TFL-Specific Correctness — Ground Truth Validation & Numerical Tolerance
 
 ---

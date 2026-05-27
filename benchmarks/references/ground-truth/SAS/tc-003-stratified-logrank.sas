@@ -1,9 +1,12 @@
 /* TC-003 Ground Truth: Stratified Log-Rank Test (SAS)
    Part of the ASA Biopharm AI/ML WG Agentic AI Benchmark
-   
-   Cross-validated against: R survival::survdiff(), Python lifelines
+
+   ⚠️  REFERENCE IMPLEMENTATION ONLY — NOT RUN OR VERIFIED
+   No SAS license available to execute this code.
+   Ground truth established via R (survival::survdiff()) and Python (lifelines) only.
+
    Note: SAS uses equal stratum weights (same as R default)
-   
+
    Usage: sas tc-003-stratified-logrank.sas -set seed 42 -set n 400
 */
 

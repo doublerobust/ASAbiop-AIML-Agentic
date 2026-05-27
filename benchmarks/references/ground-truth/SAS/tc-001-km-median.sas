@@ -1,9 +1,13 @@
 /* TC-001 Ground Truth: Kaplan-Meier Median PFS Estimation (SAS)
    Part of the ASA Biopharm AI/ML WG Agentic AI Benchmark
-   
-   Cross-validated against: R survival::survfit(), Python lifelines
+
+   ⚠️  REFERENCE IMPLEMENTATION ONLY — NOT RUN OR VERIFIED
+   No SAS license available to execute this code.
+   Ground truth established via R (survival) and Python (lifelines) only.
+   See cross-language-verification.md §Known Differences for details.
+
    Default confidence interval method: log-log (Greenwood with log-log transform)
-   
+
    Usage (batch): sas tc-001-km-median.sas -set seed 42 -set n 200
 */
 

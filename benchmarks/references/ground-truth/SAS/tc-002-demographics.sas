@@ -1,9 +1,12 @@
 /* TC-002 Ground Truth: Baseline Demographics Table (SAS)
    Part of the ASA Biopharm AI/ML WG Agentic AI Benchmark
-   
-   Cross-validated against: R dplyr + Tplyr, Python pandas + gtsummary
+
+   ⚠️  REFERENCE IMPLEMENTATION ONLY — NOT RUN OR VERIFIED
+   No SAS license available to execute this code.
+   Ground truth established via R (dplyr + Tplyr) and Python (pandas + gtsummary) only.
+
    Primary: PROC FREQ (categorical), PROC MEANS (continuous)
-   
+
    Usage: sas tc-002-demographics.sas -set seed 42 -set n 400
 */
 
