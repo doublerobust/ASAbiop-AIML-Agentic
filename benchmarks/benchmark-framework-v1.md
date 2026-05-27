@@ -3,7 +3,7 @@
 **Working title** (per WG discussion)
 **Version:** 0.2 — incorporating WG design principles & error taxonomy
 **Date:** 2026-05-25
-**Author:** Yue Shentu, with contributions from Eric (平野), xjw1001001, 侃儿, and WG members
+**Author:** Yue Shentu, with contributions from WG members (anonymized)
 **Editorial:** Natasha (on behalf of ASA Biopharm AI/ML Working Group — Agentic AI Workstream)
 
 ---
@@ -48,7 +48,7 @@ accuracy metrics that fail to reflect real-world review workflows.
 ### 1.2 Why the ASA WG Owns This
 
 This working group is uniquely positioned:
-- **Pharma-led, not vendor-led** (as Yiwen noted: "从pharma的角度做这个evaluation的标准")
+- **Pharma-led, not vendor-led** — evaluation standards must come from pharma, not vendors
 - Built on domain expertise — practicing biostatisticians who understand
   what errors matter and why
 - Credible to regulators — ASA Biopharm has existing relationships
@@ -115,7 +115,7 @@ programming language. Independence is the core value proposition.
 
 ## 3. Three Deliverables
 
-Per WG consensus (Eric's proposal, refined by xjw1001001 and 侃儿), the
+Per WG consensus, the
 benchmark produces three deliverables:
 
 | # | Deliverable | Description | Visibility |
@@ -328,7 +328,7 @@ This benchmark is the equivalent for clinical TFL review — a standardized
 set of challenges that agents must pass before being qualified for
 production use.
 
-### 7.2 Certification Model (Eric's Proposal)
+### 7.2 Certification Model
 
 The WG can serve an "industry AI union" function:
 - Vendors submit their agents for benchmark evaluation
@@ -425,14 +425,7 @@ is preserved in `test-case-design.md`.
 ## 11. Context: WG Discussions That Shaped This
 
 This framework draws directly from WG member input:
-
-| Member | Key Contribution |
-|---|---|
-| **Eric (平野)** | Proposed the benchmark-as-certification concept — "exam" framing |
-| **xjw1001001** | Emphasized benchmark is the most critical deliverable; noted test set needs internal pharma data |
-| **侃儿** | Deep-dive on TFL review fundamentals — dry run vs. with data, experience-dependent spotting |
-| **Yue (申屠)** | "We become the AI union — vendors need our benchmark certification." Methodology open, specifics internal. |
-| **Yiwen** | "从pharma的角度做这个evaluation的标准" — pharma-led independence |
+| *WG contributions internally documented for privacy.*
 
 ---
 

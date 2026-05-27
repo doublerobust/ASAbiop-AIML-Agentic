@@ -350,7 +350,7 @@ Found 3 private notes files in `workspace/notes/` that were Yue's earlier bluepr
 
 **Key concepts added from WG discussion:**
 - Error taxonomy: Class A (critical), B (major), C (minor) severity
-- Certification model — WG as "industry AI union" (Eric's proposal)
+- Certification model — WG as "industry AI union" (WG member proposal)
 - Human validation as gold standard (Rodman 2025, NEJM AI)
 - TPP-style interpretation (Parsa 2026, NEJM AI)
 - Test dataset tension: public synthetic + private internal
