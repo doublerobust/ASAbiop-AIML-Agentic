@@ -358,3 +358,51 @@ Found 3 private notes files in `workspace/notes/` that were Yue's earlier bluepr
 
 ### ✅ Git Push (Correct Repo)
 Committed and pushed to `doublerobust/ASAbiop-AIML-Agentic/benchmarks/` 
+
+## 2026-05-28 — Day 4: Regulatory Compliance Implementation
+
+### ✅ What Got Built
+
+1. **scoring-harness/compliance.py** — Regulatory compliance check module with three checkers:
+   - `check_adam_compliance()` — ADaM variable mapping: validates required variables present, population flag correct (ITTFL/SAFFL = Y), treatment variable (TRT01PN), censoring coding (CNSR = 0/1), and strata variables (SEX, ECOG for TC-003)
+   - `check_tcg_compliance()` — FDA Study Data TCG v6.0 checklist: validates population filter, treatment variable, event/censoring handling, analysis time variable, statistical method documentation, software version documentation
+   - `check_csr_formatting()` — ICH E3 CSR appendix formatting: validates table numbering per appendix, title includes population/endpoint, footnotes documented, p-value type (1/2-sided) documented, CI method documented
+   - `compute_compliance_score()` — Weighted composite (ADaM 40%, TCG 35%, CSR 25%)
+   - Each check returns `{passed: [rule_ids], failed: [rule_ids], score: float}`
+
+2. **scoring-harness/compliance.yaml** — Per-TC compliance rule definitions for TC-001, TC-002, TC-003:
+   - `adam_mapping`: required_variables, population_flag, population_value, treatment_variable, strata_variables (TC-003)
+   - `tcg_rules`: list of rules with id, desc, critical flag
+   - `csr_rules`: list of rules with id, desc, penalty weight
+
+3. **Updated scoring-harness/score.py** with:
+   - `--compliance` flag: include ADaM compliance checks in `score` command
+   - `--tcg-check` flag: include FDA TCG checklist checks in `score` command
+   - `--csr-format` flag: include ICH E3 CSR formatting checks in `score` command
+   - `compliance` subcommand: run compliance checks standalone
+   - `evaluate` subcommand: run numerical score + schema validation + compliance in one pass
+   - Backward compatible — `score` works identically when no compliance flags are passed
+
+4. **Updated README.md** — Documented new compliance flags and subcommands
+
+### Build Summary
+
+| Checker | What It Verifies | TC Coverage |
+|---|---|---|
+| `check_adam_compliance` | Required variables, population flag (ITTFL/SAFFL=Y), treatment (TRT01PN), censoring (CNSR 0/1), strata | TC-001, TC-002, TC-003 |
+| `check_tcg_compliance` | Population filter, treatment var, event/censor, analysis time, method doc, software version | TC-001, TC-002, TC-003 |
+| `check_csr_formatting` | Table numbering, title, footnotes, p-value type, CI method | TC-001, TC-002, TC-003 |
+
+### Acceptance Criteria Status
+
+- ✅ `python3 -c "from scoring_harness.compliance import ..."` works
+- ✅ `python3 scoring-harness/score.py compliance --help` shows compliance subcommand
+- ✅ `python3 scoring-harness/score.py score --help` shows --compliance flag
+- ✅ `python3 scoring-harness/score.py evaluate --help` shows evaluate subcommand
+- ✅ YAML parses: `python3 -c "import yaml; ... print(list(c.keys()))"` → [TC-001, TC-002, TC-003]
+
+### Next Steps
+
+1. **Day 5: Operational efficiency** — language-specific cost/time benchmarks
+2. Run integration tests with ground truth outputs against compliance checks
+3. WG review of compliance scoring weights (ADaM 40%, TCG 35%, CSR 25%)

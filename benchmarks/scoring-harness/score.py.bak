@@ -9,7 +9,6 @@ Supports:
 - Schema validation
 - Cross-language ground truth verification
 - Weighted scoring per test case
-- Regulatory compliance checks (ADaM, TCG, CSR)
 
 Usage:
   # Score an agent output (numerical only)
@@ -46,20 +45,19 @@ console = Console()
 
 # Import compliance module (optional)
 try:
-    from scoring_harness.compliance import compute_compliance_score as _compute_compliance_score
+    from scoring_harness.compliance import compute_compliance_score
     HAS_COMPLIANCE = True
 except ImportError:
+    # Fallback: try direct import as a module in the same directory
     try:
-        from compliance import compute_compliance_score as _compute_compliance_score
+        from compliance import compute_compliance_score
         HAS_COMPLIANCE = True
     except ImportError:
-        _compute_compliance_score = None
         HAS_COMPLIANCE = False
 
-
-# --------------------------------------------------------------------
+# ─────────────────────────────────────────────────────
 # Tolerance Loading
-# --------------------------------------------------------------------
+# ─────────────────────────────────────────────────────
 
 def load_tolerances():
     """Load tolerance specs from tolerances.yaml."""
@@ -75,6 +73,7 @@ def load_schema(tc_id: str) -> dict:
     schema_path = schema_dir / f"{tc_id.lower()}-output-schema.json"
 
     if not schema_path.exists():
+        # Try alternative naming
         schema_path = schema_dir / f"{tc_id.lower()}-output-schema.json"
 
     if schema_path.exists():
@@ -83,9 +82,9 @@ def load_schema(tc_id: str) -> dict:
     return None
 
 
-# --------------------------------------------------------------------
+# ─────────────────────────────────────────────────────
 # Comparison Logic
-# --------------------------------------------------------------------
+# ─────────────────────────────────────────────────────
 
 def compare_numeric(value_a, value_b, tol, field_name=""):
     """Compare two numeric values with tolerance.
@@ -99,8 +98,9 @@ def compare_numeric(value_a, value_b, tol, field_name=""):
     Returns:
         dict with score, pass, diff, note
     """
+    # Handle NA/null cases
     if value_a is None and value_b is None:
-        return {"score": 1.0, "pass": True, "diff": 0, "note": "both null \u2014 acceptable"}
+        return {"score": 1.0, "pass": True, "diff": 0, "note": "both null — acceptable"}
     if value_a is None or value_b is None:
         return {"score": 0.0, "pass": False, "diff": None,
                 "note": f"null mismatch: agent={value_a}, truth={value_b}"}
@@ -120,6 +120,7 @@ def compare_numeric(value_a, value_b, tol, field_name=""):
     passed = within_abs or within_rel
 
     if abs_tol == 0:
+        # Exact match
         passed = value_a == value_b
         score = 1.0 if passed else 0.0
         note = "exact match" if passed else f"exact mismatch: diff={abs_diff:.6f}"
@@ -152,9 +153,9 @@ def compare_count(value_a, value_b):
     }
 
 
-# --------------------------------------------------------------------
+# ─────────────────────────────────────────────────────
 # Scoring
-# --------------------------------------------------------------------
+# ─────────────────────────────────────────────────────
 
 def score_tc001(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
     """Score TC-001 (KM Median PFS) agent output against ground truth."""
@@ -269,6 +270,7 @@ def score_tc002(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
     truth_counts = ground_truth.get("categorical_by_arm", [])
 
     if agent_counts and truth_counts:
+        # Simple comparison: flatten and compare counts
         agent_tuples = {(c.get("variable"), c.get("level"),
                         c.get("TRT01PN"), c.get("n"))
                        for c in agent_counts if "n" in c}
@@ -300,76 +302,13 @@ def score_tc002(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
     }
 
 
-# --------------------------------------------------------------------
-# Compliance Helpers
-# --------------------------------------------------------------------
-
-def _run_compliance_check(agent_output: dict, tc: str, do_compliance: bool,
-                          do_tcg: bool, do_csr: bool) -> dict:
-    """Run compliance checks and return compliance result dict."""
-    if not HAS_COMPLIANCE:
-        console.print("[yellow]Compliance module not available; skipping checks[/yellow]")
-        return None
-    if not do_compliance and not do_tcg and not do_csr:
-        return None
-
-    try:
-        cr = _compute_compliance_score(
-            agent_output, tc,
-            check_adam=do_compliance,
-            check_tcg=do_tcg,
-            check_csr=do_csr,
-        )
-        return cr
-    except Exception as e:
-        console.print(f"[red]Compliance check error: {e}[/red]")
-        return None
-
-
-def _print_compliance_report(cr: dict):
-    """Print compliance results as a Rich table."""
-    if cr is None:
-        return
-
-    table = Table(title="Regulatory Compliance")
-    table.add_column("Component", style="cyan")
-    table.add_column("Score", justify="right")
-    table.add_column("Passed", justify="center")
-    table.add_column("Failed", justify="center")
-
-    for comp_name in ["adam_compliance", "tcg_compliance", "csr_compliance"]:
-        comp = cr.get(comp_name, {})
-        sc = comp.get("score")
-        if sc is not None:
-            pf = len(comp.get("passed", []))
-            ff = len(comp.get("failed", []))
-            pass_str = "\u2705" if sc >= 0.8 else "\u26a0\ufe0f" if sc >= 0.5 else "\u274c"
-            table.add_row(
-                comp_name,
-                f"{sc:.4f}",
-                f"{pass_str} {pf}",
-                str(ff)
-            )
-        else:
-            table.add_row(comp_name, "\u2014", "skipped", "\u2014")
-
-    table.add_row(
-        "[bold]TOTAL COMPLIANCE[/bold]",
-        f"[bold]{cr.get('total_compliance_score', 0):.4f}[/bold]",
-        "",
-        ""
-    )
-
-    console.print(table)
-
-
-# --------------------------------------------------------------------
+# ─────────────────────────────────────────────────────
 # CLI
-# --------------------------------------------------------------------
+# ─────────────────────────────────────────────────────
 
 @click.group()
 def cli():
-    """katsu \u2014 TFL Scoring and Evaluation Harness."""
+    """katsu — TFL Scoring and Evaluation Harness."""
     pass
 
 
@@ -380,13 +319,7 @@ def cli():
 @click.option("--truth", required=True, type=click.Path(exists=True),
               help="Ground truth JSON")
 @click.option("--output", type=click.Path(), help="Output report path")
-@click.option("--compliance", is_flag=True, default=False,
-              help="Include ADaM compliance checks")
-@click.option("--tcg-check", is_flag=True, default=False,
-              help="Include FDA TCG checklist checks")
-@click.option("--csr-format", is_flag=True, default=False,
-              help="Include ICH E3 CSR formatting checks")
-def score(tc, agent, truth, output, compliance, tcg_check, csr_format):
+def score(tc, agent, truth, output):
     """Score an agent output against ground truth."""
     with open(agent) as f:
         agent_out = json.load(f)
@@ -407,7 +340,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format):
 
     result = scorer(agent_out, truth_out, tolerances)
 
-    # Print numerical scoring report
+    # Print report
     table = Table(title=f"Scoring Report: {tc}")
     table.add_column("Component", style="cyan")
     table.add_column("Score", justify="right")
@@ -415,7 +348,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format):
     table.add_column("Note")
 
     for field, comp in result["component_scores"].items():
-        pass_str = "\u2705" if comp["pass"] else "\u274c"
+        pass_str = "✅" if comp["pass"] else "❌"
         table.add_row(
             field,
             f"{comp['score']:.2f}",
@@ -433,14 +366,6 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format):
     console.print(Panel(f"[bold]Agent:[/bold] {result['agent_language']} "
                         f"[bold]| Ground Truth:[/bold] {result['ground_truth_language']}"))
     console.print(table)
-
-    # Compliance section
-    if compliance or tcg_check or csr_format:
-        cr = _run_compliance_check(agent_out, tc, compliance, tcg_check, csr_format)
-        if cr:
-            _print_compliance_report(cr)
-            # Add compliance to result dict
-            result["compliance"] = cr
 
     if output:
         with open(output, "w") as f:
@@ -490,7 +415,7 @@ def verify(tc, r_path, sas_path, python_path, output):
     for label, a, b in pairs:
         result = scorer(a, b, tolerances)
         results[label] = result
-        pass_str = "\u2705" if result["score"] == 1.0 else "\u274c"
+        pass_str = "✅" if result["score"] == 1.0 else "❌"
         if result["score"] < 1.0:
             all_pass = False
         console.print(f"{pass_str} {label}: score={result['score']:.4f}")
@@ -501,9 +426,9 @@ def verify(tc, r_path, sas_path, python_path, output):
         console.print(f"\n[green]Verification report: {output}[/green]")
 
     if all_pass:
-        console.print("\n[bold green]\u2705 ALL CHECKS PASSED[/bold green]")
+        console.print("\n[bold green]✅ ALL CHECKS PASSED[/bold green]")
     else:
-        console.print("\n[bold yellow]\u26a0\ufe0f  SOME DISCREPANCIES FOUND \u2014 see above[/bold yellow]")
+        console.print("\n[bold yellow]⚠️  SOME DISCREPANCIES FOUND — see above[/bold yellow]")
 
 
 @cli.command()
@@ -528,141 +453,10 @@ def validate(tc, input):
 
     try:
         jsonschema.validate(instance=data, schema=schema)
-        console.print("[bold green]\u2705 Schema validation passed[/bold green]")
+        console.print("[bold green]✅ Schema validation passed[/bold green]")
     except jsonschema.ValidationError as e:
-        console.print(f"[bold red]\u274c Schema validation failed: {e.message}[/bold red]")
+        console.print(f"[bold red]❌ Schema validation failed: {e.message}[/bold red]")
         sys.exit(1)
-
-
-@cli.command()
-@click.option("--tc", required=True, help="Test case ID (e.g., TC-001)")
-@click.option("--agent", required=True, type=click.Path(exists=True),
-              help="Agent output JSON")
-@click.option("--check", type=click.Choice(["adam", "tcg", "csr", "all"]),
-              default="all", help="Which compliance checks to run")
-@click.option("--output", type=click.Path(), help="Output report path")
-def compliance(tc, agent, check, output):
-    """Run regulatory compliance checks on an agent output."""
-    if not HAS_COMPLIANCE:
-        console.print("[red]Compliance module not available. Check that compliance.py is installed.[/red]")
-        sys.exit(1)
-
-    with open(agent) as f:
-        agent_out = json.load(f)
-
-    run_adam = check in ("adam", "all")
-    run_tcg = check in ("tcg", "all")
-    run_csr = check in ("csr", "all")
-
-    cr = _compute_compliance_score(
-        agent_out, tc,
-        check_adam=run_adam,
-        check_tcg=run_tcg,
-        check_csr=run_csr,
-    )
-
-    if "error" in cr:
-        console.print(f"[red]Error: {cr['error']}[/red]")
-        sys.exit(1)
-
-    console.print(Panel(f"[bold]Compliance Report: {tc}[/bold]"))
-    _print_compliance_report(cr)
-
-    if output:
-        with open(output, "w") as f:
-            json.dump(cr, f, indent=2)
-        console.print(f"[green]Compliance report written to: {output}[/green]")
-
-
-@cli.command()
-@click.option("--tc", required=True, help="Test case ID (e.g., TC-001)")
-@click.option("--agent", required=True, type=click.Path(exists=True),
-              help="Agent output JSON")
-@click.option("--truth", required=True, type=click.Path(exists=True),
-              help="Ground truth JSON")
-@click.option("--output", type=click.Path(), help="Output report path")
-@click.option("--skip-schema", is_flag=True, default=False,
-              help="Skip schema validation step")
-def evaluate(tc, agent, truth, output, skip_schema):
-    """Run full evaluation: numerical scoring + schema validation + compliance.
-
-    Combines score, validate, and compliance checks into a single command.
-    """
-    with open(agent) as f:
-        agent_out = json.load(f)
-    with open(truth) as f:
-        truth_out = json.load(f)
-
-    # 1. Numerical scoring
-    console.print("[bold]Step 1: Numerical Scoring[/bold]")
-    tolerances = load_tolerances()
-    scorers = {
-        "TC-001": score_tc001,
-        "TC-002": score_tc002,
-        "TC-003": score_tc003,
-    }
-    scorer = scorers.get(tc)
-    if scorer is None:
-        console.print(f"[red]No scorer available for {tc}[/red]")
-        sys.exit(1)
-
-    score_result = scorer(agent_out, truth_out, tolerances)
-
-    score_table = Table(title=f"Numerical Score: {tc}")
-    score_table.add_column("Component", style="cyan")
-    score_table.add_column("Score", justify="right")
-    score_table.add_column("Pass", justify="center")
-    score_table.add_column("Note")
-
-    for field, comp in score_result["component_scores"].items():
-        pass_str = "\u2705" if comp["pass"] else "\u274c"
-        score_table.add_row(field, f"{comp['score']:.2f}", pass_str, comp.get("note", ""))
-
-    score_table.add_row("[bold]TOTAL[/bold]",
-                        f"[bold]{score_result['score']:.4f}[/bold]", "", "")
-    console.print(score_table)
-
-    # 2. Schema validation
-    if not skip_schema:
-        console.print("[bold]Step 2: Schema Validation[/bold]")
-        schema = load_schema(tc)
-        if schema is None:
-            console.print(f"[yellow]No schema found for {tc}; skipping[/yellow]")
-        else:
-            try:
-                import jsonschema
-                try:
-                    jsonschema.validate(instance=agent_out, schema=schema)
-                    console.print("[green]\u2705 Schema validation passed[/green]")
-                    schema_ok = True
-                except jsonschema.ValidationError as e:
-                    console.print(f"[red]\u274c Schema validation failed: {e.message}[/red]")
-                    schema_ok = False
-            except ImportError:
-                console.print("[yellow]jsonschema not installed; skipping[/yellow]")
-                schema_ok = None
-    else:
-        console.print("[yellow]Schema validation skipped (--skip-schema)[/yellow]")
-        schema_ok = None
-
-    # 3. Compliance
-    console.print("[bold]Step 3: Regulatory Compliance[/bold]")
-    cr = _run_compliance_check(agent_out, tc, True, True, True)
-    if cr:
-        _print_compliance_report(cr)
-
-    # Combine results
-    eval_result = {
-        "test_case_id": tc,
-        "numerical_score": score_result,
-        "schema_validated": schema_ok,
-        "compliance": cr,
-    }
-
-    if output:
-        with open(output, "w") as f:
-            json.dump(eval_result, f, indent=2)
-        console.print(f"[green]Evaluation report written to: {output}[/green]")
 
 
 if __name__ == "__main__":

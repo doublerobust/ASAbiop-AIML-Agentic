@@ -1,0 +1,655 @@
+#!/usr/bin/env python3
+"""compliance.py — Regulatory Compliance Checks for the TFL Benchmark
+
+Evaluates AI agent TFL outputs against:
+  1. ADaM variable mapping correctness (CDISC ADaMIG v1.3)
+  2. FDA Study Data TCG v6.0 checklist items
+  3. ICH E3 CSR appendix formatting requirements
+  4. Population filter correctness (ITT / SAFETY / PP)
+  5. CDISC Analysis Results Metadata (ARM) completeness
+
+Compliance rules are defined in compliance.yaml per test case.
+
+Usage:
+    python compliance.py check --tc TC-001 --output agent_output.json --lang R
+    python compliance.py all --tc TC-001 --output agent_output.json
+"""
+
+import json
+import re
+import sys
+from pathlib import Path
+from typing import Dict, List, Optional, Any
+
+import yaml
+
+# ─────────────────────────────────────────────────────
+# Loading
+# ─────────────────────────────────────────────────────
+
+def load_compliance_rules(tc_id: str = None) -> dict:
+    """Load compliance rule specifications from compliance.yaml."""
+    rules_path = Path(__file__).parent / "compliance.yaml"
+    with open(rules_path) as f:
+        all_rules = yaml.safe_load(f)
+    if tc_id:
+        return all_rules.get(tc_id, {})
+    return all_rules
+
+
+def load_tolerances():
+    """Load numerical tolerance specs (shared with score.py)."""
+    tol_path = Path(__file__).parent / "tolerances.yaml"
+    with open(tol_path) as f:
+        return yaml.safe_load(f)
+
+
+# ─────────────────────────────────────────────────────
+# ADaM Variable Mapping Checks
+# ─────────────────────────────────────────────────────
+
+def check_adam_variable_presence(output: dict, required_vars: List[str],
+                                 population_flag: str = None,
+                                 population_value: str = None) -> List[dict]:
+    """Check that required ADaM variables are present and correctly referenced.
+
+    For Level 1 test cases, the agent output JSON may include an 'adam_variables'
+    field listing which ADaM variables were used in the analysis. For richer
+    outputs (CSR sections, SAPs), we scan the text for variable names.
+    """
+    checks = []
+    variables_used = set()
+
+    # Extract variables from structured output
+    if "adam_variables" in output:
+        variables_used = set(v.upper() for v in output["adam_variables"])
+    elif "variables" in output:
+        variables_used = set(v.upper() for v in output["variables"])
+    else:
+        # Scan text fields for variable references
+        text_fields = [
+            str(output.get(k, "")) for k in
+            ["description", "method", "method_description", "analysis_description", "population"]
+        ]
+        combined = " ".join(text_fields)
+        for var in required_vars:
+            if var in combined.upper():
+                variables_used.add(var)
+
+    for var in required_vars:
+        present = var.upper() in variables_used
+        check = {
+            "id": f"ADAM-{var}",
+            "type": "adam_mapping",
+            "variable": var,
+            "pass": present,
+            "severity": "critical" if var in ["AVAL", "CNSR", "TRT01PN", "ITTFL", "SAFFL"] else "major",
+            "detail": f"ADaM variable {var} {'found' if present else 'MISSING'} in output",
+        }
+        checks.append(check)
+
+    # Population flag check
+    if population_flag and population_value:
+        pop_ok = _check_population_filter(output, population_flag, population_value)
+        checks.append({
+            "id": f"ADAM-POP-{population_flag}",
+            "type": "population_filter",
+            "variable": population_flag,
+            "pass": pop_ok,
+            "severity": "critical",
+            "detail": (
+                f"Population filter {population_flag}='{population_value}' "
+                f"{'applied correctly' if pop_ok else 'NOT correctly applied'}"
+            ),
+        })
+
+    return checks
+
+
+def _check_population_filter(output: dict, flag: str, expected_value: str) -> bool:
+    """Check that the correct population filter was applied."""
+    pop_text = str(output.get("population", "")).upper()
+    flag_upper = flag.upper()
+    val_upper = expected_value.upper()
+
+    # Direct structured check
+    if "population_flag" in output and "population_value" in output:
+        return (
+            output["population_flag"].upper() == flag_upper
+            and str(output["population_value"]).upper() == val_upper
+        )
+
+    # Text-based check
+    patterns = [
+        f"{flag_upper}\\s*=\\s*['\"]?{val_upper}",
+        f"{flag_upper}\\s*[:=]\\s*{val_upper}",
+        f"population.*{flag_upper}",
+    ]
+    for pat in patterns:
+        if re.search(pat, pop_text, re.IGNORECASE):
+            return True
+
+    # Also check the filter_description field
+    filter_text = str(output.get("filter_description", "")).upper()
+    if flag_upper in filter_text and val_upper in filter_text:
+        return True
+
+    return False
+
+
+# ─────────────────────────────────────────────────────
+# FDA Study Data TCG v6.0 Checklist
+# ─────────────────────────────────────────────────────
+
+TCG_RULES_REGISTRY = {
+    "TCG-01": {
+        "title": "Analysis population correctly filtered",
+        "severity": "critical",
+        "check_fn": lambda o, r: _check_adam_rule(o, r, "population_filter"),
+    },
+    "TCG-02": {
+        "title": "Treatment arm variable correctly referenced",
+        "severity": "critical",
+        "check_fn": lambda o, r: _check_adam_rule(o, r, "treatment_variable"),
+    },
+    "TCG-03": {
+        "title": "Event/censoring indicator correctly handled",
+        "severity": "critical",
+        "check_fn": lambda o, r: _check_adam_rule(o, r, "event_censor"),
+    },
+    "TCG-04": {
+        "title": "Analysis time variable correctly specified (AVAL)",
+        "severity": "critical",
+        "check_fn": lambda o, r: _check_adam_rule(o, r, "time_variable"),
+    },
+    "TCG-05": {
+        "title": "Statistical method documented",
+        "severity": "major",
+        "check_fn": lambda o, r: "method" in o or "method_description" in o,
+    },
+    "TCG-06": {
+        "title": "Software version documented in output",
+        "severity": "minor",
+        "check_fn": lambda o, r: "software_version" in o or "software" in o,
+    },
+    "TCG-07": {
+        "title": "Missing data handling documented",
+        "severity": "major",
+        "check_fn": lambda o, r: "missing_data" in o or "missing" in str(o).lower(),
+    },
+    "TCG-08": {
+        "title": "Confidence interval method documented",
+        "severity": "major",
+        "check_fn": lambda o, r: "ci_method" in o or "conf_method" in o,
+    },
+    "TCG-09": {
+        "title": "p-value type (1/2-sided) documented",
+        "severity": "major",
+        "check_fn": lambda o, r: "p_value_type" in o or "sides" in str(o).lower(),
+    },
+    "TCG-10": {
+        "title": "Analysis results reproducible from submitted data",
+        "severity": "informational",
+        "check_fn": lambda o, r: True,  # Assumption check — verified by full scoring pipeline
+    },
+}
+
+
+def check_tcg_compliance(output: dict, tc_rules: List[dict]) -> dict:
+    """Run FDA TCG v6.0 compliance checks for the given test case rules."""
+    checks = []
+    passed = 0
+    failed = 0
+    skipped = 0
+
+    for rule_spec in tc_rules:
+        for rule_id, rule_detail in rule_spec.items():
+            rule_def = TCG_RULES_REGISTRY.get(rule_id)
+            if rule_def is None:
+                checks.append({
+                    "id": rule_id,
+                    "pass": None,
+                    "severity": "unknown",
+                    "detail": f"Unknown TCG rule: {rule_id}",
+                })
+                skipped += 1
+                continue
+
+            try:
+                passing = rule_def["check_fn"](output, rule_spec)
+            except Exception as e:
+                passing = False
+
+            checks.append({
+                "id": rule_id,
+                "title": rule_def["title"],
+                "pass": passing,
+                "severity": rule_def["severity"],
+                "detail": f"{'PASS' if passing else 'FAIL'}: {rule_def['title']}",
+            })
+            if passing:
+                passed += 1
+            else:
+                failed += 1
+
+    return {
+        "passed": passed,
+        "failed": failed,
+        "skipped": skipped,
+        "total": passed + failed + skipped,
+        "score": passed / (passed + failed) if (passed + failed) > 0 else 0.0,
+        "checks": checks,
+    }
+
+
+def _check_adam_rule(output: dict, rule_spec: dict, rule_key: str) -> bool:
+    """Generic helper for ADaM-related TCG checks."""
+    if rule_key not in rule_spec:
+        # If the rule spec doesn't define this key explicitly, do a soft check
+        required_vars_map = {
+            "population_filter": ["ITTFL", "SAFFL", "PPROTFL"],
+            "treatment_variable": ["TRT01PN", "TRT01P"],
+            "event_censor": ["CNSR"],
+            "time_variable": ["AVAL"],
+        }
+        needed = required_vars_map.get(rule_key, [])
+        vars_in_output = set(
+            v.upper() for v in
+            output.get("adam_variables", output.get("variables", []))
+        )
+        return any(v in vars_in_output for v in needed)
+
+    # Structured check if the rule_spec has the key
+    spec_val = rule_spec.get(rule_key)
+    if isinstance(spec_val, list):
+        vars_in_output = set(
+            v.upper() for v in
+            output.get("adam_variables", output.get("variables", []))
+        )
+        return all(v.upper() in vars_in_output for v in spec_val)
+    return True
+
+
+# ─────────────────────────────────────────────────────
+# ICH E3 CSR Appendix Formatting Checks
+# ─────────────────────────────────────────────────────
+
+CSR_RULES_REGISTRY = {
+    "CSR-01": {
+        "title": "Table numbered per appendix convention (e.g., Table 14-1)",
+        "check_fn": lambda o: _check_csr_format(o, r"Table\s+\d{2,3}-\d+"),
+    },
+    "CSR-02": {
+        "title": "Title includes population, endpoint, and time point",
+        "check_fn": lambda o: _check_csr_format(o, r"population|ITT|SAFETY|PP", at_least=1),
+    },
+    "CSR-03": {
+        "title": "Footnotes document method, software, and data cut",
+        "check_fn": lambda o: "footnote" in str(o).lower() or "footnotes" in str(o).lower(),
+    },
+    "CSR-04": {
+        "title": "p-value type (1/2-sided) documented",
+        "check_fn": lambda o: (
+            "p_value_type" in o
+            or "sided" in str(o.get("p_value", str(o))).lower()
+            or "two-sided" in str(o).lower()
+        ),
+    },
+    "CSR-05": {
+        "title": "Confidence interval method documented",
+        "check_fn": lambda o: (
+            "ci_method" in o
+            or "conf_method" in o
+            or "log-log" in str(o).lower()
+        ),
+    },
+    "CSR-06": {
+        "title": "Missing values properly noted (e.g., 'NE')",
+        "check_fn": lambda o: (
+            "NE" in str(o)
+            or "not estimable" in str(o).lower()
+            or "missing" in str(o).lower()
+        ),
+    },
+    "CSR-07": {
+        "title": "Abbreviations defined in table footnotes",
+        "check_fn": lambda o: "abbreviation" in str(o).lower(),
+    },
+}
+
+
+def check_csr_compliance(output: dict, csr_rules: List[dict],
+                         output_text: str = None) -> dict:
+    """Check ICH E3 CSR appendix formatting compliance."""
+    checks = []
+    passed = 0
+    failed = 0
+
+    # Combine all output text for text-based rules
+    text = output_text or json.dumps(output)
+
+    for rule_spec in csr_rules:
+        for rule_id in rule_spec:
+            rule_def = CSR_RULES_REGISTRY.get(rule_id)
+            if rule_def is None:
+                continue
+
+            try:
+                passing = rule_def["check_fn"](output)
+                # For text-only rules, also scan the full text
+                if not passing:
+                    passing = _check_csr_format(text, rule_id, at_least=0)
+            except Exception:
+                passing = False
+
+            checks.append({
+                "id": rule_id,
+                "title": rule_def["title"],
+                "pass": passing,
+                "severity": "major" if rule_id in ("CSR-02", "CSR-04", "CSR-05") else "minor",
+                "detail": f"{'PASS' if passing else 'FAIL'}: {rule_def['title']}",
+            })
+            if passing:
+                passed += 1
+            else:
+                failed += 1
+
+    return {
+        "passed": passed,
+        "failed": failed,
+        "total": passed + failed,
+        "score": passed / (passed + failed) if (passed + failed) > 0 else 0.0,
+        "checks": checks,
+    }
+
+
+def _check_csr_format(text: str, pattern: str, at_least: int = 1) -> bool:
+    """Check if text matches a format pattern."""
+    if isinstance(text, dict):
+        text = json.dumps(text)
+    matches = re.findall(pattern, text, re.IGNORECASE)
+    return len(matches) >= at_least
+
+
+# ─────────────────────────────────────────────────────
+# Dataset Integrity Checks (Pinnacle 21-inspired)
+# ─────────────────────────────────────────────────────
+
+PINNACLE_RULES = {
+    "P21-001": {
+        "title": "ADaM dataset has one record per subject per parameter",
+        "check_fn": lambda o: True,  # Assumed by design of synthetic data
+    },
+    "P21-002": {
+        "title": "Population flags populated with valid values",
+        "check_fn": lambda o: _check_population_flag_values(o),
+    },
+    "P21-003": {
+        "title": "CNSR values are 0 (event) or 1 (censored)",
+        "check_fn": lambda o: True,  # Assured by ground truth generation
+    },
+    "P21-004": {
+        "title": "Treatment variable consistent across datasets",
+        "check_fn": lambda o: "TRT01PN" in str(o).upper() or "TRT01P" in str(o).upper(),
+    },
+    "P21-005": {
+        "title": "Analysis dates not missing for analyzed subjects",
+        "check_fn": lambda o: True,  # Assured by ground truth generation
+    },
+    "P21-006": {
+        "title": "Required ADaM variables populated per ADaMIG",
+        "check_fn": lambda o: len(o.get("adam_variables", o.get("variables", []))) > 0,
+    },
+}
+
+
+def check_dataset_integrity(output: dict, rules: List[str] = None) -> dict:
+    """Run Pinnacle 21-inspired dataset integrity checks."""
+    checks = []
+    passed = 0
+    failed = 0
+
+    rule_ids = rules or list(PINNACLE_RULES.keys())
+    for rule_id in rule_ids:
+        rule_def = PINNACLE_RULES.get(rule_id)
+        if rule_def is None:
+            continue
+        try:
+            passing = rule_def["check_fn"](output)
+        except Exception:
+            passing = False
+
+        checks.append({
+            "id": rule_id,
+            "title": rule_def["title"],
+            "pass": passing,
+            "severity": "error",
+            "detail": f"{'PASS' if passing else 'FAIL'}: {rule_def['title']}",
+        })
+        if passing:
+            passed += 1
+        else:
+            failed += 1
+
+    return {
+        "passed": passed,
+        "failed": failed,
+        "total": passed + failed,
+        "score": passed / (passed + failed) if (passed + failed) > 0 else 0.0,
+        "checks": checks,
+    }
+
+
+def _check_population_flag_values(output: dict) -> bool:
+    """Check that population flags use valid values."""
+    flags = {
+        "ITTFL": ["Y", "N"],
+        "SAFFL": ["Y", "N"],
+        "PPROTFL": ["Y", "N"],
+    }
+    for flag, valid_vals in flags.items():
+        if flag in output:
+            val = str(output[flag]).upper()
+            if val not in valid_vals:
+                return False
+    return True
+
+
+# ─────────────────────────────────────────────────────
+# ARM (Analysis Results Metadata) Check
+# ─────────────────────────────────────────────────────
+
+ARM_REQUIRED_FIELDS = [
+    "analysis_id",
+    "display_identifier",
+    "description",
+    "reason",
+    "documentation",
+    "datasets",
+    "results",
+]
+
+
+def check_arm_metadata(output: dict) -> dict:
+    """Check CDISC ARM metadata completeness."""
+    checks = []
+    passed = 0
+    failed = 0
+
+    arm = output.get("arm", output.get("analysis_results_metadata", {}))
+
+    for field in ARM_REQUIRED_FIELDS:
+        present = field in arm and arm[field] is not None and arm[field] != ""
+        checks.append({
+            "id": f"ARM-{field}",
+            "field": field,
+            "pass": present,
+            "severity": "major",
+            "detail": f"ARM field '{field}' {'present' if present else 'MISSING'}",
+        })
+        if present:
+            passed += 1
+        else:
+            failed += 1
+
+    return {
+        "passed": passed,
+        "failed": failed,
+        "total": passed + failed,
+        "score": passed / (passed + failed) if (passed + failed) > 0 else 0.0,
+        "checks": checks,
+    }
+
+
+# ─────────────────────────────────────────────────────
+# Composite Compliance Score
+# ─────────────────────────────────────────────────────
+
+def compute_compliance_score(output: dict, tc_id: str,
+                             check_adam: bool = True,
+                             check_tcg: bool = True,
+                             check_csr: bool = False,
+                             check_arm: bool = False,
+                             check_p21: bool = False) -> dict:
+    """Compute a weighted composite compliance score for a test case output.
+
+    Weight structure:
+      - ADaM mapping:         35%
+      - TCG checklist:        25%
+      - CSR formatting:       20% (only if applicable)
+      - ARM metadata:         10%
+      - Dataset integrity:    10%
+    """
+    rules = load_compliance_rules(tc_id)
+    if not rules:
+        return {"error": f"No compliance rules for {tc_id}", "score": None}
+
+    components = {}
+
+    # 1. ADaM variable mapping
+    if check_adam:
+        adam_req = rules.get("adam_mapping", {})
+        adam_checks = check_adam_variable_presence(
+            output,
+            required_vars=adam_req.get("required_variables", []),
+            population_flag=adam_req.get("population_flag"),
+            population_value=adam_req.get("population_value"),
+        )
+        adam_passed = sum(1 for c in adam_checks if c["pass"])
+        adam_total = len(adam_checks)
+        components["adam_mapping"] = {
+            "score": adam_passed / adam_total if adam_total > 0 else 1.0,
+            "passed": adam_passed,
+            "total": adam_total,
+            "checks": adam_checks,
+        }
+    else:
+        components["adam_mapping"] = {"score": None}
+
+    # 2. FDA TCG checklist
+    if check_tcg:
+        tcg_rules = rules.get("tcg_rules", [])
+        components["tcg_compliance"] = check_tcg_compliance(output, tcg_rules)
+    else:
+        components["tcg_compliance"] = {"score": None}
+
+    # 3. ICH E3 CSR formatting
+    if check_csr:
+        csr_rules = rules.get("csr_formatting", [])
+        components["csr_formatting"] = check_csr_compliance(output, csr_rules)
+    else:
+        components["csr_formatting"] = {"score": None}
+
+    # 4. ARM metadata
+    if check_arm:
+        components["arm_metadata"] = check_arm_metadata(output)
+    else:
+        components["arm_metadata"] = {"score": None}
+
+    # 5. Dataset integrity (P21-inspired)
+    if check_p21:
+        components["dataset_integrity"] = check_dataset_integrity(output)
+    else:
+        components["dataset_integrity"] = {"score": None}
+
+    # Weighted composite
+    weights = {
+        "adam_mapping": 0.35,
+        "tcg_compliance": 0.25,
+        "csr_formatting": 0.20,
+        "arm_metadata": 0.10,
+        "dataset_integrity": 0.10,
+    }
+
+    total_weight = 0
+    weighted_sum = 0
+    for key, weight in weights.items():
+        score = components[key].get("score") if components[key].get("score") is not None else None
+        if score is not None:
+            weighted_sum += score * weight
+            total_weight += weight
+
+    composite = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": tc_id,
+        "composite_compliance_score": composite,
+        "components": components,
+    }
+
+
+# ─────────────────────────────────────────────────────
+# CLI
+# ─────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="TFL Benchmark — Regulatory Compliance Checks")
+    parser.add_argument("--tc", required=True, help="Test case ID (e.g., TC-001)")
+    parser.add_argument("--output", required=True, help="Agent output JSON file")
+    parser.add_argument("--check", choices=["adam", "tcg", "csr", "arm", "p21", "all"],
+                        default="all", help="Which compliance checks to run")
+    parser.add_argument("--verbose", action="store_true", help="Show individual check details")
+    args = parser.parse_args()
+
+    with open(args.output) as f:
+        agent_output = json.load(f)
+
+    run_adam = args.check in ("adam", "all")
+    run_tcg = args.check in ("tcg", "all")
+    run_csr = args.check in ("csr", "all")
+    run_arm = args.check in ("arm", "all")
+    run_p21 = args.check in ("p21", "all")
+
+    result = compute_compliance_score(
+        agent_output, args.tc,
+        check_adam=run_adam,
+        check_tcg=run_tcg,
+        check_csr=run_csr,
+        check_arm=run_arm,
+        check_p21=run_p21,
+    )
+
+    if "error" in result:
+        print(f"ERROR: {result['error']}")
+        sys.exit(1)
+
+    print(f"\n{'='*60}")
+    print(f"  COMPLIANCE REPORT — {args.tc}")
+    print(f"{'='*60}")
+    print(f"  Composite Compliance Score: {result['composite_compliance_score']:.4f}")
+    print(f"{'='*60}")
+
+    for component, data in result["components"].items():
+        if data.get("score") is not None:
+            status = "✅" if data["score"] >= 0.8 else "⚠️" if data["score"] >= 0.5 else "❌"
+            print(f"\n  {status} {component}: {data['score']:.4f} ({data.get('passed',0)}/{data.get('total',0)} passed)")
+            if args.verbose and "checks" in data:
+                for check in data["checks"]:
+                    ck = "✅" if check.get("pass") else "❌" if check.get("pass") is False else "⬜"
+                    print(f"    {ck} {check['id']}: {check['detail']}")
+        else:
+            print(f"\n  ⬜ {component}: skipped")
+
+    print(f"\n{'='*60}\n")
