@@ -301,6 +301,110 @@ def score_tc002(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# Efficiency Helpers
+# --------------------------------------------------------------------
+
+def load_efficiency_config() -> dict:
+    """Load efficiency configuration from efficiency.yaml."""
+    eff_path = Path(__file__).parent / "efficiency.yaml"
+    with open(eff_path) as f:
+        return yaml.safe_load(f)
+
+
+def compute_efficiency_score(
+    accuracy_score: float,
+    total_cost: float,
+    total_time_s: float,
+    language: str = "unknown",
+    retry_count: int = 0,
+    human_review_minutes: float = 0,
+    tc_level: str = "level_1"
+) -> dict:
+    """Compute operational efficiency scores from raw metrics.
+
+    Three component scores + composite:
+    1. COST efficiency: (accuracy / max(total_cost, 0.01)) normalized
+    2. TIME efficiency: (accuracy / max(total_time_s/60, 0.1)) normalized
+    3. RELIABILITY score: deducts for retries and errors
+    4. COMPOSITE: weighted average of the three
+
+    Args:
+        accuracy_score: Numerical correctness score (0-1)
+        total_cost: Total monetary cost in USD
+        total_time_s: Total wall-clock time in seconds
+        language: "R", "SAS", or "Python"
+        retry_count: Number of API retries
+        human_review_minutes: Human review time in minutes
+        tc_level: "level_1", "level_2", or "level_3"
+
+    Returns:
+        Dict with component scores and composite
+    """
+    # Load config for language adjustments and scoring weights
+    config = load_efficiency_config()
+    lang_adj = config.get("language_adjustments", {}).get(language.upper(), {})
+    time_factor = lang_adj.get("time_factor", 1.0)
+    validation_overhead = lang_adj.get("validation_overhead_min", 0)
+
+    scoring_weights = config.get("scoring_weights", {}).get("default", {})
+    cost_weight = scoring_weights.get("cost_efficiency", 0.40)
+    time_weight = scoring_weights.get("time_efficiency", 0.35)
+    reliability_weight = scoring_weights.get("reliability", 0.25)
+
+    targets = config.get("efficiency_targets", {}).get(tc_level, {})
+    cost_target = targets.get("cost_target_usd", 0.10)
+    time_target = targets.get("time_target_min", 2.0)
+
+    # Avoid division by zero
+    cost_safe = max(total_cost, 0.001)
+    time_safe = max(total_time_s / 60, 0.01)  # Convert to minutes
+
+    # Language-adjusted time
+    adjusted_time = time_safe * time_factor
+
+    # Raw efficiency
+    cost_efficiency_raw = accuracy_score / cost_safe  # points per dollar
+    time_efficiency_raw = accuracy_score / adjusted_time  # points per minute
+
+    # Normalize to 0-1 using sigmoid-like transform
+    cost_scale = cost_target
+    cost_efficiency = 1 / (1 + (cost_efficiency_raw / max(cost_scale, 0.01)) ** (-1))
+    time_scale = time_target
+    time_efficiency = 1 / (1 + (time_efficiency_raw / max(time_scale, 0.01)) ** (-1))
+
+    # Reliability penalty
+    retry_penalty = min(retry_count * 0.05, 0.25)  # Max 25% penalty
+    reliability = max(0.0, 1.0 - retry_penalty if retry_count > 0 else 1.0)
+
+    # Composite
+    composite = (
+        cost_weight * cost_efficiency
+        + time_weight * time_efficiency
+        + reliability_weight * reliability
+    )
+
+    return {
+        "cost_efficiency_score": round(cost_efficiency, 4),
+        "cost_efficiency_raw": round(cost_efficiency_raw, 4),
+        "total_cost_usd": round(total_cost, 6),
+        "time_efficiency_score": round(time_efficiency, 4),
+        "time_efficiency_raw": round(time_efficiency_raw, 4),
+        "total_time_minutes": round(total_time_s / 60, 2),
+        "adjusted_time_minutes": round(adjusted_time, 2),
+        "language_adjustment_factor": time_factor,
+        "validation_overhead_min": validation_overhead,
+        "reliability_score": round(reliability, 4),
+        "retry_count": retry_count,
+        "composite_efficiency_score": round(composite, 4),
+        "scoring_weights_used": {
+            "cost": cost_weight,
+            "time": time_weight,
+            "reliability": reliability_weight
+        }
+    }
+
+
+# --------------------------------------------------------------------
 # Compliance Helpers
 # --------------------------------------------------------------------
 
@@ -663,6 +767,119 @@ def evaluate(tc, agent, truth, output, skip_schema):
         with open(output, "w") as f:
             json.dump(eval_result, f, indent=2)
         console.print(f"[green]Evaluation report written to: {output}[/green]")
+
+
+@cli.command()
+@click.option("--tc", required=True, help="Test case ID (e.g., TC-001)")
+@click.option("--accuracy", type=float, default=1.0,
+              help="Numerical correctness score (0-1), defaults to 1.0")
+@click.option("--cost", type=float, default=0.01,
+              help="Total monetary cost in USD")
+@click.option("--time", "wall_time", type=float, default=60.0,
+              help="Wall-clock time in seconds")
+@click.option("--language", type=click.Choice(["R", "SAS", "Python", "unknown"]),
+              default="unknown", help="Programming language used")
+@click.option("--retries", type=int, default=0, help="Number of API retries")
+@click.option("--level", type=click.Choice(["level_1", "level_2", "level_3"]),
+              default="level_1", help="Test case difficulty level")
+@click.option("--tokens-in", type=int, default=0, help="Input tokens consumed")
+@click.option("--tokens-out", type=int, default=0, help="Output tokens produced")
+def efficiency(tc, accuracy, cost, wall_time, language, retries,
+               level, tokens_in, tokens_out):
+    """Compute operational efficiency scores from agent run metadata."""
+    if accuracy < 0.5:
+        console.print(f"[yellow]Accuracy ({accuracy}) below 0.50 floor; "
+                      "efficiency scores may be misleading.[/yellow]")
+
+    result = compute_efficiency_score(
+        accuracy_score=accuracy,
+        total_cost=cost,
+        total_time_s=wall_time,
+        language=language,
+        retry_count=retries,
+        tc_level=level,
+    )
+
+    table = Table(title=f"Efficiency Report: {tc} ({language})")
+    table.add_column("Metric", style="cyan")
+    table.add_column("Score", justify="right")
+    table.add_column("Raw", justify="right")
+
+    table.add_row("Cost efficiency",
+                  f"{result['cost_efficiency_score']:.4f}",
+                  f"{result['cost_efficiency_raw']:.2f} pt/$ ")
+    table.add_row("Time efficiency",
+                  f"{result['time_efficiency_score']:.4f}",
+                  f"{result['time_efficiency_raw']:.2f} pt/min")
+    table.add_row("Reliability",
+                  f"{result['reliability_score']:.4f}",
+                  f"retries: {retries}")
+    table.add_row("[bold]Composite[/bold]",
+                  f"[bold]{result['composite_efficiency_score']:.4f}[/bold]",
+                  "")
+
+    console.print(table)
+
+    panel_text = (
+        f"[bold]Cost:[/bold] ${result['total_cost_usd']:.6f}  |  "
+        f"[bold]Time:[/bold] {result['total_time_minutes']:.2f} min"
+    )
+    if language in ("R", "SAS", "Python"):
+        panel_text += (
+            f"  |  [bold]Adj Time:[/bold] {result['adjusted_time_minutes']:.2f} min"
+            f" (lang factor: {result['language_adjustment_factor']})"
+        )
+    console.print(Panel(panel_text, title="Raw Metrics"))
+
+    if tokens_in > 0 or tokens_out > 0:
+        total_tokens = tokens_in + tokens_out
+        token_table = Table(title="Token Usage")
+        token_table.add_column("Direction", style="cyan")
+        token_table.add_column("Count", justify="right")
+        token_table.add_row("Input", f"{tokens_in:,}")
+        token_table.add_row("Output", f"{tokens_out:,}")
+        token_table.add_row("[bold]Total[/bold]", f"[bold]{total_tokens:,}[/bold]")
+        token_table.add_row("Token performance",
+                            f"{accuracy / max(total_tokens/1000, 0.01):.4f} pt/KT")
+        console.print(token_table)
+
+
+@cli.command()
+@click.option("--runs", required=True, type=click.Path(exists=True),
+              help="JSON file with array of efficiency run metadata")
+@click.option("--output", type=click.Path(), help="Output CSV/JSON path")
+def efficiency_batch(runs, output):
+    """Compute efficiency scores for multiple runs from a JSON array."""
+    with open(runs) as f:
+        run_list = json.load(f)
+
+    if not isinstance(run_list, list):
+        console.print("[red]Input must be a JSON array of run metadata[/red]")
+        sys.exit(1)
+
+    results = []
+    for i, run in enumerate(run_list):
+        acc = run.get("accuracy", run.get("accuracy_score", 1.0))
+        cost = run.get("cost", run.get("total_cost", 0.01))
+        t = run.get("time_s", run.get("wall_clock_seconds", 60))
+        lang = run.get("language", "unknown")
+        ret = run.get("retries", run.get("retry_count", 0))
+        tc = run.get("tc", run.get("test_case_id", f"RUN-{i+1:03d}"))
+        lvl = run.get("level", "level_1")
+
+        eff = compute_efficiency_score(acc, cost, t, lang, ret, tc_level=lvl)
+        eff["run_id"] = run.get("run_id", f"run-{i+1:03d}")
+        eff["test_case_id"] = tc
+        eff["language"] = lang
+        results.append(eff)
+
+        console.print(f"  {eff['run_id']}: {tc} ({lang}) -> "
+                      f"Composite={eff['composite_efficiency_score']:.4f}")
+
+    if output:
+        with open(output, "w") as f:
+            json.dump(results, f, indent=2)
+        console.print(f"[green]Batch report written to: {output}[/green]")
 
 
 if __name__ == "__main__":

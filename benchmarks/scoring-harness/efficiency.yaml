@@ -1,0 +1,177 @@
+# efficiency.yaml — Operational Efficiency Specifications
+# Part of the ASA Biopharm AI/ML WG Agentic AI Benchmark
+# Reference: benchmarks/operational-efficiency.md
+
+meta:
+  version: "0.1"
+  updated: "2026-05-29"
+
+# ────────────────────────────────────────────────────────────
+# Model pricing reference — May 2026
+# Used for token_cost calculation from agent run metadata
+# Update monthly as pricing changes; keep model_id keys stable
+# ────────────────────────────────────────────────────────────
+model_pricing:
+  deepseek-v4-flash:
+    input_per_m: 0.30
+    output_per_m: 0.60
+    provider: OpenRouter
+  gpt-4o-mini:
+    input_per_m: 0.15
+    output_per_m: 0.60
+    provider: OpenAI
+  claude-3-5-sonnet:
+    input_per_m: 3.00
+    output_per_m: 15.00
+    provider: Anthropic
+  claude-3-5-haiku:
+    input_per_m: 0.80
+    output_per_m: 4.00
+    provider: Anthropic
+  gemini-2-5-flash:
+    input_per_m: 0.15
+    output_per_m: 0.60
+    provider: Google
+  gemini-2-5-pro:
+    input_per_m: 1.25
+    output_per_m: 5.00
+    provider: Google
+  qwen-3-6-moe-local:
+    input_per_m: 0.00
+    output_per_m: 0.00
+    provider: local
+    notes: Electricity ~$0.10-0.30/hr GPU runtime
+  openclaw-qwen-local:
+    input_per_m: 0.00
+    output_per_m: 0.00
+    provider: local
+    notes: Electricity ~$0.10-0.30/hr GPU runtime
+
+# ────────────────────────────────────────────────────────────
+# Language-specific adjustment factors
+# Used to normalize efficiency scores across languages
+# ────────────────────────────────────────────────────────────
+language_adjustments:
+  R:
+    # 10% faster coding due to Pharmaverse ecosystem
+    time_factor: 0.9
+    # Average validation/setup overhead (renv lockfile)
+    validation_overhead_min: 3.0
+    notes: Package version lockfile needed (renv); CRAN quality gate
+  SAS:
+    # 30% slower LLM generation due to smaller training data footprint
+    time_factor: 1.3
+    # Minimal validation overhead; built-in, no versioning
+    validation_overhead_min: 1.5
+    notes: Proprietary license required; cannot run in open CI/CD
+  Python:
+    # 15% faster LLM generation due to largest training data footprint
+    time_factor: 0.85
+    # Environment reproduction overhead (uv/conda lock)
+    validation_overhead_min: 5.0
+    notes: PyPI lacks CRAN quality gate; larger env. space
+
+# ────────────────────────────────────────────────────────────
+# Reference efficiency targets for score normalization
+# ────────────────────────────────────────────────────────────
+efficiency_targets:
+  level_1:
+    cost_target_usd: 0.10
+    time_target_min: 2.0
+    test_cases: [TC-001, TC-002, TC-003]
+  level_2:
+    cost_target_usd: 2.00
+    time_target_min: 10.0
+    test_cases: [TC-004, TC-005, TC-006]
+  level_3:
+    cost_target_usd: 5.00
+    time_target_min: 30.0
+    test_cases: [TC-007, TC-008, TC-009, TC-010]
+
+# ────────────────────────────────────────────────────────────
+# Composite scoring weights per profile
+# ────────────────────────────────────────────────────────────
+scoring_weights:
+  default:
+    cost_efficiency: 0.40
+    time_efficiency: 0.35
+    reliability: 0.25
+  cost_sensitive:
+    cost_efficiency: 0.55
+    time_efficiency: 0.25
+    reliability: 0.20
+  time_sensitive:
+    cost_efficiency: 0.25
+    time_efficiency: 0.55
+    reliability: 0.20
+
+# ────────────────────────────────────────────────────────────
+# Total benchmark score weights by use case
+# ────────────────────────────────────────────────────────────
+total_score_weights:
+  general_leaderboard:
+    correctness: 0.50
+    compliance: 0.25
+    efficiency: 0.15
+    stability: 0.10
+  cost_sensitive_deployment:
+    correctness: 0.40
+    compliance: 0.20
+    efficiency: 0.30
+    stability: 0.10
+  regulatory_submission:
+    correctness: 0.35
+    compliance: 0.50
+    efficiency: 0.10
+    stability: 0.05
+  internal_dev_iteration:
+    correctness: 0.40
+    compliance: 0.15
+    efficiency: 0.30
+    stability: 0.15
+
+# ────────────────────────────────────────────────────────────
+# Verification time estimates (for total-cost modeling)
+# ────────────────────────────────────────────────────────────
+verification_time:
+  tc_001:
+    human_from_scratch_min: 5
+    human_verify_agent_min:
+      R: 1.5
+      SAS: 1.5
+      Python: 2.5
+  tc_002:
+    human_from_scratch_min: 10
+    human_verify_agent_min:
+      R: 3.0
+      SAS: 2.5
+      Python: 4.0
+  tc_003:
+    human_from_scratch_min: 5
+    human_verify_agent_min:
+      R: 2.0
+      SAS: 1.5
+      Python: 2.5
+  tc_005:
+    human_from_scratch_min: 30
+    human_verify_agent_min:
+      R: 7.0
+      SAS: 5.0
+      Python: 8.0
+
+# ────────────────────────────────────────────────────────────
+# Cost transparency configuration
+# ────────────────────────────────────────────────────────────
+cost_transparency_defaults:
+  infrastructure_included:
+    - api_token_cost
+    - compute_gpu_cost         # optional field
+    - human_review_time        # optional field
+    - software_licensing       # optional field
+    - environment_setup_time   # optional field
+  infrastructure_excluded:
+    - agent_development_cost
+    - prompt_engineering_time
+    - model_training_cost
+    - opportunity_cost
+  efficiency_score_floor: 0.50  # Only compute for runs with accuracy >= 0.50

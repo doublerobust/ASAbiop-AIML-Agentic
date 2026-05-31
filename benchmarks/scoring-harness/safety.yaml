@@ -1,0 +1,110 @@
+# safety.yaml — Safety & Robustness Check Rules per Test Case
+# Part of the ASA Biopharm AI/ML WG Agentic AI Benchmark
+# Reference: benchmarks/safety-robustness.md
+
+meta:
+  version: "0.1"
+  updated: "2026-05-28"
+
+# ──────────────────────────────────────────────────────────────
+# N-count consistency rules by test case
+# ──────────────────────────────────────────────────────────────
+n_count_rules:
+  TC-001:
+    rules:
+      - id: N-001
+        desc: "n_events must be ≤ n_total"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "Event + censored must sum to N"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "Arm-level N sums must match overall N"
+        critical: false
+        auto_score: true
+  TC-002:
+    rules:
+      - id: N-001
+        desc: "n_total must match between arms and overall"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "Total N must be consistent with demo table header"
+        critical: false
+        auto_score: true
+  TC-003:
+    rules:
+      - id: N-001
+        desc: "n_events must be ≤ n_total per stratum"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "Cross-stratum N must sum to total"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "Arm-level N sums must match overall N"
+        critical: false
+        auto_score: true
+
+# ──────────────────────────────────────────────────────────────
+# Denominator / population rules per test case
+# ──────────────────────────────────────────────────────────────
+denominator_rules:
+  TC-001:
+    expected_population: ITT
+    flag: ITTFL
+    critical: true
+  TC-002:
+    expected_population: SAFETY
+    flag: SAFFL
+    critical: true
+  TC-003:
+    expected_population: ITT
+    flag: ITTFL
+    critical: true
+
+# ──────────────────────────────────────────────────────────────
+# Cross-TFL agreement pairs that should be checked
+# ──────────────────────────────────────────────────────────────
+cross_tfl_pairs:
+  - source: TC-001
+    target: TC-003
+    shared_fields: [n_events, n_total]
+    description: "Event count and total N must agree between KM and log-rank"
+  - source: TC-001
+    target: TC-002
+    shared_fields: [n_total]
+    description: "Total N must be consistent (TC-001 ITT ≤ TC-002 Safety)"
+
+# ──────────────────────────────────────────────────────────────
+# Edge case resilience expectations
+# ──────────────────────────────────────────────────────────────
+edge_case_expectations:
+  non_estimable_median:
+    expected_behavior: "flag or return NA"
+    score_if_met: 1.0
+    score_if_not: 0.0
+  zero_event_stratum:
+    expected_behavior: "exclude stratum gracefully"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  missing_covariate:
+    expected_behavior: "flag or exclude with warning"
+    score_if_met: 1.0
+    score_if_not: 0.0
+  empty_arm:
+    expected_behavior: "flag as non-comparable"
+    score_if_met: 1.0
+    score_if_not: 0.5
+
+# ──────────────────────────────────────────────────────────────
+# Scoring weights for composite safety score
+# ──────────────────────────────────────────────────────────────
+scoring_weights:
+  n_count_consistency: 0.30
+  denominator_correctness: 0.35
+  cross_tfl_agreement: 0.15
+  edge_case_resilience: 0.20

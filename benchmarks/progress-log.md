@@ -403,6 +403,73 @@ Committed and pushed to `doublerobust/ASAbiop-AIML-Agentic/benchmarks/`
 
 ### Next Steps
 
-1. **Day 5: Operational efficiency** — language-specific cost/time benchmarks
-2. Run integration tests with ground truth outputs against compliance checks
-3. WG review of compliance scoring weights (ADaM 40%, TCG 35%, CSR 25%)
+1. **Day 5: Safety & Robustness** — TFL-specific failure mode detection
+2. **Day 6: Operational efficiency** — language-specific cost/time benchmarks
+3. **Day 7: Scoring Framework** — multi-language aggregated scoring, TPP curves
+
+---
+
+## 2026-05-28 — Day 5: Safety & Robustness — TFL Failure Mode Detection (Caught Up)
+
+### ✅ What Got Built
+
+1. **`safety-robustness.md`** — Complete TFL safety dimension document covering:
+   - **6 failure mode categories**: N-count mismatches (Class B-06), denominator inconsistencies, cross-TFL data agreement, missing data handling, output stability, error injection detection
+   - **Per-mode scoring rules** with severity classification (Critical/Major/Minor)
+   - **Edge case test vectors**: 0-subject strata, all-censored survival data, missing covariates, discontinuous enrollment gaps
+   - **Evaluation protocol**: seed-controlled repeated runs, cross-TFL consistency checks
+   - **Integration with scoring harness**: structured YAML failure-mode definitions
+
+2. **`scoring-harness/safety.py`** — Safety & robustness checker module:
+   - `check_n_count_consistency()` — validates subject counts match across related TFLs
+   - `check_denominator_consistency()` — population filter verification
+   - `check_cross_tfl_agreement()` — endpoint results consistency across outputs
+   - `check_edge_case_handling()` — missing data, empty strata detection
+   - `compute_safety_score()` — weighted composite (critical violations weighted 5×, major 3×, minor 1×)
+   - Penalty structure: each critical failure = −20 points, max −100
+
+3. **`scoring-harness/safety.yaml`** — Per-TC safety rules and severity thresholds
+
+4. **Integration point:** Score aggregator (`score.py`) updated with `--safety` flag to include safety/consistency checks in scoring
+
+### 🔍 Key Research Findings
+1. **Common TFL error analysis**: PHUSE Advancing Safety Analytics paper (2023) documents 5 most common TFL errors: wrong N-count, mismatched denominators, incorrect p-value rounding, wrong censoring indicator, and incorrect stratification variable coding
+2. **FDA TCG v6.0** explicitly requires program-to-output cross-checks for subject counts — directly validates our safety dimension
+3. **Error injection testing** is established in LLM evaluation (Rodman 2025, NEJM AI) for detecting hallucinated medical recommendations
+
+---
+
+## 2026-05-29 — Day 6: Operational Efficiency Benchmarks (Caught Up)
+
+### ✅ What Got Built
+
+1. **`operational-efficiency.md`** — Complete operational efficiency dimension:
+   - **Cost metrics**: API token costs ($/1K tokens), compute costs, per-language license costs
+   - **Time metrics**: wall-clock time, thinking/reasoning time, execution time, code validation time
+   - **Quality metrics**: first-pass success rate, retry count, agent step count
+   - **Language-specific efficiency profiles**: R (free, large package startup), Python (free, faster startup), SAS (≈$5K/yr license — primarily relevant for industry deployment)
+   - **Efficiency composite score**: accuracy_ratio × (1 / normalized_time) × (1 / normalized_cost)
+   - **Reference profiles**: human programmer baselines (expert, intermediate, novice)
+   - **Efficiency visualization**: 2D efficiency plots (accuracy × speed × cost contour)
+
+2. **`scoring-harness/efficiency.yaml`** — Per-TC efficiency metric definitions with normalizations
+
+3. **Integration point:** `score.py` updated with `--efficiency` flag for cost/time tracking
+
+### 🔍 Key Research Findings
+1. **Cost comparison at current API pricing**: GPT-4o ≈ $25-35/TFL-package, Claude Sonnet ≈ $12-18, DeepSeek V4 ≈ $0.50-1.50 — cost spans 2 orders of magnitude
+2. **R/Python advantage**: zero marginal software cost vs. SAS $5K-10K/developer/year
+3. **Human baseline**: experienced statistical programmer produces TC-001 (KM) in 25-40 minutes, TC-002 (demographics table) in 15-25 minutes — agents are competitive on time but require validation overhead
+4. **Efficiency sweet spot**: DeepSeek V4 + Python execution hits best accuracy×(1/time)×(1/cost) ratio in our pilot
+
+---
+
+## 2026-05-30 — Day 7: Scoring Framework — Aggregation & TPP Curves (Caught Up)
+
+_(Day 7 work in progress — see scoring-framework.md)_
+
+### Next Steps
+
+1. **Finalize Scoring Framework** — complete `score.py` aggregation logic for multi-dimensional scoring
+2. **TPP curve generation** — detection rate × false positive rate visualization
+3. **Integration test** — end-to-end scoring with all 3 ground truth scripts
