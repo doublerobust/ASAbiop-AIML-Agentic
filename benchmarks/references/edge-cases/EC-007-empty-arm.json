@@ -1,0 +1,22 @@
+{
+  "edge_case_id": "EC-007",
+  "description": "Empty treatment arm — one treatment arm has zero randomized subjects (possibly due to randomization failure or data issue). Agent should flag the arm as non-comparable rather than producing KM estimates for an empty arm.",
+  "category": "empty_arm",
+  "severity": "critical",
+  "sap_context": {
+    "tfl": "KM-estimated median PFS (TC-001)",
+    "population": "ITT",
+    "arms": {"Experimental": 0, "Control": 50},
+    "note": "Experimental arm has zero subjects after data cut"
+  },
+  "expected_output": {
+    "status": "non_comparable",
+    "n_total": 50,
+    "expected_behavior": "Should flag empty arm and not produce comparative statistics"
+  },
+  "tfl_config": {
+    "test_cases": ["TC-001"],
+    "stratified": false,
+    "by_arm": true
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "edge_case_id": "EC-014",
+  "description": "Censoring inconsistency — a subject has CNSR=1 (censored) but a death date present in the data. The censoring flag and event date contradict each other.",
+  "category": "data_inconsistency",
+  "severity": "critical",
+  "sap_context": {
+    "tfl": "KM-estimated median PFS (TC-001)",
+    "population": "ITT",
+    "note": "Subject XYZ-001-008 has CNSR=1 (censored) but ADTTE.ADT event date is populated"
+  },
+  "expected_output": {
+    "status": "flagged",
+    "expected_behavior": "Should detect contradictory censoring flag and event date"
+  },
+  "tfl_config": {
+    "test_cases": ["TC-001"],
+    "stratified": false,
+    "by_arm": true
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "edge_case_id": "EC-001",
+  "description": "Non-estimable median — PFS survival curve never drops below 0.5 in either arm. Agent should return 'NE' or 'NA' for median PFS rather than crashing or imputing a value.",
+  "category": "survival_boundary",
+  "severity": "major",
+  "sap_context": {
+    "tfl": "KM-estimated median PFS with 95% CI (TC-001)",
+    "population": "ITT",
+    "endpoint": "PFS by investigator assessment",
+    "strata": "ECOG (0/1), Sex (M/F)"
+  },
+  "input_data": {
+    "adsl": {
+      "n_subjects": 40,
+      "arms": {"Experimental": 20, "Control": 20},
+      "note": "Both arms have very long PFS — median not estimable within study follow-up"
+    },
+    "adtte": {
+      "n_events_arm1": 2,
+      "n_events_arm2": 1,
+      "max_follow_up": 24,
+      "median_survival": null,
+      "note": "18/20 Experimental subjects censored, 19/20 Control subjects censored. Survival curve stays above 0.5."
+    }
+  },
+  "expected_output": {
+    "status": "na_or_not_estimable",
+    "median_pfs": null,
+    "ci_lower": null,
+    "ci_upper": null,
+    "n_events": 3,
+    "n_total": 40,
+    "warning_included": true,
+    "explanation": "Median PFS not estimable — survival probability never reaches 0.5 in either arm"
+  },
+  "scoring_rules": {
+    "median_returned_na": 1.0,
+    "median_made_up_value": 0.0,
+    "crashed": 0.0,
+    "flagged_with_warning": 1.0,
+    "silent_wrong_output": 0.0
+  },
+  "tfl_config": {
+    "test_cases": ["TC-001"],
+    "stratified": false,
+    "by_arm": true
+  }
+}

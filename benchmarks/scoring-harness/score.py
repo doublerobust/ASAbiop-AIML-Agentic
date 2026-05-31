@@ -19,6 +19,14 @@ Usage:
   python score.py score --tc TC-001 --agent agent.json --truth ground_truth.json \
       --compliance --tcg-check --csr-format
 
+  # Score with safety/robustness checks
+  python score.py score --tc TC-001 --agent agent.json --truth ground_truth.json \
+      --safety --n-count --denom --edge
+
+  # Score with all checks
+  python score.py score --tc TC-001 --agent agent.json --truth ground_truth.json \
+      --compliance --tcg-check --csr-format --safety
+
   # Verify cross-language consistency
   python score.py verify --tc TC-001 --r R.json --sas SAS.json --python Python.json
 
@@ -28,8 +36,12 @@ Usage:
   # Run compliance checks independently
   python score.py compliance --tc TC-001 --agent agent.json
 
-  # Run full evaluation (numerical + schema + compliance)
-  python score.py evaluate --tc TC-001 --agent agent.json --truth ground_truth.json
+  # Run safety checks independently
+  python score.py check-safety --tc TC-001 --agent agent.json --package package.json
+
+  # Run full evaluation (numerical + schema + compliance + safety)
+  python score.py evaluate --tc TC-001 --agent agent.json --truth ground_truth.json \
+      --compliance --safety
 """
 
 import json
@@ -55,6 +67,18 @@ except ImportError:
     except ImportError:
         _compute_compliance_score = None
         HAS_COMPLIANCE = False
+
+# Import safety module (optional)
+try:
+    from scoring_harness.safety import compute_safety_score as _compute_safety_score
+    HAS_SAFETY = True
+except ImportError:
+    try:
+        from safety import compute_safety_score as _compute_safety_score
+        HAS_SAFETY = True
+    except ImportError:
+        _compute_safety_score = None
+        HAS_SAFETY = False
 
 
 # --------------------------------------------------------------------
@@ -468,6 +492,93 @@ def _print_compliance_report(cr: dict):
 
 
 # --------------------------------------------------------------------
+# Safety Helpers
+# --------------------------------------------------------------------
+
+def _run_safety_check(agent_output: dict, tc: str, tfl_package: dict = None,
+                      run_2: dict = None,
+                      check_n: bool = True, check_denom: bool = True,
+                      check_cross: bool = False, check_edge: bool = True,
+                      check_stability: bool = False) -> dict:
+    """Run safety and robustness checks on an agent output."""
+    if not HAS_SAFETY:
+        console.print("[yellow]Safety module not available; skipping checks[/yellow]")
+        return None
+    if not check_n and not check_denom and not check_cross and not check_edge and not check_stability:
+        return None
+
+    try:
+        sr = _compute_safety_score(
+            agent_output, tc,
+            tfl_package=tfl_package,
+            run_2=run_2,
+            check_n=check_n,
+            check_denom=check_denom,
+            check_cross=check_cross,
+            check_edge=check_edge,
+            check_stability=check_stability,
+        )
+        return sr
+    except Exception as e:
+        console.print(f"[red]Safety check error: {e}[/red]")
+        return None
+
+
+def _print_safety_report(sr: dict):
+    """Print safety results as a Rich table and panel."""
+    if sr is None:
+        return
+
+    console.print(Panel(f"[bold]Safety & Robustness Score: {sr.get('total_safety_score', 0):.4f}[/bold]"))
+
+    table = Table(title="Safety & Robustness")
+    table.add_column("Component", style="cyan")
+    table.add_column("Score", justify="right")
+    table.add_column("Passed", justify="center")
+    table.add_column("Failed", justify="center")
+
+    for comp_name in ["n_count_consistency", "denominator_correctness",
+                      "cross_tfl_agreement", "edge_case_handling",
+                      "output_stability"]:
+        comp = sr.get(comp_name, {})
+        sc = comp.get("score")
+        if sc is not None:
+            pf = comp.get("passed", [])
+            ff = comp.get("failed", [])
+            pass_str = "\u2705" if sc >= 0.8 else "\u26a0\ufe0f" if sc >= 0.5 else "\u274c"
+            table.add_row(
+                comp_name,
+                f"{sc:.4f}",
+                f"{pass_str} {len(pf)}",
+                str(len(ff))
+            )
+
+            # Show first 3 failed checks inline
+            for rid in ff[:3]:
+                table.add_row("", "", "", f"  \u274c {rid}")
+        else:
+            table.add_row(comp_name, "\u2014", "skipped", "\u2014")
+
+    table.add_row(
+        "[bold]TOTAL SAFETY[/bold]",
+        f"[bold]{sr.get('total_safety_score', 0):.4f}[/bold]",
+        "",
+        ""
+    )
+
+    console.print(table)
+
+    # Show discrepancies if any
+    for comp_name in ["cross_tfl_agreement", "output_stability"]:
+        comp = sr.get(comp_name, {})
+        disc = comp.get("discrepancies", comp.get("unstable_fields", []))
+        if disc:
+            console.print(f"[yellow]\u26a0\ufe0f  {comp_name} details:[/yellow]")
+            for d in disc[:5]:
+                console.print(f"    {d}")
+
+
+# --------------------------------------------------------------------
 # CLI
 # --------------------------------------------------------------------
 
@@ -490,7 +601,25 @@ def cli():
               help="Include FDA TCG checklist checks")
 @click.option("--csr-format", is_flag=True, default=False,
               help="Include ICH E3 CSR formatting checks")
-def score(tc, agent, truth, output, compliance, tcg_check, csr_format):
+@click.option("--safety", is_flag=True, default=False,
+              help="Include safety/robustness checks")
+@click.option("--n-count", "n_count_flag", is_flag=True, default=False,
+              help="Include N-count consistency checks (requires --safety)")
+@click.option("--denom", is_flag=True, default=False,
+              help="Include denominator correctness checks (requires --safety)")
+@click.option("--cross-tfl", "cross_tfl_flag", is_flag=True, default=False,
+              help="Include cross-TFL agreement checks (requires --safety + --package)")
+@click.option("--edge", is_flag=True, default=False,
+              help="Include edge case handling checks (requires --safety)")
+@click.option("--stability", is_flag=True, default=False,
+              help="Include output stability checks (requires --safety + --run2)")
+@click.option("--package", "package_path", type=click.Path(exists=True),
+              help="TFL package JSON (for cross-TFL checks)")
+@click.option("--run2", "run2_path", type=click.Path(exists=True),
+              help="Second run output JSON (for stability check)")
+def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
+          safety, n_count_flag, denom, cross_tfl_flag,
+          edge, stability, package_path, run2_path):
     """Score an agent output against ground truth."""
     with open(agent) as f:
         agent_out = json.load(f)
@@ -545,6 +674,40 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format):
             _print_compliance_report(cr)
             # Add compliance to result dict
             result["compliance"] = cr
+
+    # Safety section
+    if safety or n_count_flag or denom or cross_tfl_flag or edge or stability:
+        # Load TFL package and run_2 if provided
+        tfl_pkg = None
+        if package_path:
+            with open(package_path) as f:
+                tfl_pkg = json.load(f)
+
+        run2_data = None
+        if run2_path:
+            with open(run2_path) as f:
+                run2_data = json.load(f)
+
+        # Default sub-checks: if --safety alone, run all applicable
+        do_n = n_count_flag or safety
+        do_denom = denom or safety
+        do_cross = cross_tfl_flag or safety
+        do_edge = edge or safety
+        do_stability = stability or safety
+
+        sr = _run_safety_check(
+            agent_out, tc,
+            tfl_package=tfl_pkg,
+            run_2=run2_data,
+            check_n=do_n,
+            check_denom=do_denom,
+            check_cross=do_cross,
+            check_edge=do_edge,
+            check_stability=do_stability,
+        )
+        if sr:
+            _print_safety_report(sr)
+            result["safety"] = sr
 
     if output:
         with open(output, "w") as f:
@@ -682,15 +845,79 @@ def compliance(tc, agent, check, output):
 @click.option("--tc", required=True, help="Test case ID (e.g., TC-001)")
 @click.option("--agent", required=True, type=click.Path(exists=True),
               help="Agent output JSON")
+@click.option("--package", "package_path", type=click.Path(exists=True),
+              help="TFL package JSON (for cross-TFL checks)")
+@click.option("--run2", "run2_path", type=click.Path(exists=True),
+              help="Second run output JSON (for stability check)")
+@click.option("--check", type=click.Choice(["n", "denom", "cross", "edge", "stability", "all"]),
+              default="all", help="Which safety checks to run")
+@click.option("--output", type=click.Path(), help="Output report path")
+def check_safety(tc, agent, package_path, run2_path, check, output):
+    """Run safety and robustness checks on an agent output."""
+    if not HAS_SAFETY:
+        console.print("[red]Safety module not available. Check that safety.py is installed.[/red]")
+        sys.exit(1)
+
+    with open(agent) as f:
+        agent_out = json.load(f)
+
+    tfl_pkg = None
+    if package_path:
+        with open(package_path) as f:
+            tfl_pkg = json.load(f)
+
+    run2_data = None
+    if run2_path:
+        with open(run2_path) as f:
+            run2_data = json.load(f)
+
+    run_n = check in ("n", "all")
+    run_denom = check in ("denom", "all")
+    run_cross = check in ("cross", "all")
+    run_edge = check in ("edge", "all")
+    run_stability = check in ("stability", "all")
+
+    sr = _compute_safety_score(
+        agent_out, tc,
+        tfl_package=tfl_pkg,
+        run_2=run2_data,
+        check_n=run_n,
+        check_denom=run_denom,
+        check_cross=run_cross,
+        check_edge=run_edge,
+        check_stability=run_stability,
+    )
+
+    if "error" in sr:
+        console.print(f"[red]Error: {sr['error']}[/red]")
+        sys.exit(1)
+
+    console.print(Panel(f"[bold]Safety Report: {tc}[/bold]"))
+    _print_safety_report(sr)
+
+    if output:
+        with open(output, "w") as f:
+            json.dump(sr, f, indent=2)
+        console.print(f"[green]Safety report written to: {output}[/green]")
+
+
+@cli.command()
+@click.option("--tc", required=True, help="Test case ID (e.g., TC-001)")
+@click.option("--agent", required=True, type=click.Path(exists=True),
+              help="Agent output JSON")
 @click.option("--truth", required=True, type=click.Path(exists=True),
               help="Ground truth JSON")
 @click.option("--output", type=click.Path(), help="Output report path")
 @click.option("--skip-schema", is_flag=True, default=False,
               help="Skip schema validation step")
-def evaluate(tc, agent, truth, output, skip_schema):
-    """Run full evaluation: numerical scoring + schema validation + compliance.
+@click.option("--compliance", is_flag=True, default=False,
+              help="Include ADaM compliance checks")
+@click.option("--safety", is_flag=True, default=False,
+              help="Include safety/robustness checks")
+def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
+    """Run full evaluation: numerical scoring + schema validation + compliance + safety.
 
-    Combines score, validate, and compliance checks into a single command.
+    Combines score, validate, compliance, and safety checks into a single command.
     """
     with open(agent) as f:
         agent_out = json.load(f)
@@ -755,12 +982,31 @@ def evaluate(tc, agent, truth, output, skip_schema):
     if cr:
         _print_compliance_report(cr)
 
+    # 4. Safety (if requested)
+    if safety:
+        console.print("[bold]Step 4: Safety & Robustness[/bold]")
+        sr = _run_safety_check(
+            agent_out, tc,
+            tfl_package=None,
+            run_2=None,
+            check_n=True,
+            check_denom=True,
+            check_cross=False,  # Requires package
+            check_edge=True,
+            check_stability=False,  # Requires run2
+        )
+        if sr:
+            _print_safety_report(sr)
+    else:
+        sr = None
+
     # Combine results
     eval_result = {
         "test_case_id": tc,
         "numerical_score": score_result,
         "schema_validated": schema_ok,
         "compliance": cr,
+        "safety": sr,
     }
 
     if output:

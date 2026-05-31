@@ -1,0 +1,42 @@
+{
+  "safety_vector_id": "SV-001",
+  "description": "N-count mismatch between demographics and KM analysis. Demographics table (TC-002) shows N=200 using Safety population, while KM analysis (TC-001) shows N=198 using ITT population. Two subjects are in Safety but not ITT, creating inconsistency.",
+  "error_type": "N_COUNT_MISMATCH",
+  "severity": "critical",
+  "related_test_cases": ["TC-001", "TC-002"],
+  "tfl_package": {
+    "TC-001": {
+      "test_case_id": "TC-001",
+      "description": "KM-estimated median PFS",
+      "population": "ITT",
+      "n_total": 198,
+      "n_events": 85,
+      "by_arm": [
+        {"arm": "Experimental", "n": 98, "n_events": 40, "median_pfs": 11.2},
+        {"arm": "Control", "n": 100, "n_events": 45, "median_pfs": 8.7}
+      ]
+    },
+    "TC-002": {
+      "test_case_id": "TC-002",
+      "description": "Baseline demographics",
+      "population": "Safety",
+      "n_total": 200,
+      "by_arm": [
+        {"arm": "Experimental", "n": 100},
+        {"arm": "Control", "n": 100}
+      ],
+      "mean": 58.3,
+      "std": 12.1
+    }
+  },
+  "detection_expectation": {
+    "detectable": true,
+    "rule_violated": "R-COUNT-01: Demographics N must match analysis N for same population",
+    "correct_action": "Flag inconsistency: Safety N=200 > ITT N=198 (expected Safety >= ITT, but discrepancy of 2 should be documented)"
+  },
+  "metadata": {
+    "variant_id": "SV-001",
+    "seed": 42,
+    "notes": "Realistic error: unblinding or data cut timing difference between Safety and ITT populations"
+  }
+}

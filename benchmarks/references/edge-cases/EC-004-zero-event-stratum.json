@@ -1,0 +1,25 @@
+{
+  "edge_case_id": "EC-004",
+  "description": "Zero events in one stratum — in a stratified log-rank test (TC-003), one stratum has zero events in both arms. The stratum should be excluded from the analysis.",
+  "category": "zero_event_stratum",
+  "severity": "major",
+  "sap_context": {
+    "tfl": "Stratified log-rank test (TC-003)",
+    "population": "ITT",
+    "strata": "ECOG (0/1)",
+    "note": "ECOG=0 stratum: 0 events in both arms"
+  },
+  "expected_output": {
+    "status": "stratum_excluded",
+    "n_strata_used": 1,
+    "n_strata_excluded": 1,
+    "chi_square": "computed_from_ecog1_only",
+    "p_value": "computed_from_ecog1_only",
+    "warning_included": true
+  },
+  "tfl_config": {
+    "test_cases": ["TC-001", "TC-003"],
+    "stratified": true,
+    "by_arm": true
+  }
+}

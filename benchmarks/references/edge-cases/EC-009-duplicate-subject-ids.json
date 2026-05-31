@@ -1,0 +1,21 @@
+{
+  "edge_case_id": "EC-009",
+  "description": "Duplicate subject IDs — two subjects share the same USUBJID with different data rows. Agent should detect and flag duplicate IDs or deduplicate before analysis.",
+  "category": "data_integrity",
+  "severity": "critical",
+  "sap_context": {
+    "tfl": "Baseline demographics table (TC-002), KM (TC-001)",
+    "population": "ITT",
+    "note": "Subject XYZ-001-003 appears twice with different age values"
+  },
+  "expected_output": {
+    "status": "flagged",
+    "n_duplicates_detected": 1,
+    "expected_behavior": "Should detect and report duplicate subject IDs"
+  },
+  "tfl_config": {
+    "test_cases": ["TC-001", "TC-002"],
+    "stratified": false,
+    "by_arm": true
+  }
+}

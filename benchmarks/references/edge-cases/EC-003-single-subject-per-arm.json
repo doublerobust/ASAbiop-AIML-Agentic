@@ -1,0 +1,24 @@
+{
+  "edge_case_id": "EC-003",
+  "description": "Single subject per arm — degenerate analysis with 1 subject in each treatment arm. KM estimation produces non-informative results.",
+  "category": "small_strata",
+  "severity": "major",
+  "sap_context": {
+    "tfl": "KM-estimated median PFS",
+    "population": "ITT",
+    "endpoint": "PFS"
+  },
+  "expected_output": {
+    "status": "warning_degenerate",
+    "n_total": 2,
+    "n_events_arm1": 0,
+    "n_events_arm2": 1,
+    "warning_included": true,
+    "expected_behavior": "Should produce warning about insufficient data per arm"
+  },
+  "tfl_config": {
+    "test_cases": ["TC-001"],
+    "stratified": false,
+    "by_arm": true
+  }
+}

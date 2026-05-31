@@ -1,0 +1,25 @@
+{
+  "edge_case_id": "EC-002",
+  "description": "All censored — no events occur in either treatment arm. KM estimation fails because there are no events to estimate a survival curve.",
+  "category": "survival_boundary",
+  "severity": "major",
+  "sap_context": {
+    "tfl": "KM-estimated median PFS",
+    "population": "ITT",
+    "endpoint": "PFS"
+  },
+  "expected_output": {
+    "status": "warning_no_events",
+    "median_pfs": null,
+    "ci_lower": null,
+    "ci_upper": null,
+    "n_events": 0,
+    "n_total": 100,
+    "warning_included": true
+  },
+  "tfl_config": {
+    "test_cases": ["TC-001"],
+    "stratified": false,
+    "by_arm": true
+  }
+}

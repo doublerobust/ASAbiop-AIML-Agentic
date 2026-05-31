@@ -1,0 +1,29 @@
+{
+  "safety_vector_id": "SV-007",
+  "description": "P-value boundary rounding — the log-rank p-value is 0.0495 but rounded to 0.05. This crosses the conventional significance boundary (0.05) and could change the study conclusion.",
+  "error_type": "P_VALUE_ROUNDING",
+  "severity": "minor",
+  "related_test_cases": ["TC-003"],
+  "tfl_package": {
+    "TC-003": {
+      "test_case_id": "TC-003",
+      "description": "Stratified log-rank test",
+      "population": "ITT",
+      "n_total": 200,
+      "n_events": 85,
+      "chi_square": 3.85,
+      "p_value": 0.05,
+      "note": "NOTE: True p-value is 0.0495. Agent rounded to 0.05. This changes interpretation from significant (p<0.05) to non-significant (p=0.05)."
+    }
+  },
+  "detection_expectation": {
+    "detectable": false,
+    "rule_violated": "ICH E9: p-values should be reported with sufficient precision (typically 4 decimal places)",
+    "correct_action": "Display p-value as 0.0495 or 0.049, not rounded to 0.05. Flag boundary-rounding if detected."
+  },
+  "metadata": {
+    "variant_id": "SV-007",
+    "seed": 42,
+    "notes": "Subtle error that changes study interpretation. Hard to detect without cross-checking raw chi-square value."
+  }
+}

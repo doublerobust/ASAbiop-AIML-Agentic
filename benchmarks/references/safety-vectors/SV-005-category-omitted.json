@@ -1,0 +1,32 @@
+{
+  "safety_vector_id": "SV-005",
+  "description": "Missing race category — the demographics table omits the 'Asian' category from the race variable breakdown. This is a TFL specification compliance error.",
+  "error_type": "CATEGORY_OMITTED",
+  "severity": "major",
+  "related_test_cases": ["TC-002"],
+  "tfl_package": {
+    "TC-002": {
+      "test_case_id": "TC-002",
+      "description": "Baseline demographics",
+      "population": "Safety",
+      "n_total": 200,
+      "categorical_by_arm": [
+        {"variable": "RACE", "level": "White", "TRT01PN": 0, "n": 60, "pct": 60.0},
+        {"variable": "RACE", "level": "Black", "TRT01PN": 0, "n": 25, "pct": 25.0},
+        {"variable": "RACE", "level": "White", "TRT01PN": 1, "n": 55, "pct": 55.0},
+        {"variable": "RACE", "level": "Black", "TRT01PN": 1, "n": 20, "pct": 20.0}
+      ],
+      "note": "NOTE: The ADSL has 4 race categories (White, Black, Asian, Other) but only 3 appear in the table. Asian category (5+15 subjects) omitted."
+    }
+  },
+  "detection_expectation": {
+    "detectable": true,
+    "rule_violated": "All ADaM variable categories must appear in TFL output",
+    "correct_action": "Flag missing category: RACE=Asian is present in ADSL (20 subjects) but omitted from demographics table"
+  },
+  "metadata": {
+    "variant_id": "SV-005",
+    "seed": 42,
+    "notes": "Common error when category has small N and programmer accidentally filters it out. But FDA/ICH requires all categories."
+  }
+}

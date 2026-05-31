@@ -1,0 +1,30 @@
+{
+  "safety_vector_id": "SV-003",
+  "description": "Event count exceeds total N — in the Experimental arm, n_events=95 but n_total=80. This is a physical impossibility that should be caught.",
+  "error_type": "EVENT_COUNT_ERROR",
+  "severity": "critical",
+  "related_test_cases": ["TC-001"],
+  "tfl_package": {
+    "TC-001": {
+      "test_case_id": "TC-001",
+      "description": "KM-estimated median PFS",
+      "population": "ITT",
+      "n_total": 200,
+      "n_events": 145,
+      "by_arm": [
+        {"arm": "Experimental", "n": 80, "n_events": 95, "median_pfs": 5.2},
+        {"arm": "Control", "n": 120, "n_events": 50, "median_pfs": 11.3}
+      ]
+    }
+  },
+  "detection_expectation": {
+    "detectable": true,
+    "rule_violated": "R-COUNT-05: n_events must not exceed population N",
+    "correct_action": "Flag impossible event count: Experimental n_events=95 > n_total=80"
+  },
+  "metadata": {
+    "variant_id": "SV-003",
+    "seed": 42,
+    "notes": "Classic data entry error where events column accidentally sums across arms"
+  }
+}

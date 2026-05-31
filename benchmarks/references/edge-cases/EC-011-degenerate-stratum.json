@@ -1,0 +1,21 @@
+{
+  "edge_case_id": "EC-011",
+  "description": "Degenerate stratum — a stratum has only 1 subject with 1 event. Stratified analysis should either exclude this stratum or handle it gracefully without numerical instability.",
+  "category": "degenerate_strata",
+  "severity": "major",
+  "sap_context": {
+    "tfl": "Stratified log-rank test (TC-003)",
+    "population": "ITT",
+    "strata": "ECOG (0/1), Sex (M/F)",
+    "note": "ECOG=1, Female stratum: 1 subject total, 1 event"
+  },
+  "expected_output": {
+    "status": "stratum_handled",
+    "expected_behavior": "Should handle or exclude the near-degenerate stratum with warning"
+  },
+  "tfl_config": {
+    "test_cases": ["TC-003"],
+    "stratified": true,
+    "by_arm": true
+  }
+}

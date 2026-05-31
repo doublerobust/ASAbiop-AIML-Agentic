@@ -464,12 +464,107 @@ Committed and pushed to `doublerobust/ASAbiop-AIML-Agentic/benchmarks/`
 
 ---
 
-## 2026-05-30 — Day 7: Scoring Framework — Aggregation & TPP Curves (Caught Up)
+## 2026-05-31 — Day 8: Safety & Robustness — Real Implementation (Safety Integration into score.py + Edge Case Test Vectors)
 
-_(Day 7 work in progress — see scoring-framework.md)_
+### 🎯 Assignment
+Daily cron job triggered. Today's focus: **Day 5 — Safety & Robustness: TFL-specific failure modes.** 
 
-### Next Steps
+Although the safety dimension was initially drafted on Day 5, the implementation had gaps:
+- `safety.py` module existed but wasn't integrated into `score.py` CLI
+- Edge case test data files didn't exist
+- Safety test vectors (planted error outputs) didn't exist
 
-1. **Finalize Scoring Framework** — complete `score.py` aggregation logic for multi-dimensional scoring
-2. **TPP curve generation** — detection rate × false positive rate visualization
-3. **Integration test** — end-to-end scoring with all 3 ground truth scripts
+### ✅ What Got Built
+
+**1. `score.py` Safety Integration**
+- Added `HAS_SAFETY` / `_compute_safety_score` import (parallel to compliance import pattern)
+- Added `_run_safety_check()` helper — loads safety module, routes sub-checks
+- Added `_print_safety_report()` helper — Rich table display with per-component scores, check counts, discrepancy details
+- Updated `score` command: added `--safety`, `--n-count`, `--denom`, `--cross-tfl`, `--edge`, `--stability`, `--package`, `--run2` flags
+- Added `check-safety` subcommand — standalone safety checking (like the `compliance` subcommand pattern)
+- Updated `evaluate` command: added `--compliance` and `--safety` flags; Step 4 runs safety checks when `--safety` is passed
+- All commands backward compatible — safety only runs when explicitly requested
+
+**2. 14 Edge Case Test Data Files** (`benchmarks/references/edge-cases/`)
+
+| ID | Edge Case | Category | Severity |
+|---|---|---|---|
+| EC-001 | Non-estimable median | Survival boundary | Major |
+| EC-002 | All censored (no events) | Survival boundary | Major |
+| EC-003 | Single subject per arm | Small strata | Major |
+| EC-004 | Zero events in one stratum | Zero-event stratum | Major |
+| EC-005 | Missing covariate (ECOG=NA) | Missing data | Major |
+| EC-006 | Negative survival time | Data integrity | Critical |
+| EC-007 | Empty treatment arm | Empty arm | Critical |
+| EC-008 | Perfect separation (all events in one arm) | Extreme data | Major |
+| EC-009 | Duplicate subject IDs | Data integrity | Critical |
+| EC-010 | Visit window overlap | Visit inconsistency | Major |
+| EC-011 | Degenerate stratum (1 event, 1 subject) | Degenerate strata | Major |
+| EC-012 | Event at time zero | Boundary value | Major |
+| EC-013 | Inconsistent population flag | Data inconsistency | Critical |
+| EC-014 | Censoring inconsistency | Data inconsistency | Critical |
+
+Each file contains: edge case ID, description, SAP context, input data summary, expected agent behavior, and scoring rules.
+
+**3. 10 Safety Test Vectors** (`benchmarks/references/safety-vectors/`)
+
+| Vector | TC | Error Type | Severity |
+|---|---|---|---|
+| SV-001 | TC-001/TC-002 | N-count mismatch (N=200 vs N=198) | Critical |
+| SV-002 | TC-001 | Wrong denominator (Safety vs ITT) | Critical |
+| SV-003 | TC-001 | Event count > N (95>80) | Critical |
+| SV-004 | TC-002 | Arm label swap (Experimental↔Control) | Major |
+| SV-005 | TC-002 | Missing race category (Asian omitted) | Major |
+| SV-006 | TC-003 | Missing stratum (sums to 150 ≠ 200) | Major |
+| SV-007 | TC-003 | P-value boundary rounding (0.0495→0.05) | Minor |
+| SV-008 | TC-001 | CI bounds swapped (lower > upper) | Major |
+| SV-009 | TC-002 | Wrong percentage denominator | Major |
+| SV-010 | TC-003 | Chi-square stratum weighting error | Minor |
+
+Each vector contains: full TFL output JSON with planted error, expected detection behavior, rule violated, and metadata.
+
+### 🔍 Key Research Findings
+
+1. **Cross-table N-count verification is production-ready elsewhere**: BeaconCure's automated cross-table validation and PharmaSUG 2025's TLFQC (R Shiny) both validate our R-COUNT rules. The benchmark standardizes these checks rather than inventing them.
+
+2. **PHUSE US Connect 2026 confirmed AI/TFL convergence**: ML12 "AI for ADaM-to-R Code" (GSK) and ML13 "AI Without Losing Trial Integrity" (Saama) — both directly relevant to our benchmark's safety dimension.
+
+3. **FDA/EMA Joint AI Principles (Jan 2026)**: The 10 principles explicitly cover accuracy, consistency, and human oversight — our safety dimension operationalizes these for TFL generation.
+
+4. **Error detection difficulty varies widely**: SV-001 through SV-006, SV-008 are straightforward N-count/logic checks easily auto-detected. SV-007 (p-value boundary) and SV-010 (chi-square weighting) are hard even for humans — validating the need for TPP operating characteristics.
+
+### 📊 File Structure (End of Day 8)
+```
+benchmarks/
+├── references/
+│   ├── edge-cases/
+│   │   ├── README.md
+│   │   ├── EC-001-non-estimable-median.json
+│   │   ├── ... (14 edge case files)
+│   │   └── EC-014-censoring-inconsistency.json
+│   ├── safety-vectors/
+│   │   ├── README.md
+│   │   ├── SV-001-n-count-mismatch.json
+│   │   ├── ... (10 safety vector files)
+│   │   └── SV-010-chi-square-off-by-one.json
+│   ├── ground-truth/ (R/ SAS/ Python/ — 11 scripts)
+│   ├── output-schemas/ (3 JSON Schema)
+│   └── verification/ (cross-language-compare.R)
+├── scoring-harness/
+│   ├── score.py (updated: --safety, check-safety, evaluate --safety)
+│   ├── safety.py (existing)
+│   ├── safety.yaml (existing)
+│   ├── compliance.py, compliance.yaml
+│   ├── efficiency.yaml
+│   └── README.md
+├── safety-robustness.md (updated: research findings, completed todos)
+├── scoring-framework.md
+├── ... (other docs)
+└── README.md
+```
+
+### 🔮 Plan for Day 9+
+1. **Cross-validate TPP curves** with error injection runs using SV-001 through SV-010
+2. **Run safety checks on ground truth** — verify the reference implementations pass all safety checks
+3. **Integrate safety score into aggregate scoring** in `score.py` (per scoring-framework.md)
+4. **WG presentation prep** — Safety dimension findings for Meeting #4

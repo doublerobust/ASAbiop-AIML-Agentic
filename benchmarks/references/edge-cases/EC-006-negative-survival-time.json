@@ -1,0 +1,21 @@
+{
+  "edge_case_id": "EC-006",
+  "description": "Negative survival time — ADTTE contains negative AVAL (survival time) for one subject. Agent should flag this as a data integrity issue rather than silently computing with a negative time value.",
+  "category": "data_integrity",
+  "severity": "critical",
+  "sap_context": {
+    "tfl": "KM-estimated median PFS (TC-001)",
+    "population": "ITT",
+    "note": "One subject has AVAL=-5.3 (negative survival time)"
+  },
+  "expected_output": {
+    "status": "flagged",
+    "error_detected": true,
+    "expected_behavior": "Should flag negative time as data error or exclude with warning"
+  },
+  "tfl_config": {
+    "test_cases": ["TC-001"],
+    "stratified": false,
+    "by_arm": true
+  }
+}

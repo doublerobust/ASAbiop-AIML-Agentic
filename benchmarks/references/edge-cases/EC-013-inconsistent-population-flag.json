@@ -1,0 +1,20 @@
+{
+  "edge_case_id": "EC-013",
+  "description": "Inconsistent population flag — a subject has ITTFL=Y (in ITT population) but is excluded from all analysis datasets. This logical inconsistency should be detected by the agent.",
+  "category": "data_inconsistency",
+  "severity": "critical",
+  "sap_context": {
+    "tfl": "Baseline demographics table (TC-002), KM (TC-001)",
+    "population": "ITT",
+    "note": "Subject XYZ-001-002 has ITTFL='Y' but no ADTTE record (missing from analysis)"
+  },
+  "expected_output": {
+    "status": "flagged",
+    "expected_behavior": "Should detect inconsistency: subject flagged for ITT but missing from ADTTE"
+  },
+  "tfl_config": {
+    "test_cases": ["TC-001", "TC-002"],
+    "stratified": false,
+    "by_arm": true
+  }
+}

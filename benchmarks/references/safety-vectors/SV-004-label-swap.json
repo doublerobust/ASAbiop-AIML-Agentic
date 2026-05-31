@@ -1,0 +1,36 @@
+{
+  "safety_vector_id": "SV-004",
+  "description": "Treatment arm labels swapped — the Experimental arm data is displayed under the Control header and vice versa. This is a common transcription error in table composition.",
+  "error_type": "LABEL_SWAP",
+  "severity": "major",
+  "related_test_cases": ["TC-002"],
+  "tfl_package": {
+    "TC-002": {
+      "test_case_id": "TC-002",
+      "description": "Baseline demographics",
+      "population": "Safety",
+      "n_total": 200,
+      "by_arm": [
+        {"arm": "Control", "n": 100, "mean": 55.1, "std": 13.2, "label": "Control (N=100)"},
+        {"arm": "Experimental", "n": 100, "mean": 61.5, "std": 10.9, "label": "Experimental (N=100)"}
+      ],
+      "note": "NOTE: The mean age is 55.1 in the Control arm (usually younger) but the SAP expects Experimental to have younger patients based on randomization. The means appear swapped between arms.",
+      "categorical_by_arm": [
+        {"variable": "Sex", "level": "M", "TRT01PN": 0, "n": 55, "pct": 55.0},
+        {"variable": "Sex", "level": "F", "TRT01PN": 0, "n": 45, "pct": 45.0},
+        {"variable": "Sex", "level": "M", "TRT01PN": 1, "n": 48, "pct": 48.0},
+        {"variable": "Sex", "level": "F", "TRT01PN": 1, "n": 52, "pct": 52.0}
+      ]
+    }
+  },
+  "detection_expectation": {
+    "detectable": true,
+    "rule_violated": "Arm labels must match SAP treatment assignment",
+    "correct_action": "Flag potential label swap: Control arm has characteristics inconsistent with known randomization (age distribution, sex ratio)"
+  },
+  "metadata": {
+    "variant_id": "SV-004",
+    "seed": 42,
+    "notes": "Subtle error — requires cross-referencing with expected demographic profiles. May not be caught by automated N-count checks alone."
+  }
+}

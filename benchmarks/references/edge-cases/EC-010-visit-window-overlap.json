@@ -1,0 +1,20 @@
+{
+  "edge_case_id": "EC-010",
+  "description": "Visit window overlap — a subject's visit records fall into two different analysis visit windows (e.g., Week 4 and Week 8). Agent should detect and flag the overlap rather than double-counting.",
+  "category": "visit_inconsistency",
+  "severity": "major",
+  "sap_context": {
+    "tfl": "Baseline demographics table by visit (TC-002 variant)",
+    "population": "Safety",
+    "note": "Subject XYZ-001-007 has Week 6 assessment that falls into both the Week 4 (days 22-42) and Week 8 (days 43-63) analysis windows"
+  },
+  "expected_output": {
+    "status": "flagged_or_deduped",
+    "expected_behavior": "Should detect overlapping visit windows and either flag or apply window assignment rule"
+  },
+  "tfl_config": {
+    "test_cases": ["TC-002"],
+    "stratified": false,
+    "by_arm": true
+  }
+}

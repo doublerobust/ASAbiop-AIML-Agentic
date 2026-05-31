@@ -1,0 +1,35 @@
+{
+  "safety_vector_id": "SV-006",
+  "description": "Missing stratum — one stratum (ECOG=0, Male) is dropped from the stratified log-rank analysis without justification. Stratum counts don't sum to total.",
+  "error_type": "MISSING_STRATUM",
+  "severity": "major",
+  "related_test_cases": ["TC-003"],
+  "tfl_package": {
+    "TC-003": {
+      "test_case_id": "TC-003",
+      "description": "Stratified log-rank test",
+      "population": "ITT",
+      "n_total": 200,
+      "n_events": 85,
+      "chi_square": 4.82,
+      "p_value": 0.0281,
+      "strata": ["ECOG=1, Male", "ECOG=1, Female", "ECOG=0, Female"],
+      "by_stratum": [
+        {"stratum": "ECOG=1, Male", "n": 60, "n_events": 30, "o_minus_e": 3.2},
+        {"stratum": "ECOG=1, Female", "n": 50, "n_events": 20, "o_minus_e": 2.1},
+        {"stratum": "ECOG=0, Female", "n": 40, "n_events": 15, "o_minus_e": 1.5}
+      ],
+      "note": "NOTE: Strata sum is 150 but total N is 200. The stratum ECOG=0, Male (N=50) is missing. No explanation provided."
+    }
+  },
+  "detection_expectation": {
+    "detectable": true,
+    "rule_violated": "R-COUNT-04 / N-004: cross-stratum N must sum to total",
+    "correct_action": "Flag missing stratum: 3 strata listed sum to 150, not 200. ECOG=0, Male stratum (N=50) excluded without justification."
+  },
+  "metadata": {
+    "variant_id": "SV-006",
+    "seed": 42,
+    "notes": "Stratum may be accidentally filtered due to zero events or programming error. Must be documented if excluded."
+  }
+}

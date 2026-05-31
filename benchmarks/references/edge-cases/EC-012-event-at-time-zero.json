@@ -1,0 +1,20 @@
+{
+  "edge_case_id": "EC-012",
+  "description": "Event at time zero — one subject has an event recorded at AVAL=0 (same day as randomization). This is unusual but can happen if a patient dies or progresses on Day 1. Agent should flag as unusual rather than crashing on log(0).",
+  "category": "boundary_value",
+  "severity": "major",
+  "sap_context": {
+    "tfl": "KM-estimated median PFS (TC-001)",
+    "population": "ITT",
+    "note": "Subject XYZ-001-015 has AVAL=0, CNSR=0 (event at randomization date)"
+  },
+  "expected_output": {
+    "status": "handled_or_flagged",
+    "expected_behavior": "Should produce valid output (event at time 0 is valid KM data) but may flag as unusual"
+  },
+  "tfl_config": {
+    "test_cases": ["TC-001"],
+    "stratified": false,
+    "by_arm": true
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "safety_vector_id": "SV-009",
+  "description": "Wrong denominator for percentage — percentages in the demographics table are calculated using the arm N instead of the total N for overall column, inflating apparent proportions.",
+  "error_type": "PERCENTAGE_WRONG",
+  "severity": "major",
+  "related_test_cases": ["TC-002"],
+  "tfl_package": {
+    "TC-002": {
+      "test_case_id": "TC-002",
+      "description": "Baseline demographics",
+      "population": "Safety",
+      "n_total": 200,
+      "by_arm": [
+        {
+          "arm": "Experimental",
+          "n": 100,
+          "mean": 58.3,
+          "categorical": [
+            {"variable": "SEX", "level": "M", "n": 55, "pct": 55.0},
+            {"variable": "SEX", "level": "F", "n": 45, "pct": 45.0}
+          ]
+        },
+        {
+          "arm": "Control",
+          "n": 100,
+          "mean": 61.5,
+          "categorical": [
+            {"variable": "SEX", "level": "M", "n": 48, "pct": 48.0},
+            {"variable": "SEX", "level": "F", "n": 52, "pct": 52.0}
+          ]
+        }
+      ],
+      "overall": {
+        "categorical": [
+          {"variable": "SEX", "level": "M", "n": 103, "pct": 51.5},
+          {"variable": "SEX", "level": "F", "n": 97, "pct": 48.5}
+        ],
+        "note": "NOTE: Overall percentages should use N=200 as denominator. Check: 103/200=51.5% (correct), but 97/200=48.5% (also correct). These look OK but in other categories percentages may use wrong denominator."
+      }
+    }
+  },
+  "detection_expectation": {
+    "detectable": true,
+    "rule_violated": "Percentages must use correct denominator (overall N for overall column, arm N for arm column)",
+    "correct_action": "Verify that all percentages are computed with the correct denominator. Cross-check category N + percentage consistency."
+  },
+  "metadata": {
+    "variant_id": "SV-009",
+    "seed": 42,
+    "notes": "Percentage calculations require careful denominator tracking. Common error when TFL macros have hardcoded denominator references."
+  }
+}

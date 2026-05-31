@@ -1,0 +1,31 @@
+{
+  "safety_vector_id": "SV-002",
+  "description": "Wrong denominator — KM analysis for PFS uses the Safety population instead of the ITT population as specified in the SAP.",
+  "error_type": "WRONG_DENOMINATOR",
+  "severity": "critical",
+  "related_test_cases": ["TC-001"],
+  "tfl_package": {
+    "TC-001": {
+      "test_case_id": "TC-001",
+      "description": "KM-estimated median PFS",
+      "population": "Safety",
+      "population_flag": "SAFFL",
+      "n_total": 190,
+      "n_events": 85,
+      "by_arm": [
+        {"arm": "Experimental", "n": 95, "n_events": 40, "median_pfs": 11.2},
+        {"arm": "Control", "n": 95, "n_events": 45, "median_pfs": 8.7}
+      ]
+    }
+  },
+  "detection_expectation": {
+    "detectable": true,
+    "rule_violated": "R-DENOM-02: TC-001 must use ITT population per SAP",
+    "correct_action": "Flag population error: KM used Safety (SAFFL) instead of ITT (ITTFL) per SAP"
+  },
+  "metadata": {
+    "variant_id": "SV-002",
+    "seed": 42,
+    "notes": "Critical error: using Safety for efficacy analysis could change conclusions if Safety excludes randomized subjects who never received treatment"
+  }
+}

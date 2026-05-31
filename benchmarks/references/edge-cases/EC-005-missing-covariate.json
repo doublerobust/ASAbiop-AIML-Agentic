@@ -1,0 +1,22 @@
+{
+  "edge_case_id": "EC-005",
+  "description": "Missing covariate — ECOG stratification factor is missing (NA) for a subset of subjects. Agent must handle the missing values without crashing or producing incorrect output.",
+  "category": "missing_data",
+  "severity": "major",
+  "sap_context": {
+    "tfl": "Baseline demographics table (TC-002) + Stratified log-rank (TC-003)",
+    "population": "ITT",
+    "strata": "ECOG (0/1)",
+    "note": "5/100 subjects have ECOG=NA"
+  },
+  "expected_output": {
+    "status": "handled_with_flag",
+    "ecog_na_handled": true,
+    "warning_included": true
+  },
+  "tfl_config": {
+    "test_cases": ["TC-002", "TC-003"],
+    "stratified": true,
+    "by_arm": true
+  }
+}

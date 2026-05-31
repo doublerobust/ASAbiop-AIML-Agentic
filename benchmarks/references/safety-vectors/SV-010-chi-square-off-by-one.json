@@ -1,0 +1,34 @@
+{
+  "safety_vector_id": "SV-010",
+  "description": "Chi-square off by stratum weighting error — the chi-square statistic is ~1.0 less than the correct value due to stratum weight miscalculation. This is subtle and may affect p-value interpretation near boundaries.",
+  "error_type": "CHI_SQ_OFF_BY_ONE",
+  "severity": "minor",
+  "related_test_cases": ["TC-003"],
+  "tfl_package": {
+    "TC-003": {
+      "test_case_id": "TC-003",
+      "description": "Stratified log-rank test",
+      "population": "ITT",
+      "n_total": 200,
+      "n_events": 85,
+      "chi_square": 3.12,
+      "p_value": 0.0773,
+      "p_value_note": "Two-sided p-value",
+      "by_stratum": [
+        {"stratum": "ECOG=0", "n": 100, "n_events": 40, "o_minus_e": 4.5, "variance": 18.2},
+        {"stratum": "ECOG=1", "n": 100, "n_events": 45, "o_minus_e": 3.8, "variance": 16.5}
+      ],
+      "note": "NOTE: Correct chi-square = sum(O-E)^2/V = 4.5^2/18.2 + 3.8^2/16.5 = 1.11 + 0.87 = 1.98? No, that's not right -- the variance denominator is wrong. Correct: (4.5+3.8)^2/(18.2+16.5) = 8.3^2/34.7 = 68.89/34.7 = 1.985. But reported chi-square = 3.12. The actual correct value should be ~4.12 with correct stratum weighting."
+    }
+  },
+  "detection_expectation": {
+    "detectable": false,
+    "rule_violated": "Stratum weights must be proportional to inverse variance for correct stratified test",
+    "correct_action": "Very hard to detect without independent computation. Requires cross-check against raw data. Flag if chi-square/p-value don't match reference values."
+  },
+  "metadata": {
+    "variant_id": "SV-010",
+    "seed": 42,
+    "notes": "Hardest error to detect. The chi-square is plausible (between 3-4) and the p-value is reasonable. Only detectable by cross-validation with a reference implementation."
+  }
+}

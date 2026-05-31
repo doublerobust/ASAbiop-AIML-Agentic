@@ -1,0 +1,23 @@
+{
+  "edge_case_id": "EC-008",
+  "description": "Perfect separation — all events occur in one treatment arm (100% events in Experimental, 0 events in Control). This violates the proportional hazards assumption and may produce extreme or non-informative HR estimates.",
+  "category": "extreme_data",
+  "severity": "major",
+  "sap_context": {
+    "tfl": "KM-estimated median PFS (TC-001)",
+    "population": "ITT",
+    "arms": {"Experimental": 50, "Control": 50},
+    "note": "All 40 events are in the Experimental arm; Control has 0 events (all censored)"
+  },
+  "expected_output": {
+    "status": "warning_extreme",
+    "n_events_experimental": 40,
+    "n_events_control": 0,
+    "expected_behavior": "Should produce valid KM estimates per arm but flag non-PH concern"
+  },
+  "tfl_config": {
+    "test_cases": ["TC-001"],
+    "stratified": false,
+    "by_arm": true
+  }
+}

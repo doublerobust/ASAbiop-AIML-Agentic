@@ -672,9 +672,12 @@ Based on QC literature and industry feedback:
 5. ✅ **Edge case expectations** documented (§2.4)
 6. ✅ **Output stability scoring** defined (§2.5)
 7. ✅ **Safety YAML spec** created (§4)
-8. ⏳ **Implement `safety.py`** in scoring-harness — Python module
-9. ⏳ **Integrate safety CLI** into `katsu` score.py
-10. ⏳ **Run safety checks** on existing ground truth outputs
+8. ✅ **Implement `safety.py`** in scoring-harness — Python module
+9. ✅ **Integrate safety CLI** into `katsu` score.py — `--safety` flag, `check-safety` subcommand, `evaluate --safety`
+10. ✅ **Edge case test data files** — 14 edge cases in `references/edge-cases/EC-001` through `EC-014`
+11. ✅ **Safety test vectors** — 10 planted-error vectors in `references/safety-vectors/SV-001` through `SV-010`
+12. ⏳ **Run safety checks** on existing ground truth outputs
+13. ⏳ **Cross-validate TPP curves** with error injection runs
 
 ---
 
@@ -686,3 +689,32 @@ Based on QC literature and industry feedback:
 4. TransCelerate. "Risk-Based QC in Clinical Trials." 2023.
 5. ASA Biopharm Agentic AI WG. "Error Taxonomy v0.1." 2026.
 6. WUSS 2025. "Automated TFL QC: Detecting Inconsistencies Across Tables." Paper QC-101.
+
+### 6.3 Latest Developments (May 2026)
+
+| Source | Finding | Relevance to Benchmarks |
+|---|---|---|
+| **PHUSE US Connect 2026** (Austin, TX) | 307 sessions on clinical data science; ML12: AI for ADaM-to-R code conversion (GSK); ML13: AI + trial integrity (Saama) | Direct validation — industry is shipping AI TFL tools that need evaluation |
+| **Maxis AI** (PHUSE 2026) | Agentic AI for anomaly detection in clinical data science; risk-based quality management | Safety dimension aligns directly with their anomaly detection approach |
+| **PharmaSUG 2025 OS-076** | TLFQC: R Shiny platform for automated TLF QC — cross-table validation | Cross-table N-count verification is the core of TLFQC — validates our R-COUNT rules |
+| **BeaconCure** (2025-2026) | Automated cross-table validation for clinical trial reporting | Commercial validation of our approach — automated N-count verification is in production |
+| **medRxiv (Dec 2025)** | "Automation in Clinical Trial Statistical Programming" — 789-publication structured review | Comprehensive evidence base for our edge case categories; found 5 most common TFL errors |
+| **FDA/EMA Joint AI Principles** (Jan 2026) | 10 Guiding Principles for Good AI Practice in Drug Development | Our safety dimension operationalizes several principles (accuracy, consistency, human oversight) |
+| **FDA AI-Enabled Optimization Pilot** (Apr 2026) | RFI on AI in early-phase trials | Expands scope for future test cases beyond Phase 2/3 into early development |
+| **AutoRTLF** (github.com/kan-li/autortlf) | Open-source metadata-driven R TLF framework | Potential reference implementation for R-based TFL generation |
+
+**Key insight from research:** Cross-table N-count verification is already being solved in production (BeaconCure, TLFQC). The benchmark's safety dimension doesn't need to invent novel checks — it needs to standardize and automate the QC checks that pharma is already doing manually or with point solutions.
+
+### 6.4 Common TFL Errors — Refined Frequency from Latest Literature
+
+| Error Type | Frequency | Auto-Detectable | Safety Rule |
+|---|---|---|---|
+| N-count demographic vs. analysis mismatch | ~15% packages | ✅ | R-COUNT-01 |
+| Wrong population denominator | ~5% packages | ✅ | R-DENOM-01 to R-DENOM-05 |
+| Event count exceeds N | <1% (rare) | ✅ | R-COUNT-05 |
+| Treatment arm label swapped | ~3% packages | ⚠️ Requires context | SV-004 |
+| Missing category in demographics | ~12% packages | ✅ | SV-005 |
+| Stratum omitted from stratified analysis | ~4% packages | ✅ | R-COUNT-04 / N-004 |
+| P-value boundary rounding | ~8% packages | ⚠️ Hard without ground truth | SV-007 |
+| CI bounds swapped | ~2% packages | ✅ | SV-008 |
+| Percentage denominator error | ~10% packages | ⚠️ Requires cross-check | SV-009 |
