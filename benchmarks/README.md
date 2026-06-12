@@ -38,23 +38,43 @@ readiness.
 
 | # | Deliverable | Timeline | Status |
 |---|---|---|---|
-| 1 | Benchmark taxonomy — dimensions, metrics, scenarios | Ongoing | 🟡 In progress |
-| 2 | **TFL test case bank** — 20-50 TFL generation & review tasks in R, SAS, Python | Phase 1 | 🟡 Started |
-| 3 | Evaluation harness — automated scoring pipeline (multi-language) | Phase 2 | 🔴 Not started |
-| 4 | Reference implementations — gold-standard TFL outputs | Phase 2 | 🔴 Not started |
+| 1 | Benchmark taxonomy — 5 dimensions, scoring framework, TPP curves | Ongoing | 🟢 Complete |
+| 2 | **TFL test case bank** — 14 test cases (7 Level 1 with ground truth in R+Python) | Phase 1 | 🟡 In progress (14/50) |
+| 3 | Evaluation harness — scoring CLI (compliance, safety, efficiency) | Phase 2 | 🟡 In progress |
+| 4 | Reference implementations — 7 gold-standard TFL outputs (R+Python, 15 scripts) | Phase 2 | 🟡 In progress |
 | 5 | Public leaderboard — vendor and open-source submissions | Phase 3 | 🔴 Not started |
 | 6 | White paper — benchmark methodology and industry findings | Phase 3 | 🔴 Not started |
 
 ## Folder Structure
 
 ```
-benchmark/
-├── README.md                        ← This file
-├── benchmark-framework-v1.md        ← The benchmark framework proposal
-├── progress-log.md                  ← Daily log — what happened, decisions, next steps
-├── relevant-work.md                 ← Catalog of related pharma/biotech benchmark efforts
-├── tools-packages.md                ← Tools, packages, and infrastructure needed
-└── references/                      ← Reference papers and standards
+benchmarks/
+├── references/
+│   ├── ground-truth/
+│   │   ├── R/ (7 scripts + common/)
+│   │   ├── SAS/ (3 scripts)
+│   │   └── Python/ (7 scripts + common/)
+│   ├── output-schemas/ (7 JSON Schema files)
+│   ├── edge-cases/ (14 edge case files)
+│   ├── safety-vectors/ (10 safety vector files)
+│   └── verification/ (cross-language-compare.R)
+├── scoring-harness/
+│   ├── score.py (CLI: score, verify, validate, compliance, check-safety, evaluate)
+│   ├── safety.py, compliance.py
+│   ├── tolerances.yaml, safety.yaml, compliance.yaml, efficiency.yaml
+│   └── README.md
+├── test-case-design.md (14 test cases, 7 with ground truth)
+├── scoring-framework.md (multi-language aggregation, TPP curves)
+├── vendor-catalog.md (6 vendors + PharmaSUG 2026 papers)
+├── safety-robustness.md
+├── regulatory-compliance.md
+├── operational-efficiency.md
+├── cross-language-verification.md
+├── benchmark-framework-v1.md
+├── relevant-work.md
+├── tools-packages.md
+├── progress-log.md
+└── README.md
 ```
 
 ## Daily Cadence

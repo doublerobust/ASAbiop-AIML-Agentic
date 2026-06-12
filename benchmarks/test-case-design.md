@@ -940,27 +940,532 @@ parametrizable_params: [study_parameters, treatment_effect, safety_profile]
 
 ---
 
-## 6. Test Case Distribution Matrix
+## 4. Level 1 Test Cases — Expansion (TC-011 through TC-014)
 
-| Test Case | Level | Domain | Statistical Methods | Scoring Type | Param. Variants | Est. Human Time |
-|---|---|---|---|---|---|---|
-| TC-001: KM Median PFS | 1 | Efficacy | KM estimation | Auto (numerical) | 10 | 5 min |
-| TC-002: Demographics Table | 1 | Reporting | Descriptive stats | Auto (tabular) | 8 | 10 min |
-| TC-003: Stratified Log-Rank | 1 | Efficacy | Log-rank, stratification | Auto (numerical) | 12 | 5 min |
-| TC-004: SAP Section | 2 | Design | GS design, log-rank, estimands | Checklist | 10 | 120 min |
-| TC-005: TFL QC Review | 2 | Reporting | QC, discrepancy detection | Partial auto | 15 | 30 min |
-| TC-006: Sample Size Re-Est. | 2 | Design | Conditional power, SSR | Auto + rubric | 10 | 45 min |
-| TC-007: Reg. Response ITT/PP | 3 | Regulatory | Tipping point, sensitivity | Expert rubric | 8 | 180 min |
-| TC-008: Dose-Finding Design | 3 | Design | Bayesian, OCs, simulation | Expert rubric | 6 | 240 min |
-| TC-009: Safety/DMC Report | 3 | Safety | Safety monitoring, signal detection | Expert rubric | 8 | 480 min |
-| TC-010: CSR Section | 3 | Reporting | CSR writing, ICH E3 | Expert rubric | 6 | 480 min |
+### TC-011: Adverse Event Summary Table by SOC and PT
+
+```yaml
+id: TC-011
+level: 1
+domain: safety
+statistical_methods: [descriptive statistics, AE tabulation]
+data_requirements:
+  format: ADaM (ADAE)
+  source: synthetic (seed-controlled)
+  n_subjects: 200 (100 per arm)
+n_variants: 10
+description: |
+  Generate a standard adverse event summary table with:
+  - Rows: SOC → PT hierarchy (MedDRA coding)
+  - Columns: Treatment arms (Experimental vs Control)
+  - Cells: n (%) for each AE term, sorted by descending frequency
+  - Summary rows: Any AE, Serious AEs, AEs leading to discontinuation
+  
+  Population: Safety (SAFFL = "Y")
+  Scoring: exact match on n-counts, ±0.5% on percentages
+inputs:
+  - dataset: adae_adam.sas7bdat (or .rds / .parquet)
+  - specification: "AE summary by SOC/PT, safety population"
+expected_output:
+  type: table
+  format: structured JSON with ae_table array
+ground_truth_method: Python + R (cross-validated)
+scoring:
+  exact_match_weight: 0.7
+  functional_equiv_weight: 0.3
+  partial_credit: yes
+  tolerance: n exact, pct ±0.5%
+estimated_human_time: 20 min
+estimated_agent_time_reference: 5 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, ae_rate_distribution, soc_hierarchy]
+```
+
+**Auto-scoring rules:**
+- N-counts must match ground truth exactly (subject counts per term are deterministic given seed)
+- Percentages within ±0.5% (rounding tolerance)
+- SOC/PT hierarchy must be preserved (PT nested within SOC)
+- Sorting must be by descending frequency within each SOC
+- Summary rows (Any AE, SAE, Discontinuation) must be present
+
+---
+
+### TC-012: Forest Plot — Subgroup Hazard Ratios
+
+```yaml
+id: TC-012
+level: 1
+domain: efficacy
+statistical_methods: [Cox proportional hazards, subgroup analysis]
+data_requirements:
+  format: ADaM (ADTTE + ADSL)
+  source: synthetic (seed-controlled exponential survival)
+  n_subjects: 300 (150 per arm)
+n_variants: 10
+description: |
+  Compute hazard ratios with 95% CIs for predefined subgroups:
+  - Age group (<65, >=65)
+  - Sex (Male, Female)
+  - ECOG PS (0, 1+)
+  - Region (NA, Europe, Asia)
+  - Prior therapy (Yes, No)
+  
+  Use Cox PH model per subgroup. Report overall HR and subgroup-specific
+  HRs with 95% CI. Compute interaction p-values.
+inputs:
+  - dataset: adtte_adam + adsl_adam
+  - specification: "Subgroup analysis per SAP, Cox PH model"
+expected_output:
+  type: structured result (forest plot data)
+  format: JSON with overall HR, subgroup HRs, interaction p-values
+ground_truth_method: R (survival::coxph) + Python (rate-ratio approximation)
+scoring:
+  exact_match_weight: 0.5
+  functional_equiv_weight: 0.5
+  partial_credit: yes
+  tolerance: HR ±0.05, CI ±0.1
+estimated_human_time: 15 min
+estimated_agent_time_reference: 8 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, hazard_ratio, subgroup_distribution]
+```
+
+**Auto-scoring rules:**
+- HR within ±0.05 of ground truth (R survival::coxph reference)
+- CI bounds within ±0.1
+- All 11 subgroups must be present
+- Interaction p-values within ±0.01
+- CI lower < HR < CI upper ordering enforced
+
+---
+
+### TC-013: Waterfall Plot — Best % Change in Tumor Size
+
+```yaml
+id: TC-013
+level: 1
+domain: efficacy (oncology)
+statistical_methods: [RECIST 1.1 response categorization]
+data_requirements:
+  format: ADaM (ADRS or custom)
+  source: synthetic (seed-controlled)
+  n_subjects: 150 (75 per arm)
+n_variants: 10
+description: |
+  Compute best percentage change from baseline in tumor size (sum of
+  longest diameters) for each subject. Categorize per RECIST 1.1:
+  - CR: -100%
+  - PR: >= -30% decrease
+  - PD: >= +20% increase
+  - SD: neither PR nor PD
+  
+  Compute ORR (CR+PR), DCR (CR+PR+SD), median best % change.
+  Sort subjects by best % change for waterfall plot.
+inputs:
+  - dataset: tumor_response_data (ADRS or custom)
+  - specification: "Waterfall plot data per RECIST 1.1"
+expected_output:
+  type: structured result (waterfall plot data)
+  format: JSON with subjects array (sorted), summary stats
+ground_truth_method: Python + R (cross-validated)
+scoring:
+  exact_match_weight: 0.6
+  functional_equiv_weight: 0.4
+  partial_credit: yes
+  tolerance: pct ±1.0%, counts exact
+estimated_human_time: 10 min
+estimated_agent_time_reference: 5 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, response_rate_distribution]
+```
+
+**Auto-scoring rules:**
+- Response category counts (CR/PR/SD/PD) must match exactly
+- ORR and DCR within ±1.0%
+- Individual subject BESTPCHG within ±1.0%
+- Sorting order must be ascending by BESTPCHG
+- RECIST 1.1 thresholds (-30%, +20%) must be correctly applied
+
+---
+
+### TC-014: Listing of Key Protocol Deviations
+
+```yaml
+id: TC-014
+level: 1
+domain: reporting
+statistical_methods: [data listing, categorization]
+data_requirements:
+  format: ADaM (ADPD or custom)
+  source: synthetic (seed-controlled)
+  n_subjects: 200 (100 per arm)
+n_variants: 10
+description: |
+  Generate a listing of key protocol deviations with:
+  - Subject ID, treatment arm, deviation category, description,
+    study day, date, severity
+  - Categories: Eligibility, Visit Window, Prohibited Medication,
+    Dose Modification, Consent, Endpoint Deviation
+  - Severity: Critical, Major, Minor
+  - Sorted by subject ID
+  
+  Compute summary statistics: n subjects with PDs, n total PDs,
+  breakdown by category and severity.
+inputs:
+  - dataset: protocol_deviation_data (ADPD or custom)
+  - specification: "PD listing sorted by subject, summary by category"
+expected_output:
+  type: listing
+  format: JSON with listing array + summary stats
+ground_truth_method: Python + R (cross-validated)
+scoring:
+  exact_match_weight: 0.8
+  functional_equiv_weight: 0.2
+  partial_credit: yes
+  tolerance: exact match for counts, category names
+estimated_human_time: 15 min
+estimated_agent_time_reference: 5 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, pd_rate, severity_distribution]
+```
+
+**Auto-scoring rules:**
+- Listing must be sorted by USUBJID
+- PD category codes must match standard taxonomy
+- Summary counts must match exactly
+- Severity classification must be consistent with data
+- All PD subjects must appear in listing
+
+---
+
+## 5. Level 2 Test Cases (Detailed)
+
+### TC-004: SAP Section Drafting
+
+```yaml
+id: TC-004
+title: "Draft SAP section for primary efficacy analysis"
+level: 2
+domain: design
+statistical_methods: [group sequential design, log-rank test, estimands]
+data_requirements:
+  format: Protocol + SAP template
+  source: synthetic protocol
+  n_subjects: N/A (design task)
+n_variants: 10
+description: |
+  Given a synthetic Phase III oncology protocol (two-arm, randomized,
+  double-blind), draft the "Primary Efficacy Analysis" section of the
+  SAP. The section must include:
+  - Estimand specification (5 attributes per ICH E9(R1))
+  - Primary endpoint definition (PFS per RECIST 1.1)
+  - Statistical method (stratified log-rank test)
+  - Multiplicity adjustment (O'Brien-Fleming group sequential boundaries)
+  - Missing data handling strategy
+  - Analysis population definitions (ITT, mITT, PP)
+  
+  The agent must correctly implement the O'Brien-Fleming spending function
+  and specify the information fraction for the interim analysis.
+inputs:
+  - specification: "Phase III protocol synopsis with treatment arms and endpoints"
+expected_output:
+  type: section
+  format: Structured Markdown with ICH E3-compliant section numbering
+ground_truth_method: Manual review (checklist-based scoring)
+scoring:
+  exact_match_weight: 0.0
+  functional_equiv_weight: 1.0
+  partial_credit: yes
+estimated_human_time: 120 min
+estimated_agent_time_reference: 15 min
+contamination_risk: high
+parametrizable_params: [trial_phase, n_arms, endpoint_type, interim_timing]
+```
+
+---
+
+### TC-005: TFL QC Review
+
+```yaml
+id: TC-005
+title: "QC review of a TFL package (3 tables, 2 figures, 1 listing)"
+level: 2
+domain: reporting
+statistical_methods: [QC methodology, cross-table verification]
+data_requirements:
+  format: TFL output package (JSON/RTF) + SAP
+  source: pre-generated with seeded errors
+  n_subjects: 200
+n_variants: 15
+description: |
+  Review a pre-generated TFL package containing:
+  - Table 1: Baseline demographics (with 2 seeded errors)
+  - Table 2: Efficacy summary (with 1 seeded error)
+  - Table 3: Safety summary (with 3 seeded errors)
+  - Figure 1: KM curve (with 1 seeded error)
+  - Figure 2: Forest plot (no errors)
+  - Listing 1: Protocol deviations (with 1 seeded error)
+  
+  The agent must identify and classify each error using the 3-class
+  severity taxonomy (A/B/C). Total: 8 seeded errors across 6 TFLs.
+inputs:
+  - tfl_package: 6 TFL outputs with seeded errors
+  - sap: matching SAP for reference
+  - error_catalog: ground truth error locations (hidden from agent)
+expected_output:
+  type: report
+  format: JSON with error_id, location, severity, description
+ground_truth_method: Auto (pre-seeded error catalog)
+scoring:
+  exact_match_weight: 0.6
+  functional_equiv_weight: 0.4
+  partial_credit: yes
+estimated_human_time: 30 min
+estimated_agent_time_reference: 8 min
+contamination_risk: medium
+parametrizable_params: [seed, error_types, error_locations, n_errors]
+```
+
+---
+
+### TC-006: Sample Size Re-Estimation at Interim
+
+```yaml
+id: TC-006
+title: "Sample size re-estimation based on interim data"
+level: 2
+domain: design
+statistical_methods: [conditional power, sample size re-estimation, group sequential]
+data_requirements:
+  format: ADaM (ADTTE) — interim dataset (50% information)
+  source: synthetic
+  n_subjects: 200 (interim), re-estimation target
+n_variants: 10
+description: |
+  Given interim data from a Phase III trial at 50% information fraction:
+  - Compute observed hazard ratio at interim
+  - Compute conditional power for 3 assumed HR scenarios (observed, null, alternative)
+  - Recommend sample size re-estimation (increase, maintain, or stop for futility)
+  - Implement the pre-planned Cui-Hung-Wang (CHW) method
+  
+  The agent must correctly implement the CHW sample size re-estimation
+  formula and provide a recommendation with justification.
+inputs:
+  - dataset: interim_adtte (50% events)
+  - specification: "CHW method per SAP, alpha-spending O'Brien-Fleming"
+expected_output:
+  type: code + recommendation
+  format: JSON with observed HR, conditional powers, recommended N
+ground_truth_method: R (gsDesign) + expert review
+scoring:
+  exact_match_weight: 0.4
+  functional_equiv_weight: 0.6
+  partial_credit: yes
+estimated_human_time: 45 min
+estimated_agent_time_reference: 10 min
+contamination_risk: medium
+parametrizable_params: [seed, interim_fraction, true_hr, alpha_spending]
+```
+
+---
+
+## 6. Level 3 Test Cases (Expert Review)
+
+### TC-007: Regulatory Response — ITT/PP Discrepancy
+
+```yaml
+id: TC-007
+title: "Draft regulatory response addressing ITT/PP discrepancy"
+level: 3
+domain: regulatory
+statistical_methods: [tipping point analysis, sensitivity analysis, estimands]
+data_requirements:
+  format: ADaM (ADSL, ADTTE) + regulatory question
+  source: synthetic
+  n_subjects: 300
+n_variants: 8
+description: |
+  FDA requests explanation for why ITT analysis (HR=0.72, p=0.018)
+  shows significant treatment effect but PP analysis (HR=0.81, p=0.089)
+  does not. The agent must:
+  1. Identify the drivers of the ITT/PP discrepancy
+  2. Conduct tipping point analysis
+  3. Provide sensitivity analyses (multiple imputation, pattern mixture)
+  4. Draft a regulatory response letter (max 3 pages)
+  
+  The response must be consistent with ICH E9(R1) estimand framework
+  and FDA guidance on missing data.
+inputs:
+  - dataset: adsl + adtte with protocol deviations
+  - specification: "FDA information request on ITT/PP discrepancy"
+expected_output:
+  type: report
+  format: regulatory letter (Markdown) + analysis results (JSON)
+ground_truth_method: Expert review (3 biostatisticians)
+scoring:
+  exact_match_weight: 0.0
+  functional_equiv_weight: 1.0
+  partial_credit: yes
+estimated_human_time: 180 min
+estimated_agent_time_reference: 20 min
+contamination_risk: high
+parametrizable_params: [seed, itt_hr, pp_hr, n_protocol_deviations]
+```
+
+---
+
+### TC-008: Dose-Finding Study Design
+
+```yaml
+id: TC-008
+title: "Design a Phase I dose-finding study with expansion cohort"
+level: 3
+domain: design
+statistical_methods: [CRM, BOIN, EWOC, simulation]
+data_requirements:
+  format: DLT rates per dose level (historical)
+  source: synthetic historical data
+  n_subjects: N/A (design task)
+n_variants: 6
+description: |
+  Design a Phase I dose-finding study for a novel oncology agent:
+  - Select dose-escalation method (CRM, BOIN, or EWOC)
+  - Define dose levels (5-7 levels) with DLT rate assumptions
+  - Specify stopping rules
+  - Design expansion cohort at recommended Phase 2 dose (RP2D)
+  - Simulate operating characteristics (1000 trials)
+  
+  The agent must produce simulation-based operating characteristics:
+  - Probability of selecting each dose as RP2D
+  - Expected number of DLTs
+  - Expected sample size
+inputs:
+  - specification: "Phase I protocol synopsis, DLT rates from preclinical"
+expected_output:
+  type: design document + simulation results
+  format: Markdown + JSON (simulation OCs)
+ground_truth_method: Expert review + simulation verification
+scoring:
+  exact_match_weight: 0.0
+  functional_equiv_weight: 1.0
+  partial_credit: yes
+estimated_human_time: 240 min
+estimated_agent_time_reference: 30 min
+contamination_risk: high
+parametrizable_params: [dlt_rates, n_doses, target_dlt_rate, method]
+```
+
+---
+
+### TC-009: Safety Signal Evaluation / DMC Report
+
+```yaml
+id: TC-009
+title: "Evaluate safety signals and draft DMC recommendation"
+level: 3
+domain: safety
+statistical_methods: [safety monitoring, Bayesian signal detection, group sequential]
+data_requirements:
+  format: ADaM (ADAE, ADLB, ADVS, ADSL)
+  source: synthetic with planted safety signals
+  n_subjects: 500
+n_variants: 8
+description: |
+  Review interim safety data and draft a DMC recommendation:
+  - Identify potential safety signals using Bayesian and frequentist methods
+  - Evaluate hepatotoxicity signals (Hy's Law cases)
+  - Assess cardiovascular risk (QTc prolongation)
+  - Compare event rates across treatment arms with Fisher's exact test
+  - Draft DMC recommendation (continue, modify, stop)
+inputs:
+  - dataset: adae + adlb + advs + adsl (interim)
+  - specification: "DMC charter, safety monitoring plan"
+expected_output:
+  type: report
+  format: DMC recommendation letter (Markdown) + signal analysis (JSON)
+ground_truth_method: Expert review (safety physician + biostatistician)
+scoring:
+  exact_match_weight: 0.0
+  functional_equiv_weight: 1.0
+  partial_credit: yes
+estimated_human_time: 480 min
+estimated_agent_time_reference: 30 min
+contamination_risk: high
+parametrizable_params: [seed, signal_types, signal_magnitudes, interim_fraction]
+```
+
+---
+
+### TC-010: CSR Statistical Sections
+
+```yaml
+id: TC-010
+title: "Draft CSR statistical sections (Sections 11-16)"
+level: 3
+domain: reporting
+statistical_methods: [CSR authoring, ICH E3, multiple analyses]
+data_requirements:
+  format: Full ADaM package + SAP + protocol
+  source: synthetic (complete trial data)
+  n_subjects: 400
+n_variants: 6
+description: |
+  Draft the statistical sections of a Clinical Study Report (ICH E3):
+  - Section 11: Study population (disposition, protocol deviations)
+  - Section 12: Efficacy evaluation (primary + secondary endpoints)
+  - Section 13: Safety evaluation (AEs, labs, vital signs)
+  - Section 14: Tables, figures, listings (TFL listing)
+  - Section 15: Appendix (individual patient data listings)
+  - Section 16: Supplemental (exploratory analyses)
+  
+  Each section must follow ICH E3 structure, include proper references
+  to TFLs, and maintain narrative consistency.
+inputs:
+  - dataset: full ADaM suite
+  - sap: completed SAP
+  - protocol: completed protocol
+expected_output:
+  type: report
+  format: CSR sections (Markdown) per ICH E3
+ground_truth_method: Expert review (medical writer + biostatistician)
+scoring:
+  exact_match_weight: 0.0
+  functional_equiv_weight: 1.0
+  partial_credit: yes
+estimated_human_time: 480 min
+estimated_agent_time_reference: 45 min
+contamination_risk: high
+parametrizable_params: [trial_phase, therapeutic_area, n_endpoints]
+```
+
+---
+
+## 7. Test Case Distribution Matrix
+
+| Test Case | Level | Domain | Statistical Methods | Scoring Type | Ground Truth | Param. Variants | Est. Human Time |
+|---|---|---|---|---|---|---|---|
+| TC-001: KM Median PFS | 1 | Efficacy | KM estimation | Auto (numerical) | R+Py ✅ | 10 | 5 min |
+| TC-002: Demographics Table | 1 | Reporting | Descriptive stats | Auto (tabular) | R+Py ✅ | 8 | 10 min |
+| TC-003: Stratified Log-Rank | 1 | Efficacy | Log-rank, stratification | Auto (numerical) | R+Py ✅ | 12 | 5 min |
+| TC-011: AE Summary Table | 1 | Safety | AE tabulation, SOC/PT | Auto (tabular) | R+Py ✅ | 10 | 20 min |
+| TC-012: Forest Plot HRs | 1 | Efficacy | Cox PH, subgroup analysis | Auto (numerical) | R+Py ✅ | 10 | 15 min |
+| TC-013: Waterfall Plot | 1 | Efficacy (onc.) | RECIST 1.1 categorization | Auto (tabular) | R+Py ✅ | 10 | 10 min |
+| TC-014: PD Listing | 1 | Reporting | Data listing, categorization | Auto (listing) | R+Py ✅ | 10 | 15 min |
+| TC-004: SAP Section | 2 | Design | GS design, log-rank, estimands | Checklist | — | 10 | 120 min |
+| TC-005: TFL QC Review | 2 | Reporting | QC, discrepancy detection | Partial auto | — | 15 | 30 min |
+| TC-006: Sample Size Re-Est. | 2 | Design | Conditional power, SSR | Auto + rubric | — | 10 | 45 min |
+| TC-007: Reg. Response ITT/PP | 3 | Regulatory | Tipping point, sensitivity | Expert rubric | — | 8 | 180 min |
+| TC-008: Dose-Finding Design | 3 | Design | Bayesian, OCs, simulation | Expert rubric | — | 6 | 240 min |
+| TC-009: Safety/DMC Report | 3 | Safety | Safety monitoring, signal detection | Expert rubric | — | 8 | 480 min |
+| TC-010: CSR Section | 3 | Reporting | CSR writing, ICH E3 | Expert rubric | — | 6 | 480 min |
 
 **Coverage Summary:**
-- **Domains:** Efficacy (2), Design (2), Reporting (3), Safety (1), Regulatory (1), Cross-cutting (1)
-- **Levels:** Level 1 (3), Level 2 (3), Level 3 (4)
-- **Auto-scorable:** 3 (Level 1) + 1 partial (Level 2)
+- **Domains:** Efficacy (3), Design (2), Reporting (3), Safety (2), Regulatory (1), Cross-cutting (1)
+- **Levels:** Level 1 (7), Level 2 (3), Level 3 (4)
+- **Auto-scorable:** 7 (Level 1) + 1 partial (Level 2)
 - **Expert-review needed:** 3 (Level 2) + 4 (Level 3)
-- **Total parametrizable variants:** 93 across all test cases
+- **Ground truth implemented:** 7 (TC-001 through TC-003, TC-011 through TC-014)
+- **Total parametrizable variants:** 133 across all test cases
 
 ---
 

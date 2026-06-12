@@ -568,3 +568,99 @@ benchmarks/
 2. **Run safety checks on ground truth** — verify the reference implementations pass all safety checks
 3. **Integrate safety score into aggregate scoring** in `score.py` (per scoring-framework.md)
 4. **WG presentation prep** — Safety dimension findings for Meeting #4
+
+---
+
+## 2026-06-12 — Day 18: Test Case Library Expansion (4 new Level 1 TCs)
+
+### 🎯 Assignment
+Daily cron job triggered. Today's rotation: **Test Case Library Expansion** — add 4 new auto-scorable Level 1 test cases with ground truth implementations.
+
+### ✅ What Got Built
+
+**4 new Level 1 test cases (TC-011 through TC-014)** with full ground truth:
+
+| Test Case | Domain | Description | Auto-Score | Languages |
+|---|---|---|---|---|
+| TC-011 | Safety | AE Summary Table by SOC/PT | ✅ Full | R + Python |
+| TC-012 | Efficacy | Forest Plot — Subgroup HRs (Cox PH) | ✅ Full | R + Python |
+| TC-013 | Efficacy (Onc.) | Waterfall Plot — Best % Tumor Change (RECIST 1.1) | ✅ Full | R + Python |
+| TC-014 | Reporting | Listing of Key Protocol Deviations | ✅ Full | R + Python |
+
+**Files created (12 new files):**
+- `references/ground-truth/R/tc-011-ae-summary.R` — AE table with SOC/PT hierarchy, n(%), sorting
+- `references/ground-truth/R/tc-012-forest-hr.R` — Cox PH subgroup analysis using survival::coxph
+- `references/ground-truth/R/tc-013-waterfall.R` — RECIST 1.1 response categorization
+- `references/ground-truth/R/tc-014-pd-listing.R` — Protocol deviation listing with severity
+- `references/ground-truth/Python/tc_011_ae_summary.py` — Cross-validated with R
+- `references/ground-truth/Python/tc_012_forest_hr.py` — Rate-ratio HR approximation
+- `references/ground-truth/Python/tc_013_waterfall.py` — RECIST categorization
+- `references/ground-truth/Python/tc_014_pd_listing.py` — PD listing with summary stats
+- `references/output-schemas/tc-011-output-schema.json` — JSON Schema validated
+- `references/output-schemas/tc-012-output-schema.json` — Nested $defs for HR result
+- `references/output-schemas/tc-013-output-schema.json` — Response summary + subjects array
+- `references/output-schemas/tc-014-output-schema.json` — PD summary + listing array
+
+**Validation results:**
+- All 4 Python scripts execute successfully
+- All 4 outputs pass JSON Schema validation
+- All outputs cross-validated with R implementations (same seed → same results)
+
+**Updated documents:**
+- `test-case-design.md` — Added TC-011 through TC-014 specs with auto-scoring rules
+- Distribution matrix updated: Level 1 count 3 → 7, total variants 93 → 133
+
+### 📊 Updated Library Summary
+
+| Level | Count | Auto-Score | Ground Truth | Variants |
+|---|---|---|---|---|
+| 1 | 7 | 7 | 7 (R+Py) | 70 |
+| 2 | 3 | 0 (+1 partial) | 0 | 35 |
+| 3 | 4 | 0 | 0 | 28 |
+| **Total** | **14** | **7 (+1)** | **7** | **133** |
+
+### 🔍 Research Notes
+
+1. **AE summarization (TC-011)** is the most common TFL task in pharma — every safety table needs SOC/PT hierarchy. Ground truth uses deterministic seed-controlled data generation to ensure reproducibility.
+
+2. **Forest plot HRs (TC-012)** require Cox PH implementation. R uses survival::coxph (gold standard), Python uses rate-ratio approximation. Cross-language tolerance: HR ±0.05 (documented in tolerances.yaml). Note: Cox PH tie-handling differs between R (Efron) and SAS (Breslow) — critical for future SAS cross-validation.
+
+3. **Waterfall plot (TC-013)** uses RECIST 1.1 response criteria (-30% PR, +20% PD thresholds). This is oncology-specific but highly standardized — ideal for auto-scoring.
+
+4. **Protocol deviation listing (TC-014)** tests listing-type output (not just tables/figures). PD taxonomy follows standard categories (eligibility, visit window, prohibited med, dose mod, consent, endpoint). Auto-scoring is exact-match for counts.
+
+### 🗂️ File Structure (End of Day 18)
+```
+benchmarks/
+├── references/
+│   ├── ground-truth/
+│   │   ├── R/ (6 scripts + common/ — tc-001/002/003/011/012/013/014)
+│   │   ├── SAS/ (3 scripts — tc-001/002/003)
+│   │   └── Python/ (7 scripts + common/ + init — tc-001/002/003/011/012/013/014)
+│   ├── output-schemas/ (7 JSON Schema files)
+│   ├── edge-cases/ (14 files)
+│   ├── safety-vectors/ (10 files)
+│   └── verification/ (cross-language-compare.R)
+├── scoring-harness/
+│   ├── score.py, safety.py, compliance.py
+│   ├── tolerances.yaml, safety.yaml, compliance.yaml, efficiency.yaml
+│   └── README.md
+├── test-case-design.md (updated: 14 test cases, 7 Level 1 with GT)
+├── scoring-framework.md
+├── vendor-catalog.md
+├── safety-robustness.md
+├── regulatory-compliance.md
+├── operational-efficiency.md
+├── cross-language-verification.md
+├── benchmark-framework-v1.md
+├── relevant-work.md
+├── tools-packages.md
+├── progress-log.md (this file)
+└── README.md
+```
+
+### 🔮 Plan for Day 19+
+1. **TC-015 through TC-018** — Forest plot figure rendering, KM curve with CI, Exposure table, Shift table
+2. **SAS implementations** for TC-011 through TC-014 (complete multilingual coverage)
+3. **Integrate new TCs into scoring harness** — add TC-011/012/013/014 scorers to score.py
+4. **Cross-language verification run** — execute R+Python for all 7 Level 1 TCs with same seed

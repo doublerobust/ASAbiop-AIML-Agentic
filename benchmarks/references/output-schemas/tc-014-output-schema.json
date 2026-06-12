@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tc-014-output-schema",
+  "title": "TC-014: Protocol Deviation Listing Output",
+  "description": "Schema for listing of key protocol deviations",
+  "type": "object",
+  "required": ["test_case_id", "title", "parameters", "population", "summary", "listing", "metadata"],
+  "properties": {
+    "test_case_id": {
+      "type": "string",
+      "const": "TC-014"
+    },
+    "title": { "type": "string" },
+    "parameters": {
+      "type": "object",
+      "required": ["seed", "n_subjects"],
+      "properties": {
+        "seed": { "type": "integer" },
+        "n_subjects": { "type": "integer", "minimum": 20 }
+      }
+    },
+    "population": {
+      "type": "object",
+      "required": ["n_experimental", "n_control"],
+      "properties": {
+        "description": { "type": "string" },
+        "n_experimental": { "type": "integer", "minimum": 1 },
+        "n_control": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["all", "experimental", "control"],
+      "properties": {
+        "all": { "$ref": "#/$defs/pd_summary" },
+        "experimental": { "$ref": "#/$defs/pd_summary" },
+        "control": { "$ref": "#/$defs/pd_summary" }
+      }
+    },
+    "listing": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["USUBJID", "TRT01A", "PD_CAT", "PD_CODE", "PDDESC", "PDDY", "PDDTC", "SEVERITY"],
+        "properties": {
+          "USUBJID": { "type": "string" },
+          "TRT01A": { "type": "string", "enum": ["Experimental", "Control"] },
+          "PD_CAT": { "type": "string" },
+          "PD_CODE": { "type": "string" },
+          "PDDESC": { "type": "string" },
+          "PDDY": { "type": "integer", "minimum": 1 },
+          "PDDTC": { "type": "string", "format": "date" },
+          "SEVERITY": { "type": "string", "enum": ["Critical", "Major", "Minor"] }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["language", "generated_at"],
+      "properties": {
+        "language": { "type": "string" },
+        "sorting": { "type": "string" },
+        "packages": { "type": "array", "items": { "type": "string" } },
+        "generated_at": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "$defs": {
+    "pd_summary": {
+      "type": "object",
+      "required": ["n_subjects_with_pd", "n_total_deviations", "by_category", "by_severity"],
+      "properties": {
+        "n_subjects_with_pd": { "type": "integer", "minimum": 0 },
+        "n_total_deviations": { "type": "integer", "minimum": 0 },
+        "by_category": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["n_subjects", "n_deviations"],
+            "properties": {
+              "n_subjects": { "type": "integer", "minimum": 0 },
+              "n_deviations": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "by_severity": {
+          "type": "object",
+          "required": ["Critical", "Major", "Minor"],
+          "properties": {
+            "Critical": { "type": "integer", "minimum": 0 },
+            "Major": { "type": "integer", "minimum": 0 },
+            "Minor": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    }
+  }
+}
