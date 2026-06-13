@@ -1,103 +1,125 @@
-# Ontology as the Grounding Layer for Agentic AI in Clinical Biostatistics
+# Institutional Knowledge for Agentic AI in Biostatistics
 
-## Final Proposal — Approved (Post-Swarm Iteration 3 + Claude Opus Quality Gate)
-
-> **Review verdict:** APPROVED WITH MINOR CHANGES
-> **Reviewer:** Claude Opus 4.7 (quality gate pass)
-> **Swarm models:** Gemini 2.5 Pro, MiMo V2.5 Pro, DeepSeek V4 Flash, Natasha
-> **Iterations:** 3 (2 full swarm + 1 direct) — 9 critiques across 4 models
-> **Date:** 2026-06-13
->
-> *Summary assessment: The proposal has evolved from a position paper (v1) to a technically grounded implementation brief (vFinal). The core thesis — ontology as the accountability layer for agentic AI in clinical biostatistics — is robust and defensible. SHACL Core validation with deterministic middleware provides a credible GxP boundary. The MVO path (3-6 months) offers concrete de-risking. Minor issues identified in the quality pass (OBO single inheritance characterization, regulatory framework references, cost-benefit source labels) have been corrected in this final version. No blocking issues remain.*
+## Technical Proposal
 
 ---
 
-### 1. Core Thesis
+### 1. The Problem
 
-Ontology is the essential grounding layer for deploying agentic AI in clinical biostatistics and drug development. It is not an optional add-on. It is the structural prerequisite that transforms a stochastic language model into an auditable, traceable, regulatorily defensible reasoning system.
+Agentic AI for clinical biostatistics is already happening. Teams are building prototypes — agents that draft SAPs, generate TLFs, automate QC. Benchmarking efforts are quantifying time savings and capability gaps. This is not a debate about whether agents will be used.
 
-Automation bias is not an objection to ontology. It is an objection to *ungrounded* AI — agents operating without explicit, reviewable, version-controlled domain knowledge. The counterfactual is not "with or without ontology." The counterfactual is: **in a world where agentic AI will be used in clinical trial design, implementation, analysis, and reporting, ontology is the tool that makes it safe to do so.**
+But there's a ceiling on how effective these agents can be with current memory architectures.
 
----
+| Memory Layer | What It Holds | Limits |
+|-------------|---------------|--------|
+| **Prompt / system message** | Instructions, role, constraints | Fragile; limited context window; no depth |
+| **RAG (vector retrieval)** | Documents, PDFs, past outputs | Unstructured retrieval; no reasoning or constraints |
+| **Conversation history** | Recent turns | Short-lived; flat; no structured knowledge |
+| **Fine-tuning** | Behavioral patterns | Expensive; static; hard to audit |
 
-### 2. Positioning: Why Ontology, Not "Better Prompts" or "Bigger Models"
+None of these capture **structured institutional knowledge** — the decision logic, conventions, and rules that senior statisticians carry in their heads and that take years to transfer. This is the knowledge that governs choices like:
 
-| Concern | Pure LLM Approach | Ontology-Grounded Approach |
-|---------|-------------------|---------------------------|
-| Hallucination | Mitigated by prompt engineering, RAG, fine-tuning; no guarantee | Constrained by formal SHACL shapes; invalid paths fail deterministic validation |
-| Audit trail | Logged prompts + outputs; reasoning internal to model weights | Every decision traceable to explicit concept and rule nodes |
-| Regulatory defense | "The model determined this" | "Rule R3.2 (ICH E9 §5.3) + Concept C12 (Non-inferiority margin) → Decision D7" |
-| Version control | Model version != knowledge version | Ontology versions are diff-able, reviewable, frozen in Git |
-| Cross-study consistency | Depends on prompt quality per study | Centralized ontology enforced across all studies |
-| Benchmarking | Needs external test sets; subject to leakage | Ontology serves as normative reference — trace decisions to validated knowledge artifacts |
+- When to use MMRM vs ANCOVA for a given endpoint type and visit structure
+- Which missing data strategies are acceptable under ICH E9(R1) vs which are not
+- Which stratification factors require pooling and which can be handled directly
+- What analysis conventions a given therapeutic area's reviewers expect
 
-The ontology is not a supplement to the LLM. It is the **accountability layer** that wraps LLM reasoning in a formally reviewable structure, moving validation from stochastic evaluation to deterministic compliance. The ontology does not replace empirical benchmarks (e.g., historical study validation) — it complements them by providing the normative reference against which agent decision traces are evaluated.
+An agent without this knowledge is inconsistent. It may answer the same question differently depending on which document it retrieves. It has no audit trail for _why_ it made a decision. And every new study starts from scratch.
 
----
+### 2. The Proposal
 
-### 3. Architecture: The LLM↔Ontology Execution Loop
+When an agent pilot reaches a natural checkpoint (enough work done to demonstrate value), pause and **codify what the agent learned** into a structured, versioned, machine-readable knowledge base — an **ontology**.
 
-The system uses **SHACL (Shapes Constraint Language) Core** for deterministic validation of LLM-generated analysis decisions against a predefined TBox (schema) representing ICH guidelines, protocol intent, and CDISC conventions. SHACL Core is W3C-standard, vendor-independent, and produces machine-readable validation reports well-suited for audit logging.
+This ontology captures:
 
-#### 3.1 Component Architecture
+- **Declarative knowledge** — the concepts in the domain (endpoint types, analysis methods, estimand components, data structures)
+- **Constraints** — what's required, what's allowed, what's forbidden, per ICH guidelines and institutional conventions
+- **Relationships** — how concepts connect (Endpoint → HasAnalysisMethod → MMRM)
+- **Rules** — conditional logic that can be validated automatically (Longitudinal endpoint → Repeated-measures analysis required)
+
+This is not an additional project. It is a byproduct of the pilot work already underway. Built incrementally, protocol by protocol, it becomes the structured institutional memory for an AI-native biostatistics group.
+
+#### 2.1 The Self-Reinforcing Cycle
 
 ```
-[Protocol & CDISC Metadata]
-        │
-        ▼
-┌───────────────────────────────┐
-│  LLM Agent                    │   ← Unvalidated space (non-GxP)
-│  - Ingests protocol + study   │
-│  - Proposes analysis path     │
-│  - Outputs structured JSON    │
-└───────────┬───────────────────┘
-            │ Simple JSON (Pydantic schema)
-            ▼
-┌───────────────────────────────┐
-│  Deterministic Middleware     │   ← Validated space (GxP boundary)
-│  - Maps JSON → JSON-LD        │
-│  - Applies URI resolution     │
-│  - Fills default graph props  │
-└───────────┬───────────────────┘
-            │ JSON-LD graph
-            ▼
-┌───────────────────────────────┐
-│  SHACL Core Validator Engine  │   ← Validated boundary
-│  - Executes TBox shapes       │
-│  - Produces Validation Report │
-│  - Logs every check to audit  │
-└───────────┬───────────────────┘
-            │ PASS / FAIL with report
-            ▼
-    ┌───────────┬──────────┐
-    │           │          │
-    ▼           ▼          ▼
-Validated   Retry (max 3)  Human Escalation
-Code Gen    (self-correct) (after cap exhausted)
+Better ontology ──→ More effective agents ──→ Faster pilots ──→ Richer ontology
+     ↑                                                              │
+     └────────────────────── Compounds over time ────────────────────┘
 ```
 
-**Key architectural decisions:**
+The ontology does not require separate funding. It is built at a natural pilot checkpoint. It makes the agent iterate faster for the remainder of the pilot (no re-prompting to remember things already discovered). After the pilot, the ontology is a reusable asset.
 
-- **The LLM does not output RDF directly.** LLMs are unreliable at generating valid, deeply nested JSON-LD without hallucinating URIs or violating schema constraints. Instead, the LLM outputs simple JSON (via structured function calling or a Pydantic-validated schema), and a deterministic middleware layer translates this into standard JSON-LD. This eliminates the highest-risk failure mode in the pipeline.
+#### 2.2 The Copy-Adapt-Extend Workflow
 
-- **The GxP boundary sits before the middleware, not after.** The LLM operates in unvalidated space. Everything downstream — the middleware, the SHACL validator, the code generator — lives in validated space. This means the LLM can be updated without revalidating the pipeline, and the pipeline can be validated independently of the model.
+Study teams already build new protocols by copying old ones and adapting. The ontology follows the same pattern:
 
-- **SHACL uses strict Core semantics only.** No SHACL-AF extensions (`sh:condition`, `sh:rule`), which have inconsistent validator support. All constraints use core SHACL constructs (`sh:node`, `sh:property`, `sh:in`, `sh:or`, `sh:xone`, `sh:severity`).
+1. **Copy** — Protocol 12's team loads Protocol 5's ontology
+2. **Adapt** — adjust endpoints, comparators, stratification factors, conventions
+3. **Extend** — add new rules for anything genuinely novel (rare, per the 80/20 rule)
+4. **Validate** — the ontology changes go through the same review process as the SAP
 
-#### 3.2 The Self-Correction Loop (with Guardrails)
+Within the same therapeutic area, protocols are more alike than different. The vast majority of structure — endpoint taxonomies, analysis conventions, CDISC mappings — is shared. Tools like nano-ontoprompt let the LLM suggest the delta for new protocols, which a statistician validates in minutes.
+
+#### 2.3 The Ontology in the Agent Memory Stack
+
+The ontology is **one layer** of the agent's memory, not the whole stack.
+
+| Layer | Technology | What It Holds | Auditable? | Versioned? |
+|-------|-----------|---------------|------------|------------|
+| **Ontology** | SHACL / RDF triples | Structured concepts, constraints, rules | ✅ Fully traceable | ✅ Git-native |
+| **Documents** | RAG vector store | Guideline PDFs, SAP examples, regulatory precedent | Partial | ❌ Not typically |
+| **Code** | Skill libraries, | Execution logic, analysis code | ✅ If CI/CD | ✅ Git |
+| **Context** | Conversation history | Recent session context | ❌ Ephemeral | ❌ |
+| **Judgment** | Human-in-the-loop | Edge cases, novel designs, override decisions | ✅ Per override log | N/A |
+
+Each layer has a role. The ontology is the only one that is simultaneously structured, auditable, version-controlled, and transferable between studies. It does not replace documents (ICH guidelines still need full-text retrieval). It does not replace code (agents need skills to execute analyses). It does not replace human judgment (edge cases require escalation). But it fills a gap that nothing else fills — the structured institutional knowledge that makes an agent consistent, traceable, and effective across studies.
+
+---
+
+### 3. Architecture: The Ontology Layer
+
+The ontology uses **SHACL (Shapes Constraint Language) Core** for deterministic validation of agent-generated analysis decisions against a predefined vocabulary representing ICH guidelines, protocol intent, and institutional conventions. SHACL Core is W3C-standard, vendor-independent, and produces machine-readable validation reports suitable for audit logging.
+
+#### 3.1 The Agent ↔ Ontology Interface
+
+```
+[Agent proposes decision]
+         │
+         ▼ Simple JSON (Pydantic schema)
+[Deterministic Middleware]    ← GxP boundary starts here
+         │ Maps JSON → JSON-LD
+         ▼
+[SHACL Core Validator]
+         │ Checks against TBox shapes
+         ▼
+  ┌──────────┬──────────┐
+  │          │          │
+  ▼          ▼          ▼
+PASS      Retry (×3)  Escalation
+          (self-correct with error report)
+```
+
+Key design decisions:
+
+- **The agent does not output RDF directly.** LLMs are unreliable at generating valid JSON-LD. The agent outputs simple JSON (validated via Pydantic schema), and a deterministic middleware layer translates this into JSON-LD for SHACL validation.
+
+- **The GxP boundary sits at the middleware.** Everything upstream (the LLM agent) is unvalidated space. Everything downstream (middleware, SHACL validator, code generator) is validated once. The LLM can be updated without revalidating the pipeline.
+
+- **SHACL uses strict Core semantics only.** No SHACL-AF extensions (`sh:condition`, `sh:rule`) which have inconsistent validator support.
+
+#### 3.2 Self-Correction Loop
 
 When SHACL validation fails:
-
-1. The SHACL Validation Report is parsed by a deterministic translator that converts the raw RDF report into structured natural-language error messages (e.g., "Continuous endpoint #2 is longitudinal but has missing data handling strategy undefined — required per ICH E9(R1) §2.3").
-2. The LLM is re-prompted with these structured errors and the original context.
-3. **Retry budget:** Maximum 3 re-prompt attempts. Each attempt increments a counter tracked in the audit log.
-4. **Degradation guard:** If the LLM produces a *different* failing output on each attempt (oscillation rather than convergence), escalation triggers early.
-5. **Escalation:** After 3 failed retries, the system halts and flags the case for human statistical review. The full failure trace (original proposal, all 3 failing iterations, SHACL validation reports) is bundled for the reviewer.
-6. **Gaming guard:** A passing SHACL validation does not mean the output is clinically appropriate — only that it satisfies formal constraints. The system explicitly logs a caveat: "SHACL conformance does not guarantee clinical judgment correctness." The human reviewer retains final authority.
+1. The validation report is translated into structured natural-language error messages
+2. The agent is re-prompted with these errors and original context
+3. **Retry cap:** Maximum 3 iterations. Each attempt tracked in audit log.
+4. **Degradation guard:** If the agent produces different failing outputs (oscillation), escalation triggers early.
+5. **Escalation:** After 3 retries or oscillation, the case is flagged for human review. Full failure trace (original proposal + all iterations + validation reports) is bundled.
+6. **Gaming guard:** SHACL conformance does not guarantee clinical appropriateness. The audit log explicitly notes: "SHACL conformance ≠ clinical judgment correctness." Human reviewer retains final authority.
 
 ---
 
-### 4. Concrete SHACL Example: Endpoint Analysis Decision
+### 4. Concrete SHACL Example
 
 The following uses **SHACL Core only** — no SHACL-AF extensions. It demonstrates the distinction between hard constraints and advisory recommendations using `sh:severity`.
 
@@ -151,8 +173,6 @@ stat:LongitudinalContinuousShape
     ] .
 
 # ── Advisory Recommendation: Preferred Method ───────────────
-# MMRM is recommended as the default for longitudinal continuous
-# in superiority trials. This is advisory, not blocking.
 stat:PreferredLongitudinalRecommendation
     a sh:NodeShape ;
     sh:targetClass stat:LongitudinalSuperiorityTrial ;
@@ -166,88 +186,78 @@ stat:PreferredLongitudinalRecommendation
 
 #### 4.2 Decision Trace Example
 
-**Input:** Phase 3 superiority trial, continuous endpoint with weekly visits over 12 weeks, two treatment arms, stratified by site.
+**Input:** Phase 3 superiority trial, continuous endpoint with weekly visits over 12 weeks, two arms.
 
-**LLM proposal:** ANCOVA at week 12 with LOCF for missing data, no longitudinal structure.
+**Agent proposal:** ANCOVA at week 12 with LOCF for missing data, no longitudinal structure.
 
 **SHACL validation result:**
 
 | Shape | Check | Result |
 |-------|-------|--------|
-| `ContinuousEndpointShape` | Has missing data handling? | ✅ PASS (LOCF satisfies `sh:minCount 1`) |
-| `ContinuousEndpointShape` | Has analysis method? | ✅ PASS (ANCOVA satisfies `sh:minCount 1`) |
-| `LongitudinalContinuousShape` | Method appropriate for longitudinal? | ❌ FAIL — ANCOVA not in `sh:in (...)` for longitudinal endpoints |
-| `PreferredLongitudinalRecommendation` | MMRM preferred? | ⚠️ WARNING only — not blocking, but flagged for documentation |
+| `ContinuousEndpointShape` | Has missing data handling? | ✅ PASS |
+| `ContinuousEndpointShape` | Has analysis method? | ✅ PASS |
+| `LongitudinalContinuousShape` | Method appropriate for longitudinal? | ❌ FAIL — ANCOVA not in allowed methods list |
+| `PreferredLongitudinalRecommendation` | MMRM preferred? | ⚠️ Warning only (advisory) |
 
-**System action:** Output blocked. Error message returned: "Longitudinal endpoints require a repeated-measures-capable analysis method. Proposed (ANCOVA). Allowed: MMRM, GEE, GrowthCurveModel, BayesianLongitudinal."
+**Agent self-corrected proposal:** MMRM with unstructured covariance, MAR assumption, Kenward-Roger df.
 
-**LLM self-corrected proposal:** MMRM with unstructured covariance, MAR assumption, Kenward-Roger df.
-
-**Result:** PASS. Audit log records: concept traces (LongitudinalEndpoint → LongitudinalContinuousShape → MMRM), ICH E9(R1) reference, and the corrective iteration.
+**Result:** PASS. Audit log records concept traces (LongitudinalEndpoint → LongitudinalContinuousShape → MMRM), ICH E9(R1) reference, and the corrective iteration.
 
 ---
 
-### 5. Integration with the Existing Ontology Landscape
+### 5. Integration with Existing Standards
 
-| Standard | Coverage | This Proposal's Relationship |
-|----------|----------|------------------------------|
-| **OBO Foundry** | Upper-level biomedical ontology principles | Adopts OBO design principles (prefers single inheritance, unique identifiers, orthogonality) while accommodating OBO's allowance for multiple inheritance where clinically necessary |
-| **NCI Thesaurus** | Cancer terminology, disease codes, drug names | Imported as reference terminology for indication and comparator mappings |
-| **SNOMED CT** | Clinical findings, procedures, body structures | Used for adverse event and comorbidity semantic enrichment |
-| **CDISC SDTM/ADaM** | Study data tabulation and analysis datasets | Consumed via define.xml parsing; ADaM variable semantics (e.g., `AVAL`, `CHG`, `PARAM`) mapped to ontology concepts through a deterministic YAML-to-triples translation layer |
-| **CDISC Controlled Terminology** | Codelists for SDTM/ADaM variables | Imported as value-set definitions for study metadata validation |
-| **OCRe (Ontology of Clinical Research)** | Clinical trial design concepts | Evaluated for reuse; OCRe provides trial design taxonomy but does not extend to statistical analysis rules — this is the gap the proposal fills |
+| Standard | Coverage | Relationship |
+|----------|----------|--------------|
+| **OBO Foundry** | Biomedical ontology principles | Adopts OBO design principles (prefers single asserted parent, unique identifiers, orthogonality) |
+| **NCI Thesaurus** | Cancer terminology | Imported for indication and comparator mappings |
+| **SNOMED CT** | Clinical terminology | Used for adverse event semantic enrichment |
+| **CDISC SDTM/ADaM** | Study data standards | Consumed via define.xml parsing; ADaM variable semantics mapped to ontology through deterministic YAML-to-triples layer |
+| **CDISC Controlled Terminology** | Codelists | Imported as value-set definitions for study metadata validation |
+| **OCRe** | Clinical research design taxonomy | Evaluated for reuse; covers trial design concepts but not statistical analysis rules — this is the gap the ontology fills |
 
-This proposal does not replace existing standards. It fills a specific gap: **none of the above ontologies or standards formalize statistical analysis decision rules in a machine-executable format.** CDISC describes *what data looks like*; this ontology describes *how to analyze it correctly given the regulatory framework.*
+This ontology does not replace existing standards. It fills a gap: none of the above provide machine-executable **analysis decision rules**. CDISC describes what data looks like. This ontology describes how to analyze it correctly given the regulatory framework.
 
 ---
 
 ### 6. Key Objections and Rebuttals
 
-#### 6.1 "It adds documentation and maintenance burden"
+#### 6.1 "Ontologies are too hard to build and maintain"
 
-**Rebuttal:** The ontology is not built from scratch in a single formalization exercise — it grows incrementally alongside the work it supports. After completing a project (a simulation study, a SAP, a protocol review), the statistician's AI copilot produces a first draft of the relevant ontology nodes. When new specifications or documents arrive, the LLM proposes how to integrate them into the existing graph — suggesting new nodes, links, rules, and actions — and the human inspects, validates, or rejects each addition individually. Inspecting one new node and its connections in an existing graph is far easier than building the full structure from nothing.
+**Rebuttal:** The ontology is not built in a single formalization exercise. It grows incrementally alongside the work it supports. After completing a project, the AI copilot drafts the relevant ontology nodes. When new specifications arrive, the LLM proposes how to integrate them into the existing graph — suggesting new nodes, links, rules, and actions — and the human inspects and validates each addition individually. Inspecting one new node in an existing graph is far easier than building from nothing.
 
-This pattern — AI proposes, human validates, ontology grows — turns knowledge acquisition from a bottleneck into a byproduct of normal workflow. The initial investment is building the graph skeleton and the validation pipeline; the ongoing cost is minutes per document review, not weeks per formalization cycle.
+This pattern — AI proposes, human validates, graph accumulates — turns knowledge acquisition from a bottleneck into a byproduct of normal workflow. Tools like nano-ontoprompt make the "propose and validate" cycle lightweight. The initial investment is building the graph skeleton and validation pipeline; the ongoing cost is minutes per addition.
 
-Statisticians express domain knowledge through YAML/Markdown templates — no Turtle or SPARQL required. A deterministic parser converts templates to triples. Changes go through a PR workflow: automated regression tests run all historical SHACL shapes against the updated ontology to detect regressions, then human domain experts (from the Core Ontology Board) review and approve. Semantic versioning applied to the TBox for downstream impact assessment.
+Statisticians express domain knowledge through YAML/Markdown templates — no Turtle or SPARQL required. A deterministic parser converts templates to triples. Changes go through a PR workflow with automated regression testing.
 
 #### 6.2 "What happens when the ontology is wrong?"
 
-**Risk acknowledged.** The blast radius of a wrong TBox rule is all studies using it. Mitigations:
+**Acknowledged risk.** The blast radius of a bad TBox rule is all studies using it. Mitigations:
 
-- **Regression test suite:** Each ontology update runs against a curated set of "known good" analysis decision graphs. If a rule change breaks a previously passing test, the PR is blocked.
-- **TBox/ABox separation:** The TBox (schema + rules) is version-controlled and validated independently from the ABox (study instances). TBox changes are gated by the Core Ontology Board.
-- **Break-glass override workflow:** If a study team needs to deviate from a TBox rule (novel design, regulatory agreement, special case):
-  1. Study statistician files a deviation request — one of: "rule is wrong" (ontology error) or "rule doesn't apply" (study-specific exception).
-  2. Core Ontology Board reviews within 5 business days.
-  3. If approved: study-level ABox branch is created with the override annotated. Audit trail records: what was overridden, by whom, why, for how long (single analysis vs. full study vs. indefinite).
-  4. If "rule is wrong": a TBox change ticket is created automatically. The ontology fix goes through the standard PR + regression + approval workflow.
-  5. Override decisions are reviewed quarterly for patterns that indicate systemic ontology gaps.
+- **Regression test suite:** Each ontology update runs against a curated set of known-good analysis decision graphs. If a rule change breaks a previously passing test, the PR is blocked.
+- **TBox/ABox separation:** Schema (TBox) is version-controlled independently from study instances (ABox). Schema changes require Core Ontology Board approval.
+- **Break-glass override:** Study teams can deviate with documented justification:
+  1. Statistician files deviation — classified as "rule is wrong" (ontology error) or "rule doesn't apply" (study-specific exception)
+  2. Board reviews within 5 business days
+  3. Approved deviations create study-level branches with full audit trail
+  4. "Rule is wrong" cases automatically create TBox change tickets
+  5. Patterns reviewed quarterly for systemic ontology gaps
 
 #### 6.3 "This replaces statisticians"
 
-**Rebuttal:** The ontology enables the **Bionic Statistician** — handling repetitive execution (SAP boilerplate, constraint checking, routine method selection) while elevating the statistician's role to strategic trial design, regulatory interaction, and interpretation of surprising results. For junior statisticians, the ontology serves as an interactive validation engine: when they propose an analysis, the SHACL engine explains *why* a constraint was violated, building domain intuition faster than traditional mentorship alone. This directly addresses the downstream talent-gap concern: juniors learn through guided constraint interaction rather than rote repetition.
+**Rebuttal:** The ontology handles repetitive execution — SAP boilerplate, constraint checking, routine method selection. It elevates the statistician's role to strategic trial design, regulatory interaction, and interpretation. For junior statisticians, the ontology serves as an interactive validation engine: when they propose an analysis, SHACL explains _why_ a constraint was violated, building domain intuition faster than traditional mentorship alone.
 
 #### 6.4 "What about regulatory acceptance?"
 
-**Acknowledged risk.** No regulator (FDA, EMA, PMDA) has issued guidance on ontology-based validation of AI-generated statistical analysis decisions. Strategy:
-1. **Parallel validation:** For the first 6-12 months post-MVO, the ontology runs alongside traditional processes. All SHACL-validated decisions are compared against human-generated SAPs for agreement.
-2. **FDA/CDISC engagement:** Submit the ontology framework as a discussion starter via existing CDISC collaboration channels and FDA biomarker/statistics working groups.
-3. **Historical study validation:** Run the ontology against 10-20 completed studies with known analysis decisions to measure agreement rate and identify edge cases.
-4. **The ontology itself has a regulatory path:** Unlike the LLM, the ontology is a deterministic artifact subject to standard Computer System Validation (GAMP 5) and 21 CFR Part 11 electronic records compliance. The SHACL engine, middleware, and code generator are validated once; the LLM is treated as an unvalidated input source.
+**Acknowledged risk.** No regulator has issued guidance on ontology-based validation of AI-generated analysis decisions. Strategy:
+1. **Parallel validation:** First 6-12 months post-MVO, ontology runs alongside traditional processes. All decisions compared against human-generated SAPs.
+2. **Historical study validation:** Test ontology against 10-20 completed studies to measure agreement and identify edge cases.
+3. **FDA/CDISC engagement:** Submit framework via existing working groups for input.
+4. **The ontology has a regulatory path:** It is a deterministic artifact subject to standard Computer System Validation (GAMP 5). Unlike the LLM, it can be validated independently.
 
-#### 6.5 "LLMs will get good enough that ontology becomes unnecessary"
+#### 6.5 "What about LLM-bootstrapping paradox?"
 
-**Rebuttal:** This confuses accuracy with auditability. Even a perfect LLM cannot produce diff-based review, version-controlled knowledge, or traceability to specific ICH guideline paragraphs. Regulators do not accept "the model knew it" — they require documented, reviewable, signed-off rule artifacts. The ontology is not an accuracy enhancer; it is an **audit artifact**. Even if LLMs achieved perfect accuracy, clinical trial reporting would still require the ontology for inspection readiness.
-
-#### 6.6 "LLMs help build the ontology — isn't that circular?"
-
-**Acknowledged.** LLMs assist in extracting axioms from YAML templates during ontology construction. The circularity is closed by a validation gate: **every axiom generated by LLM assistance is validated by a human domain expert before merging into the TBox.** Spot-checking is insufficient; the validation rate is 100% for TBox changes. This eliminates the bootstrapping paradox because the ontology's correctness rests on human expert certification, not on the LLM that helped draft it.
-
-#### 6.7 "Only works for cookie-cutter studies"
-
-The 80/20 split is an argument *for* ontology, not against. Standardizing the 80% (superiority trials, standard endpoints, common designs) frees bandwidth for the complex 20% (adaptive designs, novel endpoints, special regulatory agreements). The ontology is a living artifact: repeating edge cases get formalized and absorbed over successive releases. Break-glass overrides handle the genuinely novel cases while the ontology evolves.
+**Acknowledged.** LLMs assist in drafting ontology axioms. The circularity is closed by a validation gate: every axiom generated by LLM assistance is validated by a human domain expert before merging. This is 100% human validation for TBox changes — not spot-checking, not sampling.
 
 ---
 
@@ -257,38 +267,34 @@ The 80/20 split is an argument *for* ontology, not against. Standardizing the 80
 
 | Role | Count | Responsibility |
 |------|-------|---------------|
-| Lead Statistical Scientist | 1 | Domain authority; chairs the Board; final decision on TBox changes |
-| Senior Statisticians | 3 | Domain expertise across therapeutic areas; review PRs, break-glass requests |
-| Ontology Engineer | 1 | Technical authority on SHACL/OWL, middleware, tooling |
-| Regulatory Compliance Lead | 1 | Computer System Validation (GAMP 5), Part 11 compliance, audit-readiness |
-| MLOps/DevOps Engineer | 1 | CI/CD pipeline, regression testing, versioning infrastructure |
+| Lead Statistical Scientist | 1 | Domain authority; chairs Board; final TBox approval |
+| Senior Statisticians | 3 | Domain expertise across TAs; review PRs, break-glass requests |
+| Ontology Engineer | 1 | Technical authority on SHACL, middleware, tooling |
+| Regulatory Compliance Lead | 1 | CSV (GAMP 5), Part 11 compliance, audit readiness |
+| MLOps/DevOps Engineer | 1 | CI/CD pipeline, regression testing, versioning |
 
-Reporting line: Within BARDS (Biostatistics and Research Decision Sciences), reporting to the head of Late Development Statistics.
-
-Decision authority: The Board has binding authority on TBox content. Study teams can request deviations via break-glass (section 6.2). Escalation of Board-team disagreement goes to the BARDS VP.
-
-Funding: Central BARDS budget allocation (not study-level), with a 2-year committed runway for MVO development.
+Reporting line: Within BARDS, reporting to head of Late Development Statistics. Funding: Central BARDS budget, 2-year committed runway for MVO development.
 
 #### 7.2 Knowledge Acquisition Workflow
 
-Statisticians provide domain knowledge in YAML/Markdown templates:
+Statisticians provide domain knowledge in YAML templates:
 
 ```yaml
 rule_id: MISSING_DATA_LONGITUDINAL
 domain: continuous_endpoint
 condition: endpoint_type == "longitudinal" && trial_phase == "Phase3"
 constraint:
-  type: hard  # hard | advisory
+  type: hard
   path: analysis_method
   allowed: [MMRM, GEE, GrowthCurveModel, BayesianLongitudinal]
-  justification: "Longitudinal data requires repeated-measures-capable method (ICH E9(R1) §2.3)"
+  justification: "Longitudinal data requires repeated-measures method (ICH E9(R1) §2.3)"
 ```
 
-The deterministic parser converts this YAML into Turtle/RDF triples incrementally. The LLM assists in suggesting template fields and flagging inconsistencies (e.g., "this rule references endpoint_type but no endpoint_type class exists in the TBox") — but every axiom is human-validated before merge.
+The deterministic parser converts YAML to Turtle triples. The LLM assists in suggesting template fields and flagging inconsistencies. Every axiom is human-validated before merge.
 
 ---
 
-### 8. Cost-Benefit Analysis
+### 8. Cost-Benefit
 
 #### 8.1 Investment (24 months)
 
@@ -298,35 +304,35 @@ The deterministic parser converts this YAML into Turtle/RDF triples incrementall
 | Ontology Engineer | 1.0 | $200K |
 | Regulatory Compliance | 0.5 | $125K |
 | MLOps/DevOps | 1.0 | $200K |
-| Infrastructure (graph store, CI/CD, compute) | — | $100K |
+| Infrastructure | — | $100K |
 | **Total annual** | — | **$1.0M** |
 | **2-year total** | — | **$2.0M** |
 
 #### 8.2 Projected Returns
 
-| Metric | Current State | Post-Ontology | Savings |
-|--------|--------------|---------------|---------|
-| SAP first draft time | 4-6 weeks | 3-5 days | ~80% reduction |
-| SAP QC cycle time | 2-3 rounds | 0-1 rounds (constraint pre-validation catches most issues) | ~60% reduction |
-| Statistical methodology audit findings | Baseline | Near-elimination of preventable findings (wrong method, missing estimand component) | Estimated 70% reduction |
-| Cross-study method inconsistency | Common for rare endpoints | Enforced consistency | Standardization benefit |
+| Metric | Current | Post-Ontology | Savings |
+|--------|---------|---------------|---------|
+| SAP first draft | 4-6 weeks | 3-5 days | ~80% |
+| SAP QC cycles | 2-3 rounds | 0-1 rounds | ~60% |
+| Methodology audit findings | Baseline | Near-elimination of preventable findings | ~70% |
+| Cross-study consistency | Variable across teams | Enforced | Standardization |
 
-**Break-even estimate:** 15 Phase II/III studies post-MVO deployment. At an estimated ~$100K/study in statistical labor + QC + audit remediation (based on internal planning benchmarks), the ontology pays for itself within 12-18 months of enterprise-wide use.
+**Break-even estimate:** 15 Phase II/III studies post-MVO deployment. At an estimated ~$100K/study in labor + QC + audit remediation (internal planning benchmark), the ontology pays for itself within 12-18 months of enterprise-wide use.
 
-**Risk-adjusted (50% adoption):** Break-even extends to ~24 months for 30 active studies. Still positive within the 3-year ROI window.
+**Risk-adjusted (50% adoption):** Break-even extends to ~24 months for 30 studies.
 
 ---
 
-### 9. Implementation Stack & Timeline
+### 9. Implementation Timeline
 
-| Phase | Scope | Duration | Dependencies | Exit Criteria |
-|-------|-------|----------|--------------|---------------|
-| **MVO** | Superiority trials, binary/continuous endpoints, two-arm, simple stratification | 3-6 months | Core team hired, YAML template format frozen | SHACL validates 10 historical studies with ≥95% agreement on primary analysis decisions (exact-match of analysis method, missing data strategy, and stratification approach between ontology-generated SAP and human-generated SAP) |
-| **Pilot** | 2-3 active studies running ontology-parallel with traditional SAP | 6-12 months | MVO complete, SHACL engine validated, FDA/CDISC engagement initiated | No critical disagreements between ontology and human SAPs |
-| **Expansion** | Time-to-event endpoints, non-inferiority, multi-arm, complex stratification | 12-18 months | Pilot feedback incorporated, regulatory guidance emerging | ≥80% of Phase II/III studies covered by ontology rules |
-| **Production** | Full coverage, break-glass governance mature, regulatory positions known | 18-24 months | Expansion validated, regulatory path clear | Ontology is default SAP authorship pathway |
+| Phase | Scope | Duration | Exit Criteria |
+|-------|-------|----------|---------------|
+| **MVO** | Superiority, binary/continuous endpoints, two-arm, simple stratification | 3-6 months | SHACL validates 10 historical studies with ≥95% agreement (exact-match of analysis method, missing data strategy, stratification) |
+| **Pilot** | 2-3 active studies running ontology-parallel | 6-12 months | No critical disagreements between ontology and human SAPs |
+| **Expansion** | TTE endpoints, non-inferiority, multi-arm | 12-18 months | ≥80% of Phase II/III studies covered |
+| **Production** | Full coverage, governance mature | 18-24 months | Ontology is default SAP authorship pathway |
 
-**Total: 3-5 years to full production readiness. MVO proof-of-value in 3-6 months.**
+**Total: 3-5 years to full production. MVO proof-of-value in 3-6 months.**
 
 ---
 
@@ -334,17 +340,17 @@ The deterministic parser converts this YAML into Turtle/RDF triples incrementall
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| Regulators explicitly reject ontology-based AI validation | High — could invalidate core premise | Parallel validation generates evidence for discussion; if rejected, ontology still has standalone value as a documentation and training tool |
-| Knowledge acquisition bottleneck proves unbreakable | High — ontology cannot scale without domain expert input | Start with MVO (small domain); prove the workflow scales before expanding |
-| SHACL engine performance degrades at enterprise scale (hundreds of concurrent studies) | Medium — may require infrastructure investment | Benchmark during MVO phase; scale with partitionable TBox per therapeutic area |
-| LLM gaming passes SHACL but produces clinically inappropriate outputs | Medium — false sense of security | Caveats in audit log; human-in-the-loop for all production outputs during Pilot phase |
-| Ontology governance becomes a bottleneck (Board too slow to approve changes) | Medium — delays adoption | Publish SLAs (5-day break-glass review, 2-week TBox change review); adjust staffing if needed |
-| Cross-pharma adoption stalls (no industry standard emerges) | Low — single-pharma value is already positive per cost-benefit analysis | Publish framework; engage CDISC working groups; lead by example rather than waiting for consensus |
+| Regulators reject ontology-based AI validation | High | Parallel validation generates evidence; ontology has standalone value as documentation/training tool |
+| Knowledge acquisition bottleneck | High | Start with MVO; prove the workflow scales before expanding |
+| SHACL performance at enterprise scale | Medium | Benchmark during MVO; partition TBox by therapeutic area |
+| Agent gaming — passes SHACL but clinically inappropriate | Medium | Audit log caveats; human-in-the-loop during Pilot |
+| Governance becomes too slow | Medium | Publish SLAs (5-day break-glass, 2-week TBox changes) |
+| Cross-pharma adoption stalls | Low | Single-pharma value is positive; publish framework regardless |
 
 ---
 
-### 11. Summary
+### 11. What This Proposal Is and Isn't
 
-The debate is not "ontology vs no ontology." The debate is: **if agentic AI will be used in clinical biostatistics, what makes it safe, auditable, and regulatorily defensible?** The answer is formal domain knowledge represented as an ontology grounded in SHACL Core constraints, with a deterministic middleware layer, a capped self-correction loop, Git-based governance, and an explicit break-glass pathway for genuine edge cases.
+**What it is:** An argument that structured institutional knowledge (ontology) fills a critical gap in agent memory — one that prompts, RAG, conversation history, and fine-tuning all miss. The ontology is built incrementally as a byproduct of agent pilot work, follows the copy-adapt-extend pattern that study teams already use, and compounds in value with each additional protocol.
 
-Every alternative — better prompts, bigger models, RAG, fine-tuning — fails on at least one non-negotiable dimension: traceability, version control, independent validation, and inspection readiness. Ontology is the right tool for this problem. The MVO path (3-6 months) provides a concrete, de-risked starting point.
+**What it isn't:** A claim that ontology replaces documents, code, or human judgment. A demand for separate upfront funding. An assertion that ontology is the only thing agents need. The ontology is one layer of the agent memory stack — but it is the only layer that is simultaneously structured, auditable, version-controlled, and transferable across studies. That is the gap it fills, and no existing technology fills it better.

@@ -1,64 +1,54 @@
-# Ontology for Agentic AI in Clinical Biostatistics
+# Institutional Knowledge for Agentic AI in Biostatistics
 
 ## Executive Brief — For BARDS Leadership Review
 
 ---
 
-### The Problem
+### Where We Are
 
-Biostatistics is already drowning in documentation burden. Every SAP goes through 3-5 rounds of QC. Every audit traces back to the same pattern: two study teams made different analysis decisions for the same endpoint type because knowledge lived in people's heads, not in a shared, enforceable framework.
+Agentic AI for clinical biostatistics is no longer hypothetical. Teams are building prototypes — agents that draft SAPs, generate TLFs, automate QC checks. The early evidence shows real time savings. Benchmarking work on agent skills and workflows is underway.
 
-Agentic AI is coming to clinical development — whether we prepare for it or not. The question is not whether it will be used. The question is whether it will be used *safely*, *consistently*, and *defensibly* under regulatory scrutiny.
+This is not a debate about _whether_ agents will be used in biostatistics. They already are. The question is how to make them effective enough for production work.
 
-Without structure, an AI agent making analysis decisions is a black box. You cannot audit it, cannot trace its reasoning, cannot freeze its knowledge at a point in time, and cannot show an inspector *why* it chose Method A over Method B.
+### Where the Ceiling Is
 
-That is a risk that compounds with every trial.
+Today's agents rely on a shallow memory stack: prompts, RAG over documents, recent conversation history. This works for demos. But it hits a ceiling when the agent needs to make consistent, auditable, domain-grounded decisions across multiple studies.
 
----
+The missing layer is **structured institutional knowledge** — the decision logic that senior statisticians carry in their heads and that currently takes years to transfer. Things like:
 
-### The Insight
+- When to use MMRM vs ANCOVA for a given endpoint type
+- What missing data strategies are acceptable per ICH E9(R1)
+- Which stratification factors require pooling rules
+- The analysis conventions that reviewers expect for a given therapeutic area
 
-The solution is not "better prompts" or "bigger models." The solution is a formal, machine-readable, human-verifiable knowledge framework that encodes our regulatory guidelines, endpoint conventions, and analysis decision rules in one place.
+Without this layer, every agent pilot starts from scratch. Without this layer, the same question gets answered differently depending on which document the agent happens to retrieve. Without this layer, there's no audit trail for _why_ a decision was made.
 
-Think of it as the **statistical playbook that every study team agrees to follow** — except it's machine-executable, version-controlled, and capable of validating every analysis decision before it reaches the SAP.
+### What We Propose
 
-When an agent proposes ANCOVA for a longitudinal endpoint, the framework catches it: "Longitudinal endpoints require repeated-measures methods per ICH E9(R1)." It doesn't replace the statistician — it catches the mistakes that humans catch in QC cycle 2, but at the moment of proposal, not three weeks later.
+When an agent pilot reaches a natural checkpoint (enough work done to show value), pause and **codify what the agent learned** — the endpoint types it encountered, the methods it selected, the rules it followed, the conventions it discovered. This becomes the first draft of an **ontology**: a structured, versioned, machine-readable knowledge base of analysis decisions.
 
----
+This is not an additional project. It's a byproduct of the pilot work you're already doing. Tools like nano-ontoprompt let the LLM propose the ontology structure, which a statistician validates — minutes per addition, not weeks.
 
-### What's Changed by the Multi-Model Review
+Here's what happens next:
 
-The initial proposal was a technical document for ontology engineers. It used language that would not survive a leadership conversation. The revised proposal — shaped through 9 critiques across 4 different AI model architectures — now addresses the questions that matter:
+1. **During the pilot** — the ontology makes the agent iterate faster. No more re-prompting it to remember things it already figured out. The ontology *is* its institutional memory, carried forward.
 
-| Question | Answer |
-|----------|--------|
-| What does it cost? | ~$2M over 2 years for a dedicated team of 6-7 |
-| What's the return? | 80% faster SAP drafts, 60% reduction in QC cycles, near-elimination of preventable audit findings |
-| How long until value? | 3-6 months for a bounded proof-of-concept on superiority trials |
-| What's the risk? | Building a team with rare skillset (statistics + formal knowledge systems). Mitigated by starting small. |
-| Does this replace statisticians? | No. It frees them from repetitive decisions to focus on trial design, regulatory strategy, and interpretation. |
-| Has this been tested against critics? | Yes. 4 independent AI reviewers stress-tested every objection. No blocking issues remain. |
+2. **After the pilot** — the ontology becomes a reusable asset. When Protocol 12 starts, the team doesn't learn from scratch. They copy Protocol 5's ontology, adapt what's different (new endpoints, new comparators, maybe a new convention), and extend. This is exactly how study teams already work — nobody writes a protocol from a blank page.
 
----
+3. **Over time** — the ontology compounds. Within the same therapeutic area, protocols are more alike than different. The 80/20 rule applies: the ontology captures the 80% once, each new study formalizes the 20% delta. Better ontology → more effective agents → richer ontology.
+
+### What the Ontology Is and Isn't
+
+An ontology captures **structured decision knowledge**: what concepts exist, what rules apply, what's required or forbidden. It gives the agent a shared vocabulary and a rulebook.
+
+It does **not** capture everything. Full guideline documents still need RAG. Code still needs skill libraries. Recent session context still needs conversation history. Human judgment still decides the edge cases.
+
+The ontology is one layer of the agent memory stack — but it's the layer that nothing else fills. Prompts are fragile. RAG is unstructured. Conversation history is short-lived. The ontology is the only layer that is simultaneously structured, auditable, version-controlled, and transferable between studies.
 
 ### The Asks
 
-1. **Review the technical proposal** (`docs/ontology-as-grounding-layer-for-agentic-ai.md` in the working group repo) at your convenience
-2. **Discuss a Minimum Viable Ontology** — a 3-6 month pilot scoped to superiority trials with binary/continuous endpoints
-3. **Identify the right team** — 2 statisticians, 1 ontology engineer, 1 regulatory compliance lead, 1 DevOps engineer, plus senior oversight
+1. **Review this framing.** We're not asking for ontology funding upfront. We're asking to build it as a byproduct of agent pilot work that's already budgeted.
 
----
+2. **At the next pilot checkpoint**, try codifying what the agent has learned into structured memory. The tools exist. The process is lightweight. The output is reusable.
 
-### One-Page Summary
-
-**The problem:** AI in clinical biostatistics needs guardrails. Without structured knowledge representation, AI agents are unauditable black boxes — unacceptable under GxP.
-
-**The solution:** A formal, version-controlled knowledge framework (ontology) that encodes ICH guidelines, endpoint conventions, and analysis rules. Every AI-proposed decision is validated against this framework before reaching a SAP.
-
-**The value proposition:** Faster SAP generation, fewer QC cycles, consistent decisions across studies, audit-ready traceability, and a defensible path to using AI in regulated work.
-
-**The timeline:** 3-6 months to prove the concept on a bounded domain. 3-5 years to full production capability.
-
-**The investment:** ~$2M over 2 years for a dedicated team of 6. Break-even at 15 studies deployed.
-
-**The team:** Within BARDS, with a hybrid skillset — statistics leads the domain, engineering builds the framework.
+3. **Discuss how this fits the team's existing workflow** — the copy-adapt-extend pattern is already how study teams work. The ontology just makes that pattern explicit and machine-readable.
