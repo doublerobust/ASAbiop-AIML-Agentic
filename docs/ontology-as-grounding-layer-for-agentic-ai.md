@@ -206,7 +206,11 @@ This proposal does not replace existing standards. It fills a specific gap: **no
 
 #### 6.1 "It adds documentation and maintenance burden"
 
-**Rebuttal:** Git-based governance with automated CI/CD guardrails. Statisticians express domain knowledge through YAML/Markdown templates — no Turtle or SPARQL required. A deterministic parser converts templates to triples. Changes go through a PR workflow: automated regression tests run all historical SHACL shapes against the updated ontology to detect regressions, then human domain experts (from the Core Ontology Board) review and approve. Semantic versioning applied to the TBox for downstream impact assessment.
+**Rebuttal:** The ontology is not built from scratch in a single formalization exercise — it grows incrementally alongside the work it supports. After completing a project (a simulation study, a SAP, a protocol review), the statistician's AI copilot produces a first draft of the relevant ontology nodes. When new specifications or documents arrive, the LLM proposes how to integrate them into the existing graph — suggesting new nodes, links, rules, and actions — and the human inspects, validates, or rejects each addition individually. Inspecting one new node and its connections in an existing graph is far easier than building the full structure from nothing.
+
+This pattern — AI proposes, human validates, ontology grows — turns knowledge acquisition from a bottleneck into a byproduct of normal workflow. The initial investment is building the graph skeleton and the validation pipeline; the ongoing cost is minutes per document review, not weeks per formalization cycle.
+
+Statisticians express domain knowledge through YAML/Markdown templates — no Turtle or SPARQL required. A deterministic parser converts templates to triples. Changes go through a PR workflow: automated regression tests run all historical SHACL shapes against the updated ontology to detect regressions, then human domain experts (from the Core Ontology Board) review and approve. Semantic versioning applied to the TBox for downstream impact assessment.
 
 #### 6.2 "What happens when the ontology is wrong?"
 
