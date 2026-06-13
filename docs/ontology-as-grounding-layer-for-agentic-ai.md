@@ -37,7 +37,7 @@ This ontology captures:
 - **Relationships** — how concepts connect (Endpoint → HasAnalysisMethod → MMRM)
 - **Rules** — conditional logic that can be validated automatically (Longitudinal endpoint → Repeated-measures analysis required)
 
-This is not an additional project. It is a byproduct of the pilot work already underway. Built incrementally, protocol by protocol, it becomes the structured institutional memory for an AI-native biostatistics group.
+This is not an additional project. It is a workflow discipline layered onto pilot work already underway — no separate budget line, no dedicated headcount request. Built incrementally, protocol by protocol, it becomes the structured institutional memory for an AI-native biostatistics group.
 
 #### 2.1 The Self-Reinforcing Cycle
 
@@ -47,7 +47,7 @@ Better ontology ──→ More effective agents ──→ Faster pilots ──�
      └────────────────────── Compounds over time ────────────────────┘
 ```
 
-The ontology does not require separate funding. It is built at a natural pilot checkpoint. It makes the agent iterate faster for the remainder of the pilot (no re-prompting to remember things already discovered). After the pilot, the ontology is a reusable asset.
+The ontology does not require separate funding. It is built at a natural pilot checkpoint — defined as *after the first end-to-end dry run of a TLF package, typically ~2 months before database lock*. This is a natural pause in the workflow where the agent has accumulated enough experience to codify, and the team has enough context to validate. The ontology then makes the agent iterate faster for the remainder of the pilot. After the pilot, the ontology is a reusable asset.
 
 #### 2.2 The Copy-Adapt-Extend Workflow
 
@@ -275,7 +275,15 @@ Statisticians express domain knowledge through YAML/Markdown templates — no Tu
 
 Reporting line: Within BARDS, reporting to head of Late Development Statistics. Funding: Central BARDS budget, 2-year committed runway for MVO development.
 
-#### 7.2 Knowledge Acquisition Workflow
+#### 7.2 Narrative Annotation: Preserving the "Why"
+
+The ontology captures *what* decision rules exist and *what* constraints apply. It does not natively capture *why* a rule exists — the regulatory precedent, the FDA conversation, the institutional history that led to a convention.
+
+When a senior statistician leaves, the ontology preserves the rules they established but not the reasoning behind them. To address this, each TBox rule and concept can carry an optional **narrative annotation**: a free-text rationale field linked to a source (FDA response, working group decision, regulatory precedent, internal convention document).
+
+This annotation layer is not required from day one. It is populated incrementally, prioritized by rules most likely to be questioned or rules with non-obvious reasoning. Over time, it becomes the institutional memory that survives turnover.
+
+#### 7.3 Knowledge Acquisition Workflow
 
 Statisticians provide domain knowledge in YAML templates:
 
@@ -296,30 +304,27 @@ The deterministic parser converts YAML to Turtle triples. The LLM assists in sug
 
 ### 8. Cost-Benefit
 
-#### 8.1 Investment (24 months)
+#### 8.1 Cost Model
 
-| Item | FTE | Annual Cost |
-|------|-----|-------------|
-| Senior Statisticians (3 × 50%) | 1.5 | $375K |
-| Ontology Engineer | 1.0 | $200K |
-| Regulatory Compliance | 0.5 | $125K |
-| MLOps/DevOps | 1.0 | $200K |
-| Infrastructure | — | $100K |
-| **Total annual** | — | **$1.0M** |
-| **2-year total** | — | **$2.0M** |
+The ontology is built as a workflow discipline within existing pilot work, not as a separate funded project. The incremental cost is:
+- **Statistician time for validation:** ~2 days per pilot checkpoint (validating LLM-proposed ontology additions)
+- **Infrastructure:** Already covered by existing pilot tooling (nano-ontoprompt on existing compute)
+- **Engineering:** Ontology structure maintenance is part of the pilot engineering scope
+
+The Core Ontology Board (described in §7) would represent allocated time from existing headcount, not new hires. The 2-year committed runway refers to organizational commitment to the practice, not a dedicated budget line.
 
 #### 8.2 Projected Returns
 
-| Metric | Current | Post-Ontology | Savings |
+| Metric | Current | Target (Post-Ontology) | Benefit |
 |--------|---------|---------------|---------|
-| SAP first draft | 4-6 weeks | 3-5 days | ~80% |
-| SAP QC cycles | 2-3 rounds | 0-1 rounds | ~60% |
-| Methodology audit findings | Baseline | Near-elimination of preventable findings | ~70% |
-| Cross-study consistency | Variable across teams | Enforced | Standardization |
+| Cross-study method consistency | Variable across teams | Enforced via shared TBox | Standardization; reduced rework |
+| SAP QC cycles | 2-3 rounds | Target 0-1 rounds (constraint pre-validation catches most issues) | QC time reduction |
+| Methodology audit findings | Baseline | Target: near-elimination of preventable findings | ~70% reduction target |
+| TLF programming rework | Common from late-discovered cross-study inconsistencies | Reduced through earlier constraint validation | Programming efficiency |
 
-**Break-even estimate:** 15 Phase II/III studies post-MVO deployment. At an estimated ~$100K/study in labor + QC + audit remediation (internal planning benchmark), the ontology pays for itself within 12-18 months of enterprise-wide use.
+**Break-even estimate:** The primary value driver is not SAP drafting speed. The bottleneck in study delivery is ADaM + TLF programming and the rework cycles from inconsistencies between SAP, analysis specs, and programming output. The ontology's value comes from catching these inconsistencies at the point of decision rather than during QC. Break-even is achieved through reduction in rework cycles across the pipeline, not through faster first drafts.
 
-**Risk-adjusted (50% adoption):** Break-even extends to ~24 months for 30 studies.
+**Target:** Validate during MVO and first pilot with concrete metrics. Current estimates are directional and will be refined based on pilot measurement.
 
 ---
 
@@ -349,7 +354,22 @@ The deterministic parser converts YAML to Turtle triples. The LLM assists in sug
 
 ---
 
-### 11. What This Proposal Is and Isn't
+### 11. Implementation-Level Considerations
+
+The panel review identified several technical issues that are real but belong on the implementation roadmap, not in this proposal. They are acknowledged here as known items to be resolved during the MVO phase:
+
+- **Middleware Pydantic schema specification** — a concrete JSON schema for the agent-to-ontology interface will be developed during MVO
+- **SHACL performance benchmarking** — validation will be tested against graphs of 100, 1000, and 10000 nodes to establish performance envelope
+- **YAML-to-Turtle parser DSL scope** — the MVO will define which SHACL Core features the template DSL covers
+- **GxP audit trail storage** — the audit trail design (format, immutability, timestamping) will be specified during MVO, with options including signed git commits, append-only database, or write-once storage
+- **Ontology regression testing** — test case format and coverage targets will be defined during the MVO phase
+- **SHACL shape interaction** — overlapping constraints from multiple active shapes will be tested and resolved during the first live pilot
+- **Protocol amendment versioning** — ontology transition workflows for study changes will be designed during the pilot phase
+- **Automation bias mitigation** — strategies including random sampling and calibration reporting are noted for future operational design
+
+These are not gaps in the proposal. They are implementation details for the team that builds it. Every engineering project has unknowns that get resolved during execution; this proposal is honest about where they are.
+
+### 12. What This Proposal Is and Isn't
 
 **What it is:** An argument that structured institutional knowledge (ontology) fills a critical gap in agent memory — one that prompts, RAG, conversation history, and fine-tuning all miss. The ontology is built incrementally as a byproduct of agent pilot work, follows the copy-adapt-extend pattern that study teams already use, and compounds in value with each additional protocol.
 
