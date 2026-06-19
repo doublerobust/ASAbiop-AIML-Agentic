@@ -1,0 +1,164 @@
+{
+  "test_case_id": "TC-012",
+  "title": "Forest Plot — Subgroup Hazard Ratios for PFS",
+  "parameters": {
+    "seed": 42,
+    "n_subjects": 300
+  },
+  "overall": {
+    "hr": 0.555,
+    "ci_lower": 0.411,
+    "ci_upper": 0.748,
+    "n_experimental": 150,
+    "n_control": 150,
+    "events_experimental": 74,
+    "events_control": 104
+  },
+  "subgroups": [
+    {
+      "subgroup": "Age <65",
+      "variable": "AGEGR1",
+      "value": "<65",
+      "hr": 0.643,
+      "ci_lower": 0.429,
+      "ci_upper": 0.962,
+      "n_experimental": 82,
+      "n_control": 81,
+      "events_experimental": 42,
+      "events_control": 54
+    },
+    {
+      "subgroup": "Age >=65",
+      "variable": "AGEGR1",
+      "value": ">=65",
+      "hr": 0.472,
+      "ci_lower": 0.301,
+      "ci_upper": 0.738,
+      "n_experimental": 68,
+      "n_control": 69,
+      "events_experimental": 32,
+      "events_control": 50
+    },
+    {
+      "subgroup": "Male",
+      "variable": "SEX",
+      "value": "Male",
+      "hr": 0.669,
+      "ci_lower": 0.433,
+      "ci_upper": 1.034,
+      "n_experimental": 63,
+      "n_control": 80,
+      "events_experimental": 33,
+      "events_control": 53
+    },
+    {
+      "subgroup": "Female",
+      "variable": "SEX",
+      "value": "Female",
+      "hr": 0.462,
+      "ci_lower": 0.305,
+      "ci_upper": 0.698,
+      "n_experimental": 87,
+      "n_control": 70,
+      "events_experimental": 41,
+      "events_control": 51
+    },
+    {
+      "subgroup": "ECOG PS 0",
+      "variable": "ECOGGR1",
+      "value": "0",
+      "hr": 0.534,
+      "ci_lower": 0.353,
+      "ci_upper": 0.808,
+      "n_experimental": 100,
+      "n_control": 80,
+      "events_experimental": 42,
+      "events_control": 49
+    },
+    {
+      "subgroup": "ECOG PS 1+",
+      "variable": "ECOGGR1",
+      "value": "1+",
+      "hr": 0.715,
+      "ci_lower": 0.462,
+      "ci_upper": 1.108,
+      "n_experimental": 50,
+      "n_control": 70,
+      "events_experimental": 32,
+      "events_control": 55
+    },
+    {
+      "subgroup": "North America",
+      "variable": "REGION",
+      "value": "North America",
+      "hr": 0.64,
+      "ci_lower": 0.394,
+      "ci_upper": 1.041,
+      "n_experimental": 49,
+      "n_control": 61,
+      "events_experimental": 27,
+      "events_control": 42
+    },
+    {
+      "subgroup": "Europe",
+      "variable": "REGION",
+      "value": "Europe",
+      "hr": 0.467,
+      "ci_lower": 0.275,
+      "ci_upper": 0.792,
+      "n_experimental": 50,
+      "n_control": 47,
+      "events_experimental": 24,
+      "events_control": 33
+    },
+    {
+      "subgroup": "Asia",
+      "variable": "REGION",
+      "value": "Asia",
+      "hr": 0.572,
+      "ci_lower": 0.33,
+      "ci_upper": 0.99,
+      "n_experimental": 51,
+      "n_control": 42,
+      "events_experimental": 23,
+      "events_control": 29
+    },
+    {
+      "subgroup": "Prior therapy: Yes",
+      "variable": "PRIORTRT",
+      "value": "Yes",
+      "hr": 0.566,
+      "ci_lower": 0.352,
+      "ci_upper": 0.909,
+      "n_experimental": 60,
+      "n_control": 68,
+      "events_experimental": 27,
+      "events_control": 47
+    },
+    {
+      "subgroup": "Prior therapy: No",
+      "variable": "PRIORTRT",
+      "value": "No",
+      "hr": 0.535,
+      "ci_lower": 0.362,
+      "ci_upper": 0.789,
+      "n_experimental": 90,
+      "n_control": 82,
+      "events_experimental": 47,
+      "events_control": 57
+    }
+  ],
+  "interaction_pvalues": {
+    "AGEGR1": 0.2565,
+    "SEX": 0.2526,
+    "ECOGGR1": 0.4157,
+    "REGION": 0.6576,
+    "PRIORTRT": 0.901
+  },
+  "metadata": {
+    "language": "R",
+    "method": "Cox PH (survival::coxph)",
+    "ci_method": "Wald (log-scale)",
+    "packages": ["survival", "jsonlite"]
+  }
+}
