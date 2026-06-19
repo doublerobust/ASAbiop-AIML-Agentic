@@ -133,17 +133,25 @@ compare_counts <- function(val_a, val_b, field) {
 # TC-specific comparison logic
 # ─────────────────────────────────────────────────────
 
+# Build the list of language pairs to compare, skipping SAS when absent.
+make_pairs <- function(field, r, sas, py) {
+  has_sas <- length(sas) > 0
+  pairs <- list(list("R vs Python", r[[field]], py[[field]]))
+  if (has_sas) {
+    pairs <- c(pairs,
+      list(list("R vs SAS",     r[[field]],   sas[[field]])),
+      list(list("SAS vs Python", sas[[field]], py[[field]])))
+  }
+  pairs
+}
+
 compare_tc001 <- function(r, sas, py) {
   fields <- c("median_pfs", "ci_lower", "ci_upper", "n_events", "n_total")
   results <- list()
 
   for (field in fields) {
     results[[field]] <- list()
-    pairs <- list(
-      list("R vs SAS",   r[[field]],   sas[[field]]),
-      list("R vs Python", r[[field]],  py[[field]]),
-      list("SAS vs Python", sas[[field]], py[[field]])
-    )
+    pairs <- make_pairs(field, r, sas, py)
 
     for (pair in pairs) {
       label <- pair[[1]]
@@ -170,11 +178,7 @@ compare_tc002 <- function(r, sas, py) {
   # Compare continuous stats from age_by_arm
   for (field in intersect(fields, names(r))) {
     results[[field]] <- list()
-    pairs <- list(
-      list("R vs SAS",   r[[field]],   sas[[field]]),
-      list("R vs Python", r[[field]],  py[[field]]),
-      list("SAS vs Python", sas[[field]], py[[field]])
-    )
+    pairs <- make_pairs(field, r, sas, py)
 
     for (pair in pairs) {
       label <- pair[[1]]
@@ -211,11 +215,7 @@ compare_tc003 <- function(r, sas, py) {
 
   for (field in fields) {
     results[[field]] <- list()
-    pairs <- list(
-      list("R vs SAS",   r[[field]],   sas[[field]]),
-      list("R vs Python", r[[field]],  py[[field]]),
-      list("SAS vs Python", sas[[field]], py[[field]])
-    )
+    pairs <- make_pairs(field, r, sas, py)
 
     for (pair in pairs) {
       label <- pair[[1]]
@@ -307,9 +307,17 @@ if (sys.nframe() == 0) {
   # Read outputs
   cat(sprintf("Comparing %s ground truth across languages...\n", opts$tc))
 
+  # SAS is OPTIONAL: there is no SAS license in CI and TC-011..014 have no SAS
+  # reference. A meaningful comparison requires that all provided outputs were
+  # computed on the SAME shared dataset (run each TC script with --data X.csv).
   r_json   <- fromJSON(opts$r_output, simplifyVector = FALSE)
-  sas_json <- fromJSON(opts$sas_output, simplifyVector = FALSE)
   py_json  <- fromJSON(opts$python_output, simplifyVector = FALSE)
+  if (!is.na(opts$sas_output) && nzchar(opts$sas_output) && file.exists(opts$sas_output)) {
+    sas_json <- fromJSON(opts$sas_output, simplifyVector = FALSE)
+  } else {
+    sas_json <- list()  # empty => SAS pairs are skipped below
+    cat("(SAS output not provided/found — comparing R vs Python only)\n")
+  }
 
   # Run comparison
   comparisons <- switch(opts$tc,

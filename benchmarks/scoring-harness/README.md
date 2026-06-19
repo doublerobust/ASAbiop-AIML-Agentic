@@ -7,15 +7,25 @@ cross-validated ground truth in R, SAS, and Python.
 
 ```
 scoring-harness/
-├── score.py               ← Main scoring, compliance & evaluation entry point
-├── compliance.py           ← Regulatory compliance checks (ADaM, TCG, CSR)
-├── compliance.yaml         ← Per-TC compliance rule definitions
-├── compare.py              ← Numerical comparison with tolerance
-├── schema_validator.py     ← JSON Schema validation
-├── tolerances.yaml         ← Machine-readable tolerance specs
-├── requirements.txt        ← Python dependencies
-└── README.md               ← This file
+├── score.py            ← Main CLI: score / verify / validate / compliance /
+│                          check-safety / evaluate / efficiency (numerical
+│                          comparison + JSON Schema validation are built in)
+├── compliance.py       ← Regulatory compliance checks (ADaM, TCG, CSR)
+├── compliance.yaml     ← Per-TC compliance rule definitions
+├── safety.py           ← Safety & robustness checks (N-counts, denominators,
+│                          cross-TFL agreement, edge cases, stability)
+├── safety.yaml         ← Safety rule definitions
+├── efficiency.yaml     ← Operational-efficiency scoring configuration
+├── tolerances.yaml     ← Machine-readable numerical tolerance specs
+├── requirements.txt    ← Python dependencies
+└── README.md           ← This file
 ```
+
+> NOTE (QC review): numerical comparison and schema validation are implemented
+> directly inside `score.py` (functions `compare_numeric`, `compare_count`,
+> `load_schema`/`validate`). There are no separate `compare.py` or
+> `schema_validator.py` modules; earlier versions of this README listed files
+> that never existed.
 
 ## Commands
 
@@ -58,12 +68,25 @@ python score.py evaluate \
 
 ### verify — Cross-Language Verification
 
+**IMPORTANT:** verification is only meaningful when every language was run on the
+**same shared dataset**. Generate the canonical dataset once (R
+`write_shared_data()` → `adtte_<seed>.csv`) and run each TC script with
+`--data <shared.csv>`. SAS is **optional** (no license in CI; TC-011..014 have
+no SAS reference).
+
 ```bash
+# 1) create shared data and per-language outputs
+Rscript ../references/ground-truth/R/tc-001-km-median.R \
+  --data adtte_42.csv --arm 1 --output r1.json
+python3 ../references/ground-truth/Python/tc_001_km_median.py \
+  --data adtte_42.csv --arm 1 --output p1.json
+
+# 2) verify (flags are --r / --python / optional --sas)
 python score.py verify \
   --tc TC-001 \
-  --r-output references/ground-truth/R/tc-001-output.json \
-  --sas-output references/ground-truth/SAS/tc-001-output.json \
-  --python-output references/ground-truth/Python/tc-001-output.json
+  --r r1.json \
+  --python p1.json \
+  # --sas sas1.json   # optional
 ```
 
 ### validate — Schema Validation

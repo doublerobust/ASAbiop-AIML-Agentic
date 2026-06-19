@@ -134,8 +134,7 @@ output <- list(
   metadata = list(
     language = "R",
     sorting = "TRT01A, USUBJID, PDDY",
-    packages = c("jsonlite"),
-    generated_at = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ")
+    packages = c("jsonlite")
   )
 )
 

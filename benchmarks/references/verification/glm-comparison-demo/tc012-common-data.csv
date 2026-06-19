@@ -1,0 +1,301 @@
+"USUBJID","TRT01A","AGEGR1","SEX","ECOGGR1","REGION","PRIORTRT","AVAL","CNSR"
+"SUBJ-E-0001","Experimental","<65","Male","0","North America","No",23.7891766740941,1
+"SUBJ-E-0002","Experimental",">=65","Female","0","Europe","Yes",7.66339739704998,0
+"SUBJ-E-0003","Experimental","<65","Male","1+","North America","Yes",7.29409215950253,0
+"SUBJ-E-0004","Experimental","<65","Female","0","Europe","Yes",13.107865178882,0
+"SUBJ-E-0005","Experimental",">=65","Male","1+","Asia","No",6.0604816969564,0
+"SUBJ-E-0006","Experimental","<65","Female","0","North America","No",22.7769921803847,1
+"SUBJ-E-0007","Experimental","<65","Female","1+","North America","Yes",22.1097023589537,1
+"SUBJ-E-0008","Experimental",">=65","Female","0","North America","No",11.6963454371312,0
+"SUBJ-E-0009","Experimental",">=65","Female","0","Europe","No",22.2967456472106,1
+"SUBJ-E-0010","Experimental",">=65","Male","1+","North America","Yes",5.14672770808153,0
+"SUBJ-E-0011","Experimental","<65","Male","0","North America","No",20.8816462098621,1
+"SUBJ-E-0012","Experimental","<65","Male","0","North America","No",22.5878838342614,1
+"SUBJ-E-0013","Experimental","<65","Male","0","Europe","Yes",12.9288704508645,0
+"SUBJ-E-0014","Experimental","<65","Female","1+","Asia","No",6.65143656206655,0
+"SUBJ-E-0015","Experimental",">=65","Female","0","North America","No",22.1120334444568,1
+"SUBJ-E-0016","Experimental",">=65","Female","0","North America","No",17.7093106799592,0
+"SUBJ-E-0017","Experimental",">=65","Female","0","Asia","Yes",21.2385301147588,1
+"SUBJ-E-0018","Experimental","<65","Female","1+","Europe","No",19.1839305195026,1
+"SUBJ-E-0019","Experimental",">=65","Male","1+","North America","No",14.2016197843868,0
+"SUBJ-E-0020","Experimental",">=65","Female","0","Asia","Yes",2.71601540081606,0
+"SUBJ-E-0021","Experimental","<65","Female","0","Asia","No",13.3211783205087,0
+"SUBJ-E-0022","Experimental","<65","Female","0","North America","No",18.3493553493172,1
+"SUBJ-E-0023","Experimental",">=65","Male","0","Europe","Yes",20.967628705781,1
+"SUBJ-E-0024","Experimental","<65","Male","1+","Asia","Yes",20.4456569147296,1
+"SUBJ-E-0025","Experimental","<65","Male","1+","Asia","No",0.209089491874709,0
+"SUBJ-E-0026","Experimental","<65","Female","0","North America","No",18.9487329027615,1
+"SUBJ-E-0027","Experimental","<65","Female","0","Asia","No",15.0436696524803,0
+"SUBJ-E-0028","Experimental","<65","Female","1+","Europe","No",12.7619759148949,0
+"SUBJ-E-0029","Experimental",">=65","Female","1+","Asia","Yes",18.3434928646311,1
+"SUBJ-E-0030","Experimental","<65","Male","0","Europe","No",13.0562068894505,0
+"SUBJ-E-0031","Experimental","<65","Female","1+","North America","No",4.92160095430392,0
+"SUBJ-E-0032","Experimental","<65","Male","0","North America","No",23.5494074653834,1
+"SUBJ-E-0033","Experimental",">=65","Female","0","Asia","Yes",22.6668656640686,1
+"SUBJ-E-0034","Experimental","<65","Female","1+","North America","No",22.7969415094703,1
+"SUBJ-E-0035","Experimental","<65","Female","1+","North America","No",20.8625035692201,0
+"SUBJ-E-0036","Experimental",">=65","Male","0","Asia","No",21.9928720244206,1
+"SUBJ-E-0037","Experimental",">=65","Female","0","Asia","No",21.0984035627916,1
+"SUBJ-E-0038","Experimental","<65","Female","0","Europe","No",21.360129002016,1
+"SUBJ-E-0039","Experimental",">=65","Female","0","Asia","No",20.5023543331772,1
+"SUBJ-E-0040","Experimental","<65","Male","1+","Asia","No",1.76064645523553,0
+"SUBJ-E-0041","Experimental",">=65","Male","0","Asia","No",21.7205653572455,1
+"SUBJ-E-0042","Experimental",">=65","Male","1+","North America","No",8.4843223696172,0
+"SUBJ-E-0043","Experimental",">=65","Male","0","Europe","Yes",23.2505421596579,1
+"SUBJ-E-0044","Experimental","<65","Male","0","Asia","Yes",18.5427727689967,1
+"SUBJ-E-0045","Experimental",">=65","Female","1+","Europe","No",6.42299137032551,0
+"SUBJ-E-0046","Experimental",">=65","Female","1+","Asia","No",21.8524410990067,1
+"SUBJ-E-0047","Experimental",">=65","Female","0","Europe","Yes",22.9381363224238,1
+"SUBJ-E-0048","Experimental","<65","Male","0","Asia","Yes",18.0541522479616,1
+"SUBJ-E-0049","Experimental","<65","Male","1+","Asia","No",6.99113841718392,0
+"SUBJ-E-0050","Experimental","<65","Female","1+","Europe","Yes",14.4613654522159,0
+"SUBJ-E-0051","Experimental","<65","Male","0","Asia","Yes",2.81525635693827,0
+"SUBJ-E-0052","Experimental","<65","Female","0","Europe","No",13.8509302041852,0
+"SUBJ-E-0053","Experimental",">=65","Female","0","Asia","Yes",8.07720241786917,0
+"SUBJ-E-0054","Experimental",">=65","Female","1+","Asia","Yes",0.7890673914502,0
+"SUBJ-E-0055","Experimental","<65","Male","0","Asia","No",20.8386337808333,1
+"SUBJ-E-0056","Experimental","<65","Male","1+","Asia","Yes",19.7833596747369,1
+"SUBJ-E-0057","Experimental","<65","Female","0","Asia","No",18.1673261551903,0
+"SUBJ-E-0058","Experimental",">=65","Male","1+","Europe","Yes",19.2661986490712,1
+"SUBJ-E-0059","Experimental",">=65","Female","0","Asia","No",18.7040576676401,0
+"SUBJ-E-0060","Experimental","<65","Male","1+","Asia","No",18.4491649442352,1
+"SUBJ-E-0061","Experimental","<65","Female","1+","Europe","No",15.8165266912327,0
+"SUBJ-E-0062","Experimental",">=65","Male","0","North America","No",18.0869840802625,1
+"SUBJ-E-0063","Experimental","<65","Male","0","Europe","Yes",17.5751639514143,0
+"SUBJ-E-0064","Experimental","<65","Male","0","Europe","No",19.614519237075,1
+"SUBJ-E-0065","Experimental",">=65","Female","0","Europe","No",16.8606885470068,0
+"SUBJ-E-0066","Experimental","<65","Female","1+","Europe","No",14.7907726957903,0
+"SUBJ-E-0067","Experimental","<65","Male","1+","North America","No",3.14245009692488,0
+"SUBJ-E-0068","Experimental",">=65","Male","0","Asia","No",22.282571729796,0
+"SUBJ-E-0069","Experimental","<65","Female","1+","Europe","Yes",8.36305588215882,0
+"SUBJ-E-0070","Experimental",">=65","Female","0","North America","No",19.8956970199943,1
+"SUBJ-E-0071","Experimental","<65","Male","0","Asia","Yes",23.4057552460581,1
+"SUBJ-E-0072","Experimental","<65","Female","0","Asia","Yes",20.5773421567865,1
+"SUBJ-E-0073","Experimental",">=65","Female","0","Europe","Yes",23.788957847748,1
+"SUBJ-E-0074","Experimental",">=65","Male","0","North America","Yes",7.3560106400878,0
+"SUBJ-E-0075","Experimental",">=65","Female","0","Europe","Yes",7.07029087729009,0
+"SUBJ-E-0076","Experimental","<65","Female","1+","Europe","Yes",23.6096010538749,1
+"SUBJ-E-0077","Experimental",">=65","Female","1+","Asia","No",5.01883653719183,0
+"SUBJ-E-0078","Experimental",">=65","Male","0","North America","Yes",5.89408635817192,0
+"SUBJ-E-0079","Experimental","<65","Male","1+","North America","No",13.2251406129409,0
+"SUBJ-E-0080","Experimental","<65","Female","0","Europe","Yes",18.4451124435291,1
+"SUBJ-E-0081","Experimental",">=65","Female","1+","Asia","No",1.94887720191708,0
+"SUBJ-E-0082","Experimental",">=65","Female","0","Europe","Yes",18.8512053326704,1
+"SUBJ-E-0083","Experimental",">=65","Male","1+","Europe","Yes",4.07030232823812,0
+"SUBJ-E-0084","Experimental",">=65","Male","1+","Asia","Yes",21.1650786688551,1
+"SUBJ-E-0085","Experimental",">=65","Male","0","North America","No",19.8634031006194,0
+"SUBJ-E-0086","Experimental","<65","Female","0","North America","Yes",6.41705411966447,0
+"SUBJ-E-0087","Experimental",">=65","Female","0","Europe","No",21.8688574391417,1
+"SUBJ-E-0088","Experimental","<65","Male","0","Europe","Yes",3.11955258759678,0
+"SUBJ-E-0089","Experimental","<65","Female","0","North America","No",19.9760483843274,1
+"SUBJ-E-0090","Experimental",">=65","Male","0","Asia","No",19.0612234999426,1
+"SUBJ-E-0091","Experimental","<65","Female","0","Europe","Yes",22.2276663333178,1
+"SUBJ-E-0092","Experimental","<65","Female","0","Europe","No",7.10696019232273,0
+"SUBJ-E-0093","Experimental",">=65","Female","0","Asia","Yes",22.8068243893795,1
+"SUBJ-E-0094","Experimental","<65","Male","0","North America","No",3.97225745304115,0
+"SUBJ-E-0095","Experimental","<65","Female","0","North America","Yes",19.4368669646792,1
+"SUBJ-E-0096","Experimental",">=65","Male","0","Asia","No",13.5061044100086,0
+"SUBJ-E-0097","Experimental","<65","Female","0","Europe","Yes",19.0969319469295,1
+"SUBJ-E-0098","Experimental",">=65","Female","1+","Asia","Yes",1.21695000684366,0
+"SUBJ-E-0099","Experimental",">=65","Female","0","Europe","No",22.5296229450032,1
+"SUBJ-E-0100","Experimental",">=65","Female","1+","Asia","No",19.8225465123542,1
+"SUBJ-E-0101","Experimental",">=65","Male","0","North America","Yes",16.0950267500986,0
+"SUBJ-E-0102","Experimental",">=65","Male","0","Europe","Yes",19.6545353647523,0
+"SUBJ-E-0103","Experimental",">=65","Male","1+","Europe","No",18.3624536613934,1
+"SUBJ-E-0104","Experimental","<65","Male","0","Europe","No",18.3176624451218,0
+"SUBJ-E-0105","Experimental","<65","Female","0","Europe","Yes",1.78492995790946,0
+"SUBJ-E-0106","Experimental","<65","Male","0","Asia","No",22.2839644351043,1
+"SUBJ-E-0107","Experimental",">=65","Female","0","Europe","No",21.7267983793281,1
+"SUBJ-E-0108","Experimental",">=65","Male","0","Europe","No",4.90212885231528,0
+"SUBJ-E-0109","Experimental","<65","Female","1+","Europe","Yes",18.0697550014593,1
+"SUBJ-E-0110","Experimental","<65","Female","0","North America","No",14.5577663555741,0
+"SUBJ-E-0111","Experimental",">=65","Female","0","North America","No",11.842464321691,0
+"SUBJ-E-0112","Experimental","<65","Male","1+","Asia","No",23.6996666193008,1
+"SUBJ-E-0113","Experimental",">=65","Female","0","Asia","No",18.965612326283,1
+"SUBJ-E-0114","Experimental",">=65","Female","0","Europe","No",7.57374946410075,0
+"SUBJ-E-0115","Experimental","<65","Female","0","Europe","Yes",21.1508151814342,1
+"SUBJ-E-0116","Experimental","<65","Female","0","Europe","No",22.0126643436961,1
+"SUBJ-E-0117","Experimental",">=65","Male","0","North America","Yes",18.483588529285,1
+"SUBJ-E-0118","Experimental","<65","Female","0","North America","No",1.79053214020454,0
+"SUBJ-E-0119","Experimental",">=65","Male","0","Asia","No",22.0444965753704,1
+"SUBJ-E-0120","Experimental","<65","Male","1+","Asia","Yes",21.6899633863941,1
+"SUBJ-E-0121","Experimental","<65","Female","0","Asia","Yes",14.0099341097551,0
+"SUBJ-E-0122","Experimental","<65","Female","0","Europe","No",15.9525145726246,0
+"SUBJ-E-0123","Experimental","<65","Male","1+","North America","No",0.299476661139885,0
+"SUBJ-E-0124","Experimental",">=65","Male","1+","Asia","No",1.53408644229665,0
+"SUBJ-E-0125","Experimental","<65","Male","0","Asia","No",10.5755366010123,0
+"SUBJ-E-0126","Experimental",">=65","Female","0","Europe","Yes",20.3981345104985,1
+"SUBJ-E-0127","Experimental","<65","Female","1+","Asia","Yes",6.94418843421671,0
+"SUBJ-E-0128","Experimental",">=65","Male","0","North America","No",6.77718876455075,0
+"SUBJ-E-0129","Experimental","<65","Female","0","North America","No",22.9497813116759,1
+"SUBJ-E-0130","Experimental",">=65","Female","1+","North America","Yes",3.12136233618598,0
+"SUBJ-E-0131","Experimental","<65","Female","0","Europe","No",12.7239170699165,0
+"SUBJ-E-0132","Experimental","<65","Female","0","Asia","Yes",20.6009854422882,1
+"SUBJ-E-0133","Experimental","<65","Female","1+","North America","No",21.1299783080426,0
+"SUBJ-E-0134","Experimental",">=65","Female","0","North America","Yes",19.7856016047299,1
+"SUBJ-E-0135","Experimental","<65","Female","1+","North America","No",3.18464268367369,0
+"SUBJ-E-0136","Experimental","<65","Female","0","North America","No",21.3513281447813,1
+"SUBJ-E-0137","Experimental",">=65","Female","1+","Europe","No",22.2576599093154,1
+"SUBJ-E-0138","Experimental","<65","Female","0","North America","No",22.5201555043459,1
+"SUBJ-E-0139","Experimental","<65","Female","0","North America","Yes",9.46901019202634,0
+"SUBJ-E-0140","Experimental",">=65","Male","0","North America","Yes",22.9794462081045,1
+"SUBJ-E-0141","Experimental","<65","Male","0","Europe","No",23.7625147816725,1
+"SUBJ-E-0142","Experimental","<65","Male","1+","North America","No",21.3238906287588,1
+"SUBJ-E-0143","Experimental",">=65","Female","0","Asia","Yes",23.2828464237973,1
+"SUBJ-E-0144","Experimental",">=65","Female","0","Asia","No",20.024994911626,1
+"SUBJ-E-0145","Experimental",">=65","Female","0","Europe","No",23.548725809902,1
+"SUBJ-E-0146","Experimental","<65","Male","1+","Asia","Yes",3.71392144251874,0
+"SUBJ-E-0147","Experimental","<65","Male","0","Europe","No",22.758915073704,1
+"SUBJ-E-0148","Experimental","<65","Male","0","North America","No",10.9829751045515,0
+"SUBJ-E-0149","Experimental","<65","Female","0","North America","Yes",20.1401908798143,1
+"SUBJ-E-0150","Experimental",">=65","Male","1+","North America","No",4.50758325407238,0
+"SUBJ-C-0001","Control",">=65","Male","0","Asia","No",2.99614772285247,0
+"SUBJ-C-0002","Control","<65","Male","1+","Asia","Yes",21.2916427734308,1
+"SUBJ-C-0003","Control","<65","Male","0","Asia","Yes",23.3603890137747,1
+"SUBJ-C-0004","Control",">=65","Female","1+","Asia","No",16.5341072705817,0
+"SUBJ-C-0005","Control",">=65","Male","1+","Europe","No",10.0620322013151,0
+"SUBJ-C-0006","Control",">=65","Male","1+","Asia","Yes",8.34563010367294,0
+"SUBJ-C-0007","Control",">=65","Female","1+","North America","Yes",14.4992884804688,0
+"SUBJ-C-0008","Control",">=65","Female","1+","North America","No",1.59150335405554,0
+"SUBJ-C-0009","Control","<65","Female","0","Asia","Yes",13.7882510821025,0
+"SUBJ-C-0010","Control","<65","Male","1+","Europe","No",13.4164572953498,0
+"SUBJ-C-0011","Control",">=65","Male","1+","Asia","No",10.3152450354851,0
+"SUBJ-C-0012","Control",">=65","Female","0","Asia","Yes",10.7159122686695,0
+"SUBJ-C-0013","Control","<65","Male","0","Europe","No",0.757736479863524,0
+"SUBJ-C-0014","Control","<65","Male","0","North America","Yes",20.044000052847,1
+"SUBJ-C-0015","Control","<65","Female","0","Asia","Yes",12.099626681043,0
+"SUBJ-C-0016","Control","<65","Female","0","North America","No",19.984154216105,0
+"SUBJ-C-0017","Control",">=65","Male","0","North America","Yes",11.7538208573091,0
+"SUBJ-C-0018","Control",">=65","Female","1+","North America","Yes",9.95278044267322,0
+"SUBJ-C-0019","Control",">=65","Male","0","North America","No",9.74563656685253,0
+"SUBJ-C-0020","Control",">=65","Female","1+","Europe","No",6.47207877288262,0
+"SUBJ-C-0021","Control","<65","Male","1+","Europe","Yes",22.1775734592229,1
+"SUBJ-C-0022","Control",">=65","Female","1+","North America","No",4.36080564501249,0
+"SUBJ-C-0023","Control","<65","Female","1+","North America","No",3.48058193922043,0
+"SUBJ-C-0024","Control","<65","Male","0","North America","Yes",20.4803030323331,0
+"SUBJ-C-0025","Control","<65","Female","0","North America","Yes",21.1514265588485,1
+"SUBJ-C-0026","Control",">=65","Male","1+","North America","No",5.60316615848846,0
+"SUBJ-C-0027","Control",">=65","Male","1+","Europe","No",5.37225589312249,0
+"SUBJ-C-0028","Control",">=65","Male","1+","North America","No",2.47652579786345,0
+"SUBJ-C-0029","Control","<65","Female","1+","Asia","Yes",0.57309027022076,0
+"SUBJ-C-0030","Control","<65","Male","1+","Europe","No",3.54211567235844,0
+"SUBJ-C-0031","Control",">=65","Female","0","North America","Yes",7.35164706380395,0
+"SUBJ-C-0032","Control",">=65","Male","1+","Asia","Yes",8.36428392200519,0
+"SUBJ-C-0033","Control","<65","Male","0","North America","No",20.2434764597565,1
+"SUBJ-C-0034","Control","<65","Female","0","Europe","Yes",22.6595492376946,1
+"SUBJ-C-0035","Control",">=65","Female","0","North America","No",13.8851554001139,0
+"SUBJ-C-0036","Control",">=65","Male","1+","Asia","No",21.7900007176213,1
+"SUBJ-C-0037","Control","<65","Male","0","Europe","Yes",1.92076060920954,0
+"SUBJ-C-0038","Control",">=65","Female","0","North America","No",20.4787831585854,1
+"SUBJ-C-0039","Control",">=65","Female","1+","North America","Yes",7.93183062265001,0
+"SUBJ-C-0040","Control",">=65","Male","0","North America","No",21.2295347820036,1
+"SUBJ-C-0041","Control","<65","Male","1+","North America","Yes",7.80044963198995,0
+"SUBJ-C-0042","Control",">=65","Male","1+","Asia","No",14.7956727466734,0
+"SUBJ-C-0043","Control","<65","Male","0","North America","No",23.8855788283981,1
+"SUBJ-C-0044","Control","<65","Male","0","Asia","No",10.0333334319293,0
+"SUBJ-C-0045","Control",">=65","Female","1+","Europe","Yes",0.921700718916125,0
+"SUBJ-C-0046","Control","<65","Female","0","Europe","Yes",9.63293018026484,0
+"SUBJ-C-0047","Control","<65","Male","0","Europe","Yes",16.514362047575,0
+"SUBJ-C-0048","Control",">=65","Male","0","Asia","No",19.2244511176832,1
+"SUBJ-C-0049","Control",">=65","Male","1+","North America","No",2.70726075506814,0
+"SUBJ-C-0050","Control",">=65","Female","0","Europe","No",19.8885587872937,1
+"SUBJ-C-0051","Control","<65","Female","0","Europe","No",3.02893850952387,0
+"SUBJ-C-0052","Control","<65","Male","1+","North America","Yes",1.4459141604011,0
+"SUBJ-C-0053","Control",">=65","Female","1+","North America","No",2.41969148078543,0
+"SUBJ-C-0054","Control","<65","Male","0","Asia","Yes",19.1382656442001,1
+"SUBJ-C-0055","Control",">=65","Male","0","North America","No",14.2297799815675,0
+"SUBJ-C-0056","Control",">=65","Male","0","Europe","No",18.389945096802,1
+"SUBJ-C-0057","Control",">=65","Male","0","Europe","Yes",15.2556673201921,0
+"SUBJ-C-0058","Control","<65","Male","1+","Europe","No",8.58497612311372,0
+"SUBJ-C-0059","Control",">=65","Female","0","North America","No",3.52148715885918,0
+"SUBJ-C-0060","Control","<65","Female","0","Asia","No",20.5022762836888,1
+"SUBJ-C-0061","Control",">=65","Female","0","Asia","Yes",19.0028574848548,1
+"SUBJ-C-0062","Control","<65","Male","0","Asia","No",19.97137368517,1
+"SUBJ-C-0063","Control","<65","Female","1+","North America","No",19.9175002612174,1
+"SUBJ-C-0064","Control","<65","Male","0","Europe","Yes",14.3495687800977,0
+"SUBJ-C-0065","Control",">=65","Female","0","Asia","No",19.5091016041115,1
+"SUBJ-C-0066","Control",">=65","Male","0","Europe","No",20.532478351146,1
+"SUBJ-C-0067","Control","<65","Male","0","Europe","Yes",2.06557438812322,0
+"SUBJ-C-0068","Control","<65","Male","0","Asia","Yes",21.6091484944336,1
+"SUBJ-C-0069","Control",">=65","Female","1+","North America","No",3.72770569464635,0
+"SUBJ-C-0070","Control","<65","Male","1+","North America","No",8.30977738701871,0
+"SUBJ-C-0071","Control",">=65","Female","1+","Europe","Yes",23.7764865132049,1
+"SUBJ-C-0072","Control","<65","Female","0","Asia","Yes",6.05029870445529,0
+"SUBJ-C-0073","Control","<65","Male","0","Europe","Yes",12.7116876964768,0
+"SUBJ-C-0074","Control","<65","Female","1+","Europe","No",6.20567835867405,0
+"SUBJ-C-0075","Control","<65","Male","1+","Europe","No",11.4850649886061,0
+"SUBJ-C-0076","Control","<65","Male","1+","North America","Yes",21.7403657133691,1
+"SUBJ-C-0077","Control",">=65","Female","1+","Asia","Yes",0.601015414216767,0
+"SUBJ-C-0078","Control","<65","Female","0","Asia","Yes",14.1333285098275,0
+"SUBJ-C-0079","Control","<65","Female","1+","North America","Yes",18.1441337694414,1
+"SUBJ-C-0080","Control","<65","Male","1+","North America","No",3.61074719522504,0
+"SUBJ-C-0081","Control","<65","Male","1+","North America","Yes",3.41706440621425,0
+"SUBJ-C-0082","Control","<65","Female","0","Asia","Yes",20.9188023945317,1
+"SUBJ-C-0083","Control",">=65","Female","0","Asia","No",2.64703632177164,0
+"SUBJ-C-0084","Control",">=65","Female","0","Asia","Yes",9.72555773465051,0
+"SUBJ-C-0085","Control","<65","Male","0","Europe","No",13.2302590087056,0
+"SUBJ-C-0086","Control","<65","Male","1+","Asia","Yes",19.3660785659156,0
+"SUBJ-C-0087","Control","<65","Male","0","North America","Yes",18.358392347116,1
+"SUBJ-C-0088","Control","<65","Female","0","North America","No",20.9393862127326,1
+"SUBJ-C-0089","Control","<65","Female","1+","North America","No",5.68724754266441,0
+"SUBJ-C-0090","Control",">=65","Male","1+","Europe","No",1.09308582069204,0
+"SUBJ-C-0091","Control",">=65","Male","0","Europe","No",18.1334820063785,1
+"SUBJ-C-0092","Control","<65","Female","1+","Europe","No",22.1746892742813,1
+"SUBJ-C-0093","Control","<65","Male","1+","Asia","No",23.2628992390819,1
+"SUBJ-C-0094","Control","<65","Female","0","Europe","No",18.1004341458902,1
+"SUBJ-C-0095","Control","<65","Male","0","North America","No",13.9729479230979,0
+"SUBJ-C-0096","Control",">=65","Male","0","Europe","No",0.0349177280440927,0
+"SUBJ-C-0097","Control","<65","Female","1+","Europe","No",5.37264729583902,0
+"SUBJ-C-0098","Control","<65","Female","1+","North America","No",19.8202898441814,1
+"SUBJ-C-0099","Control",">=65","Male","1+","North America","Yes",13.4298000626977,0
+"SUBJ-C-0100","Control","<65","Female","1+","Europe","No",12.2564465298517,0
+"SUBJ-C-0101","Control",">=65","Female","0","Europe","No",6.62499296013266,0
+"SUBJ-C-0102","Control",">=65","Female","0","North America","No",20.8926732125692,1
+"SUBJ-C-0103","Control","<65","Male","0","North America","No",2.85523914732039,0
+"SUBJ-C-0104","Control",">=65","Male","0","North America","No",20.5975602739491,1
+"SUBJ-C-0105","Control","<65","Male","0","North America","Yes",17.6180120548211,0
+"SUBJ-C-0106","Control",">=65","Male","0","Asia","Yes",2.17523157443128,0
+"SUBJ-C-0107","Control","<65","Female","1+","North America","No",7.08542801439762,0
+"SUBJ-C-0108","Control",">=65","Female","0","Asia","No",3.53298770936555,0
+"SUBJ-C-0109","Control",">=65","Female","0","Europe","No",18.8680887585506,1
+"SUBJ-C-0110","Control",">=65","Male","0","Europe","No",23.1823977059685,1
+"SUBJ-C-0111","Control","<65","Male","1+","Europe","No",21.3583061420359,1
+"SUBJ-C-0112","Control","<65","Female","0","Asia","Yes",23.1480365521882,0
+"SUBJ-C-0113","Control","<65","Female","0","North America","Yes",6.96548928196231,0
+"SUBJ-C-0114","Control",">=65","Female","0","Europe","Yes",3.09277052508184,0
+"SUBJ-C-0115","Control","<65","Female","0","Asia","Yes",6.55250285441677,0
+"SUBJ-C-0116","Control",">=65","Female","0","North America","No",12.9186298691185,0
+"SUBJ-C-0117","Control","<65","Female","0","Asia","Yes",5.68068049227198,0
+"SUBJ-C-0118","Control","<65","Male","1+","Europe","No",10.1800257201026,0
+"SUBJ-C-0119","Control","<65","Female","1+","Europe","No",18.9580604028874,0
+"SUBJ-C-0120","Control",">=65","Male","0","Asia","Yes",10.961684225886,0
+"SUBJ-C-0121","Control",">=65","Female","0","Asia","Yes",20.0310537100889,0
+"SUBJ-C-0122","Control",">=65","Male","1+","North America","No",7.47195124581811,0
+"SUBJ-C-0123","Control",">=65","Male","1+","Europe","No",7.8281006620576,0
+"SUBJ-C-0124","Control",">=65","Female","0","North America","No",9.40552643345048,0
+"SUBJ-C-0125","Control",">=65","Male","1+","Europe","No",2.40081410048491,0
+"SUBJ-C-0126","Control",">=65","Male","1+","North America","Yes",0.0370071327148239,0
+"SUBJ-C-0127","Control",">=65","Male","0","North America","No",20.1560418074951,1
+"SUBJ-C-0128","Control","<65","Female","1+","Asia","Yes",14.8560667019469,0
+"SUBJ-C-0129","Control","<65","Female","1+","Europe","Yes",8.18391839811017,0
+"SUBJ-C-0130","Control","<65","Female","1+","Europe","No",4.70384864306788,0
+"SUBJ-C-0131","Control",">=65","Male","0","North America","Yes",0.425987704484551,0
+"SUBJ-C-0132","Control",">=65","Male","0","Europe","No",2.8533589017267,0
+"SUBJ-C-0133","Control","<65","Female","0","Europe","Yes",4.14407985905806,0
+"SUBJ-C-0134","Control","<65","Male","1+","Asia","No",0.231088197252102,0
+"SUBJ-C-0135","Control","<65","Male","1+","Asia","Yes",23.446654453408,1
+"SUBJ-C-0136","Control","<65","Female","0","North America","Yes",22.7309337677434,1
+"SUBJ-C-0137","Control","<65","Male","1+","North America","Yes",18.0681129656732,1
+"SUBJ-C-0138","Control","<65","Male","1+","North America","Yes",18.3679514983669,1
+"SUBJ-C-0139","Control",">=65","Male","1+","North America","Yes",18.6406190693378,1
+"SUBJ-C-0140","Control","<65","Female","1+","Asia","Yes",1.20791481248473,0
+"SUBJ-C-0141","Control",">=65","Female","1+","North America","No",8.95084780727692,0
+"SUBJ-C-0142","Control","<65","Female","0","North America","Yes",7.89991478539175,0
+"SUBJ-C-0143","Control","<65","Male","1+","North America","No",4.2494285851717,0
+"SUBJ-C-0144","Control",">=65","Male","1+","North America","No",2.763229278138,0
+"SUBJ-C-0145","Control",">=65","Male","0","Europe","Yes",21.1724294023588,1
+"SUBJ-C-0146","Control","<65","Female","1+","Asia","No",13.6188482094427,0
+"SUBJ-C-0147","Control","<65","Male","0","North America","Yes",3.94174210446204,0
+"SUBJ-C-0148","Control","<65","Male","1+","North America","Yes",20.3795753364205,0
+"SUBJ-C-0149","Control","<65","Female","0","Asia","No",0.0820752047002316,0
+"SUBJ-C-0150","Control",">=65","Female","0","Europe","Yes",19.6877661505714,1

@@ -6,7 +6,16 @@
    Ground truth established via R (survival) and Python (lifelines) only.
    See cross-language-verification.md §Known Differences for details.
 
-   Default confidence interval method: log-log (Greenwood with log-log transform)
+   Default confidence interval method: log-log (Greenwood with log-log transform),
+   set EXPLICITLY via CONFTYPE=LOGLOG below to match R survfit and Python lifelines.
+
+   CROSS-LANGUAGE VERIFICATION: SAS PROC RANDOM streams differ from R's
+   Mersenne-Twister and numpy's PCG64, so the in-line data step below will NOT
+   reproduce the R/Python datasets for the same seed. For a true cross-language
+   check, import the SHARED dataset that R writes (write_shared_data() ->
+   adtte_<seed>.csv) with PROC IMPORT and run the analysis on that, e.g.:
+       proc import datafile="adtte_42.csv" out=adtte dbms=csv replace; run;
+   The in-line generation is retained only as a self-contained illustration.
 
    Usage (batch): sas tc-001-km-median.sas -set seed 42 -set n 200
 */
@@ -73,28 +82,33 @@ data analysis;
 run;
 
 * ── KM estimation using PROC LIFETEST ──;
-proc lifetest data=analysis outs=outs;
+* BUGFIX: the previous code used `outs=outs` (not a valid PROC LIFETEST
+* option) and then read median/CI from a survival-curve dataset using
+* `where quantile = 0.5`, which does not exist there. The quartile point
+* estimates and their 95% CIs come from the ODS OUTPUT "Quartiles" table.
+* CONFTYPE=LOGLOG is set explicitly so the CI method matches R/Python
+* (R survfit default is log-log; do not rely on SAS defaults, which have
+* changed across releases).;
+ods output Quartiles=quartiles ProductLimitEstimates=_ple;
+proc lifetest data=analysis conftype=loglog;
   time aval * cnsr(1);
 run;
+ods output close;
 
-* ── Extract median and 95% CI — log-log transform (default) ──;
+* ── Extract median (50th percentile) and its 95% CI ──;
 data _null_;
-  set outs;
-  where quantile = 0.5;
-  
-  median_val = median;
-  lower_val  = lowerlimit;
-  upper_val  = upperlimit;
-  
+  set quartiles;
+  where percent = 50;   /* 50th percentile = median */
+
   put "──────────────────────────────────────────────";
-  put "Median PFS:     " median_val 6.1 " months";
-  put "95% CI:         (" lower_val 6.1 ", " upper_val 6.1 ")";
+  put "Median PFS:     " estimate 6.1 " months";
+  put "95% CI:         (" lowerlimit 6.1 ", " upperlimit 6.1 ")";
   put "──────────────────────────────────────────────";
-  
-  * Store as macro variables for downstream use;
-  call symputx('median_pfs', put(median, best6.4));
-  call symputx('ci_lower', put(lowerlimit, best6.4));
-  call symputx('ci_upper', put(upperlimit, best6.4));
+
+  * Store as macro variables (missing => non-estimable => JSON null);
+  call symputx('median_pfs', ifc(missing(estimate),  'null', put(estimate,   best12.4)));
+  call symputx('ci_lower',   ifc(missing(lowerlimit), 'null', put(lowerlimit, best12.4)));
+  call symputx('ci_upper',   ifc(missing(upperlimit), 'null', put(upperlimit, best12.4)));
 run;
 
 * ── Event count ──;

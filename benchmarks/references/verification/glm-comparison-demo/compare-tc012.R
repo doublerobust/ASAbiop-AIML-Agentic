@@ -1,32 +1,28 @@
 #!/usr/bin/env Rscript
-#' TC-012: Forest Plot Data — Subgroup Hazard Ratios
+#' Compare R and Python TC-012 output on identical data.
 #'
-#' Computes hazard ratios with 95% CIs for predefined subgroups
-#' using Cox proportional hazards model.
+#' Generates data from R, runs R Cox PH analysis, then saves the common
+#' dataset as CSV so that both languages operate on identical survival data.
 #'
 #' Usage:
-#'   Rscript tc-012-forest-hr.R --seed 42 --n 300 --output tc-012-output.json
+#'   Rscript compare-tc012.R           # writes to CWD
+#'   Rscript compare-tc012.R /path/to/ # writes to specified dir
 
 suppressPackageStartupMessages({
   library(jsonlite)
   library(survival)
 })
 
-# --- Argument parsing ---
+# Determine output directory
 args <- commandArgs(trailingOnly = TRUE)
-seed <- 42; n_subjects <- 300; output_file <- "tc-012-output.json"
-i <- 1
-while (i <= length(args)) {
-  if (args[i] == "--seed") { seed <- as.integer(args[i + 1]); i <- i + 2 }
-  else if (args[i] == "--n") { n_subjects <- as.integer(args[i + 1]); i <- i + 2 }
-  else if (args[i] == "--output") { output_file <- args[i + 1]; i <- i + 2 }
-  else { i <- i + 1 }
-}
+out_dir <- if (length(args) >= 1) args[1] else getwd()
 
-set.seed(seed)
+seed <- 42
+n_subjects <- 300
 n_arm <- n_subjects / 2
 
-# --- Data generation ---
+set.seed(seed)
+
 generate_surv_data <- function(n, arm, seed_offset) {
   set.seed(seed + seed_offset)
   data.frame(
@@ -45,7 +41,6 @@ exp_df <- generate_surv_data(n_arm, "Experimental", 100)
 ctl_df <- generate_surv_data(n_arm, "Control", 200)
 adsl <- rbind(exp_df, ctl_df)
 
-# Generate survival times
 set.seed(seed + 300)
 base_lambda <- ifelse(adsl$TRT01A == "Experimental", 0.05 * 0.65, 0.05)
 base_lambda <- base_lambda * ifelse(adsl$AGEGR1 == ">=65", 1.2, 1.0)
@@ -57,7 +52,12 @@ censor_time <- runif(nrow(adsl), 18, 24)
 adsl$AVAL <- pmin(tte, censor_time)
 adsl$CNSR <- as.integer(tte > censor_time)
 
-# --- Cox PH subgroup analysis ---
+# Save common dataset
+data_path <- file.path(out_dir, "tc012-common-data.csv")
+write.csv(adsl, data_path, row.names = FALSE)
+cat("Common dataset written to:", data_path, "\n")
+
+# Run R analysis
 estimate_hr <- function(data, var = NULL, val = NULL) {
   if (!is.null(var) && !is.null(val)) {
     data <- data[data[[var]] == val, ]
@@ -86,7 +86,6 @@ estimate_hr <- function(data, var = NULL, val = NULL) {
 
 overall <- estimate_hr(adsl)
 
-# Subgroup definitions
 subgroups <- list(
   list(var = "AGEGR1", val = "<65", label = "Age <65"),
   list(var = "AGEGR1", val = ">=65", label = "Age >=65"),
@@ -108,7 +107,6 @@ subgroup_results <- lapply(subgroups, function(sg) {
 })
 subgroup_results <- Filter(Negate(is.null), subgroup_results)
 
-# Interaction p-values
 interaction_pvals <- list()
 for (var in c("AGEGR1", "SEX", "ECOGGR1", "REGION", "PRIORTRT")) {
   int_fit <- tryCatch(
@@ -117,7 +115,6 @@ for (var in c("AGEGR1", "SEX", "ECOGGR1", "REGION", "PRIORTRT")) {
   )
   if (!is.null(int_fit)) {
     s <- summary(int_fit)
-    # Get interaction term p-value
     coef_table <- s$coefficients
     int_row <- grep(":", rownames(coef_table))
     if (length(int_row) > 0) {
@@ -126,21 +123,14 @@ for (var in c("AGEGR1", "SEX", "ECOGGR1", "REGION", "PRIORTRT")) {
   }
 }
 
-# --- Output ---
-output <- list(
+r_out <- list(
   test_case_id = "TC-012",
-  title = "Forest Plot — Subgroup Hazard Ratios for PFS",
-  parameters = list(seed = seed, n_subjects = n_subjects),
+  language = "R",
   overall = overall,
   subgroups = subgroup_results,
-  interaction_pvalues = interaction_pvals,
-  metadata = list(
-    language = "R",
-    method = "Cox PH (survival::coxph)",
-    ci_method = "Wald (log-scale)",
-    packages = c("survival", "jsonlite")
-  )
+  interaction_pvalues = interaction_pvals
 )
 
-write_json(output, output_file, auto_unbox = TRUE, pretty = TRUE)
-cat("TC-012 output written to:", output_file, "\n")
+r_path <- file.path(out_dir, "tc012-r-output.json")
+write_json(r_out, r_path, auto_unbox = TRUE, pretty = TRUE)
+cat("R output written to:", r_path, "\n")

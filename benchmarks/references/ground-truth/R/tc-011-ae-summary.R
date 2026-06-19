@@ -92,6 +92,8 @@ generate_aes <- function(subjids, arm, ae_catalog, seed_offset) {
         for (s in affected) {
           records[[length(records) + 1]] <- list(
             USUBJID = s,
+            TRT01A = arm,  # BUGFIX: arm was never recorded, so every downstream
+                           # group_by(..., TRT01A) failed and the script never ran.
             AEBODSYS = soc,
             AEDECOD = pt,
             AESER = sample(c("Y", "N"), 1, prob = c(0.1, 0.9)),
@@ -133,24 +135,10 @@ disc_exp <- length(unique(adae$USUBJID[adae$AEACN == "DRUG WITHDRAWN" & adae$TRT
 disc_ctl <- length(unique(adae$USUBJID[adae$AEACN == "DRUG WITHDRAWN" & adae$TRT01A %in% "Control"]))
 
 # By SOC and PT
-ae_summary <- adae %>%
-  group_by(AEBODSYS, AEDECOD) %>%
-  summarise(
-    n_exp = n_distinct(USUBJID[TRT01A == "Experimental"]),
-    n_ctl = n_distinct(USUBJID[TRT01A == "Control"]),
-    .groups = "drop"
-  ) %>%
-  mutate(
-    pct_exp = round(100 * n_exp / n_exp_total, 1),
-    pct_ctl = round(100 * n_ctl / n_ctl_total, 1),
-    n_exp_total = n_exp,
-    n_ctl_total = n_ctl
-  )
-
-# Actually compute properly
-n_exp_total <- n_exp
-n_ctl_total <- n_ctl
-
+# NOTE: a previous broken `ae_summary` block referenced undefined variables
+# (n_exp_total / n_ctl_total) inside mutate() and crashed the script; it was
+# also dead code (never used downstream). Removed. The PT- and SOC-level
+# tables below are the authoritative aggregations used to build the output.
 ae_by_pt <- adae %>%
   group_by(AEBODSYS, AEDECOD, TRT01A) %>%
   summarise(n = n_distinct(USUBJID), .groups = "drop") %>%
@@ -245,8 +233,7 @@ build_output <- function() {
     ae_table = c(summary_rows, detail_rows),
     metadata = list(
       language = "R",
-      packages = c("dplyr", "tidyr", "jsonlite"),
-      generated_at = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ")
+      packages = c("dplyr", "tidyr", "jsonlite")
     )
   )
 }

@@ -15,7 +15,6 @@ import argparse
 import json
 import random
 from collections import defaultdict
-from datetime import datetime
 
 # --- Argument parsing ---
 parser = argparse.ArgumentParser(description="TC-011 AE Summary Table")
@@ -188,7 +187,6 @@ output = {
     "metadata": {
         "language": "Python",
         "packages": ["json", "random", "collections"],
-        "generated_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
     },
 }
 

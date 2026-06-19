@@ -60,9 +60,12 @@ compute_demographics <- function(adsl, population = "SAFETY", seed = NA) {
   age_stats <- data %>%
     group_by(TRT01PN, TRT01P) %>%
     summarise(
-      n = n(),
+      # Canonical output field names (match the TC-002 JSON Schema and the
+      # Python/pandas implementation): use `count` and `std`, NOT R's `n`/`sd`.
+      # Cross-language outputs must share one schema so the scorer can align them.
+      count = n(),
       mean = mean(AGE, na.rm = TRUE),
-      sd = sd(AGE, na.rm = TRUE),
+      std = sd(AGE, na.rm = TRUE),
       median = median(AGE, na.rm = TRUE),
       min = min(AGE, na.rm = TRUE),
       max = max(AGE, na.rm = TRUE),
@@ -95,9 +98,9 @@ compute_demographics <- function(adsl, population = "SAFETY", seed = NA) {
   # ── Overall totals ──
   total_age <- data %>%
     summarise(
-      n = n(),
+      count = n(),
       mean = mean(AGE, na.rm = TRUE),
-      sd = sd(AGE, na.rm = TRUE),
+      std = sd(AGE, na.rm = TRUE),
       median = median(AGE, na.rm = TRUE),
       min = min(AGE, na.rm = TRUE),
       max = max(AGE, na.rm = TRUE)

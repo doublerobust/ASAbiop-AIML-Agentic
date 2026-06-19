@@ -164,7 +164,6 @@ output = {
         "language": "Python",
         "sorting": "TRT01A, USUBJID, PDDY",
         "packages": ["json", "random", "datetime"],
-        "generated_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
     },
 }
 

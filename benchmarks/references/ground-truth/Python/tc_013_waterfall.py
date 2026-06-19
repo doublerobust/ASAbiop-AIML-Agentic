@@ -17,7 +17,7 @@ Usage:
 import argparse
 import json
 import random
-from datetime import datetime
+from statistics import median as _median
 
 # --- Argument parsing ---
 parser = argparse.ArgumentParser(description="TC-013 Waterfall Plot Data")
@@ -99,7 +99,10 @@ def compute_summary(data, arm=None):
     dcr = round(100 * (n_cr + n_pr + n_sd) / n, 1) if n > 0 else 0
 
     changes = [r["BESTPCHG"] for r in subset]
-    median_change = round(sorted(changes)[len(changes) // 2], 1) if changes else None
+    # BUGFIX: sorted(changes)[len(changes)//2] is NOT the median for even-length
+    # lists (it takes the upper-middle element, never averaging the two middle
+    # values). Use a correct median so this ground truth is actually correct.
+    median_change = round(_median(changes), 1) if changes else None
     mean_change = round(sum(changes) / len(changes), 1) if changes else None
 
     return {
@@ -139,8 +142,7 @@ output = {
     "metadata": {
         "language": "Python",
         "sorting": "ascending by BESTPCHG",
-        "packages": ["json", "random"],
-        "generated_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "packages": ["json", "random", "statistics"],
     },
 }
 

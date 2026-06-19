@@ -1,8 +1,9 @@
 # Cross-Language Verification Protocol — TFL Benchmark
 
-**Version:** 0.1 (Day 3 expansion)
-**Date:** 2026-05-27
-**Status:** 🟡 Draft — R and Python validated; SAS reference-only (no license)
+**Version:** 0.2 (Day 3 expansion; QC-revised 2026-06-18)
+**Date:** 2026-05-27 (revised 2026-06-18)
+**Status:** 🟢 R and Python empirically cross-validated on SHARED data for
+TC-001/002/003 (score.py verify = 1.0); SAS reference-only (no license)
 **Dimension:** TFL-Specific Correctness — Ground Truth Validation & Numerical Tolerance
 
 ---
@@ -12,6 +13,18 @@
 ### 1.1 Why Cross-Language Verification Matters
 
 The benchmark's ground truth must be **demonstrably correct across all three supported languages** (R, SAS, Python). If ground truth differs between languages, we cannot tell whether an agent's error is a genuine mistake or a correct answer computed in a different language runtime.
+
+> ⚠️ **CRITICAL METHODOLOGY POINT (added in QC review):** R (Mersenne-Twister),
+> SAS (its own PRNG), and Python/numpy (PCG64) produce **different random
+> streams for the same seed**. Generating the synthetic data *independently in
+> each language* therefore yields **different datasets**, and the resulting
+> statistics **cannot be expected to match** — even when every implementation
+> is correct. Cross-language verification is only meaningful when all three
+> languages consume the **same shared dataset** (a single CSV). The ground-truth
+> scripts now support a `--data <shared.csv>` flag for exactly this purpose; R
+> writes the canonical dataset via `write_shared_data()`. Any claim of
+> "same seed → same results" that does *not* use a shared CSV is incorrect and
+> has been removed from this document.
 
 This document establishes:
 1. A **verification protocol** for validating ground truth across R, SAS, and Python
@@ -108,7 +121,12 @@ verification_test:
 | **Greenwood variance formula** | Standard Greenwood | Standard Greenwood | Standard Greenwood | ✅ Consistent |
 | **Floating-point edge cases** | May differ at 5th-6th decimal | May differ at 5th-6th decimal | May differ at 5th-6th decimal | ⚠️ Tolerance = 1e-4 |
 
-**Verdict:** KM median PFS estimates are consistent across all three languages to within 1e-4 for standard datasets.
+**Verdict:** On the SAME (shared) dataset, KM median PFS estimates are
+consistent across all three languages to within 1e-4 for standard datasets.
+This has been empirically confirmed for TC-001: R `survfit` and Python
+`lifelines` both return median = 11.01 months, 95% CI (7.12, 15.10) on the
+shared `adtte_42.csv` (seed 42, n=200, ITT arm 1), via
+`score.py verify --tc TC-001` (score = 1.0).
 
 ### 3.2 Log-Rank Test (Unstratified)
 
@@ -116,10 +134,19 @@ verification_test:
 |---|---|---|---|---|
 | **Chi-square formula** | Mantel-Haenszel (O-E)^2/V | Same | Same | ✅ Consistent |
 | **Rho parameter** | rho=0 (default) = log-rank | TEST=LOGRANK | multivariate_logrank_test | ✅ Consistent |
-| **Tie handling** | Default = Peto-Peto correction | Default = exact | Default = Efron | ⚠️ Minor difference |
+| **Weighting (rho)** | rho=0 = standard log-rank (Mantel-Haenszel) | TEST=LOGRANK (rho=0) | default = standard log-rank | ✅ Consistent |
 | **p-value computation** | 1-pchisq with 1 df | Same | Same | ✅ Consistent |
 
-**Verdict:** Unstratified log-rank p-values match to within 1e-4. Tie handling may cause differences at very small sample sizes (< 50).
+**Verdict:** On the SAME dataset, unstratified log-rank chi-square and p-values
+match to within 1e-4 across languages.
+
+> **Correction (QC review):** A previous version of this table claimed R's
+> default `survdiff` tie handling was "Peto-Peto" and listed SAS as "exact" and
+> Python as "Efron". That was **wrong**: with `rho=0` (the default) `survdiff`
+> computes the standard Mantel-Haenszel log-rank, not a Peto-Peto weighted test
+> (`rho=1` would be Peto-Peto). "Efron/Breslow/exact" are **Cox-model**
+> tie-handling options, not log-rank options, and do not apply here. The
+> standard (unweighted) log-rank is what all three packages compute by default.
 
 ### 3.3 Stratified Log-Rank Test
 
@@ -159,7 +186,12 @@ verification_test:
 | **Min/Max** | Exact | Exact | Exact | ✅ Exact |
 | **Percentiles** | Type 7 (Hyndman-Fan) | Default = empirical distribution | Default = linear interpolation | ⚠️ Differs for small n |
 
-**Verdict:** Mean, SD, min, max are exact. Median and percentiles may differ at 3-4th decimal for n < 100. Tolerance of 1e-2 is adequate for demographics tables.
+**Verdict:** On the SAME dataset, mean, SD, min, max are exact across languages
+(R `sd`, SAS `PROC MEANS`, and pandas `.std(ddof=1)` all use the n−1 denominator).
+Median and percentiles may differ at the 3rd–4th decimal for n < 100 due to
+differing quantile definitions (R Type 7 / SAS empirical / pandas linear). A
+tolerance of 1e-2 is adequate for demographics tables. Empirically, TC-002 R vs
+Python match exactly on the shared `adsl_42.csv` (score.py verify = 1.0).
 
 ### 3.6 Frequency Tables
 
