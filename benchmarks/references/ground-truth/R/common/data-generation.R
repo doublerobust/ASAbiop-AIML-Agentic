@@ -3,12 +3,21 @@
 # Part of the ASA Biopharm AI/ML WG Agentic AI Benchmark
 # Common utilities used by all ground truth reference implementations
 #
-# Dependencies: survival, random.cdisc.data, simstudy, jsonlite
-# Install: remotes::install_cran(c("survival", "simstudy", "jsonlite", "dplyr"))
-#          remotes::install_github("insightsengineering/random.cdisc.data")
+# Dependencies: dplyr, jsonlite (base R rexp/sample used for generation)
+# Install: install.packages(c("dplyr", "jsonlite"))
+#
+# NOTE ON CROSS-LANGUAGE VERIFICATION:
+#   R's RNG (Mersenne-Twister via set.seed) and Python's RNG (numpy PCG64)
+#   produce DIFFERENT random streams for the same seed. Generating data
+#   independently in each language therefore yields DIFFERENT datasets, and
+#   the ground-truth statistics CANNOT be expected to match across languages.
+#
+#   To verify that R/SAS/Python compute the SAME statistic on the SAME data,
+#   generate the data once and share it as a CSV (see write_shared_data() and
+#   the --data flag in each TC script). Independent generation is retained
+#   only for single-language smoke tests, not for cross-language comparison.
 
 library(dplyr)
-library(simstudy)
 library(jsonlite)
 
 # ─────────────────────────────────────────────────────
@@ -62,6 +71,7 @@ generate_adtte <- function(seed = 42,
   # ITT flag (some patients excluded from ITT)
   ittfl <- ifelse(runif(n_subjects) < p_itt, "Y", "N")
 
+  # ECOG must be consistent with ADSL strata levels {0,1}; kept as-is
   # Build ADTTE-like data frame
   data.frame(
     USUBJID = sprintf("SUBJ-%04d", 1:n_subjects),
@@ -96,13 +106,16 @@ generate_adsl <- function(seed = 42, n_subjects = 400, n_arms = 2) {
 
   trt <- sample(0:(n_arms - 1), n_subjects, replace = TRUE)
 
+  age <- round(rnorm(n_subjects, mean = 58, sd = 12))
+
   data.frame(
     USUBJID = sprintf("SUBJ-%04d", 1:n_subjects),
     STUDYID = "BENCHMARK-001",
     TRT01PN = trt,
     TRT01P = ifelse(trt == 0, "Placebo", "Active"),
-    AGE = round(rnorm(n_subjects, mean = 58, sd = 12)),
-    AGEGR1 = ifelse(runif(n_subjects) < 0.5, "<65", ">=65"),
+    AGE = age,
+    # AGEGR1 derived deterministically from AGE (CDISC convention), not random
+    AGEGR1 = ifelse(age < 65, "<65", ">=65"),
     SEX = sample(c("M", "F"), n_subjects, replace = TRUE, prob = c(0.55, 0.45)),
     RACE = sample(c("White", "Black", "Asian", "Other"),
                   n_subjects, replace = TRUE,
@@ -137,4 +150,33 @@ print_output <- function(result) {
   cat("\n=== BENCHMARK OUTPUT ===\n")
   cat(jsonlite::toJSON(result, auto_unbox = TRUE, pretty = TRUE))
   cat("\n=== END OUTPUT ===\n")
+}
+
+# ─────────────────────────────────────────────────────
+# 4. Shared-Data Helpers (for TRUE cross-language verification)
+# ─────────────────────────────────────────────────────
+
+#' Write a generated dataset to CSV so SAS/Python can read the SAME data
+write_shared_data <- function(df, filepath) {
+  utils::write.csv(df, filepath, row.names = FALSE, na = "")
+  cat(sprintf("Wrote shared dataset to: %s\n", filepath))
+  invisible(df)
+}
+
+#' Read a shared dataset from CSV (preferred path for cross-language runs)
+read_shared_data <- function(filepath) {
+  utils::read.csv(filepath, stringsAsFactors = FALSE)
+}
+
+#' Obtain analysis data: read shared CSV if provided, else generate in-language.
+#' Cross-language verification REQUIRES a shared CSV; in-language generation is
+#' for single-language smoke tests only.
+get_adtte <- function(data_path = NA, seed = 42, n_subjects = 200, ...) {
+  if (!is.na(data_path) && nzchar(data_path)) return(read_shared_data(data_path))
+  generate_adtte(seed = seed, n_subjects = n_subjects, ...)
+}
+
+get_adsl <- function(data_path = NA, seed = 42, n_subjects = 400, ...) {
+  if (!is.na(data_path) && nzchar(data_path)) return(read_shared_data(data_path))
+  generate_adsl(seed = seed, n_subjects = n_subjects, ...)
 }

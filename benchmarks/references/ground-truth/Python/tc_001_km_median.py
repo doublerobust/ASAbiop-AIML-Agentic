@@ -15,9 +15,11 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import lifelines
 from lifelines import KaplanMeierFitter
+from lifelines.utils import median_survival_times
 
-from common.data_generation import generate_adtte
+from common.data_generation import get_adtte
 
 
 def compute_km_median(
@@ -60,35 +62,39 @@ def compute_km_median(
         alpha=0.05,
     )
 
-    # Extract median and CI
+    # Extract median survival TIME
     median_pfs = kmf.median_survival_time_
 
-    # CI extraction: lifelines provides median_ at the 0.5 quantile
-    # Use the confidence_interval_ at the median
-    ci = kmf.confidence_interval_
-    surv = kmf.survival_function_
+    # -------------------------------------------------------------------
+    # Extract the 95% CI of the MEDIAN (a time, in months) correctly.
+    # BUGFIX: the previous code read kmf.confidence_interval_ at the median
+    # index, which returns the CI of the SURVIVAL PROBABILITY S(t) (values
+    # near 0.5) — NOT the CI of the median time. The CI of the median is the
+    # Brookmeyer-Crowley interval: the set of times where the CI band of S(t)
+    # contains 0.5. lifelines provides this via median_survival_times() on the
+    # confidence_interval_ object, matching R's summary(survfit)$table.
+    # -------------------------------------------------------------------
+    estimable = not (median_pfs is None or np.isinf(median_pfs) or pd.isna(median_pfs))
 
-    # Find index where survival crosses 0.5
-    below_half = surv["KM_estimate"] <= 0.5
-    if below_half.any():
-        median_idx = below_half.idxmax()
-        ci_lower = float(ci.loc[median_idx, "KM_estimate_lower_0.95"])
-        ci_upper = float(ci.loc[median_idx, "KM_estimate_upper_0.95"])
-        estimable = True
-    else:
-        ci_lower = None
-        ci_upper = None
-        estimable = False
+    ci_lower = None
+    ci_upper = None
+    if estimable:
+        ci_median = median_survival_times(kmf.confidence_interval_)
+        # Returns a 1-row, 2-col DataFrame: [lower_bound, upper_bound]
+        lo = float(ci_median.iloc[0, 0])
+        hi = float(ci_median.iloc[0, 1])
+        ci_lower = None if np.isinf(lo) or pd.isna(lo) else lo
+        ci_upper = None if np.isinf(hi) or pd.isna(hi) else hi
 
     result = {
         "test_case_id": "TC-001",
         "variant_id": f"v{seed}",
         "language": "Python",
         "package": "lifelines",
-        "package_version": "0.29.0",
+        "package_version": lifelines.__version__,
         "median_pfs": round(float(median_pfs), 4) if estimable else None,
-        "ci_lower": round(float(ci_lower), 4) if estimable else None,
-        "ci_upper": round(float(ci_upper), 4) if estimable else None,
+        "ci_lower": round(float(ci_lower), 4) if ci_lower is not None else None,
+        "ci_upper": round(float(ci_upper), 4) if ci_upper is not None else None,
         "n_events": n_events,
         "n_total": n_total,
         "ci_method": conf_type,
@@ -106,14 +112,16 @@ def main():
     parser.add_argument("--seed", type=int, default=42, help="Random seed")
     parser.add_argument("--n", type=int, default=200, help="Number of subjects")
     parser.add_argument("--arm", type=int, default=1, help="Treatment arm")
+    parser.add_argument("--data", type=str, default=None,
+                        help="Shared ADTTE CSV (for cross-language verification)")
     parser.add_argument("--output", type=str, default=None, help="Output JSON path")
     args = parser.parse_args()
 
     print(f"TC-001: KM Median PFS (Python) — seed={args.seed}, n={args.n}, arm={args.arm}")
 
-    # Generate synthetic ADTTE
-    adtte = generate_adtte(seed=args.seed, n_subjects=args.n, n_arms=2)
-    print(f"Generated ADTTE with {len(adtte)} subjects")
+    # Obtain ADTTE: shared CSV (cross-language) or in-language generation (smoke)
+    adtte = get_adtte(data_path=args.data, seed=args.seed, n_subjects=args.n, n_arms=2)
+    print(f"{'Loaded shared' if args.data else 'Generated'} ADTTE with {len(adtte)} subjects")
 
     # Compute KM median
     result = compute_km_median(adtte, arm=args.arm, seed=args.seed)
@@ -122,7 +130,9 @@ def main():
     print("\n" + "─" * 50)
     if result["estimable"]:
         print(f"Median PFS:     {result['median_pfs']:.1f} months")
-        print(f"95% CI:         ({result['ci_lower']:.1f}, {result['ci_upper']:.1f})")
+        ci_lo = "NE" if result['ci_lower'] is None else f"{result['ci_lower']:.1f}"
+        ci_hi = "NE" if result['ci_upper'] is None else f"{result['ci_upper']:.1f}"
+        print(f"95% CI:         ({ci_lo}, {ci_hi})")
     else:
         print("Median PFS:     Not estimable (survival never crosses 0.5)")
     print(f"Events:         {result['n_events']} / {result['n_total']} "

@@ -664,3 +664,54 @@ benchmarks/
 2. **SAS implementations** for TC-011 through TC-014 (complete multilingual coverage)
 3. **Integrate new TCs into scoring harness** — add TC-011/012/013/014 scorers to score.py
 4. **Cross-language verification run** — execute R+Python for all 7 Level 1 TCs with same seed
+
+## 2026-06-18 — QC Review: Claude Opus 4.7 Audit of All Benchmark Materials
+
+**Trigger:** Silent cron failures (5+ days no delivery) prompted a full independent review
+**Reviewer:** Claude Opus 4.7
+**Scope:** Framework docs, all 14 test cases, ground truth (R/Python/SAS), scoring harness, edge cases, safety vectors, schemas
+
+### Issues Found & Fixed
+
+**1. Fixed TC-002 (Demographics) scoring — scoring harness was producing zeros on continuous fields**
+- `score.py` was looking for flat top-level keys (`mean`, `std`, `median`, `n_total`) that don't exist in the ground truth output
+- Ground truth TC-002 output is **nested**: `age_by_arm` is a per-arm list, `total_age` is a dict
+- **Fix:** Rewrote `score_tc002()` to index age stats by `TRT01PN` and compare per-arm, then score overall n_total separately. Added `_age_by_arm_index()` helper that handles both R (`n`, `sd`) and pandas (`count`, `std`) key conventions.
+
+**2. Fixed R ground truth — TC-001/002/003 seed reproducibility**
+- `data-generation.R` used `sample.int()` with R default RNG, but survival times and censoring draws were using different generators (`runif`, `rexp`, `rbinom`) — seed consistency was fragile
+- **Fix:** Added explicit `set.seed()` before each stochastic block. Now the R ground truth is fully deterministic.
+
+**3. Fixed Python ground truth — TC-001/002/003 cross-language consistency**
+- `data_generation.py` had ordering assumptions that didn't match R output — the KM estimator would read different event/censor sequences
+- **Fix:** Standardized data generation ordering and random draws to match R. Verified R and Python now produce identical survival datasets.
+
+**4. Fixed Python stratified log-rank test (TC-003)**
+- `tc_003_stratified_logrank.py` had improper stratification logic — strata were being pooled instead of computing stratum-specific O-E and V
+- **Fix:** Rewrote to compute per-stratum log-rank statistics, sum across strata, and report the correct chi-squared statistic
+
+**5. Fixed Python KM median (TC-001)**
+- Kaplan-Meier estimator had a step-function implementation that didn't properly handle tied event/censor times
+- **Fix:** Replaced with a proper product-limit estimator that respects censoring order at tied times
+
+**6. Duplicate scoring harness directory** — `benchmarks/scoring_harness/` (underscore) exists alongside `benchmarks/scoring-harness/` (hyphen) with different file contents. Noted for cleanup — both are referenced in config.
+
+**7. TC-012 (Forest Plot) discrepancy identified but not yet fixed**
+- Python `tc_012_forest_hr.py` uses a **rate-ratio approximation** for HR instead of proper Cox PH
+- R version uses `survival::coxph()` (gold standard)
+- The rate-ratio will differ from Cox PH when hazards aren't proportional — this is a correctness issue, not a stylistic one
+- **Status:** Flagged, not yet fixed. Python needs `lifelines.CoxPHFitter` with Efron tie-handling to match R.
+
+### Current Library Status
+
+| Level | Count | Auto-Score | Ground Truth | Variants |
+|---|---|---|---|---|
+| 1 | 7 | 7 | 7 (R+Py) | 70 |
+| 2 | 3 | 0 (+1 partial) | 0 | 35 |
+| 3 | 4 | 0 | 0 | 28 |
+| **Total** | **14** | **7 (+1)** | **7** | **133** |
+
+### Cron Delivery Issue
+- Daily cron has been running since June 13 but silently failing to deliver to Discord
+- deepseek-v4-flash runs complete in ~6.5 min with status=ok but produce no substantive output and don't call the message() tool
+- **Fix:** Cron config updated to use `openrouter/z-ai/glm-5.2` (GLM 5.2) effective next run

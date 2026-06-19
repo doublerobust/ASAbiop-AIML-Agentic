@@ -15,9 +15,10 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from lifelines import multivariate_logrank_test
+import lifelines
+from scipy import stats
 
-from common.data_generation import generate_adtte
+from common.data_generation import get_adtte
 
 
 def compute_stratified_logrank(
@@ -57,35 +58,70 @@ def compute_stratified_logrank(
     n_total = len(data)
     n_events = int((1 - data["CNSR"]).sum())
 
-    # Create strata interaction column (combine all strata variables)
-    # lifelines multivariate_logrank_test handles strata natively
-    # but we need to ensure proper stratification
     data = data.reset_index(drop=True)
+    event = (1 - data["CNSR"]).astype(int)
+    groups = sorted(data["TRT01PN"].unique())
+    df = len(groups) - 1
 
-    # For lifelines, we pass the strata variables; it handles equal weighting
-    result = multivariate_logrank_test(
-        durations=data["AVAL"],
-        groups=data["TRT01PN"],
-        event_observed=1 - data["CNSR"],
-        strata=data[strata_vars],
-    )
+    # -------------------------------------------------------------------
+    # Stratified log-rank computed manually to MATCH R survival::survdiff().
+    # BUGFIX: lifelines.multivariate_logrank_test has NO `strata=` argument
+    # (the previous code passed one, causing a TypeError) and lifelines
+    # provides no built-in stratified log-rank. The stratified Mantel-Haenszel
+    # log-rank sums each stratum's observed-minus-expected vector and variance
+    # matrix, then forms chi^2 = (sum O-E)' (sum V)^- (sum O-E). For a two-arm
+    # comparison this reduces to (sum(O1-E1))^2 / sum(V1), with equal weight
+    # per stratum — identical to R's default strata() behaviour.
+    # -------------------------------------------------------------------
+    def stratum_logrank_oe_v(times, ev, grp, ref_group):
+        """Return (O-E, V) for `ref_group` within one stratum (log-rank)."""
+        oe = 0.0
+        var = 0.0
+        for t in np.unique(times[ev == 1]):
+            at_risk = times >= t
+            n = int(at_risk.sum())
+            d = int(((times == t) & (ev == 1)).sum())
+            if n <= 1 or d == 0:
+                continue
+            n_ref = int((at_risk & (grp == ref_group)).sum())
+            d_ref = int(((times == t) & (ev == 1) & (grp == ref_group)).sum())
+            exp_ref = d * n_ref / n
+            oe += d_ref - exp_ref
+            # Hypergeometric variance of the count in ref group
+            var += (d * (n_ref / n) * (1 - n_ref / n) * (n - d) / (n - 1))
+        return oe, var
 
-    # Count non-empty strata
-    strata_combos = data.groupby(strata_vars).size()
-    n_strata_total = len(strata_combos)
-    n_strata_with_events = data.groupby(strata_vars).apply(
-        lambda x: (1 - x["CNSR"]).sum() > 0
-    ).sum()
+    strata_key = data[strata_vars].astype(str).agg("|".join, axis=1)
+    ref_group = groups[0]
+    total_oe = 0.0
+    total_var = 0.0
+    n_strata_total = 0
+    n_strata_with_events = 0
+
+    for _, idx in data.groupby(strata_key).groups.items():
+        n_strata_total += 1
+        s_times = data.loc[idx, "AVAL"].to_numpy()
+        s_event = event.loc[idx].to_numpy()
+        s_group = data.loc[idx, "TRT01PN"].to_numpy()
+        if s_event.sum() == 0:
+            continue  # stratum with no events contributes nothing (matches R)
+        n_strata_with_events += 1
+        oe, var = stratum_logrank_oe_v(s_times, s_event, s_group, ref_group)
+        total_oe += oe
+        total_var += var
+
+    chi_square = (total_oe ** 2) / total_var if total_var > 0 else 0.0
+    p_value = float(stats.chi2.sf(chi_square, df))
 
     output = {
         "test_case_id": "TC-003",
         "variant_id": f"v{seed}",
         "language": "Python",
-        "package": "lifelines",
-        "package_version": "0.29.0",
-        "chi_square": round(float(result.test_statistic), 4),
-        "df": int(result.degrees_of_freedom),
-        "p_value": round(float(result.p_value), 6),
+        "package": "lifelines+scipy",
+        "package_version": lifelines.__version__,
+        "chi_square": round(float(chi_square), 4),
+        "df": int(df),
+        "p_value": round(float(p_value), 6),
         "n_total": n_total,
         "n_events": n_events,
         "strata_variables": strata_vars,
@@ -106,6 +142,8 @@ def main():
     parser.add_argument("--n", type=int, default=400)
     parser.add_argument("--strata", type=str, default="SEX,ECOG",
                        help="Comma-separated stratification variables")
+    parser.add_argument("--data", type=str, default=None,
+                       help="Shared ADTTE CSV (for cross-language verification)")
     parser.add_argument("--output", type=str, default=None)
     args = parser.parse_args()
 
@@ -115,9 +153,9 @@ def main():
     print(f"TC-003: Stratified Log-Rank Test (Python) — seed={seed}, n={args.n}")
     print(f"Strata: {', '.join(strata_vars)}")
 
-    # Generate synthetic ADTTE (2 arms, HR=0.75)
-    adtte = generate_adtte(seed=seed, n_subjects=args.n, n_arms=2, hr=0.75)
-    print(f"Generated ADTTE with {len(adtte)} subjects")
+    # Obtain ADTTE: shared CSV (cross-language) or in-language generation (smoke)
+    adtte = get_adtte(data_path=args.data, seed=seed, n_subjects=args.n, n_arms=2, hr=0.75)
+    print(f"{'Loaded shared' if args.data else 'Generated'} ADTTE with {len(adtte)} subjects")
 
     # Compute stratified log-rank
     result = compute_stratified_logrank(

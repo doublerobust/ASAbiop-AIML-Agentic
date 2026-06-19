@@ -33,6 +33,7 @@ parse_args <- function() {
     n = as.integer(get_arg("--n", "200")),
     arm = as.integer(get_arg("--arm", "1")),
     conf_type = get_arg("--conf-type", "log-log"),
+    data = get_arg("--data", NA),
     output = get_arg("--output", NA)
   )
 }
@@ -44,7 +45,8 @@ parse_args <- function() {
 compute_km_median <- function(adtte,
                               arm = 1,
                               population = "ITT",
-                              conf_type = "log-log") {
+                              conf_type = "log-log",
+                              seed = NA) {
 
   # Apply population filter
   if (population == "ITT") {
@@ -62,26 +64,35 @@ compute_km_median <- function(adtte,
                  data = data,
                  conf.type = conf_type)
 
-  # Extract median and 95% CI
-  median_pfs <- fit$median
-  ci_lower   <- fit$lower
-  ci_upper   <- fit$upper
-  n_events   <- fit$nevent
-  n_total    <- fit$n
+  # ---------------------------------------------------------------------
+  # Extract median and 95% CI CORRECTLY.
+  # BUGFIX: fit$median is NOT a reliable scalar on modern survfit objects
+  # (it can be length-zero/NULL), and fit$lower / fit$upper are VECTORS of
+  # the pointwise CI at every event time — NOT the CI of the median. The
+  # quantile-based median and its CI come from summary(fit)$table.
+  # ---------------------------------------------------------------------
+  tab <- summary(fit)$table
+  median_pfs <- unname(tab["median"])
+  ci_lower   <- unname(tab["0.95LCL"])
+  ci_upper   <- unname(tab["0.95UCL"])
+  n_events   <- unname(tab["events"])
+  n_total    <- unname(tab["records"])
 
-  # Handle non-estimable cases
-  if (is.na(median_pfs)) {
+  variant <- if (is.na(seed)) NA else paste0("v", seed)
+
+  # Handle non-estimable cases (median NA when survival never reaches 0.5)
+  if (length(median_pfs) == 0 || is.na(median_pfs)) {
     result <- list(
       test_case_id = "TC-001",
-      variant_id = paste0("v", seed),
+      variant_id = variant,
       language = "R",
       package = "survival",
       package_version = as.character(packageVersion("survival")),
       median_pfs = NA,
-      ci_lower = NA,
+      ci_lower = if (is.na(ci_lower)) NA else round(as.numeric(ci_lower), 4),
       ci_upper = NA,
-      n_events = n_events,
-      n_total = n_total,
+      n_events = as.integer(n_events),
+      n_total = as.integer(n_total),
       ci_method = conf_type,
       estimable = FALSE,
       seed = seed
@@ -91,15 +102,15 @@ compute_km_median <- function(adtte,
 
   result <- list(
     test_case_id = "TC-001",
-    variant_id = paste0("v", seed),
+    variant_id = variant,
     language = "R",
     package = "survival",
     package_version = as.character(packageVersion("survival")),
     median_pfs = round(as.numeric(median_pfs), 4),
-    ci_lower = round(as.numeric(ci_lower), 4),
+    ci_lower = if (is.na(ci_lower)) NA else round(as.numeric(ci_lower), 4),
     ci_upper = if (is.na(ci_upper)) NA else round(as.numeric(ci_upper), 4),
-    n_events = n_events,
-    n_total = n_total,
+    n_events = as.integer(n_events),
+    n_total = as.integer(n_total),
     ci_method = conf_type,
     estimable = TRUE,
     seed = seed
@@ -120,21 +131,25 @@ if (sys.nframe() == 0) {  # Only runs when script is executed directly
   cat(sprintf("TC-001: KM Median PFS (R) — seed=%d, n=%d, arm=%d\n",
               seed, n, opts$arm))
 
-  # Generate synthetic ADTTE
-  adtte <- generate_adtte(seed = seed, n_subjects = n, n_arms = 2)
+  # Obtain ADTTE: shared CSV (cross-language) or in-language generation (smoke)
+  adtte <- get_adtte(data_path = opts$data, seed = seed, n_subjects = n, n_arms = 2)
 
-  cat(sprintf("Generated ADTTE with %d subjects\n", nrow(adtte)))
+  cat(sprintf("%s ADTTE with %d subjects\n",
+              if (!is.na(opts$data)) "Loaded shared" else "Generated", nrow(adtte)))
 
   # Compute KM median
   result <- compute_km_median(adtte,
                                arm = opts$arm,
-                               conf_type = opts$conf_type)
+                               conf_type = opts$conf_type,
+                               seed = seed)
 
   # Print for machine parsing
   cat("\n──────────────────────────────────────────────\n")
   if (result$estimable) {
     cat(sprintf("Median PFS:     %.1f months\n", result$median_pfs))
-    cat(sprintf("95%% CI:         (%.1f, %.1f)\n", result$ci_lower, result$ci_upper))
+    ci_lo <- if (is.na(result$ci_lower)) "NE" else sprintf("%.1f", result$ci_lower)
+    ci_hi <- if (is.na(result$ci_upper)) "NE" else sprintf("%.1f", result$ci_upper)
+    cat(sprintf("95%% CI:         (%s, %s)\n", ci_lo, ci_hi))
   } else {
     cat("Median PFS:     Not estimable (survival never crosses 0.5)\n")
   }

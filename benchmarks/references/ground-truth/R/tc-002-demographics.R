@@ -30,6 +30,7 @@ parse_args <- function() {
   list(
     seed = as.integer(get_arg("--seed", "42")),
     n = as.integer(get_arg("--n", "400")),
+    data = get_arg("--data", NA),
     output = get_arg("--output", NA)
   )
 }
@@ -38,7 +39,7 @@ parse_args <- function() {
 # TC-002 Core Computation
 # ─────────────────────────────────────────────────────
 
-compute_demographics <- function(adsl, population = "SAFETY") {
+compute_demographics <- function(adsl, population = "SAFETY", seed = NA) {
 
   # Apply population filter
   if (population == "SAFETY") {
@@ -77,7 +78,11 @@ compute_demographics <- function(adsl, population = "SAFETY") {
       mutate(pct = round(100 * n / sum(n), 1)) %>%
       ungroup() %>%
       mutate(variable = var_name) %>%
-      rename(level = !!sym(var))
+      rename(level = !!sym(var)) %>%
+      # BUGFIX: coerce level to character so bind_rows() can combine numeric
+      # (ECOG) and character (SEX/RACE/REGION) categorical levels without a
+      # vctrs type error. This previously crashed TC-002 in R entirely.
+      mutate(level = as.character(level))
   }
 
   sex_tbl   <- compute_freq(data, "SEX", "Sex")
@@ -101,7 +106,7 @@ compute_demographics <- function(adsl, population = "SAFETY") {
   # ── Build result ──
   result <- list(
     test_case_id = "TC-002",
-    variant_id = paste0("v", seed),
+    variant_id = if (is.na(seed)) NA else paste0("v", seed),
     language = "R",
     package = "dplyr",
     package_version = as.character(packageVersion("dplyr")),
@@ -130,12 +135,13 @@ if (sys.nframe() == 0) {
 
   cat(sprintf("TC-002: Baseline Demographics (R) — seed=%d, n=%d\n", seed, n))
 
-  # Generate synthetic ADSL
-  adsl <- generate_adsl(seed = seed, n_subjects = n, n_arms = 2)
-  cat(sprintf("Generated ADSL with %d subjects\n", nrow(adsl)))
+  # Obtain ADSL: shared CSV (cross-language) or in-language generation (smoke)
+  adsl <- get_adsl(data_path = opts$data, seed = seed, n_subjects = n, n_arms = 2)
+  cat(sprintf("%s ADSL with %d subjects\n",
+              if (!is.na(opts$data)) "Loaded shared" else "Generated", nrow(adsl)))
 
   # Compute demographics
-  result <- compute_demographics(adsl, population = "SAFETY")
+  result <- compute_demographics(adsl, population = "SAFETY", seed = seed)
 
   # Print summary
   cat("\n──────────────────────────────────────────────\n")

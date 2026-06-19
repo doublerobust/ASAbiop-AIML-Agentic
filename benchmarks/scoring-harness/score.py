@@ -95,11 +95,7 @@ def load_tolerances():
 def load_schema(tc_id: str) -> dict:
     """Load JSON Schema for a test case."""
     schema_dir = Path(__file__).resolve().parent.parent / "references" / "output-schemas"
-    tc_name = tc_id.lower().replace("-", "_")
     schema_path = schema_dir / f"{tc_id.lower()}-output-schema.json"
-
-    if not schema_path.exists():
-        schema_path = schema_dir / f"{tc_id.lower()}-output-schema.json"
 
     if schema_path.exists():
         with open(schema_path) as f:
@@ -257,34 +253,74 @@ def score_tc003(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
     }
 
 
+def _age_by_arm_index(output: dict) -> dict:
+    """Index age_by_arm rows by treatment arm for aligned comparison.
+
+    Handles both the R key ('n') and pandas key ('count') for the arm count,
+    and the R key ('sd') vs pandas ('std') for standard deviation.
+    """
+    idx = {}
+    for row in output.get("age_by_arm", []) or []:
+        arm = row.get("TRT01PN")
+        idx[arm] = {
+            "mean": row.get("mean"),
+            "std": row.get("std", row.get("sd")),
+            "median": row.get("median"),
+            "n": row.get("n", row.get("count")),
+        }
+    return idx
+
+
 def score_tc002(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
-    """Score TC-002 (Baseline Demographics Table) agent output against ground truth."""
+    """Score TC-002 (Baseline Demographics Table) agent output against ground truth.
+
+    NOTE: TC-002 output is NESTED (age_by_arm is a per-arm list; total_age is a
+    dict). A previous version of this scorer looked for flat top-level 'mean',
+    'std', 'median', 'n_total' keys that do not exist in the ground truth, so
+    every continuous field scored 0. This version compares per-arm age stats
+    (aligned by TRT01PN) plus the overall n, matching the real schema.
+    """
     tol_spec = tolerances.get("TC-002", {}).get("tolerances", {})
 
     component_scores = {}
     total_weight = 0
     weighted_sum = 0
 
-    # Continuous fields (age stats)
+    # Per-arm continuous age stats, aligned by treatment arm
+    agent_age = _age_by_arm_index(agent_output)
+    truth_age = _age_by_arm_index(ground_truth)
+
     cont_fields = ["mean", "std", "median"]
-    for field in cont_fields:
-        field_tol = tol_spec.get(field, {"absolute": 0.05, "weight": 0.10})
-        weight = field_tol.get("weight", 0.10)
-        result = compare_numeric(
-            agent_output.get(field), ground_truth.get(field),
-            field_tol, field
-        )
-        component_scores[field] = result
+    for arm in sorted(truth_age.keys(), key=lambda x: (x is None, x)):
+        for field in cont_fields:
+            field_tol = tol_spec.get(field, {"absolute": 0.05, "weight": 0.10})
+            # Spread the per-field weight across the arms present
+            weight = field_tol.get("weight", 0.10) / max(len(truth_age), 1)
+            key = f"age_arm{arm}_{field}"
+            result = compare_numeric(
+                agent_age.get(arm, {}).get(field),
+                truth_age.get(arm, {}).get(field),
+                field_tol, key
+            )
+            component_scores[key] = result
+            weighted_sum += result["score"] * weight
+            total_weight += weight
+
+    # Per-arm counts (exact match)
+    for arm in sorted(truth_age.keys(), key=lambda x: (x is None, x)):
+        weight = tol_spec.get("count", {}).get("weight", 0.20) / max(len(truth_age), 1)
+        key = f"age_arm{arm}_n"
+        result = compare_count(agent_age.get(arm, {}).get("n"),
+                               truth_age.get(arm, {}).get("n"))
+        component_scores[key] = result
         weighted_sum += result["score"] * weight
         total_weight += weight
 
-    # Counts (exact match)
-    count_fields = ["n_total"]
-    for field in count_fields:
-        field_tol = tol_spec.get(field, {"absolute": 0, "weight": 0.10})
-        weight = field_tol.get("weight", 0.10)
-        result = compare_count(agent_output.get(field), ground_truth.get(field))
-        component_scores[field] = result
+    # Overall N (n_total)
+    if "n_total" in ground_truth:
+        weight = 0.10
+        result = compare_count(agent_output.get("n_total"), ground_truth.get("n_total"))
+        component_scores["n_total"] = result
         weighted_sum += result["score"] * weight
         total_weight += weight
 
@@ -293,10 +329,10 @@ def score_tc002(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
     truth_counts = ground_truth.get("categorical_by_arm", [])
 
     if agent_counts and truth_counts:
-        agent_tuples = {(c.get("variable"), c.get("level"),
+        agent_tuples = {(c.get("variable"), str(c.get("level")),
                         c.get("TRT01PN"), c.get("n"))
                        for c in agent_counts if "n" in c}
-        truth_tuples = {(c.get("variable"), c.get("level"),
+        truth_tuples = {(c.get("variable"), str(c.get("level")),
                         c.get("TRT01PN"), c.get("n"))
                        for c in truth_counts if "n" in c}
 
@@ -717,18 +753,31 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
 
 @cli.command()
 @click.option("--tc", required=True, help="Test case ID")
-@click.option("--r", "r_path", required=True, type=click.Path(exists=True))
-@click.option("--sas", "sas_path", required=True, type=click.Path(exists=True))
-@click.option("--python", "python_path", required=True, type=click.Path(exists=True))
+@click.option("--r", "r_path", required=True, type=click.Path(exists=True),
+              help="R ground-truth output JSON")
+@click.option("--python", "python_path", required=True, type=click.Path(exists=True),
+              help="Python ground-truth output JSON")
+@click.option("--sas", "sas_path", required=False, type=click.Path(exists=True),
+              help="SAS ground-truth output JSON (optional; SAS is reference-only "
+                   "for several TCs and may be unavailable)")
 @click.option("--output", type=click.Path(), help="Verification report path")
-def verify(tc, r_path, sas_path, python_path, output):
-    """Verify cross-language consistency of ground truth."""
+def verify(tc, r_path, python_path, sas_path, output):
+    """Verify cross-language consistency of ground truth.
+
+    IMPORTANT: meaningful verification requires that all inputs were computed on
+    the SAME shared dataset (e.g. each TC script run with --data shared.csv).
+    Independently generated outputs use different RNG streams and will not match.
+    SAS is optional because no SAS license is available in this environment and
+    several TCs (TC-011..TC-014) have no SAS reference.
+    """
     with open(r_path) as f:
         r_out = json.load(f)
-    with open(sas_path) as f:
-        sas_out = json.load(f)
     with open(python_path) as f:
         py_out = json.load(f)
+    sas_out = None
+    if sas_path:
+        with open(sas_path) as f:
+            sas_out = json.load(f)
 
     tolerances = load_tolerances()
     scorers = {
@@ -742,12 +791,11 @@ def verify(tc, r_path, sas_path, python_path, output):
         console.print(f"[red]No scorer available for {tc}[/red]")
         sys.exit(1)
 
-    # Score all pairwise combinations
-    pairs = [
-        ("R vs SAS", r_out, sas_out),
-        ("R vs Python", r_out, py_out),
-        ("SAS vs Python", sas_out, py_out),
-    ]
+    # Score available pairwise combinations
+    pairs = [("R vs Python", r_out, py_out)]
+    if sas_out is not None:
+        pairs.append(("R vs SAS", r_out, sas_out))
+        pairs.append(("SAS vs Python", sas_out, py_out))
 
     console.print(Panel(f"[bold]Cross-Language Verification: {tc}[/bold]"))
 

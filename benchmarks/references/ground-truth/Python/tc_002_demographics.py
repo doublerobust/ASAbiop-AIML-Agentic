@@ -16,10 +16,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from common.data_generation import generate_adsl
+from common.data_generation import get_adsl
 
 
-def compute_demographics(adsl: pd.DataFrame, population: str = "SAFETY") -> dict:
+def compute_demographics(adsl: pd.DataFrame, population: str = "SAFETY",
+                         seed: int = None) -> dict:
     """Compute baseline demographics summary by treatment arm.
 
     Args:
@@ -86,7 +87,7 @@ def compute_demographics(adsl: pd.DataFrame, population: str = "SAFETY") -> dict
     # ── Build result ──
     result = {
         "test_case_id": "TC-002",
-        "variant_id": f"v{seed}",
+        "variant_id": (f"v{seed}" if seed is not None else None),
         "language": "Python",
         "package": "pandas",
         "package_version": pd.__version__,
@@ -107,20 +108,19 @@ def main():
     )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--n", type=int, default=400)
+    parser.add_argument("--data", type=str, default=None,
+                        help="Shared ADSL CSV (for cross-language verification)")
     parser.add_argument("--output", type=str, default=None)
     args = parser.parse_args()
 
-    global seed
-    seed = args.seed
-
     print(f"TC-002: Baseline Demographics (Python) — seed={args.seed}, n={args.n}")
 
-    # Generate synthetic ADSL
-    adsl = generate_adsl(seed=args.seed, n_subjects=args.n, n_arms=2)
-    print(f"Generated ADSL with {len(adsl)} subjects")
+    # Obtain ADSL: shared CSV (cross-language) or in-language generation (smoke)
+    adsl = get_adsl(data_path=args.data, seed=args.seed, n_subjects=args.n, n_arms=2)
+    print(f"{'Loaded shared' if args.data else 'Generated'} ADSL with {len(adsl)} subjects")
 
     # Compute demographics
-    result = compute_demographics(adsl, population="SAFETY")
+    result = compute_demographics(adsl, population="SAFETY", seed=args.seed)
 
     # Print summary
     print("\n" + "─" * 50)

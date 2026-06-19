@@ -4,6 +4,15 @@ Part of the ASA Biopharm AI/ML WG Agentic AI Benchmark.
 Common utilities used by all Python ground truth reference implementations.
 
 Dependencies: numpy, pandas
+
+NOTE ON CROSS-LANGUAGE VERIFICATION:
+    numpy's RNG (PCG64) and R's RNG (Mersenne-Twister) produce DIFFERENT random
+    streams for the same seed. Generating data independently in each language
+    therefore yields DIFFERENT datasets; ground-truth statistics CANNOT be
+    expected to match across languages. To verify that R/SAS/Python compute the
+    SAME statistic on the SAME data, generate the data once and share it as a
+    CSV (see read_shared_data() / get_adtte() and the --data flag in each TC
+    script). Independent generation is for single-language smoke tests only.
 """
 
 import numpy as np
@@ -48,8 +57,13 @@ def generate_adtte(
     aval = rng.exponential(scale=1.0 / (base_rate * hazard_mult))
 
     # Generate independent censoring times
+    # BUGFIX: size=n_subjects is REQUIRED. Without it, numpy returns a single
+    # scalar censoring time applied to all subjects, which over-censors the
+    # data (drives the event rate far below target and can make the median
+    # non-estimable). This previously caused TC-001 to return median=null.
     cens_time = rng.exponential(
-        scale=1.0 / (base_rate * censoring_rate / (1 - censoring_rate))
+        scale=1.0 / (base_rate * censoring_rate / (1 - censoring_rate)),
+        size=n_subjects,
     )
 
     # Observed time = min(event, censoring)
@@ -100,13 +114,16 @@ def generate_adsl(
 
     trt = rng.integers(0, n_arms, size=n_subjects)
 
+    age = np.round(rng.normal(58, 12, size=n_subjects)).astype(int)
+
     df = pd.DataFrame({
         "USUBJID": [f"SUBJ-{i:04d}" for i in range(1, n_subjects + 1)],
         "STUDYID": "BENCHMARK-001",
         "TRT01PN": trt,
         "TRT01P": np.where(trt == 0, "Placebo", "Active"),
-        "AGE": np.round(rng.normal(58, 12, size=n_subjects)).astype(int),
-        "AGEGR1": np.where(rng.uniform(size=n_subjects) < 0.5, "<65", ">=65"),
+        "AGE": age,
+        # AGEGR1 derived deterministically from AGE (CDISC convention), not random
+        "AGEGR1": np.where(age < 65, "<65", ">=65"),
         "SEX": rng.choice(["M", "F"], size=n_subjects, p=[0.55, 0.45]),
         "RACE": rng.choice(
             ["White", "Black", "Asian", "Other"],
@@ -124,3 +141,29 @@ def generate_adsl(
     })
 
     return df
+
+
+# ---------------------------------------------------------------------------
+# Shared-data helpers (for TRUE cross-language verification)
+# ---------------------------------------------------------------------------
+
+def read_shared_data(filepath) -> pd.DataFrame:
+    """Read a shared dataset CSV (the preferred path for cross-language runs)."""
+    return pd.read_csv(filepath)
+
+
+def get_adtte(data_path=None, seed: int = 42, n_subjects: int = 200, **kwargs) -> pd.DataFrame:
+    """Read shared CSV if provided, else generate in-language.
+
+    Cross-language verification REQUIRES a shared CSV; in-language generation
+    is for single-language smoke tests only.
+    """
+    if data_path:
+        return read_shared_data(data_path)
+    return generate_adtte(seed=seed, n_subjects=n_subjects, **kwargs)
+
+
+def get_adsl(data_path=None, seed: int = 42, n_subjects: int = 400, **kwargs) -> pd.DataFrame:
+    if data_path:
+        return read_shared_data(data_path)
+    return generate_adsl(seed=seed, n_subjects=n_subjects, **kwargs)

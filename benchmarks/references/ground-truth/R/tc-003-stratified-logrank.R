@@ -32,6 +32,7 @@ parse_args <- function() {
     seed = as.integer(get_arg("--seed", "42")),
     n = as.integer(get_arg("--n", "400")),
     strata_vars = get_arg("--strata", "SEX,ECOG"),
+    data = get_arg("--data", NA),
     output = get_arg("--output", NA)
   )
 }
@@ -42,7 +43,8 @@ parse_args <- function() {
 
 compute_stratified_logrank <- function(adtte,
                                        strata_vars = c("SEX", "ECOG"),
-                                       population = "ITT") {
+                                       population = "ITT",
+                                       seed = NA) {
 
   # Apply population filter
   if (population == "ITT") {
@@ -73,19 +75,37 @@ compute_stratified_logrank <- function(adtte,
 
   # Extract results
   chi_square <- fit$chisq
-  df <- length(fit$n) - 1  # Usually 1 for two-arm comparison
 
-  # Count non-empty strata
-  strata_counts <- fit$n
-  n_strata <- length(strata_counts)
-  strata_with_events <- sum(strata_counts > 0)
+  # ---------------------------------------------------------------------
+  # Degrees of freedom = (number of comparison GROUPS) - 1.
+  # BUGFIX: when strata() is in the formula, fit$n is indexed by the GROUP
+  # variable (TRT01PN), so length(fit$n) equals the number of arms, not the
+  # number of strata. For a two-arm comparison df = 1. Derive df from the
+  # number of distinct treatment groups directly so it is unambiguous.
+  # ---------------------------------------------------------------------
+  n_groups <- length(unique(data$TRT01PN))
+  df <- n_groups - 1
 
-  # p-value (two-sided)
-  p_value <- 1 - pchisq(chi_square, df)
+  # ---------------------------------------------------------------------
+  # Count strata CORRECTLY from the cross-classification of strata_vars.
+  # BUGFIX: the previous code used length(fit$n) (= number of arms) and
+  # sum(fit$n > 0) (= arms with subjects) and mislabeled them as strata
+  # counts. With SEX(2) x ECOG(2) the true total is 4 strata, not 2.
+  # A stratum 'has events' only if it contains >= 1 observed event.
+  # ---------------------------------------------------------------------
+  strata_key <- interaction(data[strata_vars], drop = TRUE)
+  n_strata <- nlevels(strata_key)
+  events_per_stratum <- tapply(1 - data$CNSR, strata_key, sum)
+  strata_with_events <- sum(events_per_stratum > 0, na.rm = TRUE)
+
+  # p-value (two-sided, chi-square with df)
+  p_value <- pchisq(chi_square, df, lower.tail = FALSE)
+
+  variant <- if (is.na(seed)) NA else paste0("v", seed)
 
   result <- list(
     test_case_id = "TC-003",
-    variant_id = paste0("v", seed),
+    variant_id = variant,
     language = "R",
     package = "survival",
     package_version = as.character(packageVersion("survival")),
@@ -93,10 +113,10 @@ compute_stratified_logrank <- function(adtte,
     df = df,
     p_value = round(p_value, 6),
     n_total = nrow(data),
-    n_events = sum(1 - data$CNSR),
+    n_events = as.integer(sum(1 - data$CNSR)),
     strata_variables = strata_vars,
-    n_strata_total = n_strata,
-    n_strata_with_events = strata_with_events,
+    n_strata_total = as.integer(n_strata),
+    n_strata_with_events = as.integer(strata_with_events),
     stratification_method = "equal_weight_per_stratum",
     seed = seed
   )
@@ -117,13 +137,15 @@ if (sys.nframe() == 0) {
   cat(sprintf("TC-003: Stratified Log-Rank Test (R) — seed=%d, n=%d\n", seed, n))
   cat(sprintf("Strata: %s\n", paste(strata_vars, collapse = ", ")))
 
-  # Generate synthetic ADTTE (2 arms by default)
-  adtte <- generate_adtte(seed = seed, n_subjects = n, n_arms = 2, hr = 0.75)
-  cat(sprintf("Generated ADTTE with %d subjects\n", nrow(adtte)))
+  # Obtain ADTTE: shared CSV (cross-language) or in-language generation (smoke)
+  adtte <- get_adtte(data_path = opts$data, seed = seed, n_subjects = n, n_arms = 2, hr = 0.75)
+  cat(sprintf("%s ADTTE with %d subjects\n",
+              if (!is.na(opts$data)) "Loaded shared" else "Generated", nrow(adtte)))
 
   # Compute stratified log-rank
   result <- compute_stratified_logrank(adtte,
-                                        strata_vars = strata_vars)
+                                        strata_vars = strata_vars,
+                                        seed = seed)
 
   # Print result
   cat("\n──────────────────────────────────────────────\n")
