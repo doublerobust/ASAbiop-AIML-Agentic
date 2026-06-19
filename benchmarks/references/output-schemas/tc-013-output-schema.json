@@ -4,79 +4,198 @@
   "title": "TC-013: Waterfall Plot Data Output",
   "description": "Schema for waterfall plot best % change in tumor size",
   "type": "object",
-  "required": ["test_case_id", "title", "parameters", "response_criteria", "thresholds", "summary", "subjects", "metadata"],
+  "required": [
+    "test_case_id",
+    "title",
+    "parameters",
+    "response_criteria",
+    "thresholds",
+    "summary",
+    "subjects",
+    "metadata"
+  ],
   "properties": {
     "test_case_id": {
       "type": "string",
       "const": "TC-013"
     },
-    "title": { "type": "string" },
+    "title": {
+      "type": "string"
+    },
     "parameters": {
       "type": "object",
-      "required": ["seed", "n_subjects"],
+      "required": [
+        "seed",
+        "n_subjects"
+      ],
       "properties": {
-        "seed": { "type": "integer" },
-        "n_subjects": { "type": "integer", "minimum": 20 }
+        "seed": {
+          "type": "integer"
+        },
+        "n_subjects": {
+          "type": "integer",
+          "minimum": 20
+        }
       }
     },
-    "response_criteria": { "type": "string" },
+    "response_criteria": {
+      "type": "string"
+    },
     "thresholds": {
       "type": "object",
-      "required": ["CR", "PR", "PD"],
+      "required": [
+        "CR",
+        "PR",
+        "PD"
+      ],
       "properties": {
-        "CR": { "type": "number" },
-        "PR": { "type": "number" },
-        "PD": { "type": "number" }
+        "CR": {
+          "type": "number"
+        },
+        "PR": {
+          "type": "number"
+        },
+        "PD": {
+          "type": "number"
+        }
       }
     },
     "summary": {
       "type": "object",
-      "required": ["all", "experimental", "control"],
+      "required": [
+        "all",
+        "experimental",
+        "control"
+      ],
       "properties": {
-        "all": { "$ref": "#/$defs/response_summary" },
-        "experimental": { "$ref": "#/$defs/response_summary" },
-        "control": { "$ref": "#/$defs/response_summary" }
+        "all": {
+          "$ref": "#/$defs/response_summary"
+        },
+        "experimental": {
+          "$ref": "#/$defs/response_summary"
+        },
+        "control": {
+          "$ref": "#/$defs/response_summary"
+        }
       }
     },
     "subjects": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["USUBJID", "TRT01A", "BASELINE", "BESTPCHG", "BOR"],
+        "required": [
+          "USUBJID",
+          "TRT01A",
+          "BASELINE",
+          "BESTPCHG",
+          "BOR"
+        ],
         "properties": {
-          "USUBJID": { "type": "string" },
-          "TRT01A": { "type": "string", "enum": ["Experimental", "Control"] },
-          "BASELINE": { "type": "number", "exclusiveMinimum": 0 },
-          "BESTPCHG": { "type": "number" },
-          "BOR": { "type": "string", "enum": ["CR", "PR", "SD", "PD"] }
+          "USUBJID": {
+            "type": "string"
+          },
+          "TRT01A": {
+            "type": "string",
+            "enum": [
+              "Experimental",
+              "Control"
+            ]
+          },
+          "BASELINE": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "BESTPCHG": {
+            "type": "number"
+          },
+          "BOR": {
+            "type": "string",
+            "enum": [
+              "CR",
+              "PR",
+              "SD",
+              "PD"
+            ]
+          }
         }
       }
     },
     "metadata": {
       "type": "object",
-      "required": ["language", "generated_at"],
+      "required": [
+        "language"
+      ],
       "properties": {
-        "language": { "type": "string" },
-        "sorting": { "type": "string" },
-        "packages": { "type": "array", "items": { "type": "string" } },
-        "generated_at": { "type": "string", "format": "date-time" }
+        "language": {
+          "type": "string"
+        },
+        "sorting": {
+          "type": "string"
+        },
+        "packages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     }
   },
   "$defs": {
     "response_summary": {
       "type": "object",
-      "required": ["n", "n_cr", "n_pr", "n_sd", "n_pd", "orr_pct", "dcr_pct"],
+      "required": [
+        "n",
+        "n_cr",
+        "n_pr",
+        "n_sd",
+        "n_pd",
+        "orr_pct",
+        "dcr_pct"
+      ],
       "properties": {
-        "n": { "type": "integer", "minimum": 1 },
-        "n_cr": { "type": "integer", "minimum": 0 },
-        "n_pr": { "type": "integer", "minimum": 0 },
-        "n_sd": { "type": "integer", "minimum": 0 },
-        "n_pd": { "type": "integer", "minimum": 0 },
-        "orr_pct": { "type": "number", "minimum": 0, "maximum": 100 },
-        "dcr_pct": { "type": "number", "minimum": 0, "maximum": 100 },
-        "median_best_pct_change": { "type": ["number", "null"] },
-        "mean_best_pct_change": { "type": ["number", "null"] }
+        "n": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "n_cr": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_pr": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_sd": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_pd": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "orr_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "dcr_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "median_best_pct_change": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "mean_best_pct_change": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
       }
     }
   }

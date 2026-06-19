@@ -943,3 +943,95 @@ All 14 scripts (7 R + 7 Python) execute without errors with seed=42.
 
 ### Git Status
 All fixes committed and pushed to main.
+
+## 2026-06-19 — Scoring Harness Integration: TC-011 through TC-014
+
+### 🎯 Assignment
+Daily cron job triggered. Today's dimension: **Scoring Harness Integration** —
+the critical gap that TC-011 through TC-014 had ground truth implementations
+and output schemas but no scorers in `score.py`, making them unusable for
+benchmark evaluation.
+
+### ✅ What Got Built
+
+**1. Four new scorer functions in `score.py`**
+
+| Scorer | Test Case | What It Compares | Key Fields |
+|---|---|---|---|
+| `score_tc011()` | AE Summary Table | Summary rows (Any AE, SAE, disc.) + detailed SOC-level n(%) per arm | n_experimental, pct_experimental, n_control, pct_control |
+| `score_tc012()` | Forest Plot HR | Overall HR + CI, each subgroup HR + CI + event counts | hr, ci_lower, ci_upper, n_experimental, n_control |
+| `score_tc013()` | Waterfall Plot | Response categories (CR/PR/SD/PD), ORR/DCR%, median/mean % change per arm | n_cr, n_pr, n_sd, n_pd, orr_pct, dcr_pct, median/mean_best_pct_change |
+| `score_tc014()` | PD Listing | Overall PD counts, by-category n, by-severity n, N per arm | n_subjects_with_pd, n_total_deviations, by_category, by_severity |
+
+**2. Updated `tolerances.yaml`** — Added tolerance specs for TC-011 through TC-014:
+- TC-011: exact match for counts, ±0.1 pp for percentages
+- TC-012: ±0.05 absolute / ±2-5% relative for HR and CI
+- TC-013: exact match for response counts, ±0.1 for percentages and change stats
+- TC-014: exact match for all counts (PD taxonomy is categorical)
+
+**3. Registered scorers in all three CLI commands** — `score`, `verify`, and `evaluate`
+now route TC-011 through TC-014 to the correct scorer function.
+
+**4. Fixed schema validation** — Removed stale `generated_at` requirement from
+nested `metadata` block in all four output schemas (TC-011–014). This field was
+removed from ground truth scripts during the June 18 QC review (for byte-level
+reproducibility) but the schemas weren't updated.
+
+### 🔍 Key Research Findings (June 2026)
+
+1. **PharmaSUG 2026 (June 22-24)** features a heavy AI/TFL track:
+   - "Enhancing ADaM Specification Validation and Generation of SAS Codes Using LLM through Amazon Bedrock" (AI-123)
+   - "Building a Model Context Protocol Server for AI-Driven Workflow Automation" (includes TFL generation)
+   - "Why Standards Matter More Than Code in the Age of GenAI" — directly relevant to our benchmark philosophy
+   - Training: "Next Generation AI for Biometrics: From Gen AI to AI Agentic Workflows and Vibe-Coding"
+
+2. **Saama TLF Analyzer** positioned as "Luminary" in Everest Group's Innovation
+   Watch 2026 — recognizes agentic AI frameworks in clinical development. Claims
+   60-70% reduction in manual analysis time. No independent benchmark exists to
+   validate these claims — our benchmark fills this gap.
+
+3. **DIA 2026 Global Annual Meeting (June 14-18, Philadelphia)** had dedicated
+   "Data, Technology and AI" track with sessions on AI-enabled authoring and
+   process standardization for regulatory submissions.
+
+4. **FDA CDER 2026 guidance agenda** includes forthcoming documents on "digital
+   health in clinical investigations" and "AI/ML Quality Considerations" —
+   regulatory pressure for standardized AI evaluation is increasing.
+
+5. **PHUSE US Connect 2026 (Austin, March)** featured "Transforming Clinical
+   Trials with AI and Agentic Tools" — Certara presented AI-enabled protocol-to-
+   content generation. Industry is converging on agentic AI for TFL generation.
+
+### 📊 Validation Results
+
+| Test Case | Self-Score | Schema Pass | Error Detection |
+|---|---|---|---|
+| TC-011 (AE Summary) | 1.0000 | ✅ | ✅ (counts catch mismatches) |
+| TC-012 (Forest Plot) | 1.0000 | ✅ | ✅ (HR +0.3 → score 0.7227) |
+| TC-013 (Waterfall) | 1.0000 | ✅ | ✅ (response counts exact) |
+| TC-014 (PD Listing) | 1.0000 | ✅ | ✅ (all counts exact) |
+
+Error injection test: TC-012 with overall HR +0.3 and subgroup HR +0.2 →
+overall score drops to **0.7227**, `overall_hr` component correctly flags ❌.
+
+### Updated Scoring Harness Coverage
+
+| Test Case | Scorer | Tolerances | Schema | Ground Truth (R+Py) |
+|---|---|---|---|---|
+| TC-001 | ✅ | ✅ | ✅ | ✅ |
+| TC-002 | ✅ | ✅ | ✅ | ✅ |
+| TC-003 | ✅ | ✅ | ✅ | ✅ |
+| TC-011 | ✅ NEW | ✅ NEW | ✅ FIXED | ✅ |
+| TC-012 | ✅ NEW | ✅ NEW | ✅ FIXED | ✅ |
+| TC-013 | ✅ NEW | ✅ NEW | ✅ FIXED | ✅ |
+| TC-014 | ✅ NEW | ✅ NEW | ✅ FIXED | ✅ |
+
+**All 7 Level 1 test cases now have complete scoring pipeline coverage.**
+
+### 🔮 Plan for Day 20+
+1. **Add compliance rules** for TC-011–014 in `compliance.yaml` (ADaM variables for AE, safety, PD domains)
+2. **Add safety check rules** for TC-011–014 in `safety.yaml`
+3. **Begin TC-015 through TC-018** — KM curve figure rendering, Exposure table, Shift table, Time-to-event table
+4. **SAS implementations** for TC-011–014 (complete multilingual trifecta)
+5. **Cross-language verification run** on shared data for all 7 Level 1 TCs
+6. **WG presentation prep** — Scoring dimension findings for next WG meeting

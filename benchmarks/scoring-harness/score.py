@@ -361,6 +361,401 @@ def score_tc002(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# TC-011: AE Summary Table by SOC and PT
+# --------------------------------------------------------------------
+
+def _ae_table_index(output: dict) -> dict:
+    """Index AE table rows by (soc, pt) for aligned comparison.
+
+    Handles the nested structure where ae_table is a list of dicts with
+    soc, pt, n_experimental, pct_experimental, n_control, pct_control.
+    Summary rows have pt=None.
+    """
+    idx = {}
+    for row in output.get("ae_table", []) or output.get("summary", []):
+        soc = row.get("soc")
+        pt = row.get("pt")
+        idx[(soc, pt)] = {
+            "n_experimental": row.get("n_experimental"),
+            "pct_experimental": row.get("pct_experimental"),
+            "n_control": row.get("n_control"),
+            "pct_control": row.get("pct_control"),
+        }
+    return idx
+
+
+def score_tc011(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-011 (AE Summary Table by SOC/PT).
+
+    Compares summary rows (overall AE/SAE/discontinuation counts) and
+    detailed SOC-level rows, both n(%) per arm.
+    """
+    tol_spec = tolerances.get("TC-011", {}).get("tolerances", {})
+    component_scores = {}
+    total_weight = 0
+    weighted_sum = 0
+
+    # Index both outputs by (soc, pt)
+    agent_idx = _ae_table_index(agent_output)
+    truth_idx = _ae_table_index(ground_truth)
+
+    # Summary rows (Any AE, SAE, AE leading to discontinuation)
+    summary_keys = [k for k in truth_idx if k[1] is None]
+    n_summary = max(len(summary_keys), 1)
+
+    for key in summary_keys:
+        truth_row = truth_idx[key]
+        agent_row = agent_idx.get(key, {})
+        soc_label = key[0]
+
+        # Counts (exact)
+        for arm_field, label in [("n_experimental", f"{soc_label}_n_exp"),
+                                 ("n_control", f"{soc_label}_n_ctl")]:
+            w = tol_spec.get("summary_n", {}).get("weight", 0.25) / (n_summary * 2)
+            r = compare_count(agent_row.get(arm_field), truth_row.get(arm_field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+        # Percentages (tolerance)
+        for arm_field, label in [("pct_experimental", f"{soc_label}_pct_exp"),
+                                 ("pct_control", f"{soc_label}_pct_ctl")]:
+            field_tol = {"absolute": tol_spec.get("summary_pct", {}).get("absolute", 0.1)}
+            w = tol_spec.get("summary_pct", {}).get("weight", 0.15) / (n_summary * 2)
+            r = compare_numeric(agent_row.get(arm_field), truth_row.get(arm_field),
+                                field_tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # Detailed SOC-level rows (pt is not None or soc not in summary labels)
+    detail_keys = [k for k in truth_idx if k not in summary_keys]
+    n_detail = max(len(detail_keys), 1)
+
+    for key in detail_keys:
+        truth_row = truth_idx[key]
+        agent_row = agent_idx.get(key, {})
+        soc_label = key[0]
+
+        for arm_field, label in [("n_experimental", f"{soc_label}_n_exp"),
+                                 ("n_control", f"{soc_label}_n_ctl")]:
+            w = tol_spec.get("ae_table_n", {}).get("weight", 0.30) / (n_detail * 2)
+            r = compare_count(agent_row.get(arm_field), truth_row.get(arm_field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+        for arm_field, label in [("pct_experimental", f"{soc_label}_pct_exp"),
+                                 ("pct_control", f"{soc_label}_pct_ctl")]:
+            field_tol = {"absolute": tol_spec.get("ae_table_pct", {}).get("absolute", 0.1)}
+            w = tol_spec.get("ae_table_pct", {}).get("weight", 0.20) / (n_detail * 2)
+            r = compare_numeric(agent_row.get(arm_field), truth_row.get(arm_field),
+                                field_tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # N per arm from population block
+    pop = ground_truth.get("population", {})
+    agent_pop = agent_output.get("population", {})
+    for field, label in [("n_experimental", "pop_n_exp"), ("n_control", "pop_n_ctl")]:
+        w = tol_spec.get("n_per_arm", {}).get("weight", 0.10) / 2
+        r = compare_count(agent_pop.get(field), pop.get(field))
+        component_scores[label] = r
+        weighted_sum += r["score"] * w
+        total_weight += w
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-011",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
+# TC-012: Forest Plot — Subgroup Hazard Ratios
+# --------------------------------------------------------------------
+
+def _subgroup_index(output: dict) -> dict:
+    """Index subgroup rows by (variable, value) for aligned comparison."""
+    idx = {}
+    for row in output.get("subgroups", []) or []:
+        var = row.get("variable")
+        val = row.get("value")
+        idx[(var, val)] = {
+            "hr": row.get("hr"),
+            "ci_lower": row.get("ci_lower"),
+            "ci_upper": row.get("ci_upper"),
+            "n_experimental": row.get("n_experimental"),
+            "n_control": row.get("n_control"),
+            "events_experimental": row.get("events_experimental"),
+            "events_control": row.get("events_control"),
+        }
+    return idx
+
+
+def score_tc012(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-012 (Forest Plot — Subgroup HRs).
+
+    Compares overall HR + CI and each subgroup HR + CI.
+    """
+    tol_spec = tolerances.get("TC-012", {}).get("tolerances", {})
+    component_scores = {}
+    total_weight = 0
+    weighted_sum = 0
+
+    # Overall HR + CI
+    agent_overall = agent_output.get("overall", {})
+    truth_overall = ground_truth.get("overall", {})
+
+    hr_tol = {"absolute": tol_spec.get("overall_hr", {}).get("absolute", 0.05),
+              "relative": tol_spec.get("overall_hr", {}).get("relative", 0.02)}
+    w = tol_spec.get("overall_hr", {}).get("weight", 0.25)
+    r = compare_numeric(agent_overall.get("hr"), truth_overall.get("hr"), hr_tol, "overall_hr")
+    component_scores["overall_hr"] = r
+    weighted_sum += r["score"] * w
+    total_weight += w
+
+    ci_tol = {"absolute": tol_spec.get("overall_ci", {}).get("absolute", 0.05)}
+    w_ci = tol_spec.get("overall_ci", {}).get("weight", 0.15) / 2
+    for field, label in [("ci_lower", "overall_ci_lower"), ("ci_upper", "overall_ci_upper")]:
+        r = compare_numeric(agent_overall.get(field), truth_overall.get(field), ci_tol, label)
+        component_scores[label] = r
+        weighted_sum += r["score"] * w_ci
+        total_weight += w_ci
+
+    # Subgroup HRs + CIs
+    agent_sg = _subgroup_index(agent_output)
+    truth_sg = _subgroup_index(ground_truth)
+
+    sg_keys = list(truth_sg.keys())
+    n_sg = max(len(sg_keys), 1)
+
+    sg_hr_w = tol_spec.get("subgroup_hr", {}).get("weight", 0.30) / n_sg
+    sg_hr_tol = {"absolute": tol_spec.get("subgroup_hr", {}).get("absolute", 0.05),
+                 "relative": tol_spec.get("subgroup_hr", {}).get("relative", 0.05)}
+
+    sg_ci_w = tol_spec.get("subgroup_ci", {}).get("weight", 0.20) / (n_sg * 2)
+    sg_ci_tol = {"absolute": tol_spec.get("subgroup_ci", {}).get("absolute", 0.05)}
+
+    sg_n_w = tol_spec.get("subgroup_n", {}).get("weight", 0.10) / (n_sg * 2)
+
+    for key in sg_keys:
+        truth_row = truth_sg[key]
+        agent_row = agent_sg.get(key, {})
+        label_base = f"{key[0]}={key[1]}"
+
+        # HR
+        r = compare_numeric(agent_row.get("hr"), truth_row.get("hr"), sg_hr_tol, f"{label_base}_hr")
+        component_scores[f"{label_base}_hr"] = r
+        weighted_sum += r["score"] * sg_hr_w
+        total_weight += sg_hr_w
+
+        # CI lower/upper
+        for ci_field, ci_label in [("ci_lower", "ci_l"), ("ci_upper", "ci_u")]:
+            r = compare_numeric(agent_row.get(ci_field), truth_row.get(ci_field),
+                                sg_ci_tol, f"{label_base}_{ci_label}")
+            component_scores[f"{label_base}_{ci_label}"] = r
+            weighted_sum += r["score"] * sg_ci_w
+            total_weight += sg_ci_w
+
+        # N per subgroup (exact)
+        for n_field, n_label in [("n_experimental", "n_exp"), ("n_control", "n_ctl")]:
+            r = compare_count(agent_row.get(n_field), truth_row.get(n_field))
+            component_scores[f"{label_base}_{n_label}"] = r
+            weighted_sum += r["score"] * sg_n_w
+            total_weight += sg_n_w
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-012",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
+# TC-013: Waterfall Plot — Best % Tumor Change
+# --------------------------------------------------------------------
+
+def score_tc013(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-013 (Waterfall Plot — RECIST 1.1).
+
+    Compares response category counts, ORR/DCR percentages, and
+    median/mean best % change across all/experimental/control arms.
+    """
+    tol_spec = tolerances.get("TC-013", {}).get("tolerances", {})
+    component_scores = {}
+    total_weight = 0
+    weighted_sum = 0
+
+    agent_summary = agent_output.get("summary", {})
+    truth_summary = ground_truth.get("summary", {})
+
+    count_fields = [("n_cr", "n_cr"), ("n_pr", "n_pr"), ("n_sd", "n_sd"), ("n_pd", "n_pd")]
+    pct_fields = [("orr_pct", "orr_pct"), ("dcr_pct", "dcr_pct")]
+    change_fields = [("median_best_pct_change", "median_pct"), ("mean_best_pct_change", "mean_pct")]
+
+    arms = ["all", "experimental", "control"]
+
+    for arm in arms:
+        truth_arm = truth_summary.get(arm, {})
+        agent_arm = agent_summary.get(arm, {})
+        if not truth_arm:
+            continue
+
+        # Response counts (exact)
+        resp_w = tol_spec.get("response_n", {}).get("weight", 0.30) / (len(arms) * len(count_fields))
+        for gt_field, label_suffix in count_fields:
+            label = f"{arm}_{label_suffix}"
+            r = compare_count(agent_arm.get(gt_field), truth_arm.get(gt_field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * resp_w
+            total_weight += resp_w
+
+        # ORR / DCR percentages
+        pct_tol = {"absolute": 0.1}
+        orr_w = tol_spec.get("orr_pct", {}).get("weight", 0.15) / len(arms)
+        dcr_w = tol_spec.get("dcr_pct", {}).get("weight", 0.15) / len(arms)
+        weights_map = {"orr_pct": orr_w, "dcr_pct": dcr_w}
+
+        for gt_field, label_suffix in pct_fields:
+            label = f"{arm}_{label_suffix}"
+            r = compare_numeric(agent_arm.get(gt_field), truth_arm.get(gt_field), pct_tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * weights_map[gt_field]
+            total_weight += weights_map[gt_field]
+
+        # Median / mean % change
+        chg_tol = {"absolute": 0.1}
+        med_w = tol_spec.get("median_pct_change", {}).get("weight", 0.20) / len(arms)
+        mean_w = tol_spec.get("mean_pct_change", {}).get("weight", 0.20) / len(arms)
+        chg_weights = {"median_best_pct_change": med_w, "mean_best_pct_change": mean_w}
+
+        for gt_field, label_suffix in change_fields:
+            label = f"{arm}_{label_suffix}"
+            r = compare_numeric(agent_arm.get(gt_field), truth_arm.get(gt_field), chg_tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * chg_weights[gt_field]
+            total_weight += chg_weights[gt_field]
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-013",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
+# TC-014: Protocol Deviation Listing
+# --------------------------------------------------------------------
+
+def score_tc014(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-014 (Listing of Key Protocol Deviations).
+
+    Compares overall PD counts, by-category counts, by-severity counts,
+    and N per arm.
+    """
+    tol_spec = tolerances.get("TC-014", {}).get("tolerances", {})
+    component_scores = {}
+    total_weight = 0
+    weighted_sum = 0
+
+    agent_summary = agent_output.get("summary", {})
+    truth_summary = ground_truth.get("summary", {})
+
+    arms = ["all", "experimental", "control"]
+
+    for arm in arms:
+        truth_arm = truth_summary.get(arm, {})
+        agent_arm = agent_summary.get(arm, {})
+        if not truth_arm:
+            continue
+
+        label_prefix = f"{arm}_"
+
+        # n_subjects_with_pd (exact)
+        w = tol_spec.get("n_subjects_with_pd", {}).get("weight", 0.25) / len(arms)
+        r = compare_count(agent_arm.get("n_subjects_with_pd"),
+                          truth_arm.get("n_subjects_with_pd"))
+        component_scores[f"{label_prefix}n_subj_pd"] = r
+        weighted_sum += r["score"] * w
+        total_weight += w
+
+        # n_total_deviations (exact)
+        w = tol_spec.get("n_total_deviations", {}).get("weight", 0.20) / len(arms)
+        r = compare_count(agent_arm.get("n_total_deviations"),
+                          truth_arm.get("n_total_deviations"))
+        component_scores[f"{label_prefix}n_total_dev"] = r
+        weighted_sum += r["score"] * w
+        total_weight += w
+
+        # By-category counts (exact match per category)
+        truth_cats = truth_arm.get("by_category", {})
+        agent_cats = agent_arm.get("by_category", {})
+        n_cats = max(len(truth_cats), 1)
+        cat_w = tol_spec.get("by_category_n", {}).get("weight", 0.25) / (len(arms) * n_cats)
+
+        for cat_name, cat_data in truth_cats.items():
+            truth_n = cat_data.get("n_deviations")
+            agent_n = agent_cats.get(cat_name, {}).get("n_deviations")
+            label = f"{label_prefix}cat_{cat_name.replace(' ', '_')}"
+            r = compare_count(agent_n, truth_n)
+            component_scores[label] = r
+            weighted_sum += r["score"] * cat_w
+            total_weight += cat_w
+
+        # By-severity counts (exact match per severity)
+        truth_sev = truth_arm.get("by_severity", {})
+        agent_sev = agent_arm.get("by_severity", {})
+        n_sev = max(len(truth_sev), 1)
+        sev_w = tol_spec.get("by_severity_n", {}).get("weight", 0.20) / (len(arms) * n_sev)
+
+        for sev_name, truth_n in truth_sev.items():
+            agent_n = agent_sev.get(sev_name)
+            label = f"{label_prefix}sev_{sev_name}"
+            r = compare_count(agent_n, truth_n)
+            component_scores[label] = r
+            weighted_sum += r["score"] * sev_w
+            total_weight += sev_w
+
+    # N per arm from population block
+    pop = ground_truth.get("population", {})
+    agent_pop = agent_output.get("population", {})
+    pop_w = tol_spec.get("n_per_arm", {}).get("weight", 0.10) / 2
+    for field, label in [("n_experimental", "pop_n_exp"), ("n_control", "pop_n_ctl")]:
+        r = compare_count(agent_pop.get(field), pop.get(field))
+        component_scores[label] = r
+        weighted_sum += r["score"] * pop_w
+        total_weight += pop_w
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-014",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
 # Efficiency Helpers
 # --------------------------------------------------------------------
 
@@ -667,6 +1062,10 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-001": score_tc001,
         "TC-002": score_tc002,
         "TC-003": score_tc003,
+        "TC-011": score_tc011,
+        "TC-012": score_tc012,
+        "TC-013": score_tc013,
+        "TC-014": score_tc014,
     }
 
     scorer = scorers.get(tc)
@@ -784,6 +1183,10 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-001": score_tc001,
         "TC-002": score_tc002,
         "TC-003": score_tc003,
+        "TC-011": score_tc011,
+        "TC-012": score_tc012,
+        "TC-013": score_tc013,
+        "TC-014": score_tc014,
     }
 
     scorer = scorers.get(tc)
@@ -979,6 +1382,10 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-001": score_tc001,
         "TC-002": score_tc002,
         "TC-003": score_tc003,
+        "TC-011": score_tc011,
+        "TC-012": score_tc012,
+        "TC-013": score_tc013,
+        "TC-014": score_tc014,
     }
     scorer = scorers.get(tc)
     if scorer is None:

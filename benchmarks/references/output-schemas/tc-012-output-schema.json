@@ -4,19 +4,36 @@
   "title": "TC-012: Forest Plot Subgroup HRs Output",
   "description": "Schema for forest plot subgroup hazard ratio analysis",
   "type": "object",
-  "required": ["test_case_id", "title", "parameters", "overall", "subgroups", "metadata"],
+  "required": [
+    "test_case_id",
+    "title",
+    "parameters",
+    "overall",
+    "subgroups",
+    "metadata"
+  ],
   "properties": {
     "test_case_id": {
       "type": "string",
       "const": "TC-012"
     },
-    "title": { "type": "string" },
+    "title": {
+      "type": "string"
+    },
     "parameters": {
       "type": "object",
-      "required": ["seed", "n_subjects"],
+      "required": [
+        "seed",
+        "n_subjects"
+      ],
       "properties": {
-        "seed": { "type": "integer" },
-        "n_subjects": { "type": "integer", "minimum": 50 }
+        "seed": {
+          "type": "integer"
+        },
+        "n_subjects": {
+          "type": "integer",
+          "minimum": 50
+        }
       }
     },
     "overall": {
@@ -26,14 +43,26 @@
       "type": "array",
       "items": {
         "allOf": [
-          { "$ref": "#/$defs/hr_result" },
+          {
+            "$ref": "#/$defs/hr_result"
+          },
           {
             "type": "object",
-            "required": ["subgroup", "variable", "value"],
+            "required": [
+              "subgroup",
+              "variable",
+              "value"
+            ],
             "properties": {
-              "subgroup": { "type": "string" },
-              "variable": { "type": "string" },
-              "value": { "type": "string" }
+              "subgroup": {
+                "type": "string"
+              },
+              "variable": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
@@ -41,32 +70,76 @@
     },
     "interaction_pvalues": {
       "type": "object",
-      "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 }
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
     },
     "metadata": {
       "type": "object",
-      "required": ["language", "method", "generated_at"],
+      "required": [
+        "language",
+        "method"
+      ],
       "properties": {
-        "language": { "type": "string" },
-        "method": { "type": "string" },
-        "ci_method": { "type": "string" },
-        "packages": { "type": "array", "items": { "type": "string" } },
-        "generated_at": { "type": "string", "format": "date-time" }
+        "language": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "ci_method": {
+          "type": "string"
+        },
+        "packages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     }
   },
   "$defs": {
     "hr_result": {
       "type": "object",
-      "required": ["hr", "ci_lower", "ci_upper", "n_experimental", "n_control"],
+      "required": [
+        "hr",
+        "ci_lower",
+        "ci_upper",
+        "n_experimental",
+        "n_control"
+      ],
       "properties": {
-        "hr": { "type": "number", "exclusiveMinimum": 0 },
-        "ci_lower": { "type": "number", "exclusiveMinimum": 0 },
-        "ci_upper": { "type": "number", "exclusiveMinimum": 0 },
-        "n_experimental": { "type": "integer", "minimum": 1 },
-        "n_control": { "type": "integer", "minimum": 1 },
-        "events_experimental": { "type": "integer", "minimum": 0 },
-        "events_control": { "type": "integer", "minimum": 0 }
+        "hr": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "ci_lower": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "ci_upper": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "n_experimental": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "n_control": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "events_experimental": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "events_control": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     }
   }

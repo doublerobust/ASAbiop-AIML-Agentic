@@ -65,3 +65,96 @@ TC-003:
     n_total:
       absolute: 0       # exact match
       weight: 0.10
+
+TC-011:
+  description: "AE Summary Table by SOC and PT"
+  tolerances:
+    # Summary row counts (Any AE, SAE, AE leading to discontinuation)
+    summary_n:
+      absolute: 0       # exact match
+      weight: 0.25
+    summary_pct:
+      absolute: 0.1     # ±0.1 percentage points
+      weight: 0.15
+    # Detailed AE table SOC-level counts
+    ae_table_n:
+      absolute: 0       # exact match
+      weight: 0.30
+    ae_table_pct:
+      absolute: 0.1
+      weight: 0.20
+    # Overall N per arm
+    n_per_arm:
+      absolute: 0       # exact match
+      weight: 0.10
+
+TC-012:
+  description: "Forest Plot — Subgroup Hazard Ratios"
+  tolerances:
+    # Overall HR
+    overall_hr:
+      absolute: 0.05
+      relative: 0.02
+      weight: 0.25
+    overall_ci:
+      absolute: 0.05
+      relative: 0.02
+      weight: 0.15
+    # Subgroup HRs (averaged across all subgroups)
+    subgroup_hr:
+      absolute: 0.05
+      relative: 0.05
+      weight: 0.30
+    subgroup_ci:
+      absolute: 0.05
+      relative: 0.05
+      weight: 0.20
+    # Event counts per subgroup
+    subgroup_n:
+      absolute: 0       # exact match
+      weight: 0.10
+
+TC-013:
+  description: "Waterfall Plot — Best % Tumor Change (RECIST 1.1)"
+  tolerances:
+    # Response category counts (per arm: all, experimental, control)
+    response_n:
+      absolute: 0       # exact match for CR/PR/SD/PD counts
+      weight: 0.30
+    # ORR and DCR percentages
+    orr_pct:
+      absolute: 0.1
+      weight: 0.15
+    dcr_pct:
+      absolute: 0.1
+      weight: 0.15
+    # Median and mean best % change
+    median_pct_change:
+      absolute: 0.1
+      weight: 0.20
+    mean_pct_change:
+      absolute: 0.1
+      weight: 0.20
+
+TC-014:
+  description: "Listing of Key Protocol Deviations"
+  tolerances:
+    # Overall counts
+    n_subjects_with_pd:
+      absolute: 0       # exact match
+      weight: 0.25
+    n_total_deviations:
+      absolute: 0       # exact match
+      weight: 0.20
+    # By-category counts
+    by_category_n:
+      absolute: 0       # exact match
+      weight: 0.25
+    # By-severity counts
+    by_severity_n:
+      absolute: 0       # exact match
+      weight: 0.20
+    # N per arm
+    n_per_arm:
+      absolute: 0       # exact match
+      weight: 0.10

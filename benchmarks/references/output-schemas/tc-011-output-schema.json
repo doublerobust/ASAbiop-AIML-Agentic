@@ -4,7 +4,14 @@
   "title": "TC-011: Adverse Event Summary Table Output",
   "description": "Schema for adverse event summary table by SOC and PT",
   "type": "object",
-  "required": ["test_case_id", "title", "parameters", "population", "ae_table", "metadata"],
+  "required": [
+    "test_case_id",
+    "title",
+    "parameters",
+    "population",
+    "ae_table",
+    "metadata"
+  ],
   "properties": {
     "test_case_id": {
       "type": "string",
@@ -15,47 +22,106 @@
     },
     "parameters": {
       "type": "object",
-      "required": ["seed", "n_subjects"],
+      "required": [
+        "seed",
+        "n_subjects"
+      ],
       "properties": {
-        "seed": { "type": "integer" },
-        "n_subjects": { "type": "integer", "minimum": 20 }
+        "seed": {
+          "type": "integer"
+        },
+        "n_subjects": {
+          "type": "integer",
+          "minimum": 20
+        }
       }
     },
     "population": {
       "type": "object",
-      "required": ["n_experimental", "n_control"],
+      "required": [
+        "n_experimental",
+        "n_control"
+      ],
       "properties": {
-        "description": { "type": "string" },
-        "n_experimental": { "type": "integer", "minimum": 1 },
-        "n_control": { "type": "integer", "minimum": 1 }
+        "description": {
+          "type": "string"
+        },
+        "n_experimental": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "n_control": {
+          "type": "integer",
+          "minimum": 1
+        }
       }
     },
     "ae_table": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["category", "soc", "n_experimental", "pct_experimental", "n_control", "pct_control"],
+        "required": [
+          "category",
+          "soc",
+          "n_experimental",
+          "pct_experimental",
+          "n_control",
+          "pct_control"
+        ],
         "properties": {
           "category": {
             "type": "string",
-            "enum": ["summary", "soc", "pt"]
+            "enum": [
+              "summary",
+              "soc",
+              "pt"
+            ]
           },
-          "soc": { "type": "string" },
-          "pt": { "type": ["string", "null"] },
-          "n_experimental": { "type": "integer", "minimum": 0 },
-          "pct_experimental": { "type": "number", "minimum": 0, "maximum": 100 },
-          "n_control": { "type": "integer", "minimum": 0 },
-          "pct_control": { "type": "number", "minimum": 0, "maximum": 100 }
+          "soc": {
+            "type": "string"
+          },
+          "pt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "n_experimental": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "pct_experimental": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "n_control": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "pct_control": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
         }
       }
     },
     "metadata": {
       "type": "object",
-      "required": ["language", "generated_at"],
+      "required": [
+        "language"
+      ],
       "properties": {
-        "language": { "type": "string" },
-        "packages": { "type": "array", "items": { "type": "string" } },
-        "generated_at": { "type": "string", "format": "date-time" }
+        "language": {
+          "type": "string"
+        },
+        "packages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     }
   }
