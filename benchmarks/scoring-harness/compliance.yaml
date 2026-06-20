@@ -101,3 +101,229 @@ TC-003:
     - id: CSR-03
       desc: "Method in footnotes"
       penalty: 0.1
+
+# ─────────────────────────────────────────────────────
+# TC-011: Adverse Event Summary Table by SOC and PT
+# ─────────────────────────────────────────────────────
+TC-011:
+  description: "AE Summary Table by SOC/PT — safety population, MedDRA coding"
+  adam_mapping:
+    required_variables: [USUBJID, AEDECOD, AEBODSYS, AESER, AEACN, TRT01PN, SAFFL]
+    population_flag: SAFFL
+    population_value: Y
+    treatment_variable: TRT01PN
+    domain: ADAE
+  tcg_rules:
+    - id: TCG-01
+      desc: "Population filter SAFFL=Y"
+      critical: true
+    - id: TCG-02
+      desc: "Treatment variable TRT01PN"
+      critical: true
+    - id: TCG-07
+      desc: "AE domain (ADAE) used as source"
+      critical: true
+    - id: TCG-08
+      desc: "MedDRA SOC (AEBODSYS) and PT (AEDECOD) present"
+      critical: true
+    - id: TCG-09
+      desc: "Serious AE flag (AESER) present for SAE summary row"
+      critical: true
+    - id: TCG-10
+      desc: "AE action (AEACN) present for discontinuation summary row"
+      critical: true
+    - id: TCG-11
+      desc: "Subject-level de-duplication: each subject counted once per PT"
+      critical: true
+    - id: TCG-12
+      desc: "SOC sorted alphabetically or by descending frequency"
+      critical: false
+    - id: TCG-13
+      desc: "PT sorted by descending frequency within SOC"
+      critical: false
+    - id: TCG-06
+      desc: "Software version documented"
+      critical: false
+  csr_rules:
+    - id: CSR-01
+      desc: "Table numbered per ICH E3 appendix"
+      penalty: 0.1
+    - id: CSR-02
+      desc: "Title includes safety population"
+      penalty: 0.2
+    - id: CSR-03
+      desc: "Footnotes: 95% CI method for percentages, MedDRA version"
+      penalty: 0.1
+    - id: CSR-06
+      desc: "Summary rows: Any AE, SAE, AEs leading to discontinuation"
+      penalty: 0.15
+    - id: CSR-07
+      desc: "Denominator (N) per treatment arm in column headers"
+      penalty: 0.1
+
+# ─────────────────────────────────────────────────────
+# TC-012: Forest Plot — Subgroup Hazard Ratios
+# ─────────────────────────────────────────────────────
+TC-012:
+  description: "Forest Plot HRs — Cox PH subgroup analysis, ITT population"
+  adam_mapping:
+    required_variables: [AVAL, CNSR, TRT01PN, ITTFL, AGE, SEX, ECOG, REGION1, PRIORTX]
+    population_flag: ITTFL
+    population_value: Y
+    treatment_variable: TRT01PN
+    domain: ADTTE + ADSL
+    subgroup_variables: [AGEGRP, SEX, ECOG, REGION1, PRIORTX]
+  tcg_rules:
+    - id: TCG-01
+      desc: "Population filter ITTFL=Y"
+      critical: true
+    - id: TCG-02
+      desc: "Treatment variable TRT01PN"
+      critical: true
+    - id: TCG-03
+      desc: "CNSR 0=event 1=censored"
+      critical: true
+    - id: TCG-04
+      desc: "Analysis time AVAL specified"
+      critical: true
+    - id: TCG-14
+      desc: "Cox PH model: treatment as sole covariate per subgroup"
+      critical: true
+    - id: TCG-15
+      desc: "All predefined subgroups present (age, sex, ECOG, region, prior therapy)"
+      critical: true
+    - id: TCG-16
+      desc: "Interaction p-values computed for each subgroup"
+      critical: false
+    - id: TCG-17
+      desc: "HR computed as exp(beta) with 95% CI from Wald"
+      critical: true
+    - id: TCG-06
+      desc: "Software version documented"
+      critical: false
+  csr_rules:
+    - id: CSR-03
+      desc: "Method in footnotes: Cox PH model specification"
+      penalty: 0.1
+    - id: CSR-05
+      desc: "CI method documented (Wald or likelihood-based)"
+      penalty: 0.2
+    - id: CSR-08
+      desc: "Forest plot includes overall HR and subgroup HRs"
+      penalty: 0.15
+    - id: CSR-09
+      desc: "Interaction p-values reported alongside subgroup HRs"
+      penalty: 0.1
+    - id: CSR-10
+      desc: "Subgroup sample sizes (n per arm) reported"
+      penalty: 0.1
+
+# ─────────────────────────────────────────────────────
+# TC-013: Waterfall Plot — Best % Change in Tumor Size
+# ─────────────────────────────────────────────────────
+TC-013:
+  description: "Waterfall Plot — RECIST 1.1 response categorization, efficacy"
+  adam_mapping:
+    required_variables: [USUBJID, TRT01PN, AVAL, BASE, CHG, PCHG, ITTFL, PARAMCD]
+    population_flag: ITTFL
+    population_value: Y
+    treatment_variable: TRT01PN
+    domain: ADRS or ADTR (tumor response)
+    paramcd_filter: "SUMDIAM or TUMSUM"
+  tcg_rules:
+    - id: TCG-01
+      desc: "Population filter ITTFL=Y"
+      critical: true
+    - id: TCG-02
+      desc: "Treatment variable TRT01PN"
+      critical: true
+    - id: TCG-18
+      desc: "Best % change from baseline (PCHG) computed per subject"
+      critical: true
+    - id: TCG-19
+      desc: "RECIST 1.1 thresholds applied: CR=-100%, PR<=-30%, PD>=+20%, SD=other"
+      critical: true
+    - id: TCG-20
+      desc: "Subjects with no baseline or no post-baseline excluded"
+      critical: true
+    - id: TCG-21
+      desc: "Best response = most extreme negative PCHG (most shrinkage)"
+      critical: true
+    - id: TCG-22
+      desc: "ORR = CR+PR, DCR = CR+PR+SD computed correctly"
+      critical: true
+    - id: TCG-23
+      desc: "Subjects sorted by descending best % change for waterfall"
+      critical: false
+    - id: TCG-06
+      desc: "Software version documented"
+      critical: false
+  csr_rules:
+    - id: CSR-01
+      desc: "Figure numbered per ICH E3 appendix"
+      penalty: 0.1
+    - id: CSR-02
+      desc: "Title includes population and response criteria (RECIST 1.1)"
+      penalty: 0.2
+    - id: CSR-03
+      desc: "Footnotes: ORR/DCR definitions, 95% CI method"
+      penalty: 0.1
+    - id: CSR-11
+      desc: "X-axis: subject ID sorted by best % change"
+      penalty: 0.1
+    - id: CSR-12
+      desc: "Reference lines at -30% (PR threshold) and +20% (PD threshold)"
+      penalty: 0.1
+
+# ─────────────────────────────────────────────────────
+# TC-014: Listing of Key Protocol Deviations
+# ─────────────────────────────────────────────────────
+TC-014:
+  description: "PD Listing — protocol deviations by category and severity"
+  adam_mapping:
+    required_variables: [USUBJID, TRT01PN, DVCAT, DVDESC, DVSTDY, DVENDY, DVSEV, SAFFL]
+    population_flag: SAFFL
+    population_value: Y
+    treatment_variable: TRT01PN
+    domain: ADPD or custom PD dataset
+  tcg_rules:
+    - id: TCG-01
+      desc: "Population filter SAFFL=Y (or all enrolled if safety pop)"
+      critical: true
+    - id: TCG-02
+      desc: "Treatment variable TRT01PN"
+      critical: true
+    - id: TCG-24
+      desc: "PD categories from standard taxonomy: Eligibility, Visit Window, Prohibited Med, Dose Modification, Consent, Endpoint"
+      critical: true
+    - id: TCG-25
+      desc: "Severity classification: Critical, Major, Minor"
+      critical: true
+    - id: TCG-26
+      desc: "Each PD record includes: subject ID, arm, category, description, study day, severity"
+      critical: true
+    - id: TCG-27
+      desc: "Listing sorted by USUBJID"
+      critical: false
+    - id: TCG-28
+      desc: "Summary: n subjects with >=1 PD, n total PDs, breakdown by category and severity"
+      critical: true
+    - id: TCG-06
+      desc: "Software version documented"
+      critical: false
+  csr_rules:
+    - id: CSR-01
+      desc: "Listing numbered per ICH E3 appendix"
+      penalty: 0.1
+    - id: CSR-02
+      desc: "Title includes population and scope (key protocol deviations)"
+      penalty: 0.2
+    - id: CSR-03
+      desc: "Footnotes: PD categorization schema, severity definitions"
+      penalty: 0.1
+    - id: CSR-13
+      desc: "Column headers: Subject ID, Treatment, Category, Description, Study Day, Severity"
+      penalty: 0.1
+    - id: CSR-14
+      desc: "Summary table precedes or follows listing with counts by category/severity"
+      penalty: 0.15

@@ -1035,3 +1035,127 @@ overall score drops to **0.7227**, `overall_hr` component correctly flags ❌.
 4. **SAS implementations** for TC-011–014 (complete multilingual trifecta)
 5. **Cross-language verification run** on shared data for all 7 Level 1 TCs
 6. **WG presentation prep** — Scoring dimension findings for next WG meeting
+
+---
+
+## 2026-06-20 — Compliance & Safety Rules for TC-011–014
+
+**Trigger:** Daily cron (GLM 5.2 via OpenRouter). Day 20.
+**Dimension:** Regulatory compliance + safety/robustness rule coverage.
+
+### 🎯 Assignment
+Yesterday's plan explicitly called for adding compliance rules for TC-011–014
+in `compliance.yaml` and safety check rules in `safety.yaml`. This was the
+critical gap: all 7 Level 1 test cases had scorers, tolerances, schemas, and
+ground truth, but only TC-001–003 had compliance and safety rules. Today
+closes that gap.
+
+### ✅ What Got Built
+
+**1. Compliance rules for TC-011–014 in `compliance.yaml`**
+
+| Test Case | ADaM Vars | TCG Rules | CSR Rules | Key Additions |
+|---|---|---|---|---|
+| TC-011 (AE Summary) | 7 | 10 | 5 | MedDRA SOC/PT (AEBODSYS/AEDECOD), AESER/AEACN flags, subject de-dup, SOC/PT sorting, MedDRA version in footnotes |
+| TC-012 (Forest Plot HR) | 9 | 9 | 5 | Cox PH model spec, all 5 subgroups, interaction p-values, HR=exp(beta) with Wald CI, subgroup sample sizes |
+| TC-013 (Waterfall) | 8 | 9 | 5 | RECIST 1.1 thresholds (CR/PR/SD/PD), best % change from baseline, ORR/DCR computation, reference lines at -30%/+20% |
+| TC-014 (PD Listing) | 8 | 8 | 5 | PD category taxonomy (6 categories), severity classification (Critical/Major/Minor), listing fields, summary by category/severity |
+
+New TCG rule IDs introduced: TCG-07 through TCG-28 (covering AE domain, MedDRA,
+Cox PH model, RECIST 1.1, PD taxonomy, etc.)
+New CSR rule IDs: CSR-06 through CSR-14 (summary rows, denominators, forest plot
+elements, RECIST footnotes, listing headers/summary)
+
+**2. Safety rules for TC-011–014 in `safety.yaml`**
+
+| Test Case | N-count Rules | Denominator | New Edge Cases |
+|---|---|---|---|
+| TC-011 | 4 | SAFETY/SAFFL | zero_ae_in_soc |
+| TC-012 | 3 | ITT/ITTFL | non_converged_cox |
+| TC-013 | 4 | ITT/ITTFL | subject_with_no_post_baseline |
+| TC-014 | 5 | SAFETY/SAFFL | all_pd_same_category |
+
+**3. Cross-TFL agreement pairs expanded** from 2 to 7:
+- TC-011 ↔ TC-002 (safety N consistency)
+- TC-012 ↔ TC-001 (event count / N agreement)
+- TC-012 ↔ TC-003 (Cox PH and log-rank same population)
+- TC-013 ↔ TC-002 (waterfall N ≤ ITT N)
+- TC-014 ↔ TC-002 (PD listing N ≤ safety N)
+- Original TC-001 ↔ TC-003 and TC-001 ↔ TC-002 retained
+
+**4. Edge case expectations expanded** from 4 to 8 scenarios:
+- Added: zero_ae_in_soc, non_converged_cox, all_pd_same_category,
+  subject_with_no_post_baseline
+- Each with expected behavior and scoring (1.0 if met, 0.0–0.5 if not)
+
+**5. Updated `safety.py` DENOM_RULES** dict to include TC-011–014 so the
+Python code can resolve population expectations for all 7 Level 1 TCs.
+
+**6. Version bumped** safety.yaml from 0.1 to 0.2.
+
+### 🔍 Key Research Findings (June 2026)
+
+1. **PharmaSUG 2026 (May 31–Jun 3, Boston)** featured Paper AI-206: "An
+   Agentic AI Framework That Reads Statistical Analysis Plans and Generates
+   TFL Table of Contents" — directly implements what our benchmark tests.
+   Also AI-123 (ADaM spec validation via LLM/Bedrock) and AI-438 (MCP server
+   for AI-driven TFL workflow automation).
+
+2. **FDA-EMA Joint Guiding Principles of Good AI Practice in Drug Development**
+   released January 2026 — promotes risk-based, human-centric approach with
+   robust data governance. Our compliance rules align with these principles
+   by checking population filters, ADaM variable mapping, and CSR formatting.
+
+3. **CDISC AI Innovation Challenge** (2025) and **Analysis Results Standard
+   (ARS) + GenAI integration** — industry is moving toward automated TFL
+   generation from ADaM via AI agents. Key emerging metrics: time to first
+   draft per TFL, rework rate per 100 LOC, % code reused from standards,
+   first-pass reviewer approval rate. Our benchmark is the first independent
+   way to validate vendor claims.
+
+4. **Saama TLF Analyzer** (Oct 2025) claims 60-70% reduction in manual
+   analysis time, CSR drafts from 2-3 weeks to 3-4 days. Positioned as
+   "Luminary" in Everest Group's Innovation Watch 2026. No independent
+   benchmark exists — ours fills this gap.
+
+5. **BRIDGE and AgentClinic** benchmarks exist for clinical NLP/multilingual
+   LLM evaluation, but NONE test TFL programming correctness or statistical
+   accuracy across R/SAS/Python. Our benchmark remains unique in this space.
+
+6. **Industry metrics reported**: 80% automation in ADaM variable creation,
+   70% QC workload reduction, 60-75% dataset creation time reduction. These
+   are vendor-reported; our benchmark provides the first standardized
+   verification framework.
+
+### 📊 Updated Rule Coverage Summary
+
+| Test Case | Scorer | Tolerances | Schema | Ground Truth | Compliance | Safety |
+|---|---|---|---|---|---|---|
+| TC-001 | ✅ | ✅ | ✅ | ✅ R+Py | ✅ | ✅ |
+| TC-002 | ✅ | ✅ | ✅ | ✅ R+Py | ✅ | ✅ |
+| TC-003 | ✅ | ✅ | ✅ | ✅ R+Py | ✅ | ✅ |
+| TC-011 | ✅ | ✅ | ✅ | ✅ R+Py | ✅ NEW | ✅ NEW |
+| TC-012 | ✅ | ✅ | ✅ | ✅ R+Py | ✅ NEW | ✅ NEW |
+| TC-013 | ✅ | ✅ | ✅ | ✅ R+Py | ✅ NEW | ✅ NEW |
+| TC-014 | ✅ | ✅ | ✅ | ✅ R+Py | ✅ NEW | ✅ NEW |
+
+**All 7 Level 1 test cases now have COMPLETE scoring pipeline coverage:**
+scorer + tolerances + schema + ground truth (R+Python) + compliance + safety.
+
+### ✅ Validation
+
+- Both `compliance.yaml` and `safety.yaml` parse correctly (YAML valid)
+- `compliance.py` loads all 7 TCs' rules successfully
+- `safety.py` loads all 7 TCs' rules successfully, DENOM_RULES updated
+- Both modules import without errors
+- 8 edge case expectations (up from 4), 7 cross-TFL pairs (up from 2)
+
+### 🔮 Plan for Day 21+
+1. **Begin TC-015 through TC-018** — KM curve figure rendering, Exposure
+   table, Shift table, Time-to-event table (expand Level 1 library)
+2. **SAS reference implementations** for TC-011–014 (complete multilingual
+   trifecta — currently R+Python only)
+3. **Cross-language verification run** on shared data for all 7 Level 1 TCs
+4. **Efficiency scoring** — populate `efficiency.yaml` with time/LOC metrics
+   for TC-011–014
+5. **WG presentation prep** — scoring dimension findings for next WG meeting

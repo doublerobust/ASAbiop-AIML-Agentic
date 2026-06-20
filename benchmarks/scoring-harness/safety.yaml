@@ -3,12 +3,12 @@
 # Reference: benchmarks/safety-robustness.md
 
 meta:
-  version: "0.1"
-  updated: "2026-05-28"
+  version: "0.2"
+  updated: "2026-06-20"
 
-# ──────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────
 # N-count consistency rules by test case
-# ──────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────
 n_count_rules:
   TC-001:
     rules:
@@ -48,10 +48,82 @@ n_count_rules:
         desc: "Arm-level N sums must match overall N"
         critical: false
         auto_score: true
+  TC-011:
+    rules:
+      - id: N-001
+        desc: "n_subjects_with_ae must be ≤ n_total per arm"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "Summary row counts (Any AE, SAE, disc.) must be ≤ total safety N"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "Per-PT n ≤ per-arm N (no subject counted twice for same PT)"
+        critical: true
+        auto_score: true
+      - id: N-004
+        desc: "Arm-level N must match between summary rows and detail rows"
+        critical: false
+        auto_score: true
+  TC-012:
+    rules:
+      - id: N-001
+        desc: "n_events per subgroup must be ≤ n_total per subgroup per arm"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "Subgroup N must sum to overall N (no subject lost in subgrouping)"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "Overall HR computed from full ITT population (not subgroup subset)"
+        critical: true
+        auto_score: true
+  TC-013:
+    rules:
+      - id: N-001
+        desc: "n_subjects in response categories (CR+PR+SD+PD) must equal total evaluable N"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "ORR (CR+PR) and DCR (CR+PR+SD) counts must be ≤ total N"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "Subjects with missing baseline or no post-baseline excluded from waterfall"
+        critical: true
+        auto_score: true
+      - id: N-004
+        desc: "Per-arm N must sum to overall N"
+        critical: false
+        auto_score: true
+  TC-014:
+    rules:
+      - id: N-001
+        desc: "n_subjects_with_pd must be ≤ n_total per arm"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "n_total_deviations ≥ n_subjects_with_pd (subjects can have multiple PDs)"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "Category counts must sum to n_total_deviations"
+        critical: true
+        auto_score: true
+      - id: N-004
+        desc: "Severity counts must sum to n_total_deviations"
+        critical: true
+        auto_score: true
+      - id: N-005
+        desc: "Arm-level PD counts must sum to overall PD count"
+        critical: false
+        auto_score: true
 
-# ──────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────
 # Denominator / population rules per test case
-# ──────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────
 denominator_rules:
   TC-001:
     expected_population: ITT
@@ -65,10 +137,26 @@ denominator_rules:
     expected_population: ITT
     flag: ITTFL
     critical: true
+  TC-011:
+    expected_population: SAFETY
+    flag: SAFFL
+    critical: true
+  TC-012:
+    expected_population: ITT
+    flag: ITTFL
+    critical: true
+  TC-013:
+    expected_population: ITT
+    flag: ITTFL
+    critical: true
+  TC-014:
+    expected_population: SAFETY
+    flag: SAFFL
+    critical: true
 
-# ──────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────
 # Cross-TFL agreement pairs that should be checked
-# ──────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────
 cross_tfl_pairs:
   - source: TC-001
     target: TC-003
@@ -78,10 +166,30 @@ cross_tfl_pairs:
     target: TC-002
     shared_fields: [n_total]
     description: "Total N must be consistent (TC-001 ITT ≤ TC-002 Safety)"
+  - source: TC-011
+    target: TC-002
+    shared_fields: [n_total]
+    description: "Safety population N must be consistent between AE table and demographics table"
+  - source: TC-012
+    target: TC-001
+    shared_fields: [n_events, n_total]
+    description: "Event count and total N must agree between forest plot HR and KM median"
+  - source: TC-012
+    target: TC-003
+    shared_fields: [n_events, n_total]
+    description: "Overall HR from Cox PH and log-rank test must use same ITT population"
+  - source: TC-013
+    target: TC-002
+    shared_fields: [n_total]
+    description: "Waterfall plot N must be ≤ ITT N from demographics (evaluable subset)"
+  - source: TC-014
+    target: TC-002
+    shared_fields: [n_total]
+    description: "PD listing N must be ≤ safety population N from demographics"
 
-# ──────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────
 # Edge case resilience expectations
-# ──────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────
 edge_case_expectations:
   non_estimable_median:
     expected_behavior: "flag or return NA"
@@ -99,10 +207,26 @@ edge_case_expectations:
     expected_behavior: "flag as non-comparable"
     score_if_met: 1.0
     score_if_not: 0.5
+  zero_ae_in_soc:
+    expected_behavior: "omit SOC or show zero row with dash"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  non_converged_cox:
+    expected_behavior: "flag non-convergence, report HR as NA"
+    score_if_met: 1.0
+    score_if_not: 0.0
+  all_pd_same_category:
+    expected_behavior: "listing and summary still correct with single category"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  subject_with_no_post_baseline:
+    expected_behavior: "exclude from waterfall, include in exclusions count"
+    score_if_met: 1.0
+    score_if_not: 0.0
 
-# ──────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────
 # Scoring weights for composite safety score
-# ──────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────
 scoring_weights:
   n_count_consistency: 0.30
   denominator_correctness: 0.35
