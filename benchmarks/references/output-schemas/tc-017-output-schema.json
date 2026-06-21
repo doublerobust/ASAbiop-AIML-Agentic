@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-017: Laboratory Shift Table Output Schema",
+  "type": "object",
+  "required": ["tc_id", "tc_name", "metadata", "shift_overall", "shift_experimental", "shift_control"],
+  "properties": {
+    "tc_id": { "type": "string", "const": "TC-017" },
+    "tc_name": { "type": "string" },
+    "metadata": {
+      "type": "object",
+      "required": ["n_total", "n_experimental", "n_control", "population", "lab_test", "lab_unit", "categories", "thresholds"],
+      "properties": {
+        "n_total": { "type": "integer" },
+        "n_experimental": { "type": "integer" },
+        "n_control": { "type": "integer" },
+        "population": { "type": "string" },
+        "lab_test": { "type": "string" },
+        "lab_unit": { "type": "string" },
+        "categories": { "type": "array", "items": { "type": "string" }, "minItems": 3, "maxItems": 3 },
+        "thresholds": {
+          "type": "object",
+          "properties": {
+            "low": { "type": "number" },
+            "high": { "type": "number" }
+          }
+        },
+        "n_post_baseline_visits": { "type": "integer" }
+      }
+    },
+    "shift_overall": { "$ref": "#/definitions/shift_block" },
+    "shift_experimental": { "$ref": "#/definitions/shift_block" },
+    "shift_control": { "$ref": "#/definitions/shift_block" }
+  },
+  "definitions": {
+    "shift_block": {
+      "type": "object",
+      "required": ["counts", "percentages", "n_total", "n_stable_normal", "n_low_to_normal", "n_normal_to_low", "n_normal_to_high", "n_high_to_normal"],
+      "properties": {
+        "counts": {
+          "type": "object",
+          "description": "3x3 matrix: Baseline category → Post-baseline category → count",
+          "properties": {
+            "LOW": { "type": "object", "properties": { "LOW": {"type":"integer"}, "NORMAL": {"type":"integer"}, "HIGH": {"type":"integer"} } },
+            "NORMAL": { "type": "object", "properties": { "LOW": {"type":"integer"}, "NORMAL": {"type":"integer"}, "HIGH": {"type":"integer"} } },
+            "HIGH": { "type": "object", "properties": { "LOW": {"type":"integer"}, "NORMAL": {"type":"integer"}, "HIGH": {"type":"integer"} } }
+          }
+        },
+        "percentages": {
+          "type": "object",
+          "properties": {
+            "LOW": { "type": "object", "properties": { "LOW": {"type":"number"}, "NORMAL": {"type":"number"}, "HIGH": {"type":"number"} } },
+            "NORMAL": { "type": "object", "properties": { "LOW": {"type":"number"}, "NORMAL": {"type":"number"}, "HIGH": {"type":"number"} } },
+            "HIGH": { "type": "object", "properties": { "LOW": {"type":"number"}, "NORMAL": {"type":"number"}, "HIGH": {"type":"number"} } }
+          }
+        },
+        "n_total": { "type": "integer" },
+        "n_stable_normal": { "type": "integer" },
+        "n_low_to_normal": { "type": "integer" },
+        "n_normal_to_low": { "type": "integer" },
+        "n_normal_to_high": { "type": "integer" },
+        "n_high_to_normal": { "type": "integer" }
+      }
+    }
+  }
+}

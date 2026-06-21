@@ -158,3 +158,129 @@ TC-014:
     n_per_arm:
       absolute: 0       # exact match
       weight: 0.10
+
+TC-015:
+  description: "KM Curve with Risk Table"
+  tolerances:
+    # Overall median survival
+    overall_median:
+      absolute: 0.1
+      relative: 0.01
+      weight: 0.15
+    # Log-rank test
+    logrank_chisq:
+      absolute: 0.05
+      relative: 0.01
+      weight: 0.15
+    logrank_p:
+      absolute: 0.005
+      relative: 0.01
+      weight: 0.10
+    # Survival probabilities at time points (averaged)
+    survival_probs:
+      absolute: 0.01    # ±0.01 on survival probability
+      relative: 0.02
+      weight: 0.25
+    # Numbers at risk (exact match required)
+    n_at_risk:
+      absolute: 2       # allow ±2 due to censoring order differences
+      weight: 0.20
+    # Metadata
+    n_total:
+      absolute: 0
+      weight: 0.05
+    events_total:
+      absolute: 0
+      weight: 0.10
+
+TC-016:
+  description: "Exposure Summary Table"
+  tolerances:
+    # Treatment duration stats (mean, sd, median per arm)
+    duration_stats:
+      absolute: 0.5     # ±0.5 weeks
+      relative: 0.02
+      weight: 0.25
+    # Cumulative dose stats
+    cumdose_stats:
+      absolute: 50      # ±50 mg cumulative
+      relative: 0.02
+      weight: 0.20
+    # Dose intensity stats
+    doseint_stats:
+      absolute: 1.0     # ±1 percentage point
+      relative: 0.02
+      weight: 0.25
+    # Dose reduction counts
+    dose_reduction_n:
+      absolute: 2       # ±2 subjects
+      weight: 0.15
+    dose_reduction_pct:
+      absolute: 1.0
+      weight: 0.10
+    # N per arm
+    n_per_arm:
+      absolute: 0
+      weight: 0.05
+
+TC-017:
+  description: "Laboratory Shift Table"
+  tolerances:
+    # Shift cell counts (3x3 matrix: exact match)
+    shift_counts:
+      absolute: 2       # ±2 per cell due to borderline values
+      weight: 0.40
+    # Summary shift counts
+    summary_counts:
+      absolute: 2
+      weight: 0.25
+    # Percentages
+    percentages:
+      absolute: 1.0     # ±1 percentage point
+      relative: 0.05
+      weight: 0.20
+    # N per arm
+    n_per_arm:
+      absolute: 0
+      weight: 0.10
+    # Overall N
+    n_total:
+      absolute: 0
+      weight: 0.05
+
+TC-018:
+  description: "Change from Baseline Table"
+  tolerances:
+    # Mean change from baseline per visit per arm
+    mean_chg:
+      absolute: 0.5     # ±0.5 mm
+      relative: 0.05
+      weight: 0.25
+    # SD of change
+    sd_chg:
+      absolute: 0.5
+      relative: 0.05
+      weight: 0.15
+    # Median change
+    median_chg:
+      absolute: 0.5
+      relative: 0.05
+      weight: 0.10
+    # CI bounds
+    ci_bounds:
+      absolute: 1.0
+      relative: 0.05
+      weight: 0.15
+    # P-values per visit
+    p_values:
+      absolute: 0.01
+      relative: 0.05
+      weight: 0.20
+    # N per visit per arm
+    n_per_visit:
+      absolute: 0       # exact match
+      weight: 0.10
+    # N per arm
+    n_per_arm:
+      absolute: 0
+      weight: 0.05

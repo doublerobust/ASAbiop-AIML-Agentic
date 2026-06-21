@@ -1138,6 +1138,137 @@ parametrizable_params: [seed, n_subjects, pd_rate, severity_distribution]
 
 ---
 
+## 5. Level 1 Test Cases — Expansion II (TC-015 through TC-018)
+
+> **Added:** 2026-06-21 (Day 21). Four new Level 1 test cases expanding TFL type
+> coverage to include KM curve figures, exposure tables, lab shift tables, and
+> longitudinal change-from-baseline tables.
+
+### TC-015: Kaplan-Meier Curve with Risk Table
+
+```yaml
+id: TC-015
+name: KM Curve with Risk Table
+level: 1
+domain: Efficacy
+tfl_type: Figure
+description: |
+  Generate a Kaplan-Meier survival curve with 95% CI and risk table at
+  specified time points. The agent must produce survival probabilities,
+  confidence intervals, and numbers at risk at each time point, for each
+  treatment arm.
+input_data: ADTTE (time-to-event)
+output_format: JSON with curve coordinates + risk table
+params:
+  seed: random seed for data generation
+  n_subjects: number of subjects (default 200)
+  time_points: [0, 3, 6, 9, 12, 15, 18, 21, 24, 30]
+ground_truth_method: Python + R (cross-validated)
+scoring:
+  survival_prob_tolerance: 0.01 absolute
+  n_at_risk_tolerance: ±2 (censoring order)
+  logrank_tolerance: 0.05 chi-square
+  weight: curve 50%, risk table 20%, log-rank 20%, median 10%
+estimated_human_time: 10 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, time_points, event_rate, censoring_rate]
+```
+
+### TC-016: Exposure Summary Table
+
+```yaml
+id: TC-016
+name: Exposure Summary Table
+level: 1
+domain: Safety
+tfl_type: Table
+description: |
+  Summarize treatment exposure metrics per arm: treatment duration (weeks),
+  cumulative dose (mg), dose intensity (%), and dose reduction rates.
+  Includes mean, SD, median, Q1, Q3, min, max for continuous; n(%) for
+  categorical.
+input_data: Custom exposure dataset (ADCM-derived)
+output_format: JSON with summary stats per arm per metric
+params:
+  seed: random seed
+  n_subjects: default 200
+  duration_mean_exp: 48 weeks
+  duration_mean_ctl: 28 weeks
+ground_truth_method: Python + R (cross-validated)
+scoring:
+  continuous_tolerance: ±0.5 for duration, ±50 for cumdose, ±1% for intensity
+  categorical_tolerance: ±2 subjects for dose reduction counts
+  weight: duration 25%, cumdose 20%, intensity 25%, reduction 25%, N 5%
+estimated_human_time: 15 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, duration_means, adherence_range, dose_reduction_rates]
+```
+
+### TC-017: Laboratory Shift Table
+
+```yaml
+id: TC-017
+name: Laboratory Shift Table
+level: 1
+domain: Safety
+tfl_type: Table
+description: |
+  Generate a 3×3 shift table showing baseline lab category (LOW/NORMAL/HIGH)
+  vs worst post-baseline lab category. Includes overall, per-arm, and by-visit
+  summaries. Uses Hemoglobin as the reference lab test.
+input_data: ADLB (lab data — baseline + 3 post-baseline visits)
+output_format: JSON with 3×3 shift counts + percentages per block
+params:
+  seed: random seed
+  n_subjects: default 200
+  lab_test: Hemoglobin (g/L)
+  thresholds: LOW < 120, HIGH > 160
+  n_post_baseline: 3 visits
+ground_truth_method: Python + R (cross-validated)
+scoring:
+  shift_count_tolerance: ±2 per cell (borderline value classification)
+  summary_count_tolerance: ±2
+  percentage_tolerance: ±1 pp
+  weight: shift cells 40%, summary 25%, percentages 20%, N 15%
+estimated_human_time: 10 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, lab_test, thresholds, treatment_effect]
+```
+
+### TC-018: Change from Baseline Table
+
+```yaml
+id: TC-018
+name: Change from Baseline Table
+level: 1
+domain: Efficacy
+tfl_type: Table
+description: |
+  Generate a longitudinal change-from-baseline table at each visit (baseline,
+  Week 6, 12, 18, 24). Per arm per visit: n, mean, SD, median change, SE,
+  95% CI, and between-arm t-test p-value.
+input_data: Longitudinal efficacy (tumor size, mm)
+output_format: JSON with visit-wise summaries + p-values
+params:
+  seed: random seed
+  n_subjects: default 200
+  visits: [BASELINE, WEEK_6, WEEK_12, WEEK_18, WEEK_24]
+  endpoint: Tumor Size (mm)
+  treatment_effect: -0.8 mm/week (exp) vs -0.1 mm/week (ctl)
+ground_truth_method: Python + R (cross-validated)
+scoring:
+  mean_chg_tolerance: ±0.5 mm
+  sd_chg_tolerance: ±0.5 mm
+  ci_tolerance: ±1.0 mm
+  p_value_tolerance: ±0.01
+  weight: mean 25%, sd 15%, median 10%, CI 15%, p-value 20%, N 15%
+estimated_human_time: 15 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, visits, endpoint, treatment_effect_per_week, baseline_mean]
+```
+
+---
+
 ## 5. Level 2 Test Cases (Detailed)
 
 ### TC-004: SAP Section Drafting
@@ -1451,6 +1582,10 @@ parametrizable_params: [trial_phase, therapeutic_area, n_endpoints]
 | TC-012: Forest Plot HRs | 1 | Efficacy | Cox PH, subgroup analysis | Auto (numerical) | R+Py ✅ | 10 | 15 min |
 | TC-013: Waterfall Plot | 1 | Efficacy (onc.) | RECIST 1.1 categorization | Auto (tabular) | R+Py ✅ | 10 | 10 min |
 | TC-014: PD Listing | 1 | Reporting | Data listing, categorization | Auto (listing) | R+Py ✅ | 10 | 15 min |
+| TC-015: KM Curve + Risk Table | 1 | Efficacy | KM curve, risk sets, CI | Auto (curve+counts) | R+Py ✅ | 10 | 10 min |
+| TC-016: Exposure Summary | 1 | Safety | Descriptive, dose metrics | Auto (tabular) | R+Py ✅ | 8 | 15 min |
+| TC-017: Lab Shift Table | 1 | Safety | Categorical shift, 3×3 | Auto (tabular) | R+Py ✅ | 8 | 10 min |
+| TC-018: Change from Baseline | 1 | Efficacy | Longitudinal, CFB, t-test | Auto (tabular) | R+Py ✅ | 10 | 15 min |
 | TC-004: SAP Section | 2 | Design | GS design, log-rank, estimands | Checklist | — | 10 | 120 min |
 | TC-005: TFL QC Review | 2 | Reporting | QC, discrepancy detection | Partial auto | — | 15 | 30 min |
 | TC-006: Sample Size Re-Est. | 2 | Design | Conditional power, SSR | Auto + rubric | — | 10 | 45 min |
@@ -1460,12 +1595,12 @@ parametrizable_params: [trial_phase, therapeutic_area, n_endpoints]
 | TC-010: CSR Section | 3 | Reporting | CSR writing, ICH E3 | Expert rubric | — | 6 | 480 min |
 
 **Coverage Summary:**
-- **Domains:** Efficacy (3), Design (2), Reporting (3), Safety (2), Regulatory (1), Cross-cutting (1)
-- **Levels:** Level 1 (7), Level 2 (3), Level 3 (4)
-- **Auto-scorable:** 7 (Level 1) + 1 partial (Level 2)
+- **Domains:** Efficacy (5), Design (2), Reporting (4), Safety (4), Regulatory (1), Cross-cutting (1)
+- **Levels:** Level 1 (11), Level 2 (3), Level 3 (4)
+- **Auto-scorable:** 11 (Level 1) + 1 partial (Level 2)
 - **Expert-review needed:** 3 (Level 2) + 4 (Level 3)
-- **Ground truth implemented:** 7 (TC-001 through TC-003, TC-011 through TC-014)
-- **Total parametrizable variants:** 133 across all test cases
+- **Ground truth implemented:** 11 (TC-001 through TC-003, TC-011 through TC-018)
+- **Total parametrizable variants:** 179 across all test cases
 
 ---
 

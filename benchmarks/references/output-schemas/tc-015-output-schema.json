@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-015: KM Curve with Risk Table Output Schema",
+  "type": "object",
+  "required": ["tc_id", "tc_name", "metadata", "overall_median", "logrank", "curve_experimental", "curve_control"],
+  "properties": {
+    "tc_id": { "type": "string", "const": "TC-015" },
+    "tc_name": { "type": "string" },
+    "metadata": {
+      "type": "object",
+      "required": ["n_total", "n_experimental", "n_control", "events_experimental", "events_control", "population", "time_unit", "time_points"],
+      "properties": {
+        "n_total": { "type": "integer" },
+        "n_experimental": { "type": "integer" },
+        "n_control": { "type": "integer" },
+        "events_experimental": { "type": "integer" },
+        "events_control": { "type": "integer" },
+        "population": { "type": "string" },
+        "time_unit": { "type": "string" },
+        "time_points": { "type": "array", "items": { "type": "number" } }
+      }
+    },
+    "overall_median": {
+      "type": "object",
+      "required": ["median", "ci_lower", "ci_upper"],
+      "properties": {
+        "median": { "type": ["number", "null"] },
+        "ci_lower": { "type": ["number", "null"] },
+        "ci_upper": { "type": ["number", "null"] }
+      }
+    },
+    "logrank": {
+      "type": "object",
+      "required": ["chisq", "df", "p_value"],
+      "properties": {
+        "chisq": { "type": "number" },
+        "df": { "type": "integer" },
+        "p_value": { "type": "number" }
+      }
+    },
+    "curve_experimental": { "$ref": "#/definitions/curve" },
+    "curve_control": { "$ref": "#/definitions/curve" }
+  },
+  "definitions": {
+    "curve": {
+      "type": "object",
+      "required": ["time_points", "survival", "ci_lower", "ci_upper", "n_at_risk", "n_events", "n_censored"],
+      "properties": {
+        "time_points": { "type": "array", "items": { "type": "number" } },
+        "survival": { "type": "array", "items": { "type": "number" } },
+        "ci_lower": { "type": "array", "items": { "type": "number" } },
+        "ci_upper": { "type": "array", "items": { "type": "number" } },
+        "n_at_risk": { "type": "array", "items": { "type": "integer" } },
+        "n_events": { "type": "array", "items": { "type": "integer" } },
+        "n_censored": { "type": "array", "items": { "type": "integer" } }
+      }
+    }
+  }
+}

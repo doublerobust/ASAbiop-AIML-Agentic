@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-018: Change from Baseline Table Output Schema",
+  "type": "object",
+  "required": ["tc_id", "tc_name", "metadata", "visits"],
+  "properties": {
+    "tc_id": { "type": "string", "const": "TC-018" },
+    "tc_name": { "type": "string" },
+    "metadata": {
+      "type": "object",
+      "required": ["n_total", "n_experimental", "n_control", "population", "visits", "endpoint", "endpoint_unit"],
+      "properties": {
+        "n_total": { "type": "integer" },
+        "n_experimental": { "type": "integer" },
+        "n_control": { "type": "integer" },
+        "population": { "type": "string" },
+        "visits": { "type": "array", "items": { "type": "string" } },
+        "endpoint": { "type": "string" },
+        "endpoint_unit": { "type": "string" }
+      }
+    },
+    "visits": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["visit", "experimental", "control", "p_value"],
+        "properties": {
+          "visit": { "type": "string" },
+          "experimental": { "$ref": "#/definitions/visit_summary" },
+          "control": { "$ref": "#/definitions/visit_summary" },
+          "p_value": { "type": ["number", "null"] }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "visit_summary": {
+      "type": "object",
+      "required": ["n", "mean_chg", "sd_chg", "median_chg", "se_chg", "ci_lower", "ci_upper", "mean_aval", "sd_aval"],
+      "properties": {
+        "n": { "type": "integer" },
+        "mean_chg": { "type": "number" },
+        "sd_chg": { "type": "number" },
+        "median_chg": { "type": "number" },
+        "se_chg": { "type": "number" },
+        "ci_lower": { "type": "number" },
+        "ci_upper": { "type": "number" },
+        "mean_aval": { "type": "number" },
+        "sd_aval": { "type": "number" }
+      }
+    }
+  }
+}

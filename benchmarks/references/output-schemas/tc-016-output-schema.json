@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-016: Exposure Summary Table Output Schema",
+  "type": "object",
+  "required": ["tc_id", "tc_name", "metadata", "treatment_duration", "cumulative_dose", "dose_intensity", "dose_reduction"],
+  "properties": {
+    "tc_id": { "type": "string", "const": "TC-016" },
+    "tc_name": { "type": "string" },
+    "metadata": {
+      "type": "object",
+      "required": ["n_total", "n_experimental", "n_control", "population", "duration_unit", "dose_unit"],
+      "properties": {
+        "n_total": { "type": "integer" },
+        "n_experimental": { "type": "integer" },
+        "n_control": { "type": "integer" },
+        "population": { "type": "string" },
+        "duration_unit": { "type": "string" },
+        "dose_unit": { "type": "string" }
+      }
+    },
+    "treatment_duration": { "$ref": "#/definitions/arm_pair_cont" },
+    "cumulative_dose": { "$ref": "#/definitions/arm_pair_cont" },
+    "dose_intensity": { "$ref": "#/definitions/arm_pair_cont" },
+    "dose_reduction": { "$ref": "#/definitions/arm_pair_cat" }
+  },
+  "definitions": {
+    "summary_cont": {
+      "type": "object",
+      "required": ["n", "mean", "sd", "median", "min", "max", "q1", "q3"],
+      "properties": {
+        "n": { "type": "integer" },
+        "mean": { "type": "number" },
+        "sd": { "type": "number" },
+        "median": { "type": "number" },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "q1": { "type": "number" },
+        "q3": { "type": "number" }
+      }
+    },
+    "summary_cat": {
+      "type": "object",
+      "required": ["n", "n_yes", "n_no", "pct_yes"],
+      "properties": {
+        "n": { "type": "integer" },
+        "n_yes": { "type": "integer" },
+        "n_no": { "type": "integer" },
+        "pct_yes": { "type": "number" }
+      }
+    },
+    "arm_pair_cont": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/definitions/summary_cont" },
+        "control": { "$ref": "#/definitions/summary_cont" }
+      }
+    },
+    "arm_pair_cat": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/definitions/summary_cat" },
+        "control": { "$ref": "#/definitions/summary_cat" }
+      }
+    }
+  }
+}

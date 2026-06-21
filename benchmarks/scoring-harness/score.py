@@ -755,6 +755,352 @@ def score_tc014(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
     }
 
 
+# TC-015: KM Curve with Risk Table
+def score_tc015(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-015 (KM Curve with Risk Table).
+
+    Compares survival probabilities, n_at_risk, log-rank, and median.
+    """
+    tol_spec = tolerances.get("TC-015", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    # Overall median
+    gt_med = ground_truth.get("overall_median", {})
+    ag_med = agent_output.get("overall_median", {})
+    med_w = tol_spec.get("overall_median", {}).get("weight", 0.15)
+    med_abs = tol_spec.get("overall_median", {}).get("absolute", 0.1)
+    r = compare_numeric(ag_med.get("median"), gt_med.get("median"), {"absolute": med_abs})
+    component_scores["overall_median"] = r
+    weighted_sum += r["score"] * med_w
+    total_weight += med_w
+
+    # Log-rank
+    gt_lr = ground_truth.get("logrank", {})
+    ag_lr = agent_output.get("logrank", {})
+    lr_w = tol_spec.get("logrank_chisq", {}).get("weight", 0.15)
+    lr_abs = tol_spec.get("logrank_chisq", {}).get("absolute", 0.05)
+    r = compare_numeric(ag_lr.get("chisq"), gt_lr.get("chisq"), {"absolute": lr_abs})
+    component_scores["logrank_chisq"] = r
+    weighted_sum += r["score"] * lr_w
+    total_weight += lr_w
+
+    lr_p_w = tol_spec.get("logrank_p", {}).get("weight", 0.10)
+    lr_p_abs = tol_spec.get("logrank_p", {}).get("absolute", 0.005)
+    r = compare_numeric(ag_lr.get("p_value"), gt_lr.get("p_value"), {"absolute": lr_p_abs})
+    component_scores["logrank_p"] = r
+    weighted_sum += r["score"] * lr_p_w
+    total_weight += lr_p_w
+
+    # Survival probabilities + n_at_risk per arm
+    surv_w = tol_spec.get("survival_probs", {}).get("weight", 0.25) / 2
+    surv_abs = tol_spec.get("survival_probs", {}).get("absolute", 0.01)
+    nar_w = tol_spec.get("n_at_risk", {}).get("weight", 0.20) / 2
+    nar_abs = tol_spec.get("n_at_risk", {}).get("absolute", 2)
+
+    for arm_key, label_prefix in [("curve_experimental", "exp_"), ("curve_control", "ctl_")]:
+        gt_curve = ground_truth.get(arm_key, {})
+        ag_curve = agent_output.get(arm_key, {})
+        gt_surv = gt_curve.get("survival", [])
+        ag_surv = ag_curve.get("survival", [])
+        gt_nar = gt_curve.get("n_at_risk", [])
+        ag_nar = ag_curve.get("n_at_risk", [])
+
+        # Average survival probability score across time points
+        n_tp = len(gt_surv)
+        if n_tp > 0:
+            arm_surv_sum = 0.0
+            for i in range(min(len(ag_surv), n_tp)):
+                r = compare_numeric(ag_surv[i], gt_surv[i], {"absolute": surv_abs})
+                arm_surv_sum += r["score"]
+            avg_arm = arm_surv_sum / n_tp
+            component_scores[f"{label_prefix}survival"] = {"score": round(avg_arm, 4), "pass": avg_arm >= 0.95}
+            weighted_sum += avg_arm * surv_w
+            total_weight += surv_w
+
+        # Average n_at_risk score
+        if len(gt_nar) > 0:
+            arm_nar_sum = 0.0
+            for i in range(min(len(ag_nar), len(gt_nar))):
+                _tol = nar_abs; _a = ag_nar[i]; _b = gt_nar[i]; r = {"score": 1.0 if (_a is None and _b is None) or (_a is not None and _b is not None and abs(int(_a)-int(_b)) <= _tol) else 0.0, "pass": (_a is None and _b is None) or (_a is not None and _b is not None and abs(int(_a)-int(_b)) <= _tol), "diff": abs(int(_a)-int(_b)) if _a is not None and _b is not None else None}
+                arm_nar_sum += r["score"]
+            avg_nar = arm_nar_sum / len(gt_nar)
+            component_scores[f"{label_prefix}n_at_risk"] = {"score": round(avg_nar, 4), "pass": avg_nar >= 0.95}
+            weighted_sum += avg_nar * nar_w
+            total_weight += nar_w
+
+    # Metadata: n_total and events
+    gt_meta = ground_truth.get("metadata", {})
+    ag_meta = agent_output.get("metadata", {})
+    n_w = tol_spec.get("n_total", {}).get("weight", 0.05)
+    r = compare_count(ag_meta.get("n_total"), gt_meta.get("n_total"))
+    component_scores["n_total"] = r
+    weighted_sum += r["score"] * n_w
+    total_weight += n_w
+
+    ev_w = tol_spec.get("events_total", {}).get("weight", 0.10)
+    gt_events = gt_meta.get("events_experimental", 0) + gt_meta.get("events_control", 0)
+    ag_events = ag_meta.get("events_experimental", 0) + ag_meta.get("events_control", 0)
+    r = compare_count(ag_events, gt_events)
+    component_scores["events_total"] = r
+    weighted_sum += r["score"] * ev_w
+    total_weight += ev_w
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+    return {
+        "test_case_id": "TC-015",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# TC-016: Exposure Summary Table
+def score_tc016(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-016 (Exposure Summary Table).
+
+    Compares continuous summary stats for duration, dose, intensity; categorical for dose reduction.
+    """
+    tol_spec = tolerances.get("TC-016", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    cont_fields = [
+        ("treatment_duration", "duration_stats", ["mean", "sd", "median", "min", "max"]),
+        ("cumulative_dose", "cumdose_stats", ["mean", "sd", "median"]),
+        ("dose_intensity", "doseint_stats", ["mean", "sd", "median"]),
+    ]
+
+    for tc_field, tol_key, stat_keys in cont_fields:
+        gt_block = ground_truth.get(tc_field, {})
+        ag_block = agent_output.get(tc_field, {})
+        field_w = tol_spec.get(tol_key, {}).get("weight", 0.20) / 2  # per arm
+        field_abs = tol_spec.get(tol_key, {}).get("absolute", 0.5)
+
+        for arm in ["experimental", "control"]:
+            gt_arm = gt_block.get(arm, {})
+            ag_arm = ag_block.get(arm, {})
+            for sk in stat_keys:
+                r = compare_numeric(ag_arm.get(sk), gt_arm.get(sk), {"absolute": field_abs})
+                label = f"{tc_field}_{arm}_{sk}"
+                # Normalize weight per stat per arm
+                per_w = field_w / len(stat_keys)
+                component_scores[label] = r
+                weighted_sum += r["score"] * per_w
+                total_weight += per_w
+
+    # Dose reduction (categorical)
+    gt_dr = ground_truth.get("dose_reduction", {})
+    ag_dr = agent_output.get("dose_reduction", {})
+    dr_n_w = tol_spec.get("dose_reduction_n", {}).get("weight", 0.15) / 2
+    dr_n_abs = tol_spec.get("dose_reduction_n", {}).get("absolute", 2)
+    dr_pct_w = tol_spec.get("dose_reduction_pct", {}).get("weight", 0.10) / 2
+    dr_pct_abs = tol_spec.get("dose_reduction_pct", {}).get("absolute", 1.0)
+
+    for arm in ["experimental", "control"]:
+        gt_arm = gt_dr.get(arm, {})
+        ag_arm = ag_dr.get(arm, {})
+        _tol = dr_n_abs; _a = ag_arm.get("n_yes"); _b = gt_arm.get("n_yes"); r = {"score": 1.0 if (_a is None and _b is None) or (_a is not None and _b is not None and abs(int(_a)-int(_b)) <= _tol) else 0.0, "pass": (_a is None and _b is None) or (_a is not None and _b is not None and abs(int(_a)-int(_b)) <= _tol), "diff": abs(int(_a)-int(_b)) if _a is not None and _b is not None else None}
+        component_scores[f"dose_reduction_{arm}_n"] = r
+        weighted_sum += r["score"] * dr_n_w
+        total_weight += dr_n_w
+
+        r = compare_numeric(ag_arm.get("pct_yes"), gt_arm.get("pct_yes"), {"absolute": dr_pct_abs})
+        component_scores[f"dose_reduction_{arm}_pct"] = r
+        weighted_sum += r["score"] * dr_pct_w
+        total_weight += dr_pct_w
+
+    # N per arm
+    gt_meta = ground_truth.get("metadata", {})
+    ag_meta = agent_output.get("metadata", {})
+    n_w = tol_spec.get("n_per_arm", {}).get("weight", 0.05) / 2
+    for field, label in [("n_experimental", "n_exp"), ("n_control", "n_ctl")]:
+        r = compare_count(ag_meta.get(field), gt_meta.get(field))
+        component_scores[label] = r
+        weighted_sum += r["score"] * n_w
+        total_weight += n_w
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+    return {
+        "test_case_id": "TC-016",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# TC-017: Laboratory Shift Table
+def score_tc017(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-017 (Lab Shift Table).
+
+    Compares 3×3 shift cell counts and summary counts across overall/exp/control.
+    """
+    tol_spec = tolerances.get("TC-017", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    cats = ["LOW", "NORMAL", "HIGH"]
+    shift_keys = ["shift_overall", "shift_experimental", "shift_control"]
+
+    # Shift counts (3x3 per block, 3 blocks)
+    sc_w = tol_spec.get("shift_counts", {}).get("weight", 0.40) / (3 * 9)  # per cell per block
+    sc_abs = tol_spec.get("shift_counts", {}).get("absolute", 2)
+
+    for sk in shift_keys:
+        gt_block = ground_truth.get(sk, {})
+        ag_block = agent_output.get(sk, {})
+        gt_counts = gt_block.get("counts", {})
+        ag_counts = ag_block.get("counts", {})
+
+        for bl in cats:
+            for pb in cats:
+                gt_v = gt_counts.get(bl, {}).get(pb)
+                ag_v = ag_counts.get(bl, {}).get(pb)
+                _tol = sc_abs; _a = ag_v; _b = gt_v; r = {"score": 1.0 if (_a is None and _b is None) or (_a is not None and _b is not None and abs(int(_a)-int(_b)) <= _tol) else 0.0, "pass": (_a is None and _b is None) or (_a is not None and _b is not None and abs(int(_a)-int(_b)) <= _tol), "diff": abs(int(_a)-int(_b)) if _a is not None and _b is not None else None}
+                label = f"{sk}_{bl}_to_{pb}"
+                component_scores[label] = r
+                weighted_sum += r["score"] * sc_w
+                total_weight += sc_w
+
+    # Summary counts
+    summary_fields = ["n_stable_normal", "n_low_to_normal", "n_normal_to_low", "n_normal_to_high", "n_high_to_normal"]
+    su_w = tol_spec.get("summary_counts", {}).get("weight", 0.25) / (3 * len(summary_fields))
+    su_abs = tol_spec.get("summary_counts", {}).get("absolute", 2)
+
+    for sk in shift_keys:
+        gt_block = ground_truth.get(sk, {})
+        ag_block = agent_output.get(sk, {})
+        for sf in summary_fields:
+            _tol = su_abs; _a = ag_block.get(sf); _b = gt_block.get(sf); r = {"score": 1.0 if (_a is None and _b is None) or (_a is not None and _b is not None and abs(int(_a)-int(_b)) <= _tol) else 0.0, "pass": (_a is None and _b is None) or (_a is not None and _b is not None and abs(int(_a)-int(_b)) <= _tol), "diff": abs(int(_a)-int(_b)) if _a is not None and _b is not None else None}
+            label = f"{sk}_{sf}"
+            component_scores[label] = r
+            weighted_sum += r["score"] * su_w
+            total_weight += su_w
+
+    # N per arm
+    gt_meta = ground_truth.get("metadata", {})
+    ag_meta = agent_output.get("metadata", {})
+    n_w = tol_spec.get("n_per_arm", {}).get("weight", 0.10) / 2
+    for field, label in [("n_experimental", "n_exp"), ("n_control", "n_ctl")]:
+        r = compare_count(ag_meta.get(field), gt_meta.get(field))
+        component_scores[label] = r
+        weighted_sum += r["score"] * n_w
+        total_weight += n_w
+
+    n_total_w = tol_spec.get("n_total", {}).get("weight", 0.05)
+    r = compare_count(ag_meta.get("n_total"), gt_meta.get("n_total"))
+    component_scores["n_total"] = r
+    weighted_sum += r["score"] * n_total_w
+    total_weight += n_total_w
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+    return {
+        "test_case_id": "TC-017",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# TC-018: Change from Baseline Table
+def score_tc018(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-018 (Change from Baseline Table).
+
+    Compares visit-wise mean/sd/median change, CI, p-values, and N.
+    """
+    tol_spec = tolerances.get("TC-018", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    gt_visits = ground_truth.get("visits", {})
+    ag_visits = agent_output.get("visits", {})
+    n_visits = len(gt_visits)
+
+    if n_visits == 0:
+        return {"test_case_id": "TC-018", "score": 0.0, "component_scores": {}, "error": "No visits in ground truth"}
+
+    # Weights per visit per arm
+    mean_w = tol_spec.get("mean_chg", {}).get("weight", 0.25) / (n_visits * 2)
+    mean_abs = tol_spec.get("mean_chg", {}).get("absolute", 0.5)
+    sd_w = tol_spec.get("sd_chg", {}).get("weight", 0.15) / (n_visits * 2)
+    sd_abs = tol_spec.get("sd_chg", {}).get("absolute", 0.5)
+    med_w = tol_spec.get("median_chg", {}).get("weight", 0.10) / (n_visits * 2)
+    med_abs = tol_spec.get("median_chg", {}).get("absolute", 0.5)
+    ci_w = tol_spec.get("ci_bounds", {}).get("weight", 0.15) / (n_visits * 2 * 2)  # lower+upper per arm
+    ci_abs = tol_spec.get("ci_bounds", {}).get("absolute", 1.0)
+    p_w = tol_spec.get("p_values", {}).get("weight", 0.20) / n_visits
+    p_abs = tol_spec.get("p_values", {}).get("absolute", 0.01)
+    n_w = tol_spec.get("n_per_visit", {}).get("weight", 0.10) / (n_visits * 2)
+
+    for visit_name, gt_vd in gt_visits.items():
+        ag_vd = ag_visits.get(visit_name, {})
+        for arm in ["experimental", "control"]:
+            gt_arm = gt_vd.get(arm, {})
+            ag_arm = ag_vd.get(arm, {})
+
+            r = compare_numeric(ag_arm.get("mean_chg"), gt_arm.get("mean_chg"), {"absolute": mean_abs})
+            component_scores[f"{visit_name}_{arm}_mean_chg"] = r
+            weighted_sum += r["score"] * mean_w
+            total_weight += mean_w
+
+            r = compare_numeric(ag_arm.get("sd_chg"), gt_arm.get("sd_chg"), {"absolute": sd_abs})
+            component_scores[f"{visit_name}_{arm}_sd_chg"] = r
+            weighted_sum += r["score"] * sd_w
+            total_weight += sd_w
+
+            r = compare_numeric(ag_arm.get("median_chg"), gt_arm.get("median_chg"), {"absolute": med_abs})
+            component_scores[f"{visit_name}_{arm}_median_chg"] = r
+            weighted_sum += r["score"] * med_w
+            total_weight += med_w
+
+            for bound in ["ci_lower", "ci_upper"]:
+                r = compare_numeric(ag_arm.get(bound), gt_arm.get(bound), {"absolute": ci_abs})
+                component_scores[f"{visit_name}_{arm}_{bound}"] = r
+                weighted_sum += r["score"] * ci_w
+                total_weight += ci_w
+
+            r = compare_count(ag_arm.get("n"), gt_arm.get("n"))
+            component_scores[f"{visit_name}_{arm}_n"] = r
+            weighted_sum += r["score"] * n_w
+            total_weight += n_w
+
+        # P-value
+        r = compare_numeric(ag_vd.get("p_value"), gt_vd.get("p_value"), {"absolute": p_abs})
+        component_scores[f"{visit_name}_p_value"] = r
+        weighted_sum += r["score"] * p_w
+        total_weight += p_w
+
+    # N per arm
+    gt_meta = ground_truth.get("metadata", {})
+    ag_meta = agent_output.get("metadata", {})
+    arm_w = tol_spec.get("n_per_arm", {}).get("weight", 0.05) / 2
+    for field, label in [("n_experimental", "n_exp"), ("n_control", "n_ctl")]:
+        r = compare_count(ag_meta.get(field), gt_meta.get(field))
+        component_scores[label] = r
+        weighted_sum += r["score"] * arm_w
+        total_weight += arm_w
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+    return {
+        "test_case_id": "TC-018",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
 # --------------------------------------------------------------------
 # Efficiency Helpers
 # --------------------------------------------------------------------
@@ -1066,6 +1412,10 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-012": score_tc012,
         "TC-013": score_tc013,
         "TC-014": score_tc014,
+        "TC-015": score_tc015,
+        "TC-016": score_tc016,
+        "TC-017": score_tc017,
+        "TC-018": score_tc018,
     }
 
     scorer = scorers.get(tc)
@@ -1187,6 +1537,10 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-012": score_tc012,
         "TC-013": score_tc013,
         "TC-014": score_tc014,
+        "TC-015": score_tc015,
+        "TC-016": score_tc016,
+        "TC-017": score_tc017,
+        "TC-018": score_tc018,
     }
 
     scorer = scorers.get(tc)
@@ -1386,6 +1740,10 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-012": score_tc012,
         "TC-013": score_tc013,
         "TC-014": score_tc014,
+        "TC-015": score_tc015,
+        "TC-016": score_tc016,
+        "TC-017": score_tc017,
+        "TC-018": score_tc018,
     }
     scorer = scorers.get(tc)
     if scorer is None:

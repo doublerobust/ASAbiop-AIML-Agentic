@@ -1159,3 +1159,143 @@ scorer + tolerances + schema + ground truth (R+Python) + compliance + safety.
 4. **Efficiency scoring** — populate `efficiency.yaml` with time/LOC metrics
    for TC-011–014
 5. **WG presentation prep** — scoring dimension findings for next WG meeting
+
+---
+
+## 2026-06-21 — Day 21: Level 1 Library Expansion II (TC-015 through TC-018)
+
+**Trigger:** Daily cron (GLM 5.2 via OpenRouter). Day 21.
+**Dimension:** Test Case Library Expansion — 4 new Level 1 TCs covering new TFL types.
+
+### 🎯 Assignment
+Yesterday's plan called for beginning TC-015 through TC-018. This expands
+the Level 1 library from 7 to 11 test cases, adding coverage for:
+- **KM curve figure** with risk table (complements TC-001 median estimation)
+- **Exposure summary table** (safety domain, dose metrics)
+- **Laboratory shift table** (safety domain, categorical shifts)
+- **Change from baseline table** (efficacy domain, longitudinal)
+
+### ✅ What Got Built
+
+**4 new Level 1 test cases with full ground truth (8 new scripts):**
+
+| Test Case | Domain | TFL Type | Description | Ground Truth |
+|---|---|---|---|---|
+| TC-015 | Efficacy | Figure | KM curve with risk table at 10 time points | R+Py ✅ |
+| TC-016 | Safety | Table | Exposure summary (duration, dose, intensity, reduction) | R+Py ✅ |
+| TC-017 | Safety | Table | Lab shift table (3×3: baseline vs post-baseline) | R+Py ✅ |
+| TC-018 | Efficacy | Table | Change from baseline (5 visits, t-test per visit) | R+Py ✅ |
+
+**Files created (16 new files):**
+
+Ground truth (8 scripts):
+- `references/ground-truth/R/tc-015-km-curve.R` — KM curve + risk table via survival::survfit
+- `references/ground-truth/R/tc-016-exposure.R` — Exposure metrics (duration, dose, intensity)
+- `references/ground-truth/R/tc-017-shift-table.R` — 3×3 shift table (LOW/NORMAL/HIGH)
+- `references/ground-truth/R/tc-018-cfb-table.R` — CFB table with t-tests
+- `references/ground-truth/Python/tc_015_km_curve.py` — KM curve via lifelines
+- `references/ground-truth/Python/tc_016_exposure.py` — Exposure summary
+- `references/ground-truth/Python/tc_017_shift_table.py` — Lab shift table
+- `references/ground-truth/Python/tc_018_cfb_table.py` — CFB table with scipy stats
+
+Output schemas (4 new):
+- `references/output-schemas/tc-015-output-schema.json` — curve definitions + risk arrays
+- `references/output-schemas/tc-016-output-schema.json` — continuous + categorical summary
+- `references/output-schemas/tc-017-output-schema.json` — 3×3 shift block definitions
+- `references/output-schemas/tc-018-output-schema.json` — visit-wise summary definitions
+
+Scoring harness updates:
+- `tolerances.yaml` — Added TC-015 through TC-018 tolerance specs
+- `score.py` — Added 4 new scorer functions: `score_tc015`, `score_tc016`, `score_tc017`, `score_tc018`
+- Registered all 4 scorers in `score`, `verify`, and `evaluate` commands
+
+### 📊 Validation Results
+
+| Test Case | Self-Score | Schema Pass | Script Execution |
+|---|---|---|---|
+| TC-015 | 1.0000 | ✅ | ✅ R+Py |
+| TC-016 | 1.0000 | ✅ | ✅ R+Py |
+| TC-017 | 1.0000 | ✅ | ✅ R+Py |
+| TC-018 | 1.0000 | ✅ | ✅ R+Py |
+
+All 4 Python scripts execute cleanly with `--seed 42 --n 200`.
+All 4 outputs pass JSON Schema validation.
+All 4 self-score at 1.0000 (perfect match).
+
+### 📊 Updated Library Summary
+
+| Level | Count | Auto-Score | Ground Truth | Variants |
+|---|---|---|---|---|
+| 1 | 11 | 11 | 11 (R+Py) | 110 |
+| 2 | 3 | 0 (+1 partial) | 0 | 35 |
+| 3 | 4 | 0 | 0 | 28 |
+| **Total** | **18** | **11 (+1)** | **11** | **173** |
+
+### 🔍 Key Research Findings (June 2026)
+
+1. **PharmaSUG 2026 (May 31–Jun 3, Boston)** confirmed as a watershed moment
+   for agentic AI in clinical trials:
+   - "An Agentic AI Framework That Reads SAPs and Generates TFL Table of Contents"
+   - "Schema-Preserving Generation of Clinical TLF Templates and Executable R Code via Iterative LLM-Guided Debugging"
+   - "Agentic R in Clinical Trials: Empowering Statistical Programmers with Open Source LLM Packages & Positron Tools"
+   - "Evaluation of Azure OpenAI ChatGPT API as Code Assistance Tools for Statistical Programming in SAS, R and Python"
+   - Industry explicitly called for "standardized evaluation benchmarks for governance" — validates our benchmark
+
+2. **FDA 2026 initiatives:**
+   - FDA-EMA Good AI Practice Principles (Jan 2026) — 10 principles for risk-based AI governance
+   - Real-Time Clinical Trials Initiative (Apr 2026) — proof-of-concept with AstraZeneca and Amgen
+   - AI-Enabled Pilot Program for Early-Phase Trials (Summer 2026) — 5-9 drugmakers, Paradigm Health
+   - 92% of organizations plan to increase AI spending in clinical trials
+   - AI exceeding expectations in task automation (46.5%), data cleaning (40.5%), query resolution (36.5%)
+
+3. **EU AI Act** provisions applicable by August 2, 2026 — high-risk classification
+   for clinical AI systems. Sponsors remain fully responsible for AI-generated content.
+
+4. **No standardized TFL benchmark exists.** HealthBench (48K+ rubric criteria,
+   262 physicians) covers medical decisions but NOT TFL programming. BRIDGE
+   covers multilingual clinical NLP but NOT statistical programming. Our
+   benchmark remains the first and only in this space.
+
+### 🗂️ Updated File Structure
+
+```
+benchmarks/
+├── references/
+│   ├── ground-truth/
+│   │   ├── R/ (11 scripts + common/ — tc-001/002/003/011-018)
+│   │   ├── SAS/ (3 scripts — tc-001/002/003)
+│   │   └── Python/ (11 scripts + common/ — tc-001/002/003/011-018)
+│   ├── output-schemas/ (11 JSON Schema files)
+│   ├── edge-cases/ (14 files)
+│   ├── safety-vectors/ (10 files)
+│   └── verification/ (cross-language-compare.R + glm-comparison-demo/)
+├── scoring-harness/
+│   ├── score.py (now supports TC-001-003, TC-011-018)
+│   ├── safety.py, compliance.py
+│   ├── tolerances.yaml, safety.yaml, compliance.yaml, efficiency.yaml
+│   └── README.md
+├── test-case-design.md (updated: 18 test cases, 11 Level 1 with GT)
+├── scoring-framework.md
+├── vendor-catalog.md
+├── safety-robustness.md
+├── regulatory-compliance.md
+├── operational-efficiency.md
+├── cross-language-verification.md
+├── benchmark-framework-v1.md
+├── relevant-work.md
+├── tools-packages.md
+├── progress-log.md (this file)
+└── README.md
+```
+
+**Total ground truth code:** 11 R scripts + 11 Python scripts + 3 SAS scripts = 25 scripts
+
+### 🔮 Plan for Day 22+
+1. **Compliance + safety rules** for TC-015 through TC-018 in compliance.yaml
+   and safety.yaml (close the pipeline gap)
+2. **SAS reference implementations** for TC-011–018 (complete multilingual trifecta)
+3. **Cross-language verification run** on shared data for all 11 Level 1 TCs
+4. **Efficiency scoring** — populate efficiency.yaml with time/LOC metrics
+5. **WG presentation prep** — scoring dimension findings for next WG meeting
+6. **TC-019+ candidates:** Concomitant medications, KM curve figure rendering
+   (PNG output), time-to-event table, ORR by subgroup
