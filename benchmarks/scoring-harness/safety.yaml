@@ -3,8 +3,8 @@
 # Reference: benchmarks/safety-robustness.md
 
 meta:
-  version: "0.2"
-  updated: "2026-06-20"
+  version: "0.3"
+  updated: "2026-06-22"
 
 # ──────────────────────────────────────────────────────
 # N-count consistency rules by test case
@@ -120,6 +120,86 @@ n_count_rules:
         desc: "Arm-level PD counts must sum to overall PD count"
         critical: false
         auto_score: true
+  TC-015:
+    rules:
+      - id: N-001
+        desc: "Risk table n_at_risk must be ≤ n_total per arm at each time point"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "n_at_risk must be non-increasing over time within each arm"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "Events + censored at each time point must sum to n_at_risk reduction"
+        critical: true
+        auto_score: true
+      - id: N-004
+        desc: "Arm-level N sums must match overall N"
+        critical: false
+        auto_score: true
+  TC-016:
+    rules:
+      - id: N-001
+        desc: "n_subjects with exposure data must be ≤ n_total safety population per arm"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "Each subject appears once per arm (no duplicate exposure records)"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "Dose intensity must be between 0% and 150% (physiologically plausible)"
+        critical: true
+        auto_score: true
+      - id: N-004
+        desc: "Exposure duration must be > 0 for all subjects"
+        critical: true
+        auto_score: true
+  TC-017:
+    rules:
+      - id: N-001
+        desc: "Sum of all 9 cells in 3x3 shift matrix must equal n_subjects per arm"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "Row totals (baseline categories) must sum to n_subjects per arm"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "Column totals (post-baseline categories) must sum to n_subjects per arm"
+        critical: true
+        auto_score: true
+      - id: N-004
+        desc: "Each subject classified once (no duplicates in shift table)"
+        critical: true
+        auto_score: true
+      - id: N-005
+        desc: "Arm-level N must sum to overall N"
+        critical: false
+        auto_score: true
+  TC-018:
+    rules:
+      - id: N-001
+        desc: "n_subjects per visit must be ≤ n_total ITT population per arm"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "n_subjects must be non-increasing across visits (dropout/missing data)"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "Baseline visit n must equal ITT N (all subjects have baseline)"
+        critical: true
+        auto_score: true
+      - id: N-004
+        desc: "CHG = AVAL - BASE at each visit (arithmetic consistency)"
+        critical: true
+        auto_score: true
+      - id: N-005
+        desc: "Arm-level N must sum to overall N at each visit"
+        critical: false
+        auto_score: true
 
 # ──────────────────────────────────────────────────────
 # Denominator / population rules per test case
@@ -152,6 +232,22 @@ denominator_rules:
   TC-014:
     expected_population: SAFETY
     flag: SAFFL
+    critical: true
+  TC-015:
+    expected_population: ITT
+    flag: ITTFL
+    critical: true
+  TC-016:
+    expected_population: SAFETY
+    flag: SAFFL
+    critical: true
+  TC-017:
+    expected_population: SAFETY
+    flag: SAFFL
+    critical: true
+  TC-018:
+    expected_population: ITT
+    flag: ITTFL
     critical: true
 
 # ──────────────────────────────────────────────────────
@@ -186,6 +282,34 @@ cross_tfl_pairs:
     target: TC-002
     shared_fields: [n_total]
     description: "PD listing N must be ≤ safety population N from demographics"
+  - source: TC-015
+    target: TC-001
+    shared_fields: [n_events, n_total]
+    description: "KM curve and KM median must use same ITT population and event counts"
+  - source: TC-015
+    target: TC-003
+    shared_fields: [n_events, n_total]
+    description: "KM curve log-rank must match TC-003 stratified log-rank (if unstratified in TC-015)"
+  - source: TC-016
+    target: TC-002
+    shared_fields: [n_total]
+    description: "Exposure table N must match safety population N from demographics"
+  - source: TC-016
+    target: TC-011
+    shared_fields: [n_total]
+    description: "Exposure table safety N must match AE summary table safety N"
+  - source: TC-017
+    target: TC-002
+    shared_fields: [n_total]
+    description: "Lab shift table N must be ≤ safety population N (subjects with lab data)"
+  - source: TC-018
+    target: TC-001
+    shared_fields: [n_total]
+    description: "CFB table ITT N must match KM/table N (same ITT population)"
+  - source: TC-018
+    target: TC-013
+    shared_fields: [n_total]
+    description: "CFB table ITT N must be ≥ waterfall plot N (waterfall = evaluable subset)"
 
 # ──────────────────────────────────────────────────────
 # Edge case resilience expectations
@@ -223,6 +347,38 @@ edge_case_expectations:
     expected_behavior: "exclude from waterfall, include in exclusions count"
     score_if_met: 1.0
     score_if_not: 0.0
+  non_estimable_curve_segment:
+    expected_behavior: "flag or truncate curve when no subjects at risk beyond last event"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  zero_subjects_in_risk_set:
+    expected_behavior: "risk table shows 0 at risk for time points beyond last follow-up"
+    score_if_met: 1.0
+    score_if_not: 0.0
+  dose_intensity_above_100:
+    expected_behavior: "flag dose intensity >100% (potential dosing error)"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  subject_with_no_exposure:
+    expected_behavior: "exclude from exposure summary, include in denominator count"
+    score_if_met: 1.0
+    score_if_not: 0.0
+  all_normal_baseline:
+    expected_behavior: "shift table correctly shows all subjects in NORMAL/NORMAL cell"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  subject_missing_baseline_lab:
+    expected_behavior: "exclude from shift table, include in exclusions"
+    score_if_met: 1.0
+    score_if_not: 0.0
+  all_subjects_discontinue_before_end:
+    expected_behavior: "CFB table n_subjects decreases to 0 at later visits"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  baseline_equals_post_baseline:
+    expected_behavior: "CHG=0 handled correctly (not excluded as missing)"
+    score_if_met: 1.0
+    score_if_not: 0.5
 
 # ──────────────────────────────────────────────────────
 # Scoring weights for composite safety score

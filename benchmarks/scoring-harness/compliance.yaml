@@ -327,3 +327,239 @@ TC-014:
     - id: CSR-14
       desc: "Summary table precedes or follows listing with counts by category/severity"
       penalty: 0.15
+
+# ─────────────────────────────────────────────────────
+# TC-015: Kaplan-Meier Curve with Risk Table
+# ─────────────────────────────────────────────────────
+TC-015:
+  description: "KM Curve with Risk Table — survival curve coordinates + at-risk counts"
+  adam_mapping:
+    required_variables: [AVAL, CNSR, TRT01PN, ITTFL]
+    population_flag: ITTFL
+    population_value: Y
+    treatment_variable: TRT01PN
+    domain: ADTTE
+  tcg_rules:
+    - id: TCG-01
+      desc: "Population filter ITTFL=Y"
+      critical: true
+    - id: TCG-02
+      desc: "Treatment variable TRT01PN"
+      critical: true
+    - id: TCG-03
+      desc: "CNSR 0=event 1=censored"
+      critical: true
+    - id: TCG-04
+      desc: "Analysis time AVAL specified"
+      critical: true
+    - id: TCG-29
+      desc: "Risk table counts at each specified time point per arm"
+      critical: true
+    - id: TCG-30
+      desc: "Curve coordinates include time, survival estimate, upper CI, lower CI"
+      critical: true
+    - id: TCG-31
+      desc: "Separate curves per treatment arm"
+      critical: true
+    - id: TCG-32
+      desc: "Log-rank test reported alongside KM curve"
+      critical: false
+    - id: TCG-06
+      desc: "Software version documented"
+      critical: false
+  csr_rules:
+    - id: CSR-01
+      desc: "Figure numbered per ICH E3 appendix"
+      penalty: 0.1
+    - id: CSR-02
+      desc: "Title includes population and endpoint (PFS/OS)"
+      penalty: 0.2
+    - id: CSR-03
+      desc: "Footnotes: KM method, log-rank test, CI method, number at risk"
+      penalty: 0.1
+    - id: CSR-15
+      desc: "X-axis: time since randomization; Y-axis: probability of survival"
+      penalty: 0.1
+    - id: CSR-16
+      desc: "Risk table below x-axis with counts per arm at each time point"
+      penalty: 0.15
+    - id: CSR-17
+      desc: "Median survival and CI reported in text or annotation"
+      penalty: 0.1
+
+# ─────────────────────────────────────────────────────
+# TC-016: Exposure Summary Table
+# ─────────────────────────────────────────────────────
+TC-016:
+  description: "Exposure Summary — duration, cumulative dose, dose intensity per arm"
+  adam_mapping:
+    required_variables: [USUBJID, TRT01PN, SAFFL, EXDUR, EXDOSE, EXTRT]
+    population_flag: SAFFL
+    population_value: Y
+    treatment_variable: TRT01PN
+    domain: ADEX or EX domain
+  tcg_rules:
+    - id: TCG-01
+      desc: "Population filter SAFFL=Y"
+      critical: true
+    - id: TCG-02
+      desc: "Treatment variable TRT01PN"
+      critical: true
+    - id: TCG-33
+      desc: "Exposure duration (EXDUR) computed per subject"
+      critical: true
+    - id: TCG-34
+      desc: "Cumulative dose (total mg) computed per subject"
+      critical: true
+    - id: TCG-35
+      desc: "Dose intensity = actual / planned dose (%)"
+      critical: true
+    - id: TCG-36
+      desc: "Relative dose intensity (RDI) computed where applicable"
+      critical: true
+    - id: TCG-37
+      desc: "Summary stats: n, mean, SD, median, min, max for continuous measures"
+      critical: false
+    - id: TCG-38
+      desc: "Dose reduction categories tabulated (if applicable)"
+      critical: false
+    - id: TCG-06
+      desc: "Software version documented"
+      critical: false
+  csr_rules:
+    - id: CSR-01
+      desc: "Table numbered per ICH E3 appendix"
+      penalty: 0.1
+    - id: CSR-02
+      desc: "Title includes safety population and exposure metric"
+      penalty: 0.2
+    - id: CSR-03
+      desc: "Footnotes: dose units, duration definition, planned dose reference"
+      penalty: 0.1
+    - id: CSR-18
+      desc: "Per-arm N in column headers"
+      penalty: 0.1
+    - id: CSR-19
+      desc: "Dose intensity <80% flagged or summarized separately"
+      penalty: 0.15
+
+# ─────────────────────────────────────────────────────
+# TC-017: Laboratory Shift Table
+# ─────────────────────────────────────────────────────
+TC-017:
+  description: "Lab Shift Table — baseline vs worst post-baseline (LOW/NORMAL/HIGH)"
+  adam_mapping:
+    required_variables: [USUBJID, TRT01PN, SAFFL, LBTESTCD, LBGRESCAT, LBBLFL, VISIT]
+    population_flag: SAFFL
+    population_value: Y
+    treatment_variable: TRT01PN
+    domain: ADLB or LB domain
+  tcg_rules:
+    - id: TCG-01
+      desc: "Population filter SAFFL=Y"
+      critical: true
+    - id: TCG-02
+      desc: "Treatment variable TRT01PN"
+      critical: true
+    - id: TCG-39
+      desc: "Baseline category derived from LBBLFL=Y or first post-dose visit"
+      critical: true
+    - id: TCG-40
+      desc: "Post-baseline category = worst post-baseline value (most extreme deviation)"
+      critical: true
+    - id: TCG-41
+      desc: "Categories: LOW, NORMAL, HIGH based on reference range"
+      critical: true
+    - id: TCG-42
+      desc: "3x3 shift matrix: rows=baseline (LOW/NORMAL/HIGH), cols=post-baseline (LOW/NORMAL/HIGH)"
+      critical: true
+    - id: TCG-43
+      desc: "Subject-level de-duplication: each subject counted once per lab test"
+      critical: true
+    - id: TCG-44
+      desc: "Per-arm and overall shift tables produced"
+      critical: false
+    - id: TCG-45
+      desc: "Percentages computed using appropriate denominator (row, column, or overall)"
+      critical: false
+    - id: TCG-06
+      desc: "Software version documented"
+      critical: false
+  csr_rules:
+    - id: CSR-01
+      desc: "Table numbered per ICH E3 appendix"
+      penalty: 0.1
+    - id: CSR-02
+      desc: "Title includes lab test, population, and shift direction"
+      penalty: 0.2
+    - id: CSR-03
+      desc: "Footnotes: reference range, category definitions, denominator basis"
+      penalty: 0.1
+    - id: CSR-20
+      desc: "Row and column totals included"
+      penalty: 0.1
+    - id: CSR-21
+      desc: "Per-arm tables side-by-side or stacked with clear labeling"
+      penalty: 0.1
+
+# ─────────────────────────────────────────────────────
+# TC-018: Change from Baseline Table
+# ─────────────────────────────────────────────────────
+TC-018:
+  description: "Change from Baseline — longitudinal efficacy, visit-wise summary + treatment comparison"
+  adam_mapping:
+    required_variables: [USUBJID, TRT01PN, ITTFL, PARAMCD, AVAL, BASE, CHG, VISIT, VISITNUM]
+    population_flag: ITTFL
+    population_value: Y
+    treatment_variable: TRT01PN
+    domain: ADBS or ADQS (efficacy)
+  tcg_rules:
+    - id: TCG-01
+      desc: "Population filter ITTFL=Y"
+      critical: true
+    - id: TCG-02
+      desc: "Treatment variable TRT01PN"
+      critical: true
+    - id: TCG-46
+      desc: "Baseline (BASE) value computed per subject from baseline visit"
+      critical: true
+    - id: TCG-47
+      desc: "Change from baseline (CHG = AVAL - BASE) computed at each post-baseline visit"
+      critical: true
+    - id: TCG-48
+      desc: "Visit ordering by VISITNUM (baseline, week 6, 12, 18, 24)"
+      critical: true
+    - id: TCG-49
+      desc: "Summary stats per visit per arm: n, mean, SD, median, 95% CI"
+      critical: true
+    - id: TCG-50
+      desc: "Treatment comparison at each visit (t-test or ANCOVA with baseline covariate)"
+      critical: true
+    - id: TCG-51
+      desc: "p-value reported per visit treatment comparison"
+      critical: false
+    - id: TCG-52
+      desc: "Subjects with missing baseline or missing post-baseline excluded from respective visit"
+      critical: true
+    - id: TCG-06
+      desc: "Software version documented"
+      critical: false
+  csr_rules:
+    - id: CSR-01
+      desc: "Table numbered per ICH E3 appendix"
+      penalty: 0.1
+    - id: CSR-02
+      desc: "Title includes population, endpoint, and analysis method"
+      penalty: 0.2
+    - id: CSR-03
+      desc: "Footnotes: analysis model (t-test/ANCOVA), baseline covariate, multiple comparison adjustment"
+      penalty: 0.1
+    - id: CSR-22
+      desc: "Visit columns ordered chronologically with baseline first"
+      penalty: 0.1
+    - id: CSR-23
+      desc: "Each cell: n, mean (SD), and treatment difference p-value"
+      penalty: 0.15
+    - id: CSR-24
+      desc: "Missing data handling stated in footnotes"
+      penalty: 0.1
