@@ -158,6 +158,54 @@ verification_time:
       R: 7.0
       SAS: 5.0
       Python: 8.0
+  tc_011:
+    human_from_scratch_min: 20
+    human_verify_agent_min:
+      R: 5.0
+      SAS: 4.0
+      Python: 6.0
+  tc_012:
+    human_from_scratch_min: 25
+    human_verify_agent_min:
+      R: 6.0
+      SAS: 5.0
+      Python: 7.0
+  tc_013:
+    human_from_scratch_min: 15
+    human_verify_agent_min:
+      R: 4.0
+      SAS: 3.5
+      Python: 5.0
+  tc_014:
+    human_from_scratch_min: 15
+    human_verify_agent_min:
+      R: 4.0
+      SAS: 3.0
+      Python: 5.0
+  tc_015:
+    human_from_scratch_min: 20
+    human_verify_agent_min:
+      R: 5.0
+      SAS: 4.0
+      Python: 6.0
+  tc_016:
+    human_from_scratch_min: 20
+    human_verify_agent_min:
+      R: 5.0
+      SAS: 4.0
+      Python: 6.0
+  tc_017:
+    human_from_scratch_min: 15
+    human_verify_agent_min:
+      R: 4.0
+      SAS: 3.5
+      Python: 5.0
+  tc_018:
+    human_from_scratch_min: 25
+    human_verify_agent_min:
+      R: 6.0
+      SAS: 5.0
+      Python: 7.0
 
 # ────────────────────────────────────────────────────────────
 # Cost transparency configuration
