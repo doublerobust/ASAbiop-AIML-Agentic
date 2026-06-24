@@ -1,0 +1,1460 @@
+{
+  "test_case_id": "TC-013",
+  "title": "Waterfall Plot \u2014 Best Percentage Change in Tumor Size",
+  "parameters": {
+    "seed": 42,
+    "n_subjects": 200
+  },
+  "response_criteria": "RECIST 1.1",
+  "thresholds": {
+    "CR": -100.0,
+    "PR": -30.0,
+    "PD": 20.0
+  },
+  "summary": {
+    "all": {
+      "n": 200,
+      "n_cr": 25,
+      "n_pr": 50,
+      "n_sd": 69,
+      "n_pd": 56,
+      "orr_pct": 37.5,
+      "dcr_pct": 72.0,
+      "median_best_pct_change": -16.5,
+      "mean_best_pct_change": 0.4
+    },
+    "experimental": {
+      "n": 100,
+      "n_cr": 23,
+      "n_pr": 30,
+      "n_sd": 33,
+      "n_pd": 14,
+      "orr_pct": 53.0,
+      "dcr_pct": 86.0,
+      "median_best_pct_change": -35.5,
+      "mean_best_pct_change": -26.9
+    },
+    "control": {
+      "n": 100,
+      "n_cr": 2,
+      "n_pr": 20,
+      "n_sd": 36,
+      "n_pd": 42,
+      "orr_pct": 22.0,
+      "dcr_pct": 58.0,
+      "median_best_pct_change": 8.0,
+      "mean_best_pct_change": 27.7
+    }
+  },
+  "subjects": [
+    {
+      "USUBJID": "SUBJ-0005",
+      "TRT01A": "Experimental",
+      "BASELINE": 36.2,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0006",
+      "TRT01A": "Experimental",
+      "BASELINE": 41.8,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0009",
+      "TRT01A": "Experimental",
+      "BASELINE": 95.1,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0010",
+      "TRT01A": "Experimental",
+      "BASELINE": 52.5,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0014",
+      "TRT01A": "Experimental",
+      "BASELINE": 35.1,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0016",
+      "TRT01A": "Experimental",
+      "BASELINE": 40.8,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0017",
+      "TRT01A": "Experimental",
+      "BASELINE": 16.9,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0024",
+      "TRT01A": "Experimental",
+      "BASELINE": 89.1,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0028",
+      "TRT01A": "Experimental",
+      "BASELINE": 55.0,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0029",
+      "TRT01A": "Experimental",
+      "BASELINE": 76.7,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0030",
+      "TRT01A": "Experimental",
+      "BASELINE": 77.4,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0040",
+      "TRT01A": "Experimental",
+      "BASELINE": 82.8,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0065",
+      "TRT01A": "Experimental",
+      "BASELINE": 74.9,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0066",
+      "TRT01A": "Experimental",
+      "BASELINE": 79.2,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0075",
+      "TRT01A": "Experimental",
+      "BASELINE": 46.2,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0078",
+      "TRT01A": "Experimental",
+      "BASELINE": 59.3,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0088",
+      "TRT01A": "Experimental",
+      "BASELINE": 28.8,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0089",
+      "TRT01A": "Experimental",
+      "BASELINE": 83.1,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0090",
+      "TRT01A": "Experimental",
+      "BASELINE": 22.9,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0091",
+      "TRT01A": "Experimental",
+      "BASELINE": 44.5,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0097",
+      "TRT01A": "Experimental",
+      "BASELINE": 72.9,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0099",
+      "TRT01A": "Experimental",
+      "BASELINE": 27.9,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0100",
+      "TRT01A": "Experimental",
+      "BASELINE": 92.1,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0109",
+      "TRT01A": "Control",
+      "BASELINE": 47.8,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0115",
+      "TRT01A": "Control",
+      "BASELINE": 82.4,
+      "BESTPCHG": -100.0,
+      "BOR": "CR"
+    },
+    {
+      "USUBJID": "SUBJ-0081",
+      "TRT01A": "Experimental",
+      "BASELINE": 68.8,
+      "BESTPCHG": -95.4,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0049",
+      "TRT01A": "Experimental",
+      "BASELINE": 81.0,
+      "BESTPCHG": -93.9,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0003",
+      "TRT01A": "Experimental",
+      "BASELINE": 29.6,
+      "BESTPCHG": -92.2,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0076",
+      "TRT01A": "Experimental",
+      "BASELINE": 18.6,
+      "BESTPCHG": -91.2,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0107",
+      "TRT01A": "Control",
+      "BASELINE": 71.6,
+      "BESTPCHG": -90.2,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0193",
+      "TRT01A": "Control",
+      "BASELINE": 49.3,
+      "BESTPCHG": -89.4,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0077",
+      "TRT01A": "Experimental",
+      "BASELINE": 41.8,
+      "BESTPCHG": -88.7,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0060",
+      "TRT01A": "Experimental",
+      "BASELINE": 98.2,
+      "BESTPCHG": -87.6,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0148",
+      "TRT01A": "Control",
+      "BASELINE": 92.7,
+      "BESTPCHG": -87.1,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0036",
+      "TRT01A": "Experimental",
+      "BASELINE": 75.4,
+      "BESTPCHG": -85.0,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0072",
+      "TRT01A": "Experimental",
+      "BASELINE": 88.8,
+      "BESTPCHG": -82.2,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0055",
+      "TRT01A": "Experimental",
+      "BASELINE": 42.8,
+      "BESTPCHG": -82.1,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0039",
+      "TRT01A": "Experimental",
+      "BASELINE": 76.1,
+      "BESTPCHG": -79.3,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0181",
+      "TRT01A": "Control",
+      "BASELINE": 48.8,
+      "BESTPCHG": -78.6,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0197",
+      "TRT01A": "Control",
+      "BASELINE": 85.9,
+      "BESTPCHG": -78.1,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0002",
+      "TRT01A": "Experimental",
+      "BASELINE": 85.9,
+      "BESTPCHG": -75.2,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0013",
+      "TRT01A": "Experimental",
+      "BASELINE": 17.6,
+      "BESTPCHG": -74.9,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0071",
+      "TRT01A": "Experimental",
+      "BASELINE": 19.3,
+      "BESTPCHG": -74.6,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0044",
+      "TRT01A": "Experimental",
+      "BASELINE": 62.9,
+      "BESTPCHG": -72.9,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0086",
+      "TRT01A": "Experimental",
+      "BASELINE": 78.1,
+      "BESTPCHG": -72.7,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0068",
+      "TRT01A": "Experimental",
+      "BASELINE": 64.8,
+      "BESTPCHG": -72.1,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0085",
+      "TRT01A": "Experimental",
+      "BASELINE": 16.4,
+      "BESTPCHG": -71.7,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0082",
+      "TRT01A": "Experimental",
+      "BASELINE": 24.2,
+      "BESTPCHG": -70.9,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0041",
+      "TRT01A": "Experimental",
+      "BASELINE": 52.6,
+      "BESTPCHG": -70.4,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0110",
+      "TRT01A": "Control",
+      "BASELINE": 36.7,
+      "BESTPCHG": -69.9,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0050",
+      "TRT01A": "Experimental",
+      "BASELINE": 27.3,
+      "BESTPCHG": -69.4,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0157",
+      "TRT01A": "Control",
+      "BASELINE": 95.5,
+      "BESTPCHG": -67.1,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0058",
+      "TRT01A": "Experimental",
+      "BASELINE": 47.7,
+      "BESTPCHG": -66.6,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0187",
+      "TRT01A": "Control",
+      "BASELINE": 66.2,
+      "BESTPCHG": -64.8,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0162",
+      "TRT01A": "Control",
+      "BASELINE": 60.3,
+      "BESTPCHG": -59.5,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0019",
+      "TRT01A": "Experimental",
+      "BASELINE": 82.3,
+      "BESTPCHG": -57.1,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0185",
+      "TRT01A": "Control",
+      "BASELINE": 98.1,
+      "BESTPCHG": -53.3,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0015",
+      "TRT01A": "Experimental",
+      "BASELINE": 43.5,
+      "BESTPCHG": -48.1,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0045",
+      "TRT01A": "Experimental",
+      "BASELINE": 34.0,
+      "BESTPCHG": -48.1,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0161",
+      "TRT01A": "Control",
+      "BASELINE": 53.0,
+      "BESTPCHG": -45.6,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0132",
+      "TRT01A": "Control",
+      "BASELINE": 89.2,
+      "BESTPCHG": -44.5,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0073",
+      "TRT01A": "Experimental",
+      "BASELINE": 32.5,
+      "BESTPCHG": -44.1,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0101",
+      "TRT01A": "Control",
+      "BASELINE": 56.5,
+      "BESTPCHG": -42.6,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0172",
+      "TRT01A": "Control",
+      "BASELINE": 15.2,
+      "BESTPCHG": -41.0,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0092",
+      "TRT01A": "Experimental",
+      "BASELINE": 59.3,
+      "BESTPCHG": -40.8,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0195",
+      "TRT01A": "Control",
+      "BASELINE": 67.7,
+      "BESTPCHG": -40.7,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0153",
+      "TRT01A": "Control",
+      "BASELINE": 62.2,
+      "BESTPCHG": -40.4,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0190",
+      "TRT01A": "Control",
+      "BASELINE": 24.1,
+      "BESTPCHG": -38.9,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0007",
+      "TRT01A": "Experimental",
+      "BASELINE": 56.1,
+      "BESTPCHG": -36.5,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0022",
+      "TRT01A": "Experimental",
+      "BASELINE": 44.4,
+      "BESTPCHG": -34.6,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0057",
+      "TRT01A": "Experimental",
+      "BASELINE": 39.6,
+      "BESTPCHG": -33.9,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0113",
+      "TRT01A": "Control",
+      "BASELINE": 19.9,
+      "BESTPCHG": -33.2,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0163",
+      "TRT01A": "Control",
+      "BASELINE": 99.5,
+      "BESTPCHG": -30.8,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0138",
+      "TRT01A": "Control",
+      "BASELINE": 34.3,
+      "BESTPCHG": -30.6,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0052",
+      "TRT01A": "Experimental",
+      "BASELINE": 93.2,
+      "BESTPCHG": -30.4,
+      "BOR": "PR"
+    },
+    {
+      "USUBJID": "SUBJ-0119",
+      "TRT01A": "Control",
+      "BASELINE": 22.6,
+      "BESTPCHG": -29.5,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0035",
+      "TRT01A": "Experimental",
+      "BASELINE": 42.7,
+      "BESTPCHG": -28.8,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0083",
+      "TRT01A": "Experimental",
+      "BASELINE": 17.5,
+      "BESTPCHG": -28.0,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0124",
+      "TRT01A": "Control",
+      "BASELINE": 40.9,
+      "BESTPCHG": -28.0,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0031",
+      "TRT01A": "Experimental",
+      "BASELINE": 21.2,
+      "BESTPCHG": -27.7,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0056",
+      "TRT01A": "Experimental",
+      "BASELINE": 62.3,
+      "BESTPCHG": -27.4,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0053",
+      "TRT01A": "Experimental",
+      "BASELINE": 45.3,
+      "BESTPCHG": -27.0,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0186",
+      "TRT01A": "Control",
+      "BASELINE": 18.2,
+      "BESTPCHG": -27.0,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0079",
+      "TRT01A": "Experimental",
+      "BASELINE": 23.0,
+      "BESTPCHG": -25.3,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0147",
+      "TRT01A": "Control",
+      "BASELINE": 74.8,
+      "BESTPCHG": -24.7,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0177",
+      "TRT01A": "Control",
+      "BASELINE": 62.1,
+      "BESTPCHG": -24.4,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0180",
+      "TRT01A": "Control",
+      "BASELINE": 21.9,
+      "BESTPCHG": -22.6,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0103",
+      "TRT01A": "Control",
+      "BASELINE": 93.0,
+      "BESTPCHG": -22.1,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0047",
+      "TRT01A": "Experimental",
+      "BASELINE": 96.2,
+      "BESTPCHG": -20.6,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0087",
+      "TRT01A": "Experimental",
+      "BASELINE": 58.1,
+      "BESTPCHG": -19.8,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0174",
+      "TRT01A": "Control",
+      "BASELINE": 99.6,
+      "BESTPCHG": -19.8,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0084",
+      "TRT01A": "Experimental",
+      "BASELINE": 49.1,
+      "BESTPCHG": -18.9,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0183",
+      "TRT01A": "Control",
+      "BASELINE": 17.5,
+      "BESTPCHG": -18.9,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0046",
+      "TRT01A": "Experimental",
+      "BASELINE": 53.8,
+      "BESTPCHG": -18.4,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0063",
+      "TRT01A": "Experimental",
+      "BASELINE": 64.8,
+      "BESTPCHG": -18.2,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0175",
+      "TRT01A": "Control",
+      "BASELINE": 27.3,
+      "BESTPCHG": -18.2,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0011",
+      "TRT01A": "Experimental",
+      "BASELINE": 79.6,
+      "BESTPCHG": -17.9,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0018",
+      "TRT01A": "Experimental",
+      "BASELINE": 37.8,
+      "BESTPCHG": -17.9,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0151",
+      "TRT01A": "Control",
+      "BASELINE": 76.5,
+      "BESTPCHG": -17.4,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0061",
+      "TRT01A": "Experimental",
+      "BASELINE": 81.1,
+      "BESTPCHG": -16.8,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0054",
+      "TRT01A": "Experimental",
+      "BASELINE": 51.9,
+      "BESTPCHG": -16.1,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0096",
+      "TRT01A": "Experimental",
+      "BASELINE": 22.4,
+      "BESTPCHG": -16.1,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0021",
+      "TRT01A": "Experimental",
+      "BASELINE": 25.8,
+      "BESTPCHG": -15.7,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0144",
+      "TRT01A": "Control",
+      "BASELINE": 17.8,
+      "BESTPCHG": -15.6,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0154",
+      "TRT01A": "Control",
+      "BASELINE": 24.9,
+      "BESTPCHG": -14.6,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0042",
+      "TRT01A": "Experimental",
+      "BASELINE": 30.8,
+      "BESTPCHG": -13.7,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0070",
+      "TRT01A": "Experimental",
+      "BASELINE": 86.1,
+      "BESTPCHG": -11.6,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0051",
+      "TRT01A": "Experimental",
+      "BASELINE": 67.0,
+      "BESTPCHG": -10.3,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0126",
+      "TRT01A": "Control",
+      "BASELINE": 43.7,
+      "BESTPCHG": -9.2,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0105",
+      "TRT01A": "Control",
+      "BASELINE": 15.9,
+      "BESTPCHG": -8.5,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0098",
+      "TRT01A": "Experimental",
+      "BASELINE": 58.7,
+      "BESTPCHG": -8.3,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0152",
+      "TRT01A": "Control",
+      "BASELINE": 59.3,
+      "BESTPCHG": -7.4,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0130",
+      "TRT01A": "Control",
+      "BASELINE": 49.8,
+      "BESTPCHG": -5.3,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0116",
+      "TRT01A": "Control",
+      "BASELINE": 91.3,
+      "BESTPCHG": -2.7,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0034",
+      "TRT01A": "Experimental",
+      "BASELINE": 53.5,
+      "BESTPCHG": -1.7,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0168",
+      "TRT01A": "Control",
+      "BASELINE": 59.1,
+      "BESTPCHG": -1.3,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0038",
+      "TRT01A": "Experimental",
+      "BASELINE": 48.1,
+      "BESTPCHG": -0.7,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0191",
+      "TRT01A": "Control",
+      "BASELINE": 84.8,
+      "BESTPCHG": 0.3,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0184",
+      "TRT01A": "Control",
+      "BASELINE": 64.9,
+      "BESTPCHG": 1.3,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0128",
+      "TRT01A": "Control",
+      "BASELINE": 34.9,
+      "BESTPCHG": 1.6,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0192",
+      "TRT01A": "Control",
+      "BASELINE": 38.3,
+      "BESTPCHG": 1.7,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0196",
+      "TRT01A": "Control",
+      "BASELINE": 85.8,
+      "BESTPCHG": 3.3,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0001",
+      "TRT01A": "Experimental",
+      "BASELINE": 56.4,
+      "BESTPCHG": 4.0,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0122",
+      "TRT01A": "Control",
+      "BASELINE": 74.7,
+      "BESTPCHG": 4.4,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0141",
+      "TRT01A": "Control",
+      "BASELINE": 80.8,
+      "BESTPCHG": 5.2,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0080",
+      "TRT01A": "Experimental",
+      "BASELINE": 53.3,
+      "BESTPCHG": 5.4,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0067",
+      "TRT01A": "Experimental",
+      "BASELINE": 53.4,
+      "BESTPCHG": 5.6,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0167",
+      "TRT01A": "Control",
+      "BASELINE": 63.8,
+      "BESTPCHG": 7.1,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0104",
+      "TRT01A": "Control",
+      "BASELINE": 79.9,
+      "BESTPCHG": 7.5,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0069",
+      "TRT01A": "Experimental",
+      "BASELINE": 78.7,
+      "BESTPCHG": 8.3,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0023",
+      "TRT01A": "Experimental",
+      "BASELINE": 22.1,
+      "BESTPCHG": 8.4,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0173",
+      "TRT01A": "Control",
+      "BASELINE": 53.5,
+      "BESTPCHG": 8.5,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0143",
+      "TRT01A": "Control",
+      "BASELINE": 19.3,
+      "BESTPCHG": 9.5,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0033",
+      "TRT01A": "Experimental",
+      "BASELINE": 42.4,
+      "BESTPCHG": 10.2,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0142",
+      "TRT01A": "Control",
+      "BASELINE": 59.5,
+      "BESTPCHG": 11.8,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0062",
+      "TRT01A": "Experimental",
+      "BASELINE": 80.8,
+      "BESTPCHG": 13.0,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0004",
+      "TRT01A": "Experimental",
+      "BASELINE": 60.7,
+      "BESTPCHG": 13.3,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0140",
+      "TRT01A": "Control",
+      "BASELINE": 49.5,
+      "BESTPCHG": 14.4,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0155",
+      "TRT01A": "Control",
+      "BASELINE": 33.0,
+      "BESTPCHG": 16.2,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0160",
+      "TRT01A": "Control",
+      "BASELINE": 76.8,
+      "BESTPCHG": 16.6,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0129",
+      "TRT01A": "Control",
+      "BASELINE": 52.7,
+      "BESTPCHG": 17.0,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0094",
+      "TRT01A": "Experimental",
+      "BASELINE": 69.4,
+      "BESTPCHG": 17.4,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0032",
+      "TRT01A": "Experimental",
+      "BASELINE": 98.1,
+      "BESTPCHG": 18.0,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0123",
+      "TRT01A": "Control",
+      "BASELINE": 96.9,
+      "BESTPCHG": 18.1,
+      "BOR": "SD"
+    },
+    {
+      "USUBJID": "SUBJ-0179",
+      "TRT01A": "Control",
+      "BASELINE": 62.2,
+      "BESTPCHG": 20.8,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0043",
+      "TRT01A": "Experimental",
+      "BASELINE": 98.5,
+      "BESTPCHG": 21.2,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0137",
+      "TRT01A": "Control",
+      "BASELINE": 29.1,
+      "BESTPCHG": 23.1,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0118",
+      "TRT01A": "Control",
+      "BASELINE": 91.8,
+      "BESTPCHG": 27.1,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0166",
+      "TRT01A": "Control",
+      "BASELINE": 75.8,
+      "BESTPCHG": 32.6,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0121",
+      "TRT01A": "Control",
+      "BASELINE": 59.0,
+      "BESTPCHG": 34.5,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0125",
+      "TRT01A": "Control",
+      "BASELINE": 83.6,
+      "BESTPCHG": 35.2,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0158",
+      "TRT01A": "Control",
+      "BASELINE": 61.2,
+      "BESTPCHG": 50.1,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0200",
+      "TRT01A": "Control",
+      "BASELINE": 91.9,
+      "BESTPCHG": 50.5,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0149",
+      "TRT01A": "Control",
+      "BASELINE": 33.5,
+      "BESTPCHG": 53.2,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0150",
+      "TRT01A": "Control",
+      "BASELINE": 29.2,
+      "BESTPCHG": 55.5,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0188",
+      "TRT01A": "Control",
+      "BASELINE": 63.3,
+      "BESTPCHG": 55.9,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0114",
+      "TRT01A": "Control",
+      "BASELINE": 65.7,
+      "BESTPCHG": 59.0,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0134",
+      "TRT01A": "Control",
+      "BASELINE": 34.3,
+      "BESTPCHG": 59.2,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0037",
+      "TRT01A": "Experimental",
+      "BASELINE": 38.3,
+      "BESTPCHG": 65.2,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0127",
+      "TRT01A": "Control",
+      "BASELINE": 99.6,
+      "BESTPCHG": 65.2,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0198",
+      "TRT01A": "Control",
+      "BASELINE": 48.1,
+      "BESTPCHG": 65.8,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0074",
+      "TRT01A": "Experimental",
+      "BASELINE": 32.8,
+      "BESTPCHG": 65.9,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0189",
+      "TRT01A": "Control",
+      "BASELINE": 45.5,
+      "BESTPCHG": 68.7,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0159",
+      "TRT01A": "Control",
+      "BASELINE": 64.7,
+      "BESTPCHG": 78.1,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0199",
+      "TRT01A": "Control",
+      "BASELINE": 48.8,
+      "BESTPCHG": 78.3,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0120",
+      "TRT01A": "Control",
+      "BASELINE": 51.8,
+      "BESTPCHG": 83.8,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0176",
+      "TRT01A": "Control",
+      "BASELINE": 77.1,
+      "BESTPCHG": 84.5,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0164",
+      "TRT01A": "Control",
+      "BASELINE": 85.0,
+      "BESTPCHG": 87.9,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0165",
+      "TRT01A": "Control",
+      "BASELINE": 93.2,
+      "BESTPCHG": 90.4,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0136",
+      "TRT01A": "Control",
+      "BASELINE": 96.0,
+      "BESTPCHG": 103.6,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0111",
+      "TRT01A": "Control",
+      "BASELINE": 81.9,
+      "BESTPCHG": 105.5,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0171",
+      "TRT01A": "Control",
+      "BASELINE": 71.0,
+      "BESTPCHG": 105.7,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0135",
+      "TRT01A": "Control",
+      "BASELINE": 99.0,
+      "BESTPCHG": 108.8,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0059",
+      "TRT01A": "Experimental",
+      "BASELINE": 37.2,
+      "BESTPCHG": 109.2,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0048",
+      "TRT01A": "Experimental",
+      "BASELINE": 96.5,
+      "BESTPCHG": 113.8,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0112",
+      "TRT01A": "Control",
+      "BASELINE": 67.8,
+      "BESTPCHG": 122.9,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0139",
+      "TRT01A": "Control",
+      "BASELINE": 20.2,
+      "BESTPCHG": 126.0,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0156",
+      "TRT01A": "Control",
+      "BASELINE": 27.3,
+      "BESTPCHG": 127.5,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0133",
+      "TRT01A": "Control",
+      "BASELINE": 24.1,
+      "BESTPCHG": 129.0,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0025",
+      "TRT01A": "Experimental",
+      "BASELINE": 83.1,
+      "BESTPCHG": 132.9,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0108",
+      "TRT01A": "Control",
+      "BASELINE": 28.2,
+      "BESTPCHG": 138.4,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0026",
+      "TRT01A": "Experimental",
+      "BASELINE": 96.9,
+      "BESTPCHG": 149.7,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0182",
+      "TRT01A": "Control",
+      "BASELINE": 77.5,
+      "BESTPCHG": 160.2,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0106",
+      "TRT01A": "Control",
+      "BASELINE": 23.5,
+      "BESTPCHG": 162.4,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0146",
+      "TRT01A": "Control",
+      "BASELINE": 74.4,
+      "BESTPCHG": 163.2,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0008",
+      "TRT01A": "Experimental",
+      "BASELINE": 25.2,
+      "BESTPCHG": 164.9,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0012",
+      "TRT01A": "Experimental",
+      "BASELINE": 40.1,
+      "BESTPCHG": 171.4,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0194",
+      "TRT01A": "Control",
+      "BASELINE": 76.4,
+      "BESTPCHG": 173.1,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0102",
+      "TRT01A": "Control",
+      "BASELINE": 86.2,
+      "BESTPCHG": 176.4,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0178",
+      "TRT01A": "Control",
+      "BASELINE": 50.5,
+      "BESTPCHG": 177.3,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0145",
+      "TRT01A": "Control",
+      "BASELINE": 77.0,
+      "BESTPCHG": 182.2,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0170",
+      "TRT01A": "Control",
+      "BASELINE": 73.4,
+      "BESTPCHG": 182.6,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0117",
+      "TRT01A": "Control",
+      "BASELINE": 16.2,
+      "BESTPCHG": 184.4,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0020",
+      "TRT01A": "Experimental",
+      "BASELINE": 35.0,
+      "BESTPCHG": 185.8,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0169",
+      "TRT01A": "Control",
+      "BASELINE": 72.5,
+      "BESTPCHG": 186.9,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0064",
+      "TRT01A": "Experimental",
+      "BASELINE": 49.9,
+      "BESTPCHG": 187.0,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0131",
+      "TRT01A": "Control",
+      "BASELINE": 43.8,
+      "BESTPCHG": 194.0,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0093",
+      "TRT01A": "Experimental",
+      "BASELINE": 46.3,
+      "BESTPCHG": 196.1,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0027",
+      "TRT01A": "Experimental",
+      "BASELINE": 85.4,
+      "BESTPCHG": 197.0,
+      "BOR": "PD"
+    },
+    {
+      "USUBJID": "SUBJ-0095",
+      "TRT01A": "Experimental",
+      "BASELINE": 15.8,
+      "BESTPCHG": 197.8,
+      "BOR": "PD"
+    }
+  ],
+  "metadata": {
+    "language": "Python",
+    "sorting": "ascending by BESTPCHG",
+    "packages": [
+      "json",
+      "random",
+      "statistics"
+    ]
+  }
+}

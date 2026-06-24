@@ -1,0 +1,93 @@
+{
+  "tc_id": "TC-016",
+  "tc_name": "Exposure Summary Table",
+  "metadata": {
+    "n_total": 200,
+    "n_experimental": 100,
+    "n_control": 100,
+    "population": "SAFETY",
+    "duration_unit": "weeks",
+    "dose_unit": "mg",
+    "r_version": "R version 4.6.0 (2026-04-24)"
+  },
+  "treatment_duration": {
+    "experimental": {
+      "n": 100,
+      "mean": 46.63,
+      "sd": 10.6455,
+      "median": 47,
+      "min": 24,
+      "max": 73,
+      "q1": 39,
+      "q3": 53.25
+    },
+    "control": {
+      "n": 100,
+      "mean": 28.35,
+      "sd": 7.4717,
+      "median": 28,
+      "min": 10,
+      "max": 52,
+      "q1": 23.75,
+      "q3": 33
+    }
+  },
+  "cumulative_dose": {
+    "experimental": {
+      "n": 100,
+      "mean": 2829.2176,
+      "sd": 685.1951,
+      "median": 2787.42,
+      "min": 1269.95,
+      "max": 4650.07,
+      "q1": 2351.91,
+      "q3": 3236.66
+    },
+    "control": {
+      "n": 100,
+      "mean": 878.9864,
+      "sd": 239.6268,
+      "median": 854.81,
+      "min": 291.53,
+      "max": 1746.44,
+      "q1": 722.33,
+      "q3": 1008.825
+    }
+  },
+  "dose_intensity": {
+    "experimental": {
+      "n": 100,
+      "mean": 86.6777,
+      "sd": 7.1657,
+      "median": 87.45,
+      "min": 75.23,
+      "max": 99.87,
+      "q1": 80.85,
+      "q3": 92.6925
+    },
+    "control": {
+      "n": 100,
+      "mean": 88.6918,
+      "sd": 7.0624,
+      "median": 89.885,
+      "min": 75.14,
+      "max": 99.67,
+      "q1": 83.3075,
+      "q3": 94.815
+    }
+  },
+  "dose_reduction": {
+    "experimental": {
+      "n": 100,
+      "n_yes": 14,
+      "n_no": 86,
+      "pct_yes": 14
+    },
+    "control": {
+      "n": 100,
+      "n_yes": 7,
+      "n_no": 93,
+      "pct_yes": 7
+    }
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "test_case_id": "TC-002",
+  "variant_id": "v42",
+  "language": "R",
+  "package": "dplyr",
+  "package_version": "1.2.1",
+  "population": "SAFETY",
+  "n_total": 196,
+  "age_by_arm": [
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "count": 87,
+      "mean": 57.16,
+      "std": 11.29,
+      "median": 58,
+      "min": 34,
+      "max": 83
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "count": 109,
+      "mean": 57.6,
+      "std": 11.88,
+      "median": 58,
+      "min": 26,
+      "max": 90
+    }
+  ],
+  "categorical_by_arm": [
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "F",
+      "n": 39,
+      "pct": 44.8,
+      "variable": "Sex"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "M",
+      "n": 48,
+      "pct": 55.2,
+      "variable": "Sex"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "F",
+      "n": 44,
+      "pct": 40.4,
+      "variable": "Sex"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "M",
+      "n": 65,
+      "pct": 59.6,
+      "variable": "Sex"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "Asian",
+      "n": 15,
+      "pct": 17.2,
+      "variable": "Race"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "Black",
+      "n": 15,
+      "pct": 17.2,
+      "variable": "Race"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "Other",
+      "n": 2,
+      "pct": 2.3,
+      "variable": "Race"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "White",
+      "n": 55,
+      "pct": 63.2,
+      "variable": "Race"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "Asian",
+      "n": 19,
+      "pct": 17.4,
+      "variable": "Race"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "Black",
+      "n": 17,
+      "pct": 15.6,
+      "variable": "Race"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "Other",
+      "n": 3,
+      "pct": 2.8,
+      "variable": "Race"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "White",
+      "n": 70,
+      "pct": 64.2,
+      "variable": "Race"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "Asia",
+      "n": 17,
+      "pct": 19.5,
+      "variable": "Region"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "Europe",
+      "n": 25,
+      "pct": 28.7,
+      "variable": "Region"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "North America",
+      "n": 34,
+      "pct": 39.1,
+      "variable": "Region"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "Rest of World",
+      "n": 11,
+      "pct": 12.6,
+      "variable": "Region"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "Asia",
+      "n": 22,
+      "pct": 20.2,
+      "variable": "Region"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "Europe",
+      "n": 32,
+      "pct": 29.4,
+      "variable": "Region"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "North America",
+      "n": 38,
+      "pct": 34.9,
+      "variable": "Region"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "Rest of World",
+      "n": 17,
+      "pct": 15.6,
+      "variable": "Region"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "0",
+      "n": 42,
+      "pct": 48.3,
+      "variable": "ECOG"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "1",
+      "n": 33,
+      "pct": 37.9,
+      "variable": "ECOG"
+    },
+    {
+      "TRT01PN": 0,
+      "TRT01P": "Placebo",
+      "level": "2",
+      "n": 12,
+      "pct": 13.8,
+      "variable": "ECOG"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "0",
+      "n": 45,
+      "pct": 41.3,
+      "variable": "ECOG"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "1",
+      "n": 44,
+      "pct": 40.4,
+      "variable": "ECOG"
+    },
+    {
+      "TRT01PN": 1,
+      "TRT01P": "Active",
+      "level": "2",
+      "n": 20,
+      "pct": 18.3,
+      "variable": "ECOG"
+    }
+  ],
+  "total_age": [
+    {
+      "count": 196,
+      "mean": 57.4,
+      "std": 11.59,
+      "median": 58,
+      "min": 26,
+      "max": 90
+    }
+  ],
+  "seed": 42
+}

@@ -1,0 +1,15 @@
+{
+  "test_case_id": "TC-001",
+  "variant_id": "v42",
+  "language": "R",
+  "package": "survival",
+  "package_version": "3.8.6",
+  "median_pfs": 11.01,
+  "ci_lower": 7.12,
+  "ci_upper": 15.1,
+  "n_events": 65,
+  "n_total": 106,
+  "ci_method": "log-log",
+  "estimable": true,
+  "seed": 42
+}

@@ -1,0 +1,149 @@
+{
+  "tc_id": "TC-017",
+  "tc_name": "Laboratory Shift Table",
+  "metadata": {
+    "n_total": 200,
+    "n_experimental": 100,
+    "n_control": 100,
+    "population": "SAFETY",
+    "lab_test": "Hemoglobin",
+    "lab_unit": "g/L",
+    "categories": [
+      "LOW",
+      "NORMAL",
+      "HIGH"
+    ],
+    "thresholds": {
+      "low": 120,
+      "high": 160
+    },
+    "n_post_baseline_visits": 3,
+    "python_version": "3.14.4"
+  },
+  "shift_overall": {
+    "counts": {
+      "LOW": {
+        "LOW": 25,
+        "NORMAL": 1,
+        "HIGH": 0
+      },
+      "NORMAL": {
+        "LOW": 45,
+        "NORMAL": 105,
+        "HIGH": 2
+      },
+      "HIGH": {
+        "LOW": 0,
+        "NORMAL": 13,
+        "HIGH": 9
+      }
+    },
+    "percentages": {
+      "LOW": {
+        "LOW": 12.5,
+        "NORMAL": 0.5,
+        "HIGH": 0.0
+      },
+      "NORMAL": {
+        "LOW": 22.5,
+        "NORMAL": 52.5,
+        "HIGH": 1.0
+      },
+      "HIGH": {
+        "LOW": 0.0,
+        "NORMAL": 6.5,
+        "HIGH": 4.5
+      }
+    },
+    "n_total": 200,
+    "n_stable_normal": 105,
+    "n_low_to_normal": 1,
+    "n_normal_to_low": 45,
+    "n_normal_to_high": 2,
+    "n_high_to_normal": 13
+  },
+  "shift_experimental": {
+    "counts": {
+      "LOW": {
+        "LOW": 13,
+        "NORMAL": 0,
+        "HIGH": 0
+      },
+      "NORMAL": {
+        "LOW": 29,
+        "NORMAL": 48,
+        "HIGH": 0
+      },
+      "HIGH": {
+        "LOW": 0,
+        "NORMAL": 7,
+        "HIGH": 3
+      }
+    },
+    "percentages": {
+      "LOW": {
+        "LOW": 13.0,
+        "NORMAL": 0.0,
+        "HIGH": 0.0
+      },
+      "NORMAL": {
+        "LOW": 29.0,
+        "NORMAL": 48.0,
+        "HIGH": 0.0
+      },
+      "HIGH": {
+        "LOW": 0.0,
+        "NORMAL": 7.0,
+        "HIGH": 3.0
+      }
+    },
+    "n_total": 100,
+    "n_stable_normal": 48,
+    "n_low_to_normal": 0,
+    "n_normal_to_low": 29,
+    "n_normal_to_high": 0,
+    "n_high_to_normal": 7
+  },
+  "shift_control": {
+    "counts": {
+      "LOW": {
+        "LOW": 12,
+        "NORMAL": 1,
+        "HIGH": 0
+      },
+      "NORMAL": {
+        "LOW": 16,
+        "NORMAL": 57,
+        "HIGH": 2
+      },
+      "HIGH": {
+        "LOW": 0,
+        "NORMAL": 6,
+        "HIGH": 6
+      }
+    },
+    "percentages": {
+      "LOW": {
+        "LOW": 12.0,
+        "NORMAL": 1.0,
+        "HIGH": 0.0
+      },
+      "NORMAL": {
+        "LOW": 16.0,
+        "NORMAL": 57.0,
+        "HIGH": 2.0
+      },
+      "HIGH": {
+        "LOW": 0.0,
+        "NORMAL": 6.0,
+        "HIGH": 6.0
+      }
+    },
+    "n_total": 100,
+    "n_stable_normal": 57,
+    "n_low_to_normal": 1,
+    "n_normal_to_low": 16,
+    "n_normal_to_high": 2,
+    "n_high_to_normal": 6
+  }
+}

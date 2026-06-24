@@ -1,0 +1,20 @@
+{
+  "test_case_id": "TC-003",
+  "variant_id": "v42",
+  "language": "Python",
+  "package": "lifelines+scipy",
+  "package_version": "0.30.3",
+  "chi_square": 5.0307,
+  "df": 1,
+  "p_value": 0.024902,
+  "n_total": 192,
+  "n_events": 126,
+  "strata_variables": [
+    "SEX",
+    "ECOG"
+  ],
+  "n_strata_total": 4,
+  "n_strata_with_events": 4,
+  "stratification_method": "equal_weight_per_stratum",
+  "seed": 42
+}

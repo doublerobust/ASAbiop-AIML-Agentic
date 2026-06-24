@@ -14,15 +14,19 @@ suppressPackageStartupMessages({
 
 # --- Argument parsing ---
 args <- commandArgs(trailingOnly = TRUE)
-seed <- 42; n_subjects <- 300; output_file <- "tc-012-output.json"
+seed <- 42; n_subjects <- 300; output_file <- "tc-012-output.json"; data_csv <- ""
 i <- 1
 while (i <= length(args)) {
   if (args[i] == "--seed") { seed <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--n") { n_subjects <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--output") { output_file <- args[i + 1]; i <- i + 2 }
+  else if (args[i] == "--data") { data_csv <- args[i + 1]; i <- i + 2 }
   else { i <- i + 1 }
 }
 
+if (data_csv != "") {
+  adsl <- read.csv(data_csv, stringsAsFactors = FALSE)
+} else {
 set.seed(seed)
 n_arm <- n_subjects / 2
 
@@ -56,6 +60,7 @@ tte <- rexp(nrow(adsl), base_lambda)
 censor_time <- runif(nrow(adsl), 18, 24)
 adsl$AVAL <- pmin(tte, censor_time)
 adsl$CNSR <- as.integer(tte > censor_time)
+} # end of else (data generation)
 
 # --- Cox PH subgroup analysis ---
 estimate_hr <- function(data, var = NULL, val = NULL) {

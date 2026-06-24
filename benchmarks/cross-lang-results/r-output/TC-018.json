@@ -1,0 +1,146 @@
+{
+  "tc_id": "TC-018",
+  "tc_name": "Change from Baseline Table",
+  "metadata": {
+    "n_total": 200,
+    "n_experimental": 100,
+    "n_control": 100,
+    "population": "ITT",
+    "visits": ["BASELINE", "WEEK_6", "WEEK_12", "WEEK_18", "WEEK_24"],
+    "endpoint": "Tumor Size",
+    "endpoint_unit": "mm",
+    "r_version": "R version 4.6.0 (2026-04-24)"
+  },
+  "visits": {
+    "BASELINE": {
+      "visit": "BASELINE",
+      "experimental": {
+        "n": 100,
+        "mean_chg": 0,
+        "sd_chg": 0,
+        "median_chg": 0,
+        "se_chg": 0,
+        "ci_lower": 0,
+        "ci_upper": 0,
+        "mean_aval": 48.3125,
+        "sd_aval": 13.2835
+      },
+      "control": {
+        "n": 100,
+        "mean_chg": 0,
+        "sd_chg": 0,
+        "median_chg": 0,
+        "se_chg": 0,
+        "ci_lower": 0,
+        "ci_upper": 0,
+        "mean_aval": 50.5642,
+        "sd_aval": 14.2172
+      },
+      "p_value": 0.2486
+    },
+    "WEEK_6": {
+      "visit": "WEEK_6",
+      "experimental": {
+        "n": 100,
+        "mean_chg": -5.0869,
+        "sd_chg": 9.1288,
+        "median_chg": -6.135,
+        "se_chg": 0.9129,
+        "ci_lower": -6.8761,
+        "ci_upper": -3.2977,
+        "mean_aval": 43.2261,
+        "sd_aval": 16.0866
+      },
+      "control": {
+        "n": 100,
+        "mean_chg": -2.3967,
+        "sd_chg": 7.5986,
+        "median_chg": -2.605,
+        "se_chg": 0.7599,
+        "ci_lower": -3.886,
+        "ci_upper": -0.9074,
+        "mean_aval": 48.1671,
+        "sd_aval": 15.7315
+      },
+      "p_value": 0.0246
+    },
+    "WEEK_12": {
+      "visit": "WEEK_12",
+      "experimental": {
+        "n": 100,
+        "mean_chg": -9.5318,
+        "sd_chg": 8.0808,
+        "median_chg": -8.84,
+        "se_chg": 0.8081,
+        "ci_lower": -11.1156,
+        "ci_upper": -7.948,
+        "mean_aval": 38.781,
+        "sd_aval": 14.4428
+      },
+      "control": {
+        "n": 100,
+        "mean_chg": -0.7814,
+        "sd_chg": 9.264,
+        "median_chg": 0.075,
+        "se_chg": 0.9264,
+        "ci_lower": -2.5971,
+        "ci_upper": 1.0343,
+        "mean_aval": 49.7823,
+        "sd_aval": 16.4586
+      },
+      "p_value": 0
+    },
+    "WEEK_18": {
+      "visit": "WEEK_18",
+      "experimental": {
+        "n": 100,
+        "mean_chg": -14.7629,
+        "sd_chg": 7.9464,
+        "median_chg": -15.09,
+        "se_chg": 0.7946,
+        "ci_lower": -16.3204,
+        "ci_upper": -13.2054,
+        "mean_aval": 33.5494,
+        "sd_aval": 16.0251
+      },
+      "control": {
+        "n": 100,
+        "mean_chg": -2.7687,
+        "sd_chg": 7.5701,
+        "median_chg": -2.785,
+        "se_chg": 0.757,
+        "ci_lower": -4.2524,
+        "ci_upper": -1.285,
+        "mean_aval": 47.7952,
+        "sd_aval": 15.8536
+      },
+      "p_value": 0
+    },
+    "WEEK_24": {
+      "visit": "WEEK_24",
+      "experimental": {
+        "n": 100,
+        "mean_chg": -18.8355,
+        "sd_chg": 8.0567,
+        "median_chg": -18.945,
+        "se_chg": 0.8057,
+        "ci_lower": -20.4146,
+        "ci_upper": -17.2564,
+        "mean_aval": 29.4775,
+        "sd_aval": 16.0254
+      },
+      "control": {
+        "n": 100,
+        "mean_chg": -2.9454,
+        "sd_chg": 8.4101,
+        "median_chg": -3.73,
+        "se_chg": 0.841,
+        "ci_lower": -4.5938,
+        "ci_upper": -1.297,
+        "mean_aval": 47.6187,
+        "sd_aval": 16.6486
+      },
+      "p_value": 0
+    }
+  }
+}

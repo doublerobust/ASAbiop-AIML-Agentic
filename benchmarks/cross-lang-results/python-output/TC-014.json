@@ -1,0 +1,1031 @@
+{
+  "test_case_id": "TC-014",
+  "title": "Listing of Key Protocol Deviations",
+  "parameters": {
+    "seed": 42,
+    "n_subjects": 200
+  },
+  "population": {
+    "description": "All randomized subjects",
+    "n_experimental": 100,
+    "n_control": 100
+  },
+  "summary": {
+    "all": {
+      "n_subjects_with_pd": 60,
+      "n_total_deviations": 90,
+      "by_category": {
+        "Eligibility": {
+          "n_subjects": 10,
+          "n_deviations": 10
+        },
+        "Visit Window": {
+          "n_subjects": 20,
+          "n_deviations": 20
+        },
+        "Prohibited Medication": {
+          "n_subjects": 12,
+          "n_deviations": 12
+        },
+        "Dose Modification": {
+          "n_subjects": 16,
+          "n_deviations": 16
+        },
+        "Consent": {
+          "n_subjects": 19,
+          "n_deviations": 19
+        },
+        "Endpoint Deviation": {
+          "n_subjects": 13,
+          "n_deviations": 13
+        }
+      },
+      "by_severity": {
+        "Critical": 7,
+        "Major": 45,
+        "Minor": 38
+      }
+    },
+    "experimental": {
+      "n_subjects_with_pd": 30,
+      "n_total_deviations": 45,
+      "by_category": {
+        "Eligibility": {
+          "n_subjects": 5,
+          "n_deviations": 5
+        },
+        "Visit Window": {
+          "n_subjects": 7,
+          "n_deviations": 7
+        },
+        "Prohibited Medication": {
+          "n_subjects": 7,
+          "n_deviations": 7
+        },
+        "Dose Modification": {
+          "n_subjects": 10,
+          "n_deviations": 10
+        },
+        "Consent": {
+          "n_subjects": 8,
+          "n_deviations": 8
+        },
+        "Endpoint Deviation": {
+          "n_subjects": 8,
+          "n_deviations": 8
+        }
+      },
+      "by_severity": {
+        "Critical": 3,
+        "Major": 23,
+        "Minor": 19
+      }
+    },
+    "control": {
+      "n_subjects_with_pd": 30,
+      "n_total_deviations": 45,
+      "by_category": {
+        "Eligibility": {
+          "n_subjects": 5,
+          "n_deviations": 5
+        },
+        "Visit Window": {
+          "n_subjects": 13,
+          "n_deviations": 13
+        },
+        "Prohibited Medication": {
+          "n_subjects": 5,
+          "n_deviations": 5
+        },
+        "Dose Modification": {
+          "n_subjects": 6,
+          "n_deviations": 6
+        },
+        "Consent": {
+          "n_subjects": 11,
+          "n_deviations": 11
+        },
+        "Endpoint Deviation": {
+          "n_subjects": 5,
+          "n_deviations": 5
+        }
+      },
+      "by_severity": {
+        "Critical": 4,
+        "Major": 22,
+        "Minor": 19
+      }
+    }
+  },
+  "listing": [
+    {
+      "USUBJID": "SUBJ-0101",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-01",
+      "PDDESC": "Visit conducted outside protocol-specified window (+7 days)",
+      "PDDY": 182,
+      "PDDTC": "2025-07-16",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0101",
+      "TRT01A": "Control",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-03",
+      "PDDESC": "Dose administered outside \u00b110% of protocol-specified dose",
+      "PDDY": 212,
+      "PDDTC": "2025-08-15",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0104",
+      "TRT01A": "Control",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-01",
+      "PDDESC": "Primary endpoint assessment not performed per schedule",
+      "PDDY": 184,
+      "PDDTC": "2025-07-18",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0104",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-03",
+      "PDDESC": "Visit conducted >14 days outside window",
+      "PDDY": 331,
+      "PDDTC": "2025-12-12",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0105",
+      "TRT01A": "Control",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-01",
+      "PDDESC": "Informed consent form version not current",
+      "PDDY": 10,
+      "PDDTC": "2025-01-25",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0106",
+      "TRT01A": "Control",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-01",
+      "PDDESC": "Primary endpoint assessment not performed per schedule",
+      "PDDY": 313,
+      "PDDTC": "2025-11-24",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0122",
+      "TRT01A": "Control",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-02",
+      "PDDESC": "Imaging assessment not reviewed by independent radiologist",
+      "PDDY": 95,
+      "PDDTC": "2025-04-20",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0122",
+      "TRT01A": "Control",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-02",
+      "PDDESC": "Consent re-consent not obtained after protocol amendment",
+      "PDDY": 109,
+      "PDDTC": "2025-05-04",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0126",
+      "TRT01A": "Control",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-01",
+      "PDDESC": "Dose modification not per protocol algorithm",
+      "PDDY": 106,
+      "PDDTC": "2025-05-01",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0127",
+      "TRT01A": "Control",
+      "PD_CAT": "Eligibility",
+      "PD_CODE": "ELIG-01",
+      "PDDESC": "Inclusion criterion not met: baseline lab value outside range",
+      "PDDY": 54,
+      "PDDTC": "2025-03-10",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0127",
+      "TRT01A": "Control",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-02",
+      "PDDESC": "Consent re-consent not obtained after protocol amendment",
+      "PDDY": 65,
+      "PDDTC": "2025-03-21",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0127",
+      "TRT01A": "Control",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-02",
+      "PDDESC": "Prior medication washout period not completed",
+      "PDDY": 355,
+      "PDDTC": "2026-01-05",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0129",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-01",
+      "PDDESC": "Visit conducted outside protocol-specified window (+7 days)",
+      "PDDY": 17,
+      "PDDTC": "2025-02-01",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0133",
+      "TRT01A": "Control",
+      "PD_CAT": "Eligibility",
+      "PD_CODE": "ELIG-01",
+      "PDDESC": "Inclusion criterion not met: baseline lab value outside range",
+      "PDDY": 283,
+      "PDDTC": "2025-10-25",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0142",
+      "TRT01A": "Control",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-01",
+      "PDDESC": "Concomitant medication prohibited per protocol",
+      "PDDY": 21,
+      "PDDTC": "2025-02-05",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0143",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-03",
+      "PDDESC": "Visit conducted >14 days outside window",
+      "PDDY": 117,
+      "PDDTC": "2025-05-12",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0149",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-03",
+      "PDDESC": "Visit conducted >14 days outside window",
+      "PDDY": 112,
+      "PDDTC": "2025-05-07",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0151",
+      "TRT01A": "Control",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-02",
+      "PDDESC": "Consent re-consent not obtained after protocol amendment",
+      "PDDY": 43,
+      "PDDTC": "2025-02-27",
+      "SEVERITY": "Critical"
+    },
+    {
+      "USUBJID": "SUBJ-0156",
+      "TRT01A": "Control",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-01",
+      "PDDESC": "Primary endpoint assessment not performed per schedule",
+      "PDDY": 22,
+      "PDDTC": "2025-02-06",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0156",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-03",
+      "PDDESC": "Visit conducted >14 days outside window",
+      "PDDY": 196,
+      "PDDTC": "2025-07-30",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0160",
+      "TRT01A": "Control",
+      "PD_CAT": "Eligibility",
+      "PD_CODE": "ELIG-03",
+      "PDDESC": "Informed consent obtained after first dose",
+      "PDDY": 35,
+      "PDDTC": "2025-02-19",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0160",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-01",
+      "PDDESC": "Visit conducted outside protocol-specified window (+7 days)",
+      "PDDY": 361,
+      "PDDTC": "2026-01-11",
+      "SEVERITY": "Critical"
+    },
+    {
+      "USUBJID": "SUBJ-0161",
+      "TRT01A": "Control",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-03",
+      "PDDESC": "Dose administered outside \u00b110% of protocol-specified dose",
+      "PDDY": 341,
+      "PDDTC": "2025-12-22",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0163",
+      "TRT01A": "Control",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-01",
+      "PDDESC": "Informed consent form version not current",
+      "PDDY": 317,
+      "PDDTC": "2025-11-28",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0164",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-01",
+      "PDDESC": "Visit conducted outside protocol-specified window (+7 days)",
+      "PDDY": 52,
+      "PDDTC": "2025-03-08",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0164",
+      "TRT01A": "Control",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-01",
+      "PDDESC": "Informed consent form version not current",
+      "PDDY": 364,
+      "PDDTC": "2026-01-14",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0166",
+      "TRT01A": "Control",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-01",
+      "PDDESC": "Informed consent form version not current",
+      "PDDY": 153,
+      "PDDTC": "2025-06-17",
+      "SEVERITY": "Critical"
+    },
+    {
+      "USUBJID": "SUBJ-0168",
+      "TRT01A": "Control",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-02",
+      "PDDESC": "Prior medication washout period not completed",
+      "PDDY": 258,
+      "PDDTC": "2025-09-30",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0169",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-03",
+      "PDDESC": "Visit conducted >14 days outside window",
+      "PDDY": 174,
+      "PDDTC": "2025-07-08",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0171",
+      "TRT01A": "Control",
+      "PD_CAT": "Eligibility",
+      "PD_CODE": "ELIG-02",
+      "PDDESC": "Exclusion criterion violated: prior therapy within washout period",
+      "PDDY": 247,
+      "PDDTC": "2025-09-19",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0178",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-02",
+      "PDDESC": "Missing required assessment at scheduled visit",
+      "PDDY": 139,
+      "PDDTC": "2025-06-03",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0178",
+      "TRT01A": "Control",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-01",
+      "PDDESC": "Concomitant medication prohibited per protocol",
+      "PDDY": 228,
+      "PDDTC": "2025-08-31",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0179",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-03",
+      "PDDESC": "Visit conducted >14 days outside window",
+      "PDDY": 87,
+      "PDDTC": "2025-04-12",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0180",
+      "TRT01A": "Control",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-02",
+      "PDDESC": "Treatment delay >7 days without protocol authorization",
+      "PDDY": 287,
+      "PDDTC": "2025-10-29",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0180",
+      "TRT01A": "Control",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-01",
+      "PDDESC": "Informed consent form version not current",
+      "PDDY": 308,
+      "PDDTC": "2025-11-19",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0182",
+      "TRT01A": "Control",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-01",
+      "PDDESC": "Informed consent form version not current",
+      "PDDY": 129,
+      "PDDTC": "2025-05-24",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0182",
+      "TRT01A": "Control",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-02",
+      "PDDESC": "Treatment delay >7 days without protocol authorization",
+      "PDDY": 308,
+      "PDDTC": "2025-11-19",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0182",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-01",
+      "PDDESC": "Visit conducted outside protocol-specified window (+7 days)",
+      "PDDY": 339,
+      "PDDTC": "2025-12-20",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0190",
+      "TRT01A": "Control",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-01",
+      "PDDESC": "Informed consent form version not current",
+      "PDDY": 256,
+      "PDDTC": "2025-09-28",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0191",
+      "TRT01A": "Control",
+      "PD_CAT": "Eligibility",
+      "PD_CODE": "ELIG-03",
+      "PDDESC": "Informed consent obtained after first dose",
+      "PDDY": 280,
+      "PDDTC": "2025-10-22",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0192",
+      "TRT01A": "Control",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-02",
+      "PDDESC": "Imaging assessment not reviewed by independent radiologist",
+      "PDDY": 114,
+      "PDDTC": "2025-05-09",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0192",
+      "TRT01A": "Control",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-01",
+      "PDDESC": "Concomitant medication prohibited per protocol",
+      "PDDY": 269,
+      "PDDTC": "2025-10-11",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0192",
+      "TRT01A": "Control",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-02",
+      "PDDESC": "Missing required assessment at scheduled visit",
+      "PDDY": 344,
+      "PDDTC": "2025-12-25",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0200",
+      "TRT01A": "Control",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-02",
+      "PDDESC": "Treatment delay >7 days without protocol authorization",
+      "PDDY": 68,
+      "PDDTC": "2025-03-24",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0200",
+      "TRT01A": "Control",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-01",
+      "PDDESC": "Informed consent form version not current",
+      "PDDY": 219,
+      "PDDTC": "2025-08-22",
+      "SEVERITY": "Critical"
+    },
+    {
+      "USUBJID": "SUBJ-0005",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-03",
+      "PDDESC": "Dose administered outside \u00b110% of protocol-specified dose",
+      "PDDY": 167,
+      "PDDTC": "2025-07-01",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0005",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-02",
+      "PDDESC": "Consent re-consent not obtained after protocol amendment",
+      "PDDY": 345,
+      "PDDTC": "2025-12-26",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0009",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-02",
+      "PDDESC": "Imaging assessment not reviewed by independent radiologist",
+      "PDDY": 189,
+      "PDDTC": "2025-07-23",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0009",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-01",
+      "PDDESC": "Informed consent form version not current",
+      "PDDY": 246,
+      "PDDTC": "2025-09-18",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0012",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-01",
+      "PDDESC": "Informed consent form version not current",
+      "PDDY": 50,
+      "PDDTC": "2025-03-06",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0012",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-02",
+      "PDDESC": "Missing required assessment at scheduled visit",
+      "PDDY": 223,
+      "PDDTC": "2025-08-26",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0013",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-01",
+      "PDDESC": "Concomitant medication prohibited per protocol",
+      "PDDY": 301,
+      "PDDTC": "2025-11-12",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0013",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-02",
+      "PDDESC": "Consent re-consent not obtained after protocol amendment",
+      "PDDY": 306,
+      "PDDTC": "2025-11-17",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0022",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-02",
+      "PDDESC": "Consent re-consent not obtained after protocol amendment",
+      "PDDY": 69,
+      "PDDTC": "2025-03-25",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0022",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-01",
+      "PDDESC": "Visit conducted outside protocol-specified window (+7 days)",
+      "PDDY": 365,
+      "PDDTC": "2026-01-15",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0027",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-02",
+      "PDDESC": "Missing required assessment at scheduled visit",
+      "PDDY": 118,
+      "PDDTC": "2025-05-13",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0027",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-01",
+      "PDDESC": "Primary endpoint assessment not performed per schedule",
+      "PDDY": 355,
+      "PDDTC": "2026-01-05",
+      "SEVERITY": "Critical"
+    },
+    {
+      "USUBJID": "SUBJ-0032",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-02",
+      "PDDESC": "Consent re-consent not obtained after protocol amendment",
+      "PDDY": 93,
+      "PDDTC": "2025-04-18",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0032",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Eligibility",
+      "PD_CODE": "ELIG-03",
+      "PDDESC": "Informed consent obtained after first dose",
+      "PDDY": 140,
+      "PDDTC": "2025-06-04",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0034",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-01",
+      "PDDESC": "Informed consent form version not current",
+      "PDDY": 68,
+      "PDDTC": "2025-03-24",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0034",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Eligibility",
+      "PD_CODE": "ELIG-01",
+      "PDDESC": "Inclusion criterion not met: baseline lab value outside range",
+      "PDDY": 240,
+      "PDDTC": "2025-09-12",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0037",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-01",
+      "PDDESC": "Primary endpoint assessment not performed per schedule",
+      "PDDY": 301,
+      "PDDTC": "2025-11-12",
+      "SEVERITY": "Critical"
+    },
+    {
+      "USUBJID": "SUBJ-0038",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-02",
+      "PDDESC": "Prior medication washout period not completed",
+      "PDDY": 364,
+      "PDDTC": "2026-01-14",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0041",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-02",
+      "PDDESC": "Treatment delay >7 days without protocol authorization",
+      "PDDY": 85,
+      "PDDTC": "2025-04-10",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0043",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-03",
+      "PDDESC": "Dose administered outside \u00b110% of protocol-specified dose",
+      "PDDY": 121,
+      "PDDTC": "2025-05-16",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0043",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Consent",
+      "PD_CODE": "CONSENT-02",
+      "PDDESC": "Consent re-consent not obtained after protocol amendment",
+      "PDDY": 210,
+      "PDDTC": "2025-08-13",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0045",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-02",
+      "PDDESC": "Imaging assessment not reviewed by independent radiologist",
+      "PDDY": 153,
+      "PDDTC": "2025-06-17",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0045",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-01",
+      "PDDESC": "Dose modification not per protocol algorithm",
+      "PDDY": 340,
+      "PDDTC": "2025-12-21",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0046",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-01",
+      "PDDESC": "Primary endpoint assessment not performed per schedule",
+      "PDDY": 66,
+      "PDDTC": "2025-03-22",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0061",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-01",
+      "PDDESC": "Concomitant medication prohibited per protocol",
+      "PDDY": 193,
+      "PDDTC": "2025-07-27",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0061",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-02",
+      "PDDESC": "Treatment delay >7 days without protocol authorization",
+      "PDDY": 222,
+      "PDDTC": "2025-08-25",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0062",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-01",
+      "PDDESC": "Concomitant medication prohibited per protocol",
+      "PDDY": 125,
+      "PDDTC": "2025-05-20",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0063",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-01",
+      "PDDESC": "Visit conducted outside protocol-specified window (+7 days)",
+      "PDDY": 308,
+      "PDDTC": "2025-11-19",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0067",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-02",
+      "PDDESC": "Prior medication washout period not completed",
+      "PDDY": 310,
+      "PDDTC": "2025-11-21",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0069",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-01",
+      "PDDESC": "Dose modification not per protocol algorithm",
+      "PDDY": 69,
+      "PDDTC": "2025-03-25",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0069",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-02",
+      "PDDESC": "Imaging assessment not reviewed by independent radiologist",
+      "PDDY": 181,
+      "PDDTC": "2025-07-15",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0072",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-03",
+      "PDDESC": "Dose administered outside \u00b110% of protocol-specified dose",
+      "PDDY": 194,
+      "PDDTC": "2025-07-28",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0074",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-01",
+      "PDDESC": "Concomitant medication prohibited per protocol",
+      "PDDY": 219,
+      "PDDTC": "2025-08-22",
+      "SEVERITY": "Critical"
+    },
+    {
+      "USUBJID": "SUBJ-0075",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-02",
+      "PDDESC": "Imaging assessment not reviewed by independent radiologist",
+      "PDDY": 69,
+      "PDDTC": "2025-03-25",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0075",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Eligibility",
+      "PD_CODE": "ELIG-01",
+      "PDDESC": "Inclusion criterion not met: baseline lab value outside range",
+      "PDDY": 226,
+      "PDDTC": "2025-08-29",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0078",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-01",
+      "PDDESC": "Visit conducted outside protocol-specified window (+7 days)",
+      "PDDY": 39,
+      "PDDTC": "2025-02-23",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0082",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Eligibility",
+      "PD_CODE": "ELIG-02",
+      "PDDESC": "Exclusion criterion violated: prior therapy within washout period",
+      "PDDY": 29,
+      "PDDTC": "2025-02-13",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0088",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Eligibility",
+      "PD_CODE": "ELIG-03",
+      "PDDESC": "Informed consent obtained after first dose",
+      "PDDY": 121,
+      "PDDTC": "2025-05-16",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0089",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Endpoint Deviation",
+      "PD_CODE": "ENDPT-02",
+      "PDDESC": "Imaging assessment not reviewed by independent radiologist",
+      "PDDY": 57,
+      "PDDTC": "2025-03-13",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0089",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Prohibited Medication",
+      "PD_CODE": "PROHIB-02",
+      "PDDESC": "Prior medication washout period not completed",
+      "PDDY": 365,
+      "PDDTC": "2026-01-15",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0095",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-01",
+      "PDDESC": "Dose modification not per protocol algorithm",
+      "PDDY": 167,
+      "PDDTC": "2025-07-01",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0095",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-03",
+      "PDDESC": "Visit conducted >14 days outside window",
+      "PDDY": 227,
+      "PDDTC": "2025-08-30",
+      "SEVERITY": "Minor"
+    },
+    {
+      "USUBJID": "SUBJ-0096",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Visit Window",
+      "PD_CODE": "VISIT-02",
+      "PDDESC": "Missing required assessment at scheduled visit",
+      "PDDY": 262,
+      "PDDTC": "2025-10-04",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0098",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-03",
+      "PDDESC": "Dose administered outside \u00b110% of protocol-specified dose",
+      "PDDY": 123,
+      "PDDTC": "2025-05-18",
+      "SEVERITY": "Major"
+    },
+    {
+      "USUBJID": "SUBJ-0099",
+      "TRT01A": "Experimental",
+      "PD_CAT": "Dose Modification",
+      "PD_CODE": "DOSE-03",
+      "PDDESC": "Dose administered outside \u00b110% of protocol-specified dose",
+      "PDDY": 30,
+      "PDDTC": "2025-02-14",
+      "SEVERITY": "Minor"
+    }
+  ],
+  "metadata": {
+    "language": "Python",
+    "sorting": "TRT01A, USUBJID, PDDY",
+    "packages": [
+      "json",
+      "random",
+      "datetime"
+    ]
+  }
+}
