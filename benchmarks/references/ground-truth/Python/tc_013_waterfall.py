@@ -24,6 +24,8 @@ parser = argparse.ArgumentParser(description="TC-013 Waterfall Plot Data")
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--n", type=int, default=150)
 parser.add_argument("--output", type=str, default="tc-013-output.json")
+parser.add_argument("--data-csv", type=str, default=None,
+                    help="Load shared tumor response dataset from CSV instead of generating")
 args = parser.parse_args()
 
 random.seed(args.seed)
@@ -78,7 +80,18 @@ def generate_tumor_response(n, seed_offset):
     return records
 
 
-subjects = generate_tumor_response(n_subjects, 100)
+if args.data_csv:
+    import csv
+    subjects = []
+    with open(args.data_csv, newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            # Convert numeric fields
+            row["BASELINE"] = float(row["BASELINE"])
+            row["BESTPCHG"] = float(row["BESTPCHG"])
+            subjects.append(row)
+else:
+    subjects = generate_tumor_response(n_subjects, 100)
 
 # Sort by best % change (ascending for waterfall)
 subjects.sort(key=lambda x: x["BESTPCHG"])

@@ -21,6 +21,8 @@ parser = argparse.ArgumentParser(description="TC-014 Protocol Deviation Listing"
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--n", type=int, default=200)
 parser.add_argument("--output", type=str, default="tc-014-output.json")
+parser.add_argument("--data-csv", type=str, default=None,
+                    help="Load shared PD dataset from CSV instead of generating")
 args = parser.parse_args()
 
 random.seed(args.seed)
@@ -103,9 +105,18 @@ def generate_protocol_deviations(subjids, arm, seed_offset):
 subjid_exp = [f"SUBJ-{i:04d}" for i in range(1, n_arm + 1)]
 subjid_ctl = [f"SUBJ-{i:04d}" for i in range(n_arm + 1, n_subjects + 1)]
 
-pds_exp = generate_protocol_deviations(subjid_exp, "Experimental", 100)
-pds_ctl = generate_protocol_deviations(subjid_ctl, "Control", 200)
-all_pds = pds_exp + pds_ctl
+if args.data_csv:
+    import csv
+    all_pds = []
+    with open(args.data_csv, newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            row["PDDY"] = int(row["PDDY"])
+            all_pds.append(row)
+else:
+    pds_exp = generate_protocol_deviations(subjid_exp, "Experimental", 100)
+    pds_ctl = generate_protocol_deviations(subjid_ctl, "Control", 200)
+    all_pds = pds_exp + pds_ctl
 
 # Sort by subject ID
 all_pds.sort(key=lambda x: (x["TRT01A"], x["USUBJID"], x["PDDY"]))

@@ -9,86 +9,92 @@ suppressPackageStartupMessages({
 })
 
 args <- commandArgs(trailingOnly = TRUE)
-seed <- 42; n_subjects <- 200; output_file <- "tc-014-output.json"
+seed <- 42; n_subjects <- 200; output_file <- "tc-014-output.json"; data_csv <- ""
 i <- 1
 while (i <= length(args)) {
   if (args[i] == "--seed") { seed <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--n") { n_subjects <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--output") { output_file <- args[i + 1]; i <- i + 2 }
+  else if (args[i] == "--data") { data_csv <- args[i + 1]; i <- i + 2 }
   else { i <- i + 1 }
 }
 
 set.seed(seed)
 n_arm <- n_subjects / 2
 
-# PD catalog
+# PD catalog (needed for summary computation regardless of data source)
 pd_catalog <- list(
-  "Eligibility" = list(
-    c("ELIG-01", "Inclusion criterion not met: baseline lab value outside range"),
-    c("ELIG-02", "Exclusion criterion violated: prior therapy within washout period"),
-    c("ELIG-03", "Informed consent obtained after first dose")
-  ),
-  "Visit Window" = list(
-    c("VISIT-01", "Visit conducted outside protocol-specified window (+7 days)"),
-    c("VISIT-02", "Missing required assessment at scheduled visit"),
-    c("VISIT-03", "Visit conducted >14 days outside window")
-  ),
-  "Prohibited Medication" = list(
-    c("PROHIB-01", "Concomitant medication prohibited per protocol"),
-    c("PROHIB-02", "Prior medication washout period not completed")
-  ),
-  "Dose Modification" = list(
-    c("DOSE-01", "Dose modification not per protocol algorithm"),
-    c("DOSE-02", "Treatment delay >7 days without protocol authorization"),
-    c("DOSE-03", "Dose administered outside \u00b110% of protocol-specified dose")
-  ),
-  "Consent" = list(
-    c("CONSENT-01", "Informed consent form version not current"),
-    c("CONSENT-02", "Consent re-consent not obtained after protocol amendment")
-  ),
-  "Endpoint Deviation" = list(
-    c("ENDPT-01", "Primary endpoint assessment not performed per schedule"),
-    c("ENDPT-02", "Imaging assessment not reviewed by independent radiologist")
+    "Eligibility" = list(
+      c("ELIG-01", "Inclusion criterion not met: baseline lab value outside range"),
+      c("ELIG-02", "Exclusion criterion violated: prior therapy within washout period"),
+      c("ELIG-03", "Informed consent obtained after first dose")
+    ),
+    "Visit Window" = list(
+      c("VISIT-01", "Visit conducted outside protocol-specified window (+7 days)"),
+      c("VISIT-02", "Missing required assessment at scheduled visit"),
+      c("VISIT-03", "Visit conducted >14 days outside window")
+    ),
+    "Prohibited Medication" = list(
+      c("PROHIB-01", "Concomitant medication prohibited per protocol"),
+      c("PROHIB-02", "Prior medication washout period not completed")
+    ),
+    "Dose Modification" = list(
+      c("DOSE-01", "Dose modification not per protocol algorithm"),
+      c("DOSE-02", "Treatment delay >7 days without protocol authorization"),
+      c("DOSE-03", "Dose administered outside \u00b110% of protocol-specified dose")
+    ),
+    "Consent" = list(
+      c("CONSENT-01", "Informed consent form version not current"),
+      c("CONSENT-02", "Consent re-consent not obtained after protocol amendment")
+    ),
+    "Endpoint Deviation" = list(
+      c("ENDPT-01", "Primary endpoint assessment not performed per schedule"),
+      c("ENDPT-02", "Imaging assessment not reviewed by independent radiologist")
+    )
   )
-)
 
-generate_pds <- function(subjids, arm, seed_offset) {
-  set.seed(seed + seed_offset)
-  study_start <- as.Date("2025-01-15")
-  records <- list()
+if (data_csv != "") {
+  # Load shared protocol deviation dataset from CSV
+  all_pds <- read.csv(data_csv, stringsAsFactors = FALSE)
+} else {
+  generate_pds <- function(subjids, arm, seed_offset) {
+    set.seed(seed + seed_offset)
+    study_start <- as.Date("2025-01-15")
+    records <- list()
 
-  pd_subjects <- sample(subjids, floor(length(subjids) * 0.30))
+    pd_subjects <- sample(subjids, floor(length(subjids) * 0.30))
 
-  for (subj in pd_subjects) {
-    n_pds <- sample(1:3, 1, prob = c(0.6, 0.3, 0.1))
-    cats <- sample(names(pd_catalog), min(n_pds, length(pd_catalog)))
+    for (subj in pd_subjects) {
+      n_pds <- sample(1:3, 1, prob = c(0.6, 0.3, 0.1))
+      cats <- sample(names(pd_catalog), min(n_pds, length(pd_catalog)))
 
-    for (cat in cats) {
-      code_desc <- sample(pd_catalog[[cat]], 1)[[1]]
-      study_day <- sample(1:365, 1)
-      pd_date <- study_start + study_day
+      for (cat in cats) {
+        code_desc <- sample(pd_catalog[[cat]], 1)[[1]]
+        study_day <- sample(1:365, 1)
+        pd_date <- study_start + study_day
 
-      severity <- sample(c("Major", "Minor", "Critical"), 1, prob = c(0.5, 0.35, 0.15))
+        severity <- sample(c("Major", "Minor", "Critical"), 1, prob = c(0.5, 0.35, 0.15))
 
-      records[[length(records) + 1]] <- list(
-        USUBJID = subj, TRT01A = arm, PD_CAT = cat,
-        PD_CODE = code_desc[1], PDDESC = code_desc[2],
-        PDDY = study_day, PDDTC = format(pd_date, "%Y-%m-%d"),
-        SEVERITY = severity
-      )
+        records[[length(records) + 1]] <- list(
+          USUBJID = subj, TRT01A = arm, PD_CAT = cat,
+          PD_CODE = code_desc[1], PDDESC = code_desc[2],
+          PDDY = study_day, PDDTC = format(pd_date, "%Y-%m-%d"),
+          SEVERITY = severity
+        )
+      }
     }
+
+    if (length(records) == 0) return(data.frame())
+    do.call(rbind, lapply(records, as.data.frame, stringsAsFactors = FALSE))
   }
 
-  if (length(records) == 0) return(data.frame())
-  do.call(rbind, lapply(records, as.data.frame, stringsAsFactors = FALSE))
+  subjid_exp <- paste0("SUBJ-", sprintf("%04d", 1:n_arm))
+  subjid_ctl <- paste0("SUBJ-", sprintf("%04d", (n_arm + 1):n_subjects))
+
+  pds_exp <- generate_pds(subjid_exp, "Experimental", 100)
+  pds_ctl <- generate_pds(subjid_ctl, "Control", 200)
+  all_pds <- rbind(pds_exp, pds_ctl)
 }
-
-subjid_exp <- paste0("SUBJ-", sprintf("%04d", 1:n_arm))
-subjid_ctl <- paste0("SUBJ-", sprintf("%04d", (n_arm + 1):n_subjects))
-
-pds_exp <- generate_pds(subjid_exp, "Experimental", 100)
-pds_ctl <- generate_pds(subjid_ctl, "Control", 200)
-all_pds <- rbind(pds_exp, pds_ctl)
 
 # Sort
 all_pds <- all_pds[order(all_pds$TRT01A, all_pds$USUBJID, all_pds$PDDY), ]

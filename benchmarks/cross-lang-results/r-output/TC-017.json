@@ -19,127 +19,127 @@
   "shift_overall": {
     "counts": {
       "LOW": {
-        "LOW": 25,
-        "NORMAL": 1,
-        "HIGH": 0
+        "LOW": 3,
+        "NORMAL": 21,
+        "HIGH": 1
       },
       "NORMAL": {
-        "LOW": 45,
-        "NORMAL": 105,
-        "HIGH": 2
+        "LOW": 16,
+        "NORMAL": 132,
+        "HIGH": 5
       },
       "HIGH": {
-        "LOW": 0,
-        "NORMAL": 13,
-        "HIGH": 9
+        "LOW": 1,
+        "NORMAL": 17,
+        "HIGH": 4
       }
     },
     "percentages": [
       {
-        "LOW": 12.5,
-        "NORMAL": 0.5,
-        "HIGH": 0
+        "LOW": 1.5,
+        "NORMAL": 10.5,
+        "HIGH": 0.5
       },
       {
-        "LOW": 22.5,
-        "NORMAL": 52.5,
-        "HIGH": 1
+        "LOW": 8,
+        "NORMAL": 66,
+        "HIGH": 2.5
       },
       {
-        "LOW": 0,
-        "NORMAL": 6.5,
-        "HIGH": 4.5
+        "LOW": 0.5,
+        "NORMAL": 8.5,
+        "HIGH": 2
       }
     ],
     "n_total": 200,
-    "n_stable_normal": 105,
-    "n_low_to_normal": 1,
-    "n_normal_to_low": 45,
-    "n_normal_to_high": 2,
-    "n_high_to_normal": 13
+    "n_stable_normal": 132,
+    "n_low_to_normal": 21,
+    "n_normal_to_low": 16,
+    "n_normal_to_high": 5,
+    "n_high_to_normal": 17
   },
   "shift_experimental": {
     "counts": {
       "LOW": {
-        "LOW": 13,
-        "NORMAL": 0,
-        "HIGH": 0
+        "LOW": 1,
+        "NORMAL": 9,
+        "HIGH": 1
       },
       "NORMAL": {
-        "LOW": 29,
-        "NORMAL": 48,
-        "HIGH": 0
+        "LOW": 6,
+        "NORMAL": 69,
+        "HIGH": 4
       },
       "HIGH": {
-        "LOW": 0,
-        "NORMAL": 7,
-        "HIGH": 3
+        "LOW": 1,
+        "NORMAL": 9,
+        "HIGH": 0
       }
     },
     "percentages": [
       {
-        "LOW": 13,
-        "NORMAL": 0,
-        "HIGH": 0
+        "LOW": 1,
+        "NORMAL": 9,
+        "HIGH": 1
       },
       {
-        "LOW": 29,
-        "NORMAL": 48,
-        "HIGH": 0
+        "LOW": 6,
+        "NORMAL": 69,
+        "HIGH": 4
       },
       {
-        "LOW": 0,
-        "NORMAL": 7,
-        "HIGH": 3
+        "LOW": 1,
+        "NORMAL": 9,
+        "HIGH": 0
       }
     ],
     "n_total": 100,
-    "n_stable_normal": 48,
-    "n_low_to_normal": 0,
-    "n_normal_to_low": 29,
-    "n_normal_to_high": 0,
-    "n_high_to_normal": 7
+    "n_stable_normal": 69,
+    "n_low_to_normal": 9,
+    "n_normal_to_low": 6,
+    "n_normal_to_high": 4,
+    "n_high_to_normal": 9
   },
   "shift_control": {
     "counts": {
       "LOW": {
-        "LOW": 12,
-        "NORMAL": 1,
+        "LOW": 2,
+        "NORMAL": 12,
         "HIGH": 0
       },
       "NORMAL": {
-        "LOW": 16,
-        "NORMAL": 57,
-        "HIGH": 2
+        "LOW": 10,
+        "NORMAL": 63,
+        "HIGH": 1
       },
       "HIGH": {
         "LOW": 0,
-        "NORMAL": 6,
-        "HIGH": 6
+        "NORMAL": 8,
+        "HIGH": 4
       }
     },
     "percentages": [
       {
-        "LOW": 12,
-        "NORMAL": 1,
+        "LOW": 2,
+        "NORMAL": 12,
         "HIGH": 0
       },
       {
-        "LOW": 16,
-        "NORMAL": 57,
-        "HIGH": 2
+        "LOW": 10,
+        "NORMAL": 63,
+        "HIGH": 1
       },
       {
         "LOW": 0,
-        "NORMAL": 6,
-        "HIGH": 6
+        "NORMAL": 8,
+        "HIGH": 4
       }
     ],
     "n_total": 100,
-    "n_stable_normal": 57,
-    "n_low_to_normal": 1,
-    "n_normal_to_low": 16,
-    "n_normal_to_high": 2,
-    "n_high_to_normal": 6
+    "n_stable_normal": 63,
+    "n_low_to_normal": 12,
+    "n_normal_to_low": 10,
+    "n_normal_to_high": 1,
+    "n_high_to_normal": 8
   }
 }

@@ -17,26 +17,26 @@
       "pt": null,
       "n_experimental": 100,
       "pct_experimental": 100,
-      "n_control": 96,
-      "pct_control": 96
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "summary",
       "soc": "Serious adverse events",
       "pt": null,
-      "n_experimental": 44,
-      "pct_experimental": 44,
-      "n_control": 33,
-      "pct_control": 33
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "summary",
       "soc": "Adverse events leading to discontinuation",
       "pt": null,
-      "n_experimental": 39,
-      "pct_experimental": 39,
-      "n_control": 34,
-      "pct_control": 34
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     }
   ],
   "ae_table": [
@@ -46,368 +46,368 @@
       "pt": null,
       "n_experimental": 100,
       "pct_experimental": 100,
-      "n_control": 96,
-      "pct_control": 96
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "summary",
       "soc": "Serious adverse events",
       "pt": null,
-      "n_experimental": 44,
-      "pct_experimental": 44,
-      "n_control": 33,
-      "pct_control": 33
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "summary",
       "soc": "Adverse events leading to discontinuation",
       "pt": null,
-      "n_experimental": 39,
-      "pct_experimental": 39,
-      "n_control": 34,
-      "pct_control": 34
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "soc",
       "soc": "Gastrointestinal disorders",
       "pt": null,
-      "n_experimental": 55,
-      "pct_experimental": 55,
-      "n_control": 62,
-      "pct_control": 62
-    },
-    {
-      "category": "pt",
-      "soc": "Gastrointestinal disorders",
-      "pt": "Nausea",
-      "n_experimental": 32,
-      "pct_experimental": 32,
-      "n_control": 11,
-      "pct_control": 11
-    },
-    {
-      "category": "pt",
-      "soc": "Gastrointestinal disorders",
-      "pt": "Vomiting",
-      "n_experimental": 5,
-      "pct_experimental": 5,
-      "n_control": 27,
-      "pct_control": 27
-    },
-    {
-      "category": "pt",
-      "soc": "Gastrointestinal disorders",
-      "pt": "Constipation",
-      "n_experimental": 13,
-      "pct_experimental": 13,
-      "n_control": 23,
-      "pct_control": 23
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Gastrointestinal disorders",
       "pt": "Abdominal pain",
-      "n_experimental": 17,
-      "pct_experimental": 17,
-      "n_control": 8,
-      "pct_control": 8
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
+    },
+    {
+      "category": "pt",
+      "soc": "Gastrointestinal disorders",
+      "pt": "Constipation",
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Gastrointestinal disorders",
       "pt": "Diarrhoea",
-      "n_experimental": 12,
-      "pct_experimental": 12,
-      "n_control": 16,
-      "pct_control": 16
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
+    },
+    {
+      "category": "pt",
+      "soc": "Gastrointestinal disorders",
+      "pt": "Nausea",
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
+    },
+    {
+      "category": "pt",
+      "soc": "Gastrointestinal disorders",
+      "pt": "Vomiting",
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "soc",
       "soc": "General disorders and administration site conditions",
       "pt": null,
-      "n_experimental": 37,
-      "pct_experimental": 37,
-      "n_control": 38,
-      "pct_control": 38
-    },
-    {
-      "category": "pt",
-      "soc": "General disorders and administration site conditions",
-      "pt": "Pyrexia",
-      "n_experimental": 28,
-      "pct_experimental": 28,
-      "n_control": 6,
-      "pct_control": 6
-    },
-    {
-      "category": "pt",
-      "soc": "General disorders and administration site conditions",
-      "pt": "Fatigue",
-      "n_experimental": 2,
-      "pct_experimental": 2,
-      "n_control": 21,
-      "pct_control": 21
-    },
-    {
-      "category": "pt",
-      "soc": "General disorders and administration site conditions",
-      "pt": "Oedema peripheral",
-      "n_experimental": 2,
-      "pct_experimental": 2,
-      "n_control": 15,
-      "pct_control": 15
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "General disorders and administration site conditions",
       "pt": "Asthenia",
-      "n_experimental": 6,
-      "pct_experimental": 6,
-      "n_control": 4,
-      "pct_control": 4
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
+    },
+    {
+      "category": "pt",
+      "soc": "General disorders and administration site conditions",
+      "pt": "Fatigue",
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
+    },
+    {
+      "category": "pt",
+      "soc": "General disorders and administration site conditions",
+      "pt": "Oedema peripheral",
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
+    },
+    {
+      "category": "pt",
+      "soc": "General disorders and administration site conditions",
+      "pt": "Pyrexia",
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "soc",
       "soc": "Infections and infestations",
       "pt": null,
-      "n_experimental": 50,
-      "pct_experimental": 50,
-      "n_control": 38,
-      "pct_control": 38
-    },
-    {
-      "category": "pt",
-      "soc": "Infections and infestations",
-      "pt": "Urinary tract infection",
-      "n_experimental": 29,
-      "pct_experimental": 29,
-      "n_control": 3,
-      "pct_control": 3
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Infections and infestations",
       "pt": "Nasopharyngitis",
-      "n_experimental": 23,
-      "pct_experimental": 23,
-      "n_control": 24,
-      "pct_control": 24
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Infections and infestations",
       "pt": "Upper respiratory tract infection",
-      "n_experimental": 13,
-      "pct_experimental": 13,
-      "n_control": 16,
-      "pct_control": 16
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
+    },
+    {
+      "category": "pt",
+      "soc": "Infections and infestations",
+      "pt": "Urinary tract infection",
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "soc",
       "soc": "Investigations",
       "pt": null,
-      "n_experimental": 36,
-      "pct_experimental": 36,
-      "n_control": 52,
-      "pct_control": 52
-    },
-    {
-      "category": "pt",
-      "soc": "Investigations",
-      "pt": "AST increased",
-      "n_experimental": 3,
-      "pct_experimental": 3,
-      "n_control": 24,
-      "pct_control": 24
-    },
-    {
-      "category": "pt",
-      "soc": "Investigations",
-      "pt": "Weight decreased",
-      "n_experimental": 8,
-      "pct_experimental": 8,
-      "n_control": 24,
-      "pct_control": 24
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Investigations",
       "pt": "ALT increased",
-      "n_experimental": 18,
-      "pct_experimental": 18,
-      "n_control": 12,
-      "pct_control": 12
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
+    },
+    {
+      "category": "pt",
+      "soc": "Investigations",
+      "pt": "AST increased",
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Investigations",
       "pt": "Blood creatinine increased",
-      "n_experimental": 13,
-      "pct_experimental": 13,
-      "n_control": 8,
-      "pct_control": 8
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
+    },
+    {
+      "category": "pt",
+      "soc": "Investigations",
+      "pt": "Weight decreased",
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "soc",
       "soc": "Musculoskeletal and connective tissue disorders",
       "pt": null,
-      "n_experimental": 32,
-      "pct_experimental": 32,
-      "n_control": 12,
-      "pct_control": 12
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Musculoskeletal and connective tissue disorders",
       "pt": "Arthralgia",
-      "n_experimental": 20,
-      "pct_experimental": 20,
-      "n_control": 2,
-      "pct_control": 2
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Musculoskeletal and connective tissue disorders",
       "pt": "Back pain",
-      "n_experimental": 11,
-      "pct_experimental": 11,
-      "n_control": 4,
-      "pct_control": 4
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Musculoskeletal and connective tissue disorders",
       "pt": "Myalgia",
-      "n_experimental": 11,
-      "pct_experimental": 11,
-      "n_control": 7,
-      "pct_control": 7
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "soc",
       "soc": "Nervous system disorders",
       "pt": null,
-      "n_experimental": 60,
-      "pct_experimental": 60,
-      "n_control": 17,
-      "pct_control": 17
-    },
-    {
-      "category": "pt",
-      "soc": "Nervous system disorders",
-      "pt": "Headache",
-      "n_experimental": 30,
-      "pct_experimental": 30,
-      "n_control": 2,
-      "pct_control": 2
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Nervous system disorders",
       "pt": "Dizziness",
-      "n_experimental": 22,
-      "pct_experimental": 22,
-      "n_control": 5,
-      "pct_control": 5
-    },
-    {
-      "category": "pt",
-      "soc": "Nervous system disorders",
-      "pt": "Neuropathy peripheral",
-      "n_experimental": 18,
-      "pct_experimental": 18,
-      "n_control": 6,
-      "pct_control": 6
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Nervous system disorders",
       "pt": "Dysgeusia",
-      "n_experimental": 17,
-      "pct_experimental": 17,
-      "n_control": 5,
-      "pct_control": 5
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
+    },
+    {
+      "category": "pt",
+      "soc": "Nervous system disorders",
+      "pt": "Headache",
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
+    },
+    {
+      "category": "pt",
+      "soc": "Nervous system disorders",
+      "pt": "Neuropathy peripheral",
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "soc",
       "soc": "Respiratory, thoracic and mediastinal disorders",
       "pt": null,
-      "n_experimental": 51,
-      "pct_experimental": 51,
-      "n_control": 45,
-      "pct_control": 45
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Respiratory, thoracic and mediastinal disorders",
       "pt": "Cough",
-      "n_experimental": 30,
-      "pct_experimental": 30,
-      "n_control": 8,
-      "pct_control": 8
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Respiratory, thoracic and mediastinal disorders",
       "pt": "Dyspnoea",
-      "n_experimental": 23,
-      "pct_experimental": 23,
-      "n_control": 29,
-      "pct_control": 29
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Respiratory, thoracic and mediastinal disorders",
       "pt": "Epistaxis",
-      "n_experimental": 12,
-      "pct_experimental": 12,
-      "n_control": 20,
-      "pct_control": 20
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "soc",
       "soc": "Skin and subcutaneous tissue disorders",
       "pt": null,
-      "n_experimental": 43,
-      "pct_experimental": 43,
-      "n_control": 24,
-      "pct_control": 24
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Skin and subcutaneous tissue disorders",
       "pt": "Alopecia",
-      "n_experimental": 20,
-      "pct_experimental": 20,
-      "n_control": 3,
-      "pct_control": 3
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Skin and subcutaneous tissue disorders",
       "pt": "Dry skin",
-      "n_experimental": 8,
-      "pct_experimental": 8,
-      "n_control": 15,
-      "pct_control": 15
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Skin and subcutaneous tissue disorders",
       "pt": "Pruritus",
-      "n_experimental": 12,
-      "pct_experimental": 12,
-      "n_control": 4,
-      "pct_control": 4
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     },
     {
       "category": "pt",
       "soc": "Skin and subcutaneous tissue disorders",
       "pt": "Rash",
-      "n_experimental": 9,
-      "pct_experimental": 9,
-      "n_control": 3,
-      "pct_control": 3
+      "n_experimental": 100,
+      "pct_experimental": 100,
+      "n_control": 100,
+      "pct_control": 100
     }
   ],
   "metadata": {

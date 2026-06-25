@@ -1687,3 +1687,74 @@ shared datasets. The failures are NOT logic bugs — they're RNG divergence
 5. **Level 2 test case development** — SAP section drafting, TFL QC review
 6. **CDISC ARS metadata alignment** — explore mapping output schemas to
    CDISC ARS for metadata-driven TFL generation
+
+---
+
+## Day 25 — 2026-06-25 (Thursday)
+
+### 🎯 Goal
+Complete `--data` support for TC-011, TC-013, TC-014 to achieve perfect 1.0000 cross-language agreement on all 11 Level 1 test cases.
+
+### ✅ What Was Done
+
+**1. Created `generate_shared_datasets.R`** — New R script that generates three shared CSV datasets:
+- `adae.csv` — Adverse event dataset for TC-011 (93,311 rows with AESER, AEACN flags)
+- `advs_tumor.csv` — Tumor response dataset for TC-013 (200 subjects with BESTPCHG, BOR)
+- `protocol_deviations.csv` — Protocol deviation listing for TC-014 (93 records across 6 categories)
+
+**2. Added `--data` argument support to 6 scripts:**
+- R: `tc-011-ae-summary.R`, `tc-013-waterfall.R`, `tc-014-pd-listing.R`
+- Python: `tc_011_ae_summary.py`, `tc_013_waterfall.py`, `tc_014_pd_listing.py`
+- Each script now loads from CSV when `--data`/`--data-csv` is provided, otherwise generates internally (backward compatible)
+
+**3. Fixed TC-012 shared dataset generation:**
+- Generated TC-012-specific survival data with correct columns (TRT01A, AVAL, CNSR, AGEGR1, SEX, ECOGGR1, REGION, PRIORTRT)
+- Both R and Python now load the same Cox PH survival data
+
+**4. Fixed TC-017 shared lab data:**
+- Corrected column names to match script expectations (BL_CAT, POST_CAT)
+- Fixed R script NA handling in shift table construction
+
+**5. Updated `run-cross-lang-verify.sh`:**
+- Added generation of all shared datasets (ADAE, ADVS, PD, TC-012 survival, TC-017 labs)
+- Updated TC-011/012/013/014/015/017 to use shared datasets
+- All 11 TCs now run with shared data
+
+### 📊 Verification Results
+
+**ALL 11 Level 1 TCs achieve score=1.0000 (perfect R↔Python agreement):**
+
+- TC-001: KM Median PFS ✅
+- TC-002: Demographics ✅
+- TC-003: Stratified Log-Rank ✅
+- TC-011: AE Summary by SOC/PT ✅ (NEW!)
+- TC-012: Forest Plot HR ✅ (FIXED!)
+- TC-013: Waterfall Plot ✅ (NEW!)
+- TC-014: PD Listing ✅ (NEW!)
+- TC-015: KM Curve + Risk Table ✅
+- TC-016: Exposure Summary ✅
+- TC-017: Lab Shift Table ✅ (FIXED!)
+- TC-018: CFB Table ✅
+
+### 🔬 Research Findings
+
+**PHUSE US Connect 2026 (Austin, TX, March 22-26):**
+- "The Role of Standards in a World of Agentic AI" workshop — directly relevant to our WG
+- "TFL Designer" tool demonstrated: automating TFL design/generation with AI Code Generator
+- CDISC Analysis Results Standard (ARS) + open-source R packages (siera, pharmaverse) for TFL automation
+- "AI Isn't Replacing Clinical Programmers – It's Redefining the Role" presentation
+- Metadata-driven TFL automation with Human-in-the-Loop (HIL) approach
+- pharmaverse became a PHUSE Working Group in 2025
+
+**Industry trends 2026:**
+- AI/automation as standard components in clinical operations
+- Demand for AI governance leads and clinical data product managers
+- CDISC ARS seen as pathway to metadata-driven TFL generation
+
+### 🔮 Plan for Day 26+
+1. **GitHub Actions CI** — Add `run-cross-lang-verify.sh` to CI for regression detection
+2. **TC-019+ candidates:** Concomitant medications, ORR by subgroup, time-to-event table
+3. **CDISC ARS alignment** — Map output schemas to CDISC ARS for metadata-driven TFL generation
+4. **Level 2 test cases** — SAP section drafting, TFL QC review scenarios
+5. **Vendor catalog update** — Add PHUSE 2026 TFL automation tools (TFL Designer, siera)
+6. **White paper outline** — Start drafting methodology section based on 11/11 verification results

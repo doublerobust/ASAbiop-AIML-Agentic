@@ -21,96 +21,101 @@ args <- commandArgs(trailingOnly = TRUE)
 seed <- 42
 n_subjects <- 200
 output_file <- "tc-011-output.json"
+data_csv <- ""
 
 i <- 1
 while (i <= length(args)) {
   if (args[i] == "--seed") { seed <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--n") { n_subjects <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--output") { output_file <- args[i + 1]; i <- i + 2 }
+  else if (args[i] == "--data") { data_csv <- args[i + 1]; i <- i + 2 }
   else { i <- i + 1 }
 }
 
 set.seed(seed)
 
-# --- Data generation ---
-# Generate ADSL-like subject data
+# --- Data generation or loading ---
 n_arm <- n_subjects / 2
 arms <- rep(c("Experimental", "Control"), each = n_arm)
 subjid <- paste0("SUBJ-", sprintf("%04d", 1:n_subjects))
 
-adsl <- data.frame(
-  USUBJID = subjid,
-  TRT01A = arms,
-  SAFFL = "Y",
-  stringsAsFactors = FALSE
-)
-
-# Define SOC/PT hierarchy with realistic frequencies
-ae_catalog <- list(
-  "Gastrointestinal disorders" = c(
-    "Nausea", "Diarrhoea", "Vomiting", "Abdominal pain", "Constipation"
-  ),
-  "General disorders and administration site conditions" = c(
-    "Fatigue", "Pyrexia", "Oedema peripheral", "Asthenia"
-  ),
-  "Nervous system disorders" = c(
-    "Headache", "Dizziness", "Neuropathy peripheral", "Dysgeusia"
-  ),
-  "Skin and subcutaneous tissue disorders" = c(
-    "Rash", "Pruritus", "Alopecia", "Dry skin"
-  ),
-  "Investigations" = c(
-    "ALT increased", "AST increased", "Blood creatinine increased", "Weight decreased"
-  ),
-  "Respiratory, thoracic and mediastinal disorders" = c(
-    "Cough", "Dyspnoea", "Epistaxis"
-  ),
-  "Musculoskeletal and connective tissue disorders" = c(
-    "Arthralgia", "Myalgia", "Back pain"
-  ),
-  "Infections and infestations" = c(
-    "Upper respiratory tract infection", "Urinary tract infection", "Nasopharyngitis"
+if (data_csv != "") {
+  # Load shared ADAE dataset from CSV
+  adae <- read.csv(data_csv, stringsAsFactors = FALSE)
+} else {
+  # Generate ADSL-like subject data
+  adsl <- data.frame(
+    USUBJID = subjid,
+    TRT01A = arms,
+    SAFFL = "Y",
+    stringsAsFactors = FALSE
   )
-)
 
-# Generate AE rates (higher in experimental arm)
-generate_aes <- function(subjids, arm, ae_catalog, seed_offset) {
-  set.seed(seed + seed_offset)
-  records <- list()
-  
-  rate_multiplier <- if (arm == "Experimental") 1.3 else 1.0
-  
-  for (soc in names(ae_catalog)) {
-    for (pt in ae_catalog[[soc]]) {
-      # Base rate varies by PT
-      base_rate <- runif(1, 0.02, 0.25)
-      adj_rate <- min(base_rate * rate_multiplier, 0.95)
-      
-      n_events <- rbinom(1, length(subjids), adj_rate)
-      if (n_events > 0) {
-        affected <- sample(subjids, n_events)
-        for (s in affected) {
-          records[[length(records) + 1]] <- list(
-            USUBJID = s,
-            TRT01A = arm,  # BUGFIX: arm was never recorded, so every downstream
-                           # group_by(..., TRT01A) failed and the script never ran.
-            AEBODSYS = soc,
-            AEDECOD = pt,
-            AESER = sample(c("Y", "N"), 1, prob = c(0.1, 0.9)),
-            AEACN = sample(c("DOSE NOT CHANGED", "DOSE REDUCED", "DRUG WITHDRAWN"), 1, prob = c(0.7, 0.2, 0.1))
-          )
+  # Define SOC/PT hierarchy with realistic frequencies
+  ae_catalog <- list(
+    "Gastrointestinal disorders" = c(
+      "Nausea", "Diarrhoea", "Vomiting", "Abdominal pain", "Constipation"
+    ),
+    "General disorders and administration site conditions" = c(
+      "Fatigue", "Pyrexia", "Oedema peripheral", "Asthenia"
+    ),
+    "Nervous system disorders" = c(
+      "Headache", "Dizziness", "Neuropathy peripheral", "Dysgeusia"
+    ),
+    "Skin and subcutaneous tissue disorders" = c(
+      "Rash", "Pruritus", "Alopecia", "Dry skin"
+    ),
+    "Investigations" = c(
+      "ALT increased", "AST increased", "Blood creatinine increased", "Weight decreased"
+    ),
+    "Respiratory, thoracic and mediastinal disorders" = c(
+      "Cough", "Dyspnoea", "Epistaxis"
+    ),
+    "Musculoskeletal and connective tissue disorders" = c(
+      "Arthralgia", "Myalgia", "Back pain"
+    ),
+    "Infections and infestations" = c(
+      "Upper respiratory tract infection", "Urinary tract infection", "Nasopharyngitis"
+    )
+  )
+
+  # Generate AE rates (higher in experimental arm)
+  generate_aes <- function(subjids, arm, ae_catalog, seed_offset) {
+    set.seed(seed + seed_offset)
+    records <- list()
+
+    rate_multiplier <- if (arm == "Experimental") 1.3 else 1.0
+
+    for (soc in names(ae_catalog)) {
+      for (pt in ae_catalog[[soc]]) {
+        base_rate <- runif(1, 0.02, 0.25)
+        adj_rate <- min(base_rate * rate_multiplier, 0.95)
+
+        n_events <- rbinom(1, length(subjids), adj_rate)
+        if (n_events > 0) {
+          affected <- sample(subjids, n_events)
+          for (s in affected) {
+            records[[length(records) + 1]] <- list(
+              USUBJID = s,
+              TRT01A = arm,
+              AEBODSYS = soc,
+              AEDECOD = pt,
+              AESER = sample(c("Y", "N"), 1, prob = c(0.1, 0.9)),
+              AEACN = sample(c("DOSE NOT CHANGED", "DOSE REDUCED", "DRUG WITHDRAWN"), 1, prob = c(0.7, 0.2, 0.1))
+            )
+          }
         }
       }
     }
-  }
-  
-  if (length(records) == 0) return(data.frame())
-  do.call(rbind, lapply(records, as.data.frame, stringsAsFactors = FALSE))
-}
 
-adae_exp <- generate_aes(subjid[arms == "Experimental"], "Experimental", ae_catalog, 100)
-adae_ctl <- generate_aes(subjid[arms == "Control"], "Control", ae_catalog, 200)
-adae <- rbind(adae_exp, adae_ctl)
+    if (length(records) == 0) return(data.frame())
+    do.call(rbind, lapply(records, as.data.frame, stringsAsFactors = FALSE))
+  }
+
+  adae_exp <- generate_aes(subjid[arms == "Experimental"], "Experimental", ae_catalog, 100)
+  adae_ctl <- generate_aes(subjid[arms == "Control"], "Control", ae_catalog, 200)
+  adae <- rbind(adae_exp, adae_ctl)
+}
 
 # --- Compute AE summary ---
 n_exp <- sum(arms == "Experimental")

@@ -11,53 +11,59 @@ suppressPackageStartupMessages({
 })
 
 args <- commandArgs(trailingOnly = TRUE)
-seed <- 42; n_subjects <- 150; output_file <- "tc-013-output.json"
+seed <- 42; n_subjects <- 150; output_file <- "tc-013-output.json"; data_csv <- ""
 i <- 1
 while (i <= length(args)) {
   if (args[i] == "--seed") { seed <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--n") { n_subjects <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--output") { output_file <- args[i + 1]; i <- i + 2 }
+  else if (args[i] == "--data") { data_csv <- args[i + 1]; i <- i + 2 }
   else { i <- i + 1 }
 }
 
 set.seed(seed)
 n_arm <- n_subjects / 2
 
-# Generate tumor response data
-generate_response <- function(n, arm, seed_offset) {
-  set.seed(seed + seed_offset)
-  if (arm == "Experimental") {
-    category <- sample(c("CR", "PR", "SD", "PD"), n, replace = TRUE,
-                       prob = c(0.15, 0.35, 0.30, 0.20))
-  } else {
-    category <- sample(c("CR", "PR", "SD", "PD"), n, replace = TRUE,
-                       prob = c(0.05, 0.20, 0.35, 0.40))
-  }
+if (data_csv != "") {
+  # Load shared tumor response dataset from CSV
+  all_df <- read.csv(data_csv, stringsAsFactors = FALSE)
+} else {
+  # Generate tumor response data
+  generate_response <- function(n, arm, seed_offset) {
+    set.seed(seed + seed_offset)
+    if (arm == "Experimental") {
+      category <- sample(c("CR", "PR", "SD", "PD"), n, replace = TRUE,
+                         prob = c(0.15, 0.35, 0.30, 0.20))
+    } else {
+      category <- sample(c("CR", "PR", "SD", "PD"), n, replace = TRUE,
+                         prob = c(0.05, 0.20, 0.35, 0.40))
+    }
 
-  pct_change <- numeric(n)
-  for (j in seq_len(n)) {
-    pct_change[j] <- switch(
-      category[j],
-      CR = -100.0,
-      PR = runif(1, -99.0, -30.0),
-      SD = runif(1, -29.9, 19.9),
-      PD = runif(1, 20.0, 200.0)
+    pct_change <- numeric(n)
+    for (j in seq_len(n)) {
+      pct_change[j] <- switch(
+        category[j],
+        CR = -100.0,
+        PR = runif(1, -99.0, -30.0),
+        SD = runif(1, -29.9, 19.9),
+        PD = runif(1, 20.0, 200.0)
+      )
+    }
+
+    data.frame(
+      USUBJID = paste0("SUBJ-", sprintf("%04d", 1:n)),
+      TRT01A = arm,
+      BASELINE = round(runif(n, 15, 100), 1),
+      BESTPCHG = round(pct_change, 1),
+      BOR = category,
+      stringsAsFactors = FALSE
     )
   }
 
-  data.frame(
-    USUBJID = paste0("SUBJ-", sprintf("%04d", 1:n)),
-    TRT01A = arm,
-    BASELINE = round(runif(n, 15, 100), 1),
-    BESTPCHG = round(pct_change, 1),
-    BOR = category,
-    stringsAsFactors = FALSE
-  )
+  exp_df <- generate_response(n_arm, "Experimental", 100)
+  ctl_df <- generate_response(n_arm, "Control", 200)
+  all_df <- rbind(exp_df, ctl_df)
 }
-
-exp_df <- generate_response(n_arm, "Experimental", 100)
-ctl_df <- generate_response(n_arm, "Control", 200)
-all_df <- rbind(exp_df, ctl_df)
 
 # Sort by best % change
 all_df <- all_df[order(all_df$BESTPCHG), ]

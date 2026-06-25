@@ -21,6 +21,8 @@ parser = argparse.ArgumentParser(description="TC-011 AE Summary Table")
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--n", type=int, default=200)
 parser.add_argument("--output", type=str, default="tc-011-output.json")
+parser.add_argument("--data-csv", type=str, default=None,
+                    help="Load shared ADAE dataset from CSV instead of generating")
 args = parser.parse_args()
 
 random.seed(args.seed)
@@ -90,9 +92,17 @@ def generate_aes(subjids, arm, seed_offset):
     return records
 
 
-adae_exp = generate_aes(subjid_exp, "Experimental", 100)
-adae_ctl = generate_aes(subjid_ctl, "Control", 200)
-adae = adae_exp + adae_ctl
+if args.data_csv:
+    import csv
+    adae = []
+    with open(args.data_csv, newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            adae.append(row)
+else:
+    adae_exp = generate_aes(subjid_exp, "Experimental", 100)
+    adae_ctl = generate_aes(subjid_ctl, "Control", 200)
+    adae = adae_exp + adae_ctl
 
 # --- Compute AE summary ---
 def unique_subjects(records, filter_fn=None):
