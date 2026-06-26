@@ -1758,3 +1758,141 @@ Complete `--data` support for TC-011, TC-013, TC-014 to achieve perfect 1.0000 c
 4. **Level 2 test cases** — SAP section drafting, TFL QC review scenarios
 5. **Vendor catalog update** — Add PHUSE 2026 TFL automation tools (TFL Designer, siera)
 6. **White paper outline** — Start drafting methodology section based on 11/11 verification results
+
+## 2026-06-26 — Day 26: GitHub Actions CI + CDISC ARS Alignment
+
+**Trigger:** Daily cron (GLM 5.2 via OpenRouter). Day 26.
+**Dimension:** CI automation + CDISC ARS interoperability.
+
+### 🎯 Assignment
+Day 25 achieved 11/11 Level 1 TCs at score=1.0000 cross-language verification.
+Today's plan called for GitHub Actions CI (item #1) and CDISC ARS alignment
+(item #3). Both were addressed.
+
+### ✅ What Got Built
+
+**1. GitHub Actions CI Workflow — `.github/workflows/cross-language-verify.yml`**
+
+Automated cross-language verification pipeline for regression detection:
+
+- **Triggers:** push to `benchmarks/**`, PR to main, manual dispatch
+- **Inputs:** configurable seed and N_subjects (defaults: 42, 200)
+- **Pipeline steps:**
+  1. Set up R (release) + Python 3.12 on ubuntu-latest
+  2. Cache R packages (survival, dplyr, tidyr, jsonlite)
+  3. Install Python deps (pandas, numpy, jsonschema, pyyaml, click, rich, lifelines, scipy)
+  4. Run `run-cross-lang-verify.sh` — generates shared datasets, runs all 11 TCs in R + Python
+  5. Run `katsu verify` for each TC — pairwise R vs Python scoring
+  6. Run `katsu validate` — JSON Schema validation on all 22 outputs (11 R + 11 Python)
+  7. Upload artifacts (cross-lang-results + verification log) — 30-day retention
+  8. Upload failure logs on failure — 90-day retention
+
+- **Failure conditions:** any TC scoring < 1.0, any schema validation failure
+- **Manual dispatch:** WG members can trigger with custom seed/N for ad-hoc verification
+
+**2. CDISC ARS Alignment Document — `benchmarks/cdisc-ars-alignment.md`**
+
+Comprehensive mapping of benchmark output schemas to CDISC Analysis Results
+Standard (ARS) v1.0:
+
+- **ARS concept mapping:** 8 core ARS concepts mapped to benchmark JSON fields
+- **Per-TC mapping tables:** TC-001 (KM median), TC-002 (demographics), TC-012
+  (forest plot HR) with field-by-field ARS equivalents
+- **ARS-compatible output envelope:** proposed JSON wrapper that makes benchmark
+  outputs ARS-compliant without breaking existing format (backward compatible)
+- **`cards` R package integration plan:** 6-step path from documentation →
+  proof-of-concept (TC-001) → full ARS compliance for all 11 Level 1 TCs
+- **6-phase implementation roadmap:** Phase 1 (documentation) done; Phases 2-6
+  planned for Days 27-36+
+- **Benefits analysis:** for AI agents (auto-scoring), for WG (CDISC ecosystem
+  positioning), for regulatory compliance (traceability chain)
+
+### 🔍 Key Research Findings (June 2026)
+
+1. **FDA June 2026 guidance** — Draft guidance on AI-enabled medical device
+   lifecycle management released June 6, 2026. Public comment period closes
+   August 5, 2026. Requires algorithm transparency, data provenance, robust
+   risk management, and continuous real-world performance monitoring. While
+   focused on devices, the principles align with our compliance scoring
+   dimension (ADaM mapping, TCG checklist, CSR formatting).
+
+2. **CDISC ARS adoption accelerating** — `cards` R package (pharmaverse)
+   now integrates with `gtsummary` for automatic ARD generation. CDISC EU
+   Interchange 2026 and US Interchange 2026 will feature ARS workshops.
+   SDTMIG v4.0 / SDTM v3.0 early adoption programs underway. Our ARS
+   alignment positions the benchmark for metadata-driven TFL generation
+   testing.
+
+3. **PharmaSUG 2026 confirmed** as watershed for agentic AI in TFL:
+   - "Agentic AI Framework That Reads SAPs and Generates TFL ToC"
+   - "Schema-Preserving Generation of Clinical TLF Templates + Executable R Code"
+   - "Agentic R in Clinical Trials" (Posit/Phil Bowsher)
+   - "Evaluation of Azure OpenAI ChatGPT API as Code Assistance for SAS, R, Python"
+   - Industry explicitly called for "standardized evaluation benchmarks for governance"
+   — directly validates our benchmark's existence.
+
+4. **Saama TLF Analyzer** (launched Oct 2025) — positioned as "Luminary" in
+   Everest Group Innovation Watch 2026. Claims 60-70% manual analysis time
+   reduction, CSR first draft from 2-3 weeks to 3-4 days. Figures-to-text
+   intelligence (KM curves, forest plots, waterfall plots → narrative). No
+   independent benchmark exists to validate these claims — ours fills this gap.
+
+5. **JDIX (Janus Data Intelligence)** — Offers JDIQ (Clinical Data Intelligence
+   Platform) and JDIM (Clinical AI Agents Platform). No specific "TFL Reviewer"
+   product found in this search; may have been rebranded. Updated vendor catalog
+   with corrected JDIX product names.
+
+6. **EU AI Act** provisions applicable by August 2, 2026 — high-risk
+   classification for clinical AI systems. Sponsors remain responsible for
+   AI-generated content. Our benchmark's compliance + safety scoring directly
+   addresses the need for standardized AI output verification under EU AI Act.
+
+7. **`cards` + `gtsummary` integration** — `gtsummary` now refactored to
+   extract ARD objects from summary tables and create tables from ARD objects.
+   `cardx` extension package provides ARD objects for complex statistical
+   models (regression, survival). This is the R ecosystem's native path to
+   ARS compliance and should be our integration vector.
+
+### 📊 Updated File Structure
+
+```
+benchmarks/
+├── .github/workflows/
+│   └── cross-language-verify.yml  ← NEW: CI for regression detection
+├── references/
+│   ├── ground-truth/R/ (11 scripts + common/)
+│   ├── ground-truth/SAS/ (11 scripts)
+│   ├── ground-truth/Python/ (11 scripts + common/)
+│   ├── output-schemas/ (11 JSON Schema files)
+│   ├── edge-cases/ (14 files)
+│   ├── safety-vectors/ (10 files)
+│   └── verification/ (cross-language-compare.R + glm-comparison-demo/)
+├── scoring-harness/
+│   ├── score.py (supports TC-001-003, TC-011-018)
+│   ├── compliance.py, safety.py
+│   ├── tolerances.yaml, safety.yaml, compliance.yaml, efficiency.yaml
+│   └── README.md
+├── cdisc-ars-alignment.md  ← NEW: ARS mapping + integration plan
+├── test-case-design.md (18 test cases)
+├── scoring-framework.md
+├── vendor-catalog.md
+├── safety-robustness.md
+├── regulatory-compliance.md
+├── operational-efficiency.md
+├── cross-language-verification.md
+├── benchmark-framework-v1.md
+├── relevant-work.md
+├── tools-packages.md
+├── progress-log.md (this file)
+└── README.md
+```
+
+### 🔮 Plan for Day 27+
+1. **ARS proof-of-concept** — Add `--ars-output` flag to TC-001 R script as
+   Phase 2 of ARS alignment
+2. **TC-019+ candidates:** Concomitant medications table, ORR by subgroup
+3. **Level 2 test cases** — SAP section drafting, TFL QC review scenarios
+4. **Efficiency scoring** — populate efficiency.yaml with time/LOC metrics
+5. **White paper outline** — Start drafting methodology section based on
+   11/11 verification results + CI pipeline + ARS alignment
+6. **WG presentation prep** — CI pipeline + ARS alignment for next WG meeting
