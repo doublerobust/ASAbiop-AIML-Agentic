@@ -1102,6 +1102,190 @@ def score_tc018(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# TC-019: Concomitant Medications Summary Table
+# --------------------------------------------------------------------
+
+def score_tc019(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-019: Concomitant Medications Summary Table.
+
+    Compares summary row counts, ATC class-level counts/pcts,
+    and medication-level counts/pcts.
+    """
+    tol_spec = tolerances.get("TC-019", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    # Summary rows (Any CM)
+    ag_summary = agent_output.get("summary_rows", [])
+    gt_summary = ground_truth.get("summary_rows", [])
+    summary_n_tol = tol_spec.get("summary_n", {})
+    summary_pct_tol = tol_spec.get("summary_pct", {})
+
+    for i in range(min(len(ag_summary), len(gt_summary))):
+        ag_s = ag_summary[i] if i < len(ag_summary) else {}
+        gt_s = gt_summary[i] if i < len(gt_summary) else {}
+
+        for field, label in [("n_experimental", "summary_n_exp"), ("n_control", "summary_n_ctrl")]:
+            r = compare_count(ag_s.get(field), gt_s.get(field))
+            component_scores[f"{label}_row{i}"] = r
+            weighted_sum += r["score"] * summary_n_tol.get("weight", 0.25)
+            total_weight += summary_n_tol.get("weight", 0.25)
+
+        for field, label in [("pct_experimental", "summary_pct_exp"), ("pct_control", "summary_pct_ctrl")]:
+            r = compare_numeric(ag_s.get(field), gt_s.get(field), summary_pct_tol, label)
+            component_scores[f"{label}_row{i}"] = r
+            weighted_sum += r["score"] * summary_pct_tol.get("weight", 0.15)
+            total_weight += summary_pct_tol.get("weight", 0.15)
+
+    # Detailed rows (ATC class + medication level)
+    ag_detail = agent_output.get("detailed_rows", [])
+    gt_detail = ground_truth.get("detailed_rows", [])
+    atc_n_tol = tol_spec.get("atc_class_n", {})
+    atc_pct_tol = tol_spec.get("atc_class_pct", {})
+    med_n_tol = tol_spec.get("medication_n", {})
+    med_pct_tol = tol_spec.get("medication_pct", {})
+
+    for i in range(min(len(ag_detail), len(gt_detail))):
+        ag_d = ag_detail[i] if i < len(ag_detail) else {}
+        gt_d = gt_detail[i] if i < len(gt_detail) else {}
+
+        is_med_row = "medication" in gt_d and gt_d.get("medication")
+
+        if is_med_row:
+            for field, label in [("n_experimental", f"med_n_exp_{i}"), ("n_control", f"med_n_ctrl_{i}")]:
+                r = compare_count(ag_d.get(field), gt_d.get(field))
+                component_scores[label] = r
+                weighted_sum += r["score"] * med_n_tol.get("weight", 0.10)
+                total_weight += med_n_tol.get("weight", 0.10)
+
+            for field, label in [("pct_experimental", f"med_pct_exp_{i}"), ("pct_control", f"med_pct_ctrl_{i}")]:
+                r = compare_numeric(ag_d.get(field), gt_d.get(field), med_pct_tol, label)
+                component_scores[label] = r
+                weighted_sum += r["score"] * med_pct_tol.get("weight", 0.05)
+                total_weight += med_pct_tol.get("weight", 0.05)
+        else:
+            for field, label in [("n_experimental", f"atc_n_exp_{i}"), ("n_control", f"atc_n_ctrl_{i}")]:
+                r = compare_count(ag_d.get(field), gt_d.get(field))
+                component_scores[label] = r
+                weighted_sum += r["score"] * atc_n_tol.get("weight", 0.25)
+                total_weight += atc_n_tol.get("weight", 0.25)
+
+            for field, label in [("pct_experimental", f"atc_pct_exp_{i}"), ("pct_control", f"atc_pct_ctrl_{i}")]:
+                r = compare_numeric(ag_d.get(field), gt_d.get(field), atc_pct_tol, label)
+                component_scores[label] = r
+                weighted_sum += r["score"] * atc_pct_tol.get("weight", 0.15)
+                total_weight += atc_pct_tol.get("weight", 0.15)
+
+    # N per arm
+    arm_w = tol_spec.get("n_per_arm", {}).get("weight", 0.05) / 2
+    for field, label in [("n_experimental", "n_exp"), ("n_control", "n_ctrl")]:
+        r = compare_count(agent_output.get(field), ground_truth.get(field))
+        component_scores[label] = r
+        weighted_sum += r["score"] * arm_w
+        total_weight += arm_w
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+    return {
+        "test_case_id": "TC-019",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
+# TC-020: ORR by Subgroup
+# --------------------------------------------------------------------
+
+def score_tc020(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-020: ORR by Subgroup.
+
+    Compares overall ORR, subgroup-level ORR, responder counts,
+    and CMH interaction p-values.
+    """
+    tol_spec = tolerances.get("TC-020", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    # Overall
+    ag_ov = agent_output.get("overall", {})
+    gt_ov = ground_truth.get("overall", {})
+
+    for field, tol_key, label in [
+        ("orr_experimental", "overall_orr_exp", "orr_exp"),
+        ("orr_control", "overall_orr_ctrl", "orr_ctrl"),
+        ("orr_difference", "overall_orr_diff", "orr_diff"),
+    ]:
+        tol = tol_spec.get(tol_key, {})
+        r = compare_numeric(ag_ov.get(field), gt_ov.get(field), tol, label)
+        component_scores[f"overall_{label}"] = r
+        weighted_sum += r["score"] * tol.get("weight", 0.10)
+        total_weight += tol.get("weight", 0.10)
+
+    # Responder counts
+    res_tol = tol_spec.get("responder_counts", {})
+    for field, label in [("responders_experimental", "resp_exp"), ("responders_control", "resp_ctrl")]:
+        r = compare_count(ag_ov.get(field), gt_ov.get(field))
+        component_scores[f"overall_{label}"] = r
+        weighted_sum += r["score"] * res_tol.get("weight", 0.10)
+        total_weight += res_tol.get("weight", 0.10)
+
+    # Subgroup-level
+    ag_sgs = agent_output.get("subgroups", [])
+    gt_sgs = ground_truth.get("subgroups", [])
+
+    for i in range(min(len(ag_sgs), len(gt_sgs))):
+        ag_s = ag_sgs[i] if i < len(ag_sgs) else {}
+        gt_s = gt_sgs[i] if i < len(gt_sgs) else {}
+
+        for field, tol_key, label in [
+            ("orr_experimental", "subgroup_orr_exp", f"sg_{i}_orr_exp"),
+            ("orr_control", "subgroup_orr_ctrl", f"sg_{i}_orr_ctrl"),
+            ("orr_difference", "subgroup_orr_diff", f"sg_{i}_orr_diff"),
+        ]:
+            tol = tol_spec.get(tol_key, {})
+            r = compare_numeric(ag_s.get(field), gt_s.get(field), tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.10)
+            total_weight += tol.get("weight", 0.10)
+
+        # N per subgroup per arm
+        sg_n_tol = tol_spec.get("subgroup_n", {})
+        for field, label in [("n_experimental", f"sg_{i}_n_exp"), ("n_control", f"sg_{i}_n_ctrl")]:
+            r = compare_count(ag_s.get(field), gt_s.get(field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * sg_n_tol.get("weight", 0.10)
+            total_weight += sg_n_tol.get("weight", 0.10)
+
+    # Interaction p-values
+    ag_ints = agent_output.get("interaction_pvalues", [])
+    gt_ints = ground_truth.get("interaction_pvalues", [])
+    int_tol = tol_spec.get("interaction_p", {})
+
+    for i in range(min(len(ag_ints), len(gt_ints))):
+        ag_i = ag_ints[i] if i < len(ag_ints) else {}
+        gt_i = gt_ints[i] if i < len(gt_ints) else {}
+        r = compare_numeric(ag_i.get("cmh_p_value"), gt_i.get("cmh_p_value"), int_tol, f"int_p_{i}")
+        component_scores[f"int_p_{i}"] = r
+        weighted_sum += r["score"] * int_tol.get("weight", 0.10)
+        total_weight += int_tol.get("weight", 0.10)
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+    return {
+        "test_case_id": "TC-020",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
 # Efficiency Helpers
 # --------------------------------------------------------------------
 
@@ -1416,6 +1600,8 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-016": score_tc016,
         "TC-017": score_tc017,
         "TC-018": score_tc018,
+        "TC-019": score_tc019,
+        "TC-020": score_tc020,
     }
 
     scorer = scorers.get(tc)
@@ -1541,6 +1727,8 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-016": score_tc016,
         "TC-017": score_tc017,
         "TC-018": score_tc018,
+        "TC-019": score_tc019,
+        "TC-020": score_tc020,
     }
 
     scorer = scorers.get(tc)
@@ -1744,6 +1932,8 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-016": score_tc016,
         "TC-017": score_tc017,
         "TC-018": score_tc018,
+        "TC-019": score_tc019,
+        "TC-020": score_tc020,
     }
     scorer = scorers.get(tc)
     if scorer is None:

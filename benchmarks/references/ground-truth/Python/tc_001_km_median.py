@@ -115,6 +115,8 @@ def main():
     parser.add_argument("--data", type=str, default=None,
                         help="Shared ADTTE CSV (for cross-language verification)")
     parser.add_argument("--output", type=str, default=None, help="Output JSON path")
+    parser.add_argument("--ars-output", type=str, default=None,
+                        help="Output ARS-compatible JSON envelope path")
     args = parser.parse_args()
 
     print(f"TC-001: KM Median PFS (Python) — seed={args.seed}, n={args.n}, arm={args.arm}")
@@ -153,6 +155,61 @@ def main():
         with open(outpath, "w") as f:
             json.dump(result, f, indent=2)
         print(f"Wrote output to: {outpath}")
+
+    # ─────────────────────────────────────────────────────
+    # ARS-compatible output envelope (CDISC ARS v1.0)
+    # Phase 2 proof-of-concept: wraps benchmark output in ARS structure
+    # ─────────────────────────────────────────────────────
+    if args.ars_output:
+        ars_envelope = {
+            "ars_version": "1.0",
+            "analysisResult": {
+                "id": "TC-001",
+                "version": "1.0",
+                "analysisReason": "Primary efficacy endpoint estimation",
+                "analysisMethod": {
+                    "name": "Kaplan-Meier",
+                    "codeTemplate": "lifelines.KaplanMeierFitter().fit(AVAL, 1-CNSR)",
+                    "parameters": {
+                        "conf_type": result["ci_method"],
+                        "alpha": 0.05
+                    }
+                },
+                "analysisVariables": [
+                    {"name": "AVAL", "dataset": "ADTTE", "role": "analysis time"},
+                    {"name": "CNSR", "dataset": "ADTTE", "role": "censoring"},
+                    {"name": "TRT01A", "dataset": "ADSL", "role": "treatment"}
+                ],
+                "analysisPopulation": {
+                    "name": "ITT",
+                    "filter": "ITTFL = 'Y'"
+                },
+                "analysisDataset": "ADTTE",
+                "resultGroups": [
+                    {
+                        "id": "Experimental" if args.arm == 1 else "Control",
+                        "n": result["n_total"],
+                        "events": result["n_events"]
+                    }
+                ],
+                "documentation": "KM median PFS estimation with 95% CI (Brookmeyer-Crowley log-log)",
+                "analysisResultsData": {
+                    "statistics": [
+                        {"name": "median_pfs", "value": result["median_pfs"], "unit": "months"},
+                        {"name": "ci_lower", "value": result["ci_lower"]},
+                        {"name": "ci_upper", "value": result["ci_upper"]},
+                        {"name": "n_events", "value": result["n_events"]},
+                        {"name": "n_total", "value": result["n_total"]},
+                        {"name": "estimable", "value": result["estimable"]}
+                    ]
+                }
+            }
+        }
+        ars_path = Path(args.ars_output)
+        ars_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(ars_path, "w") as f:
+            json.dump(ars_envelope, f, indent=2)
+        print(f"Wrote ARS-compatible output to: {ars_path}")
 
 
 if __name__ == "__main__":

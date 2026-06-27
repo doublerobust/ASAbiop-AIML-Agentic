@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "TC-019: Concomitant Medications Summary Output Schema",
+  "description": "Structured output from concomitant medications summary table benchmark test case",
+  "type": "object",
+  "required": [
+    "test_case_id", "variant_id", "language", "package",
+    "summary_rows", "detailed_rows", "n_experimental", "n_control", "seed"
+  ],
+  "properties": {
+    "test_case_id": {
+      "type": "string",
+      "const": "TC-019",
+      "description": "Test case identifier"
+    },
+    "variant_id": {
+      "type": ["string", "null"],
+      "description": "Variant identifier based on seed"
+    },
+    "language": {
+      "type": "string",
+      "enum": ["R", "SAS", "Python"],
+      "description": "Implementation language"
+    },
+    "package": {
+      "type": "string",
+      "description": "Primary package used"
+    },
+    "package_version": {
+      "type": "string",
+      "description": "Package version string"
+    },
+    "summary_rows": {
+      "type": "array",
+      "description": "Summary rows (Any CM, etc.)",
+      "items": {
+        "type": "object",
+        "required": ["category", "n_experimental", "pct_experimental", "n_control", "pct_control"],
+        "properties": {
+          "category": {"type": "string"},
+          "n_experimental": {"type": "integer", "minimum": 0},
+          "pct_experimental": {"type": "number", "minimum": 0, "maximum": 100},
+          "n_control": {"type": "integer", "minimum": 0},
+          "pct_control": {"type": "number", "minimum": 0, "maximum": 100}
+        }
+      }
+    },
+    "detailed_rows": {
+      "type": "array",
+      "description": "Detailed rows by ATC class and medication",
+      "items": {
+        "type": "object",
+        "required": ["atc_class", "atc_class_name", "n_experimental", "pct_experimental", "n_control", "pct_control"],
+        "properties": {
+          "atc_class": {"type": "string"},
+          "atc_class_name": {"type": "string"},
+          "medication": {"type": "string"},
+          "n_experimental": {"type": "integer", "minimum": 0},
+          "pct_experimental": {"type": "number", "minimum": 0, "maximum": 100},
+          "n_control": {"type": "integer", "minimum": 0},
+          "pct_control": {"type": "number", "minimum": 0, "maximum": 100}
+        }
+      }
+    },
+    "n_experimental": {"type": "integer", "minimum": 1},
+    "n_control": {"type": "integer", "minimum": 1},
+    "seed": {"type": ["integer", "null"]}
+  }
+}

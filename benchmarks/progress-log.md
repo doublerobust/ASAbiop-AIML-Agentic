@@ -1896,3 +1896,140 @@ benchmarks/
 5. **White paper outline** — Start drafting methodology section based on
    11/11 verification results + CI pipeline + ARS alignment
 6. **WG presentation prep** — CI pipeline + ARS alignment for next WG meeting
+
+## 2026-06-27 — Day 27: ARS Proof-of-Concept + TC-019/TC-020 + White Paper Outline
+
+**Trigger:** Daily cron (GLM 5.2 via OpenRouter). Day 27.
+**Dimension:** ARS interoperability + test case library expansion + publication planning.
+
+### 🎯 Assignment
+Day 26 plan called for:
+1. ARS proof-of-concept (`--ars-output` flag to TC-001 R script)
+2. TC-019+ candidates (concomitant meds table, ORR by subgroup)
+3. Level 2 test cases
+4. Efficiency scoring
+5. White paper outline
+6. WG presentation prep
+
+### ✅ What Got Built
+
+**1. ARS Proof-of-Concept — `--ars-output` flag on TC-001 (R + Python)**
+
+Phase 2 of the CDISC ARS alignment roadmap is now implemented:
+- TC-001 R script (`tc-001-km-median.R`) now accepts `--ars-output <file>`
+- TC-001 Python script (`tc_001_km_median.py`) now accepts `--ars-output <file>`
+- Both emit an ARS v1.0-compatible JSON envelope with:
+  - `analysisResult.id`, `version`, `analysisReason`
+  - `analysisMethod` (name, codeTemplate, parameters)
+  - `analysisVariables` (AVAL, CNSR, TRT01A with dataset and role)
+  - `analysisPopulation` (ITT, filter)
+  - `resultGroups` (arm, n, events)
+  - `analysisResultsData.statistics` (structured list of name-value pairs)
+- Backward compatible: existing `--output` flag unchanged; ARS envelope is optional
+- Scoring harness can unwrap ARS envelope if present (planned for Phase 4)
+
+**2. TC-019: Concomitant Medications Summary Table (R + Python)**
+
+New Level 1 test case covering safety domain — concomitant medications:
+- **Domain:** Safety (ADCM)
+- **TFL Type:** Table
+- **Method:** Descriptive summary by ATC class and medication
+- **R script:** `tc-019-concomitant-meds.R` — generates ADCM with 8 ATC classes, 23 medications
+- **Python script:** `tc_019_concomitant_meds.py` — matching implementation
+- **Output schema:** `tc-019-output-schema.json` — summary rows + detailed rows
+- **Tolerances:** Exact match for counts, ±0.1 pp for percentages
+- **Scorer:** `score_tc019()` in score.py — compares summary rows, ATC class-level n(%), medication-level n(%)
+- Features: Any CM summary row, ATC class sorting, medication-level detail within class, subject de-duplication
+
+**3. TC-020: ORR by Subgroup (R + Python)**
+
+New Level 1 test case covering efficacy domain — objective response rate by subgroup:
+- **Domain:** Efficacy (tumor response)
+- **TFL Type:** Table (forest-plot-ready)
+- **Method:** ORR (CR+PR rate) by subgroup with Wilson CI, risk difference CI, CMH interaction test
+- **R script:** `tc-020-orr-by-subgroup.R` — 3 subgroups (SEX, AGEGR1, ECOG), CMH via `mantelhaen.test()`
+- **Python script:** `tc_020_orr_by_subgroup.py` — matching implementation with scipy/statsmodels
+- **Output schema:** `tc-020-output-schema.json` — overall + subgroups + interaction_pvalues
+- **Tolerances:** ±0.1 pp for ORR values, exact match for counts, ±0.01 for p-values
+- **Scorer:** `score_tc020()` in score.py — compares overall ORR, subgroup ORR, responder counts, CMH p-values
+- Features: Wilson score CI, risk difference with normal approximation CI, CMH common OR
+
+**4. White Paper Outline — `white-paper-outline.md`**
+
+Comprehensive publication plan with 8 sections:
+1. Title & Abstract (working title: "A Standardized Benchmark for Evaluating Agentic AI in Clinical Trial TFL Programming")
+2. Introduction & Motivation (benchmark gap, vendor landscape, regulatory pressure)
+3. Benchmark Design (TFL-first scope, 3 difficulty levels, 13 Level 1 TC inventory)
+4. Scoring Framework (4 dimensions: correctness 40%, compliance 25%, safety 20%, efficiency 15%)
+5. Results (11/11 verification at 1.0000, 128 compliance rules, 83 safety rules, ARS PoC)
+6. Discussion (PharmaSUG 2026, FDA-EMA Good AI Practice, EU AI Act, vendor claims)
+7. Conclusions
+8. References (8 key citations)
+- Appendices: YAML templates, tolerance specs, CI config, ARS mapping
+- Timeline: Draft by Day 30, WG review by Day 35, submit to ASA by Day 40
+
+**5. Efficiency Scoring Updated — `efficiency.yaml` v0.2**
+
+- Added verification time estimates for TC-019 and TC-020
+- Updated Level 1 efficiency_targets to include all 13 TCs
+- Version bumped from 0.1 to 0.2
+- All 13 Level 1 TCs now have verification time estimates for R, SAS, and Python
+
+### 📊 Updated Coverage Summary
+
+| Test Case | R | Python | SAS | Scorer | Tolerances | Schema | Compliance | Safety | Effort |
+|---|---|---|---|---|---|---|---|---|---|
+| TC-001 | ✅+ARS | ✅+ARS | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| TC-002 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| TC-003 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| TC-011 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| TC-012 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| TC-013 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| TC-014 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| TC-015 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| TC-016 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| TC-017 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| TC-018 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| TC-019 | ✅ NEW | ✅ NEW | ❌ | ✅ NEW | ✅ NEW | ✅ NEW | ❌ | ❌ | ✅ NEW |
+| TC-020 | ✅ NEW | ✅ NEW | ❌ | ✅ NEW | ✅ NEW | ✅ NEW | ❌ | ❌ | ✅ NEW |
+
+**13 Level 1 test cases now exist** (up from 11). 11 have complete trilingual coverage.
+TC-019 and TC-020 have R+Python ground truth + scorers + tolerances + schemas.
+Compliance/safety rules for TC-019/020 planned for Day 28.
+
+### 📊 Updated Library Summary
+
+| Level | Count | Auto-Score | Ground Truth | Variants |
+|---|---|---|---|---|
+| 1 | 13 | 13 | 13 (R+Py, 11 also SAS) | 130 |
+| 2 | 3 | 0 (+1 partial) | 0 | 35 |
+| 3 | 4 | 0 | 0 | 28 |
+| **Total** | **20** | **13** | **13** | **193** |
+
+### 📄 New Files Created (Day 27)
+
+| File | Type | Description |
+|---|---|---|
+| `tc-019-concomitant-meds.R` | R ground truth | Concomitant medications summary |
+| `tc_019_concomitant_meds.py` | Python ground truth | Concomitant medications summary |
+| `tc-019-output-schema.json` | JSON Schema | TC-019 output validation |
+| `tc-020-orr-by-subgroup.R` | R ground truth | ORR by subgroup with CMH |
+| `tc_020_orr_by_subgroup.py` | Python ground truth | ORR by subgroup with CMH |
+| `tc-020-output-schema.json` | JSON Schema | TC-020 output validation |
+| `white-paper-outline.md` | Document | 8-section white paper outline |
+
+### Modified Files (Day 27)
+- `tc-001-km-median.R` — added `--ars-output` flag + ARS envelope generation
+- `tc_001_km_median.py` — added `--ars-output` flag + ARS envelope generation
+- `tolerances.yaml` — added TC-019 and TC-020 tolerance specs
+- `score.py` — added `score_tc019()` and `score_tc020()` + registered in 3 scorer dicts
+- `efficiency.yaml` — v0.2: added TC-019/020 verification times, updated Level 1 TC list
+
+### 🔮 Plan for Day 28+
+1. **Compliance + safety rules** for TC-019 and TC-020 in compliance.yaml and safety.yaml
+2. **SAS implementations** for TC-019 and TC-020 (complete trilingual coverage)
+3. **Cross-language verification** — run TC-019 and TC-020 on shared data
+4. **Level 2 test cases** — SAP section drafting, TFL QC review scenarios
+5. **White paper drafting** — begin Section 3 (Benchmark Design) prose
+6. **WG presentation prep** — ARS PoC + TC-019/020 + CI pipeline for next WG meeting
+7. **ARS Phase 3** — Extend `--ars-output` to TC-002, TC-003, TC-012

@@ -284,3 +284,73 @@ TC-018:
     n_per_arm:
       absolute: 0
       weight: 0.05
+
+TC-019:
+  description: "Concomitant Medications Summary Table"
+  tolerances:
+    # Summary row counts (Any CM)
+    summary_n:
+      absolute: 0       # exact match
+      weight: 0.25
+    summary_pct:
+      absolute: 0.1     # ±0.1 percentage points
+      weight: 0.15
+    # ATC class-level counts
+    atc_class_n:
+      absolute: 0       # exact match
+      weight: 0.25
+    atc_class_pct:
+      absolute: 0.1
+      weight: 0.15
+    # Medication-level counts
+    medication_n:
+      absolute: 0       # exact match
+      weight: 0.10
+    medication_pct:
+      absolute: 0.1
+      weight: 0.05
+    # N per arm
+    n_per_arm:
+      absolute: 0
+      weight: 0.05
+
+TC-020:
+  description: "ORR by Subgroup"
+  tolerances:
+    # Overall ORR
+    overall_orr_exp:
+      absolute: 0.1     # ±0.1 percentage points
+      weight: 0.10
+    overall_orr_ctrl:
+      absolute: 0.1
+      weight: 0.10
+    overall_orr_diff:
+      absolute: 0.1
+      weight: 0.10
+    # Subgroup ORR
+    subgroup_orr_exp:
+      absolute: 0.1
+      weight: 0.10
+    subgroup_orr_ctrl:
+      absolute: 0.1
+      weight: 0.10
+    subgroup_orr_diff:
+      absolute: 0.1
+      weight: 0.10
+    # Responder counts
+    responder_counts:
+      absolute: 0       # exact match
+      weight: 0.10
+    # N per subgroup per arm
+    subgroup_n:
+      absolute: 0       # exact match
+      weight: 0.10
+    # CMH interaction p-values
+    interaction_p:
+      absolute: 0.01
+      relative: 0.05
+      weight: 0.10
+    # CI bounds
+    ci_bounds:
+      absolute: 0.5
+      weight: 0.10

@@ -3,8 +3,8 @@
 # Reference: benchmarks/operational-efficiency.md
 
 meta:
-  version: "0.1"
-  updated: "2026-05-29"
+  version: "0.2"
+  updated: "2026-06-27"
 
 # ────────────────────────────────────────────────────────────
 # Model pricing reference — May 2026
@@ -78,7 +78,7 @@ efficiency_targets:
   level_1:
     cost_target_usd: 0.10
     time_target_min: 2.0
-    test_cases: [TC-001, TC-002, TC-003]
+    test_cases: [TC-001, TC-002, TC-003, TC-011, TC-012, TC-013, TC-014, TC-015, TC-016, TC-017, TC-018, TC-019, TC-020]
   level_2:
     cost_target_usd: 2.00
     time_target_min: 10.0
@@ -201,6 +201,18 @@ verification_time:
       SAS: 3.5
       Python: 5.0
   tc_018:
+    human_from_scratch_min: 25
+    human_verify_agent_min:
+      R: 6.0
+      SAS: 5.0
+      Python: 7.0
+  tc_019:
+    human_from_scratch_min: 20
+    human_verify_agent_min:
+      R: 5.0
+      SAS: 4.0
+      Python: 6.0
+  tc_020:
     human_from_scratch_min: 25
     human_verify_agent_min:
       R: 6.0

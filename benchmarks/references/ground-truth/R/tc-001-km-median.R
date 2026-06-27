@@ -34,7 +34,8 @@ parse_args <- function() {
     arm = as.integer(get_arg("--arm", "1")),
     conf_type = get_arg("--conf-type", "log-log"),
     data = get_arg("--data", NA),
-    output = get_arg("--output", NA)
+    output = get_arg("--output", NA),
+    ars_output = get_arg("--ars-output", NA)
   )
 }
 
@@ -166,5 +167,58 @@ if (sys.nframe() == 0) {  # Only runs when script is executed directly
   # Write to file if --output specified
   if (!is.na(opts$output)) {
     write_output(result, opts$output)
+  }
+
+  # ─────────────────────────────────────────────────────
+  # ARS-compatible output envelope (CDISC ARS v1.0)
+  # Phase 2 proof-of-concept: wraps benchmark output in ARS structure
+  # ─────────────────────────────────────────────────────
+  if (!is.na(opts$ars_output)) {
+    ars_envelope <- list(
+      ars_version = "1.0",
+      analysisResult = list(
+        id = "TC-001",
+        version = "1.0",
+        analysisReason = "Primary efficacy endpoint estimation",
+        analysisMethod = list(
+          name = "Kaplan-Meier",
+          codeTemplate = "survival::survfit(Surv(AVAL, 1 - CNSR) ~ 1)",
+          parameters = list(
+            conf_type = result$ci_method,
+            tie_method = "efron"
+          )
+        ),
+        analysisVariables = list(
+          list(name = "AVAL", dataset = "ADTTE", role = "analysis time"),
+          list(name = "CNSR", dataset = "ADTTE", role = "censoring"),
+          list(name = "TRT01A", dataset = "ADSL", role = "treatment")
+        ),
+        analysisPopulation = list(
+          name = "ITT",
+          filter = "ITTFL = 'Y'"
+        ),
+        analysisDataset = "ADTTE",
+        resultGroups = list(
+          list(id = ifelse(opts$arm == 1, "Experimental", "Control"),
+               n = result$n_total,
+               events = result$n_events)
+        ),
+        documentation = "KM median PFS estimation with 95% CI (Brookmeyer-Crowley log-log)",
+        analysisResultsData = list(
+          statistics = list(
+            list(name = "median_pfs", value = result$median_pfs, unit = "months"),
+            list(name = "ci_lower", value = result$ci_lower),
+            list(name = "ci_upper", value = result$ci_upper),
+            list(name = "n_events", value = as.integer(result$n_events)),
+            list(name = "n_total", value = as.integer(result$n_total)),
+            list(name = "estimable", value = result$estimable)
+          )
+        )
+      )
+    )
+
+    ars_json <- jsonlite::toJSON(ars_envelope, auto_unbox = TRUE, pretty = TRUE)
+    writeLines(ars_json, opts$ars_output)
+    cat(sprintf("Wrote ARS-compatible output to: %s\n", opts$ars_output))
   }
 }
