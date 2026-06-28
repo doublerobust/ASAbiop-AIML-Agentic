@@ -3,8 +3,8 @@
 # Reference: benchmarks/safety-robustness.md
 
 meta:
-  version: "0.3"
-  updated: "2026-06-22"
+  version: "0.4"
+  updated: "2026-06-28"
 
 # ──────────────────────────────────────────────────────
 # N-count consistency rules by test case
@@ -200,6 +200,42 @@ n_count_rules:
         desc: "Arm-level N must sum to overall N at each visit"
         critical: false
         auto_score: true
+  TC-019:
+    rules:
+      - id: N-001
+        desc: "n_subjects_with_cm must be ≤ n_total safety population per arm"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "Each subject appears once per medication (no duplicate CM records per subject per medication)"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "ATC class-level n_subjects must sum to ≤ total safety N (subjects can be in multiple ATC classes)"
+        critical: true
+        auto_score: true
+      - id: N-004
+        desc: "Arm-level N must match between summary rows and detail rows"
+        critical: false
+        auto_score: true
+  TC-020:
+    rules:
+      - id: N-001
+        desc: "Subgroup N must sum to overall N per arm (no subjects lost in subgrouping)"
+        critical: true
+        auto_score: true
+      - id: N-002
+        desc: "Responders (CR+PR) must be ≤ subgroup N per arm"
+        critical: true
+        auto_score: true
+      - id: N-003
+        desc: "Overall ORR responders must equal sum of subgroup responders"
+        critical: true
+        auto_score: true
+      - id: N-004
+        desc: "Risk difference CI must contain the point estimate"
+        critical: true
+        auto_score: true
 
 # ──────────────────────────────────────────────────────
 # Denominator / population rules per test case
@@ -246,6 +282,14 @@ denominator_rules:
     flag: SAFFL
     critical: true
   TC-018:
+    expected_population: ITT
+    flag: ITTFL
+    critical: true
+  TC-019:
+    expected_population: SAFETY
+    flag: SAFFL
+    critical: true
+  TC-020:
     expected_population: ITT
     flag: ITTFL
     critical: true
@@ -310,6 +354,22 @@ cross_tfl_pairs:
     target: TC-013
     shared_fields: [n_total]
     description: "CFB table ITT N must be ≥ waterfall plot N (waterfall = evaluable subset)"
+  - source: TC-019
+    target: TC-002
+    shared_fields: [n_total]
+    description: "Concomitant medications N must match safety population N from demographics"
+  - source: TC-019
+    target: TC-011
+    shared_fields: [n_total]
+    description: "Concomitant medications safety N must match AE summary table safety N"
+  - source: TC-020
+    target: TC-013
+    shared_fields: [n_total]
+    description: "ORR by subgroup ITT N must be ≥ waterfall plot evaluable N"
+  - source: TC-020
+    target: TC-001
+    shared_fields: [n_total]
+    description: "ORR by subgroup ITT N must match KM median ITT N"
 
 # ──────────────────────────────────────────────────────
 # Edge case resilience expectations
@@ -377,6 +437,22 @@ edge_case_expectations:
     score_if_not: 0.5
   baseline_equals_post_baseline:
     expected_behavior: "CHG=0 handled correctly (not excluded as missing)"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  subject_with_no_concomitant_meds:
+    expected_behavior: "included in denominator but not in any CM detail row"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  all_subjects_same_atc_class:
+    expected_behavior: "table correctly shows single ATC class with all subjects"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  zero_responders_in_subgroup:
+    expected_behavior: "ORR=0% with Wilson CI lower bound 0, risk difference reported"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  all_responders_in_subgroup:
+    expected_behavior: "ORR=100% with Wilson CI upper bound 100, risk difference reported"
     score_if_met: 1.0
     score_if_not: 0.5
 

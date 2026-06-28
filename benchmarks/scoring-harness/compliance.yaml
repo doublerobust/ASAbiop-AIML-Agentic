@@ -563,3 +563,116 @@ TC-018:
     - id: CSR-24
       desc: "Missing data handling stated in footnotes"
       penalty: 0.1
+
+# ─────────────────────────────────────────────────────
+# TC-019: Concomitant Medications Summary Table
+# ─────────────────────────────────────────────────────
+TC-019:
+  description: "Concomitant Medications Summary — by ATC class and preferred name, safety population"
+  adam_mapping:
+    required_variables: [USUBJID, ATCCLASS, CMDECOD, CMINDC, TRT01PN, SAFFL]
+    population_flag: SAFFL
+    population_value: Y
+    treatment_variable: TRT01PN
+  tcg_rules:
+    - id: TCG-53
+      desc: "Population filter SAFFL=Y"
+      critical: true
+    - id: TCG-54
+      desc: "Treatment variable TRT01PN"
+      critical: true
+    - id: TCG-55
+      desc: "ATC class (ATCCLASS) mapped to WHO ATC classification"
+      critical: true
+    - id: TCG-56
+      desc: "Medication decoded name (CMDECOD) — not verbatim term"
+      critical: true
+    - id: TCG-57
+      desc: "Subject de-duplication: each subject counted once per medication"
+      critical: true
+    - id: TCG-58
+      desc: "ATC classes sorted alphabetically by code"
+      critical: false
+    - id: TCG-59
+      desc: "Medications within ATC class sorted by descending frequency"
+      critical: false
+    - id: TCG-60
+      desc: "Summary row: Any CM (subjects with >=1 concomitant medication)"
+      critical: true
+    - id: TCG-06
+      desc: "Software version documented"
+      critical: false
+  csr_rules:
+    - id: CSR-01
+      desc: "Table numbered per ICH E3 appendix"
+      penalty: 0.1
+    - id: CSR-02
+      desc: "Title includes population, medication class, and analysis method"
+      penalty: 0.2
+    - id: CSR-25
+      desc: "Columns: n (%), sorted by ATC class then medication"
+      penalty: 0.1
+    - id: CSR-26
+      desc: "Footnotes: ATC version, denominator definition, subject de-duplication rule"
+      penalty: 0.1
+    - id: CSR-27
+      desc: "Percentage based on safety population N per arm (not total CM records)"
+      penalty: 0.15
+
+# ─────────────────────────────────────────────────────
+# TC-020: ORR by Subgroup
+# ─────────────────────────────────────────────────────
+TC-020:
+  description: "ORR by Subgroup — objective response rate by pre-specified subgroups with CMH interaction test"
+  adam_mapping:
+    required_variables: [USUBJID, TRT01PN, ITTFL, AVAL, BOR, SEX, AGEGR1, ECOG]
+    population_flag: ITTFL
+    population_value: Y
+    treatment_variable: TRT01PN
+  tcg_rules:
+    - id: TCG-01
+      desc: "Population filter ITTFL=Y"
+      critical: true
+    - id: TCG-02
+      desc: "Treatment variable TRT01PN"
+      critical: true
+    - id: TCG-61
+      desc: "ORR defined as CR+PR (RECIST 1.1 response criteria)"
+      critical: true
+    - id: TCG-62
+      desc: "Subgroups pre-specified: SEX, AGEGR1, ECOG"
+      critical: true
+    - id: TCG-63
+      desc: "Wilson score CI for each subgroup-level ORR"
+      critical: false
+    - id: TCG-64
+      desc: "Risk difference (Experimental - Control) with 95% CI per subgroup"
+      critical: true
+    - id: TCG-65
+      desc: "Cochran-Mantel-Haenszel (CMH) interaction test for treatment-by-subgroup"
+      critical: true
+    - id: TCG-66
+      desc: "Subgroup N must sum to overall N (no subjects lost in subgrouping)"
+      critical: true
+    - id: TCG-67
+      desc: "Overall ORR reported alongside subgroup-level ORR"
+      critical: true
+    - id: TCG-06
+      desc: "Software version documented"
+      critical: false
+  csr_rules:
+    - id: CSR-01
+      desc: "Table numbered per ICH E3 appendix"
+      penalty: 0.1
+    - id: CSR-02
+      desc: "Title includes population, endpoint (ORR), and subgroup variables"
+      penalty: 0.2
+    - id: CSR-28
+      desc: "Each row: subgroup level, n/N (%), 95% CI, risk difference (95% CI)"
+      penalty: 0.15
+    - id: CSR-29
+      desc: "CMH interaction p-value reported for each subgroup variable"
+      penalty: 0.1
+    - id: CSR-30
+      desc: "Footnotes: RECIST 1.1 criteria, CI method, CMH test description"
+      penalty: 0.1
