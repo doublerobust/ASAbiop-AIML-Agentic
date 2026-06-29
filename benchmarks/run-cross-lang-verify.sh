@@ -125,6 +125,25 @@ echo ""
 echo "  Generating shared ADAE, ADVS, PD datasets..."
 (cd "$RDIR" && Rscript generate_shared_datasets.R --seed $SEED --n $N --output-dir "$SHARED") 2>&1
 
+# Generate shared ADCM for TC-019 (concomitant medications)
+(cd "$RDIR" && Rscript -e "
+source('common/data-generation.R')
+source('tc-019-concomitant-meds.R')
+adcm <- generate_adcm(seed=$SEED, n_subjects=$N)
+write_shared_data(adcm, '$SHARED/adcm.csv')
+cat('ADCM:', nrow(adcm), 'rows,', length(unique(adcm\$USUBJID)), 'subjects
+')
+") 2>&1
+
+# Generate shared tumor response data for TC-020 (ORR by subgroup)
+(cd "$RDIR" && Rscript -e "
+source('tc-020-orr-by-subgroup.R')
+data <- generate_tumor_response(seed=$SEED, n_subjects=$N)
+write_shared_data(data, '$SHARED/tc020_tumor_response.csv')
+cat('TC-020 tumor response:', nrow(data), 'subjects
+')
+") 2>&1
+
 echo ""
 echo "Shared datasets:"
 ls -la "$SHARED/"
@@ -322,6 +341,38 @@ fi
 
 # TC-018: Change from Baseline (internal, deterministic)
 run_tc_internal "TC-018" "tc-018-cfb-table.R"      "tc_018_cfb_table.py"
+
+# TC-019: Concomitant Medications (shared ADCM)
+echo ""
+echo "── TC-019 ──────────────────────────────────────────"
+echo "  R:   tc-019-concomitant-meds.R"
+if (cd "$RDIR" && Rscript "tc-019-concomitant-meds.R" --seed $SEED --n $N --data "$SHARED/adcm.csv" --output "$R_OUT/TC-019.json") 2>&1; then
+  echo "  ✓ R completed"
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_019_concomitant_meds.py"
+if (cd "$PYDIR" && python3 "tc_019_concomitant_meds.py" --seed $SEED --n $N --data "$SHARED/adcm.csv" --output "$PY_OUT/TC-019.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# TC-020: ORR by Subgroup (shared tumor response data)
+echo ""
+echo "── TC-020 ──────────────────────────────────────────"
+echo "  R:   tc-020-orr-by-subgroup.R"
+if (cd "$RDIR" && Rscript "tc-020-orr-by-subgroup.R" --seed $SEED --n $N --data "$SHARED/tc020_tumor_response.csv" --output "$R_OUT/TC-020.json") 2>&1; then
+  echo "  ✓ R completed"
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_020_orr_by_subgroup.py"
+if (cd "$PYDIR" && python3 "tc_020_orr_by_subgroup.py" --seed $SEED --n $N --data "$SHARED/tc020_tumor_response.csv" --output "$PY_OUT/TC-020.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
 
 # ───────────────────────────────────────────────────────────────────
 # Step 3: Summary

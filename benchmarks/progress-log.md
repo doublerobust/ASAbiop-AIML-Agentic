@@ -2159,3 +2159,86 @@ Created reference SAS implementations:
 4. **WG presentation prep** — ARS PoC + TC-019/020 + CI pipeline for next WG meeting
 5. **ARS Phase 3** — Extend `--ars-output` to TC-002, TC-003, TC-012
 6. **TC-021+ candidates** — Time-to-event progression (TTP), Duration of Response (DOR), Disease Control Rate (DCR)
+
+---
+
+## 2026-06-29 — Day 29: Cross-Language Verification Prep, ARS Phase 3, White Paper Section 3
+
+### 🎯 Assignment
+Daily cron job triggered. Continuing benchmark development per Day 28 plan.
+
+### ✅ What Got Done
+
+#### 1. TC-019/TC-020 Cross-Language Verification Infrastructure
+- **Fixed TC-019 R script** (`tc-019-concomitant-meds.R`): Added `--data` CSV loading support. When `--data` is provided, the script reads a shared ADCM CSV and derives n_exp/n_ctrl from unique subjects in the data (instead of re-sampling). This enables true cross-language verification on identical input data.
+- **Fixed TC-019 Python script** (`tc_019_concomitant_meds.py`): Updated to derive n_exp/n_ctrl from the loaded data's unique subjects when `--data` is provided, matching the R logic.
+- **Fixed TC-020 R script** (`tc-020-orr-by-subgroup.R`): Added `--data` CSV loading via `read_shared_data()` for cross-language verification.
+- **TC-020 Python script** already had `--data` support.
+- **Updated `run-cross-lang-verify.sh`**: Added shared data generation blocks for TC-019 (ADCM) and TC-020 (tumor response), and run blocks for both TCs. The script now covers all 13 Level 1 test cases (TC-001 through TC-020).
+- **Verified Python scripts run correctly** with both internal generation and `--data` shared CSV paths.
+
+#### 2. ARS Phase 3: TC-002 ARS Output
+- **Added `--ars-output` flag to TC-002 R script** (`tc-002-demographics.R`): Emits ARS v1.0-compatible JSON envelope with analysisMethod (descriptive statistics), analysisVariables (AGE, SEX, RACE, REGION1, ECOG, TRT01PN), analysisPopulation (SAFETY), resultGroups (Experimental/Control with n), and analysisResultsData (n_total, age means/medians by arm).
+- **Added `--ars-output` flag to TC-002 Python script** (`tc_002_demographics.py`): Matching ARS envelope output, verified correct JSON generation.
+- **Updated CDISC ARS alignment document**: Phase 2 marked as ✅ Done, Phase 3 marked as 🟡 In Progress (TC-002 complete, TC-003 and TC-012 pending).
+
+#### 3. White Paper Section 3 Draft
+- **Created `white-paper-section3-draft.md`** (~9.7 KB): Full prose draft of Section 3 (Benchmark Design) covering:
+  - 3.1 Design Principles (5 core principles)
+  - 3.2 Scope: TFL-First (in/out of scope)
+  - 3.3 Three Difficulty Levels (Level 1/2/3 descriptions)
+  - 3.4 Test Case Library (full 13-TC inventory table)
+  - 3.5 Data Generation Strategy (R/Python/SAS, ADaM datasets)
+  - 3.6 Cross-Language Verification Protocol (4-step process)
+  - 3.7 CDISC ARS Alignment (envelope structure, current coverage)
+  - 3.8 CI/CD Integration (GitHub Actions workflow)
+
+#### 4. TC-021/022/023 Candidate Design
+- **Created `tc-021-023-candidates.md`** (~4.8 KB): Design specifications for three new Level 1 test case candidates:
+  - **TC-021: Time-to-Progression (TTP)** — KM estimation with death censored (tests censoring rule knowledge vs PFS)
+  - **TC-022: Duration of Response (DOR)** — KM among responders only (tests subset analysis, left truncation)
+  - **TC-023: Disease Control Rate (DCR)** — CR+PR+SD rate (tests response categorization, cross-TFL consistency with ORR)
+  - New cross-TFL safety rules: PFS events ≥ TTP events, DCR ≥ ORR, DOR responders = ORR responders
+  - Implementation priority: TC-021 (P1), TC-022/023 (P2)
+
+### 📊 Current State
+
+| Component | Status |
+|---|---|
+| Level 1 TCs (R+Python) | 13/13 complete |
+| Level 1 TCs (SAS) | 13/13 complete (reference only, not executed) |
+| Cross-language verification | 11/13 at 1.0000 (TC-019/020 infrastructure ready, R not available on Mac Studio) |
+| ARS output | TC-001 ✅, TC-002 ✅ (Phase 3 in progress) |
+| Compliance rules | 148 (TCG + CSR) |
+| Safety rules | 96 (N-count + denom + cross-TFL + edge) |
+| White paper | Section 3 draft complete, outline for Sections 4-8 |
+| CI pipeline | GitHub Actions workflow configured |
+| TC-021+ candidates | 3 designed (TTP, DOR, DCR) |
+
+### ⚠️ Blockers
+- **R not available on Mac Studio**: Cross-language verification for TC-019/020 requires R to generate shared data and run the R scripts. The `run-cross-lang-verify.sh` script is updated and ready, but needs to be run on the Linux server where R is installed. The Python side has been verified to work correctly with shared data.
+- **Python 3.9 on Mac Studio**: System Python is 3.9 (no pandas/scipy pre-installed). Installed pandas/numpy/scipy via pip3 for local testing. Production runs should use a newer Python or virtualenv.
+
+### 📄 New Files Created (Day 29)
+
+| File | Type | Description |
+|---|---|---|
+| `white-paper-section3-draft.md` | Document | Section 3 (Benchmark Design) prose draft |
+| `tc-021-023-candidates.md` | Document | Design specs for TTP, DOR, DCR test cases |
+
+### Modified Files (Day 29)
+- `references/ground-truth/R/tc-019-concomitant-meds.R` — added `--data` CSV loading for cross-language verification
+- `references/ground-truth/Python/tc_019_concomitant_meds.py` — derive n_exp/n_ctrl from data when `--data` provided
+- `references/ground-truth/R/tc-020-orr-by-subgroup.R` — added `--data` CSV loading for cross-language verification
+- `references/ground-truth/R/tc-002-demographics.R` — added `--ars-output` flag with ARS v1.0 envelope
+- `references/ground-truth/Python/tc_002_demographics.py` — added `--ars-output` flag with ARS v1.0 envelope
+- `run-cross-lang-verify.sh` — added TC-019 and TC-020 shared data generation and run blocks
+- `cdisc-ars-alignment.md` — updated Phase 2/3 status in implementation roadmap
+
+### 🔮 Plan for Day 30+
+1. **Run TC-019/020 cross-language verification** on Linux server (R available) — target 1.0000
+2. **ARS Phase 3 continued** — extend `--ars-output` to TC-003 and TC-012
+3. **TC-021 (TTP) implementation** — R + Python ground truth, output schema, scoring
+4. **White paper Section 4** — Scoring Framework prose draft
+5. **Level 2 test case design** — TC-004 (SAP drafting) specification
+6. **WG presentation prep** — slides for ARS PoC, CI pipeline, cross-language results

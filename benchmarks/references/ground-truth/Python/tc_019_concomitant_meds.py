@@ -174,10 +174,16 @@ def main():
               f"{adcm['USUBJID'].nunique()} subjects")
 
     # Determine subjects per arm
-    rng = np.random.default_rng(args.seed)
-    trt = rng.choice([0, 1], size=args.n)
-    n_exp = int((trt == 1).sum())
-    n_ctrl = int((trt == 0).sum())
+    if args.data:
+        # Derive from unique subjects in the data
+        unique_subjects = adcm.drop_duplicates(subset='USUBJID')
+        n_exp = int((unique_subjects['TRT01PN'] == 1).sum())
+        n_ctrl = int((unique_subjects['TRT01PN'] == 0).sum())
+    else:
+        rng = np.random.default_rng(args.seed)
+        trt = rng.choice([0, 1], size=args.n)
+        n_exp = int((trt == 1).sum())
+        n_ctrl = int((trt == 0).sum())
 
     result = compute_cm_summary(adcm, (n_exp, n_ctrl))
     result["seed"] = args.seed

@@ -111,6 +111,8 @@ def main():
     parser.add_argument("--data", type=str, default=None,
                         help="Shared ADSL CSV (for cross-language verification)")
     parser.add_argument("--output", type=str, default=None)
+    parser.add_argument("--ars-output", type=str, default=None,
+                        help="Write ARS-compatible JSON envelope")
     args = parser.parse_args()
 
     print(f"TC-002: Baseline Demographics (Python) — seed={args.seed}, n={args.n}")
@@ -148,6 +150,61 @@ def main():
         with open(outpath, "w") as f:
             json.dump(result, f, indent=2, default=str)
         print(f"Wrote output to: {outpath}")
+
+    # ARS-compatible output (CDISC Analysis Results Standard v1.0)
+    if args.ars_output:
+        age_exp = [r for r in result["age_by_arm"] if r["TRT01PN"] == 1][0]
+        age_ctl = [r for r in result["age_by_arm"] if r["TRT01PN"] == 0][0]
+        ars_envelope = {
+            "id": result["test_case_id"],
+            "version": "1.0",
+            "analysisReason": "Baseline demographics characterization",
+            "analysisMethod": {
+                "name": "Descriptive statistics",
+                "codeTemplate": {
+                    "language": "Python",
+                    "package": "pandas",
+                    "env": f"Python {sys.version.split()[0]}",
+                },
+                "parameters": {
+                    "population": result["population"],
+                    "continuous_var": "AGE",
+                    "categorical_vars": ["SEX", "RACE", "REGION1", "ECOG"],
+                },
+            },
+            "analysisVariables": [
+                {"name": "AGE", "type": "continuous", "role": "covariate"},
+                {"name": "SEX", "type": "categorical", "role": "stratification"},
+                {"name": "RACE", "type": "categorical", "role": "stratification"},
+                {"name": "REGION1", "type": "categorical", "role": "stratification"},
+                {"name": "ECOG", "type": "categorical", "role": "stratification"},
+                {"name": "TRT01PN", "type": "categorical", "role": "treatment"},
+            ],
+            "analysisPopulation": {
+                "id": result["population"],
+                "condition": f"{result['population']}FL == 'Y'",
+            },
+            "analysisDataset": "ADSL",
+            "resultGroups": [
+                {"id": "Experimental", "n": int(age_exp["count"])},
+                {"id": "Control", "n": int(age_ctl["count"])},
+            ],
+            "documentation": "Baseline demographics: age (continuous) and sex/race/region/ECOG (categorical) by treatment arm",
+            "analysisResultsData": {
+                "statistics": [
+                    {"name": "n_total", "value": int(result["n_total"])},
+                    {"name": "age_mean_experimental", "value": age_exp["mean"]},
+                    {"name": "age_mean_control", "value": age_ctl["mean"]},
+                    {"name": "age_median_experimental", "value": age_exp["median"]},
+                    {"name": "age_median_control", "value": age_ctl["median"]},
+                ]
+            },
+        }
+        ars_path = Path(args.ars_output)
+        ars_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(ars_path, "w") as f:
+            json.dump(ars_envelope, f, indent=2, default=str)
+        print(f"Wrote ARS-compatible output to: {ars_path}")
 
 
 if __name__ == "__main__":

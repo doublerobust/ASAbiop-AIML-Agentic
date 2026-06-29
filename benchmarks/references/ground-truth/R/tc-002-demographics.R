@@ -31,7 +31,8 @@ parse_args <- function() {
     seed = as.integer(get_arg("--seed", "42")),
     n = as.integer(get_arg("--n", "400")),
     data = get_arg("--data", NA),
-    output = get_arg("--output", NA)
+    output = get_arg("--output", NA),
+    ars_output = get_arg("--ars-output", NA)
   )
 }
 
@@ -172,5 +173,57 @@ if (sys.nframe() == 0) {
 
   if (!is.na(opts$output)) {
     write_output(result, opts$output)
+  }
+
+  # ARS-compatible output (CDISC Analysis Results Standard v1.0)
+  if (!is.na(opts$ars_output)) {
+    ars_envelope <- list(
+      id = result$test_case_id,
+      version = "1.0",
+      analysisReason = "Baseline demographics characterization",
+      analysisMethod = list(
+        name = "Descriptive statistics",
+        codeTemplate = list(
+          language = "R",
+          package = "dplyr",
+          env = paste0("R ", R.version.string)
+        ),
+        parameters = list(
+          population = result$population,
+          continuous_var = "AGE",
+          categorical_vars = c("SEX", "RACE", "REGION1", "ECOG")
+        )
+      ),
+      analysisVariables = list(
+        list(name = "AGE", type = "continuous", role = "covariate"),
+        list(name = "SEX", type = "categorical", role = "stratification"),
+        list(name = "RACE", type = "categorical", role = "stratification"),
+        list(name = "REGION1", type = "categorical", role = "stratification"),
+        list(name = "ECOG", type = "categorical", role = "stratification"),
+        list(name = "TRT01PN", type = "categorical", role = "treatment")
+      ),
+      analysisPopulation = list(
+        id = result$population,
+        condition = paste0(result$population, "FL == 'Y'")
+      ),
+      analysisDataset = "ADSL",
+      resultGroups = lapply(split(result$age_by_arm, result$age_by_arm$TRT01PN), function(x) {
+        list(id = x$TRT01P[1], n = as.integer(x$count[1]))
+      }),
+      documentation = "Baseline demographics: age (continuous) and sex/race/region/ECOG (categorical) by treatment arm",
+      analysisResultsData = list(
+        statistics = list(
+          list(name = "n_total", value = as.integer(result$n_total)),
+          list(name = "age_mean_experimental", value = result$age_by_arm$mean[result$age_by_arm$TRT01PN == 1]),
+          list(name = "age_mean_control", value = result$age_by_arm$mean[result$age_by_arm$TRT01PN == 0]),
+          list(name = "age_median_experimental", value = result$age_by_arm$median[result$age_by_arm$TRT01PN == 1]),
+          list(name = "age_median_control", value = result$age_by_arm$median[result$age_by_arm$TRT01PN == 0])
+        )
+      )
+    )
+
+    ars_json <- jsonlite::toJSON(ars_envelope, auto_unbox = TRUE, pretty = TRUE)
+    writeLines(ars_json, opts$ars_output)
+    cat(sprintf("Wrote ARS-compatible output to: %s\n", opts$ars_output))
   }
 }

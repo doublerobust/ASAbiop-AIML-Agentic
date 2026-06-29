@@ -207,14 +207,25 @@ if (sys.nframe() == 0) {
 
   cat(sprintf("TC-019: Concomitant Medications Summary (R) — seed=%d, n=%d\\n", seed, n))
 
-  adcm <- generate_adcm(seed = seed, n_subjects = n)
-  cat(sprintf("Generated ADCM with %d records across %d subjects\\n",
-              nrow(adcm), length(unique(adcm$USUBJID))))
-
-  # Determine subjects per arm
-  trt <- sample(0:1, n, replace = TRUE)
-  n_exp <- sum(trt == 1)
-  n_ctrl <- sum(trt == 0)
+  if (!is.na(opts$data)) {
+    adcm <- read_shared_data(opts$data)
+    cat(sprintf("Loaded shared ADCM with %d records across %d subjects\\n",
+                nrow(adcm), length(unique(adcm$USUBJID))))
+    # Derive n per arm from the data's treatment assignment
+    # Each subject appears once with a TRT01PN value in the ADCM
+    adsl_unique <- adcm[!duplicated(adcm$USUBJID), ]
+    n_exp <- sum(adsl_unique$TRT01PN == 1)
+    n_ctrl <- sum(adsl_unique$TRT01PN == 0)
+    n <- n_exp + n_ctrl
+  } else {
+    adcm <- generate_adcm(seed = seed, n_subjects = n)
+    cat(sprintf("Generated ADCM with %d records across %d subjects\\n",
+                nrow(adcm), length(unique(adcm$USUBJID))))
+    # Determine subjects per arm
+    trt <- sample(0:1, n, replace = TRUE)
+    n_exp <- sum(trt == 1)
+    n_ctrl <- sum(trt == 0)
+  }
 
   result <- compute_cm_summary(adcm, c(n_exp, n_ctrl))
   result$seed <- seed

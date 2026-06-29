@@ -209,8 +209,13 @@ if (sys.nframe() == 0) {
 
   cat(sprintf("TC-020: ORR by Subgroup (R) — seed=%d, n=%d\\n", seed, n))
 
-  data <- generate_tumor_response(seed = seed, n_subjects = n)
-  cat(sprintf("Generated tumor response data with %d subjects\\n", nrow(data)))
+  if (!is.na(opts$data)) {
+    data <- read_shared_data(opts$data)
+    cat(sprintf("Loaded shared tumor response data with %d subjects\\n", nrow(data)))
+  } else {
+    data <- generate_tumor_response(seed = seed, n_subjects = n)
+    cat(sprintf("Generated tumor response data with %d subjects\\n", nrow(data)))
+  }
 
   result <- compute_orr_by_subgroup(data)
   result$seed <- seed
