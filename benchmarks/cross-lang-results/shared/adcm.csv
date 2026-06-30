@@ -1,0 +1,545 @@
+"USUBJID","STUDYID","ATCCLAS","ATCCLAS1","CMDECOD","CMINDC","TRT01PN"
+"SUBJ-0001","BENCHMARK-001","N02","Analgesics","Ibuprofen","Thrombosis",0
+"SUBJ-0001","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Anxiety",0
+"SUBJ-0001","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Inflammation",0
+"SUBJ-0001","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Hypertension",0
+"SUBJ-0001","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Pain",0
+"SUBJ-0002","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","GERD",0
+"SUBJ-0002","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Thrombosis",0
+"SUBJ-0002","BENCHMARK-001","N02","Analgesics","Ibuprofen","Anxiety",0
+"SUBJ-0002","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Pain",0
+"SUBJ-0003","BENCHMARK-001","C03","Diuretics","Furosemide","Inflammation",0
+"SUBJ-0003","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Hypertension",0
+"SUBJ-0003","BENCHMARK-001","N02","Analgesics","Ibuprofen","Edema",0
+"SUBJ-0004","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Anxiety",0
+"SUBJ-0004","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Pain",0
+"SUBJ-0004","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Pain",0
+"SUBJ-0005","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Pain",1
+"SUBJ-0005","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Anxiety",1
+"SUBJ-0005","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Pain",1
+"SUBJ-0006","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Edema",1
+"SUBJ-0006","BENCHMARK-001","N02","Analgesics","Tramadol","Edema",1
+"SUBJ-0007","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Anxiety",1
+"SUBJ-0007","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","GERD",1
+"SUBJ-0007","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Edema",1
+"SUBJ-0007","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Inflammation",1
+"SUBJ-0007","BENCHMARK-001","N02","Analgesics","Ibuprofen","Inflammation",1
+"SUBJ-0008","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Hypertension",1
+"SUBJ-0008","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","GERD",1
+"SUBJ-0009","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","GERD",0
+"SUBJ-0009","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Anxiety",0
+"SUBJ-0010","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","GERD",1
+"SUBJ-0010","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Hypertension",1
+"SUBJ-0011","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Thrombosis",0
+"SUBJ-0011","BENCHMARK-001","N02","Analgesics","Tramadol","Thrombosis",0
+"SUBJ-0012","BENCHMARK-001","N02","Analgesics","Paracetamol","Hypertension",1
+"SUBJ-0012","BENCHMARK-001","N05","Psycholeptics","Zolpidem","GERD",1
+"SUBJ-0013","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Thrombosis",0
+"SUBJ-0013","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Hypertension",0
+"SUBJ-0014","BENCHMARK-001","N02","Analgesics","Ibuprofen","Infection",1
+"SUBJ-0014","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","GERD",1
+"SUBJ-0014","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Pain",1
+"SUBJ-0015","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Anxiety",0
+"SUBJ-0015","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Infection",0
+"SUBJ-0016","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Infection",0
+"SUBJ-0016","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Inflammation",0
+"SUBJ-0018","BENCHMARK-001","C03","Diuretics","Furosemide","Hypertension",1
+"SUBJ-0018","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Anxiety",1
+"SUBJ-0019","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Thrombosis",1
+"SUBJ-0019","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","GERD",1
+"SUBJ-0019","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Thrombosis",1
+"SUBJ-0019","BENCHMARK-001","C03","Diuretics","Furosemide","Pain",1
+"SUBJ-0020","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Hypertension",1
+"SUBJ-0020","BENCHMARK-001","N02","Analgesics","Ibuprofen","Pain",1
+"SUBJ-0020","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","GERD",1
+"SUBJ-0020","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Hypertension",1
+"SUBJ-0021","BENCHMARK-001","C03","Diuretics","Furosemide","Hypertension",0
+"SUBJ-0021","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Edema",0
+"SUBJ-0022","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Infection",0
+"SUBJ-0022","BENCHMARK-001","N05","Psycholeptics","Diazepam","Hypertension",0
+"SUBJ-0022","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Anxiety",0
+"SUBJ-0023","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Thrombosis",0
+"SUBJ-0023","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Inflammation",0
+"SUBJ-0023","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Inflammation",0
+"SUBJ-0024","BENCHMARK-001","N02","Analgesics","Ibuprofen","Thrombosis",0
+"SUBJ-0024","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Anxiety",0
+"SUBJ-0024","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Pain",0
+"SUBJ-0024","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","GERD",0
+"SUBJ-0025","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Infection",0
+"SUBJ-0025","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Hypertension",0
+"SUBJ-0026","BENCHMARK-001","N02","Analgesics","Ibuprofen","Pain",1
+"SUBJ-0026","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Inflammation",1
+"SUBJ-0026","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Inflammation",1
+"SUBJ-0027","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Anxiety",0
+"SUBJ-0028","BENCHMARK-001","N02","Analgesics","Ibuprofen","Hypertension",0
+"SUBJ-0028","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Pain",0
+"SUBJ-0028","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Infection",0
+"SUBJ-0030","BENCHMARK-001","N02","Analgesics","Tramadol","Infection",0
+"SUBJ-0030","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Infection",0
+"SUBJ-0031","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Pain",1
+"SUBJ-0031","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Anxiety",1
+"SUBJ-0031","BENCHMARK-001","N02","Analgesics","Ibuprofen","Hypertension",1
+"SUBJ-0031","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Thrombosis",1
+"SUBJ-0032","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Hypertension",1
+"SUBJ-0032","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Infection",1
+"SUBJ-0032","BENCHMARK-001","N02","Analgesics","Ibuprofen","Pain",1
+"SUBJ-0033","BENCHMARK-001","C03","Diuretics","Furosemide","Pain",1
+"SUBJ-0033","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Pain",1
+"SUBJ-0033","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Pain",1
+"SUBJ-0033","BENCHMARK-001","N02","Analgesics","Tramadol","Pain",1
+"SUBJ-0033","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Hypertension",1
+"SUBJ-0034","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Infection",1
+"SUBJ-0034","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Anxiety",1
+"SUBJ-0034","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Inflammation",1
+"SUBJ-0035","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Hypertension",0
+"SUBJ-0035","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Thrombosis",0
+"SUBJ-0035","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Inflammation",0
+"SUBJ-0036","BENCHMARK-001","N02","Analgesics","Paracetamol","GERD",1
+"SUBJ-0036","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","GERD",1
+"SUBJ-0036","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Anxiety",1
+"SUBJ-0036","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Pain",1
+"SUBJ-0037","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Thrombosis",0
+"SUBJ-0037","BENCHMARK-001","N02","Analgesics","Tramadol","Hypertension",0
+"SUBJ-0037","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Thrombosis",0
+"SUBJ-0039","BENCHMARK-001","N02","Analgesics","Tramadol","Pain",1
+"SUBJ-0039","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Inflammation",1
+"SUBJ-0039","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Hypertension",1
+"SUBJ-0040","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Pain",1
+"SUBJ-0040","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","GERD",1
+"SUBJ-0041","BENCHMARK-001","N02","Analgesics","Tramadol","GERD",0
+"SUBJ-0041","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Pain",0
+"SUBJ-0042","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Infection",0
+"SUBJ-0042","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Anxiety",0
+"SUBJ-0043","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Hypertension",1
+"SUBJ-0043","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Inflammation",1
+"SUBJ-0043","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Infection",1
+"SUBJ-0044","BENCHMARK-001","N02","Analgesics","Paracetamol","GERD",1
+"SUBJ-0044","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Inflammation",1
+"SUBJ-0044","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Edema",1
+"SUBJ-0045","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Hypertension",1
+"SUBJ-0045","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Hypertension",1
+"SUBJ-0045","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Inflammation",1
+"SUBJ-0046","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Thrombosis",1
+"SUBJ-0046","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Pain",1
+"SUBJ-0046","BENCHMARK-001","C03","Diuretics","Furosemide","Thrombosis",1
+"SUBJ-0046","BENCHMARK-001","N02","Analgesics","Ibuprofen","Infection",1
+"SUBJ-0047","BENCHMARK-001","N02","Analgesics","Paracetamol","Infection",1
+"SUBJ-0047","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","GERD",1
+"SUBJ-0048","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","GERD",1
+"SUBJ-0049","BENCHMARK-001","N02","Analgesics","Paracetamol","Edema",1
+"SUBJ-0049","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Hypertension",1
+"SUBJ-0050","BENCHMARK-001","N05","Psycholeptics","Diazepam","Edema",0
+"SUBJ-0050","BENCHMARK-001","C03","Diuretics","Furosemide","GERD",0
+"SUBJ-0050","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","GERD",0
+"SUBJ-0051","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Inflammation",1
+"SUBJ-0052","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Infection",0
+"SUBJ-0053","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Thrombosis",1
+"SUBJ-0053","BENCHMARK-001","N02","Analgesics","Tramadol","Anxiety",1
+"SUBJ-0053","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Inflammation",1
+"SUBJ-0053","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Infection",1
+"SUBJ-0053","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Anxiety",1
+"SUBJ-0054","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Edema",1
+"SUBJ-0055","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","GERD",1
+"SUBJ-0055","BENCHMARK-001","C03","Diuretics","Furosemide","Infection",1
+"SUBJ-0055","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","GERD",1
+"SUBJ-0057","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Edema",0
+"SUBJ-0057","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Infection",0
+"SUBJ-0057","BENCHMARK-001","N02","Analgesics","Ibuprofen","Inflammation",0
+"SUBJ-0057","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Anxiety",0
+"SUBJ-0057","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Anxiety",0
+"SUBJ-0058","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Infection",1
+"SUBJ-0058","BENCHMARK-001","N05","Psycholeptics","Diazepam","GERD",1
+"SUBJ-0058","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Hypertension",1
+"SUBJ-0059","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Inflammation",0
+"SUBJ-0059","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Thrombosis",0
+"SUBJ-0059","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Edema",0
+"SUBJ-0060","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Hypertension",0
+"SUBJ-0060","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Pain",0
+"SUBJ-0062","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Pain",1
+"SUBJ-0062","BENCHMARK-001","N02","Analgesics","Tramadol","Thrombosis",1
+"SUBJ-0062","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Edema",1
+"SUBJ-0062","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","GERD",1
+"SUBJ-0063","BENCHMARK-001","N02","Analgesics","Ibuprofen","Thrombosis",1
+"SUBJ-0064","BENCHMARK-001","N02","Analgesics","Ibuprofen","Infection",1
+"SUBJ-0064","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Inflammation",1
+"SUBJ-0064","BENCHMARK-001","C03","Diuretics","Furosemide","Edema",1
+"SUBJ-0064","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Edema",1
+"SUBJ-0065","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Hypertension",1
+"SUBJ-0065","BENCHMARK-001","C03","Diuretics","Furosemide","Infection",1
+"SUBJ-0065","BENCHMARK-001","N02","Analgesics","Tramadol","Inflammation",1
+"SUBJ-0065","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Edema",1
+"SUBJ-0065","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","GERD",1
+"SUBJ-0066","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Anxiety",1
+"SUBJ-0066","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Inflammation",1
+"SUBJ-0066","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Inflammation",1
+"SUBJ-0066","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Hypertension",1
+"SUBJ-0067","BENCHMARK-001","C03","Diuretics","Furosemide","Inflammation",1
+"SUBJ-0068","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Pain",0
+"SUBJ-0068","BENCHMARK-001","N02","Analgesics","Paracetamol","Hypertension",0
+"SUBJ-0069","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Hypertension",1
+"SUBJ-0069","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Infection",1
+"SUBJ-0069","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","GERD",1
+"SUBJ-0069","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","Infection",1
+"SUBJ-0070","BENCHMARK-001","N02","Analgesics","Tramadol","Anxiety",0
+"SUBJ-0070","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Edema",0
+"SUBJ-0070","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Hypertension",0
+"SUBJ-0070","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Edema",0
+"SUBJ-0071","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Anxiety",1
+"SUBJ-0072","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Hypertension",0
+"SUBJ-0072","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","GERD",0
+"SUBJ-0072","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Pain",0
+"SUBJ-0072","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Edema",0
+"SUBJ-0073","BENCHMARK-001","N02","Analgesics","Ibuprofen","Thrombosis",1
+"SUBJ-0073","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Infection",1
+"SUBJ-0073","BENCHMARK-001","N05","Psycholeptics","Diazepam","Anxiety",1
+"SUBJ-0073","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Edema",1
+"SUBJ-0074","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Thrombosis",1
+"SUBJ-0074","BENCHMARK-001","C03","Diuretics","Furosemide","Pain",1
+"SUBJ-0074","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Inflammation",1
+"SUBJ-0075","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Pain",1
+"SUBJ-0076","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Anxiety",1
+"SUBJ-0076","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Edema",1
+"SUBJ-0076","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Anxiety",1
+"SUBJ-0077","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Hypertension",0
+"SUBJ-0077","BENCHMARK-001","C03","Diuretics","Furosemide","Pain",0
+"SUBJ-0077","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","Pain",0
+"SUBJ-0077","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Edema",0
+"SUBJ-0078","BENCHMARK-001","N02","Analgesics","Ibuprofen","GERD",0
+"SUBJ-0078","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Thrombosis",0
+"SUBJ-0078","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Inflammation",0
+"SUBJ-0078","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Anxiety",0
+"SUBJ-0079","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Hypertension",0
+"SUBJ-0079","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","GERD",0
+"SUBJ-0079","BENCHMARK-001","C07","Beta blocking agents","Atenolol","GERD",0
+"SUBJ-0080","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Edema",0
+"SUBJ-0080","BENCHMARK-001","N02","Analgesics","Tramadol","GERD",0
+"SUBJ-0080","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","GERD",0
+"SUBJ-0080","BENCHMARK-001","C03","Diuretics","Furosemide","Inflammation",0
+"SUBJ-0080","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Pain",0
+"SUBJ-0081","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Infection",1
+"SUBJ-0082","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Thrombosis",0
+"SUBJ-0083","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Infection",1
+"SUBJ-0083","BENCHMARK-001","C03","Diuretics","Furosemide","Pain",1
+"SUBJ-0083","BENCHMARK-001","N02","Analgesics","Tramadol","Infection",1
+"SUBJ-0084","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Infection",0
+"SUBJ-0084","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Pain",0
+"SUBJ-0084","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Edema",0
+"SUBJ-0085","BENCHMARK-001","N02","Analgesics","Ibuprofen","Pain",0
+"SUBJ-0085","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Pain",0
+"SUBJ-0085","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Hypertension",0
+"SUBJ-0085","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Hypertension",0
+"SUBJ-0086","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Hypertension",1
+"SUBJ-0086","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Pain",1
+"SUBJ-0086","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Hypertension",1
+"SUBJ-0086","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Pain",1
+"SUBJ-0087","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","Inflammation",1
+"SUBJ-0087","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Hypertension",1
+"SUBJ-0087","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","GERD",1
+"SUBJ-0087","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Infection",1
+"SUBJ-0087","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","GERD",1
+"SUBJ-0088","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Thrombosis",0
+"SUBJ-0088","BENCHMARK-001","N02","Analgesics","Paracetamol","Hypertension",0
+"SUBJ-0088","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Edema",0
+"SUBJ-0089","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Edema",0
+"SUBJ-0089","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Infection",0
+"SUBJ-0089","BENCHMARK-001","N05","Psycholeptics","Diazepam","Pain",0
+"SUBJ-0089","BENCHMARK-001","C03","Diuretics","Furosemide","Thrombosis",0
+"SUBJ-0090","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Edema",0
+"SUBJ-0090","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Infection",0
+"SUBJ-0090","BENCHMARK-001","N02","Analgesics","Tramadol","Anxiety",0
+"SUBJ-0091","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Anxiety",0
+"SUBJ-0091","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Anxiety",0
+"SUBJ-0091","BENCHMARK-001","N02","Analgesics","Tramadol","GERD",0
+"SUBJ-0091","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Pain",0
+"SUBJ-0092","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Pain",1
+"SUBJ-0092","BENCHMARK-001","N02","Analgesics","Paracetamol","Infection",1
+"SUBJ-0092","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Thrombosis",1
+"SUBJ-0092","BENCHMARK-001","C03","Diuretics","Furosemide","Inflammation",1
+"SUBJ-0092","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Edema",1
+"SUBJ-0093","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Hypertension",0
+"SUBJ-0094","BENCHMARK-001","N02","Analgesics","Ibuprofen","Inflammation",1
+"SUBJ-0094","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Edema",1
+"SUBJ-0095","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Inflammation",1
+"SUBJ-0095","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Edema",1
+"SUBJ-0095","BENCHMARK-001","N02","Analgesics","Tramadol","Infection",1
+"SUBJ-0096","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Hypertension",1
+"SUBJ-0096","BENCHMARK-001","C07","Beta blocking agents","Atenolol","GERD",1
+"SUBJ-0097","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Thrombosis",0
+"SUBJ-0097","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Infection",0
+"SUBJ-0098","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Thrombosis",1
+"SUBJ-0098","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Edema",1
+"SUBJ-0098","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Pain",1
+"SUBJ-0098","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Pain",1
+"SUBJ-0098","BENCHMARK-001","C03","Diuretics","Furosemide","Pain",1
+"SUBJ-0099","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Thrombosis",1
+"SUBJ-0099","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Edema",1
+"SUBJ-0099","BENCHMARK-001","C07","Beta blocking agents","Atenolol","GERD",1
+"SUBJ-0099","BENCHMARK-001","N02","Analgesics","Tramadol","Edema",1
+"SUBJ-0099","BENCHMARK-001","C03","Diuretics","Furosemide","GERD",1
+"SUBJ-0100","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Edema",1
+"SUBJ-0100","BENCHMARK-001","C07","Beta blocking agents","Atenolol","GERD",1
+"SUBJ-0100","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Infection",1
+"SUBJ-0100","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Thrombosis",1
+"SUBJ-0101","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Thrombosis",1
+"SUBJ-0102","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","GERD",1
+"SUBJ-0103","BENCHMARK-001","C03","Diuretics","Furosemide","Infection",0
+"SUBJ-0103","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","GERD",0
+"SUBJ-0103","BENCHMARK-001","N02","Analgesics","Paracetamol","Anxiety",0
+"SUBJ-0103","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Thrombosis",0
+"SUBJ-0104","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Hypertension",1
+"SUBJ-0105","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Thrombosis",0
+"SUBJ-0105","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Hypertension",0
+"SUBJ-0105","BENCHMARK-001","N02","Analgesics","Paracetamol","Hypertension",0
+"SUBJ-0105","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","GERD",0
+"SUBJ-0106","BENCHMARK-001","N02","Analgesics","Ibuprofen","Pain",1
+"SUBJ-0106","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Thrombosis",1
+"SUBJ-0106","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Inflammation",1
+"SUBJ-0108","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Infection",0
+"SUBJ-0108","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Pain",0
+"SUBJ-0109","BENCHMARK-001","N02","Analgesics","Tramadol","Infection",1
+"SUBJ-0109","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Pain",1
+"SUBJ-0109","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Hypertension",1
+"SUBJ-0110","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Inflammation",0
+"SUBJ-0110","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","GERD",0
+"SUBJ-0111","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Thrombosis",1
+"SUBJ-0111","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Hypertension",1
+"SUBJ-0112","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Infection",0
+"SUBJ-0112","BENCHMARK-001","N02","Analgesics","Paracetamol","GERD",0
+"SUBJ-0112","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Infection",0
+"SUBJ-0113","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Edema",1
+"SUBJ-0114","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Thrombosis",0
+"SUBJ-0114","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Pain",0
+"SUBJ-0114","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Pain",0
+"SUBJ-0115","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Pain",1
+"SUBJ-0115","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Anxiety",1
+"SUBJ-0116","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Hypertension",1
+"SUBJ-0116","BENCHMARK-001","C03","Diuretics","Furosemide","Inflammation",1
+"SUBJ-0118","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Inflammation",0
+"SUBJ-0118","BENCHMARK-001","C03","Diuretics","Furosemide","Edema",0
+"SUBJ-0118","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Edema",0
+"SUBJ-0119","BENCHMARK-001","C03","Diuretics","Furosemide","GERD",0
+"SUBJ-0119","BENCHMARK-001","N02","Analgesics","Tramadol","Hypertension",0
+"SUBJ-0119","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Pain",0
+"SUBJ-0119","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Thrombosis",0
+"SUBJ-0119","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Inflammation",0
+"SUBJ-0120","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Hypertension",1
+"SUBJ-0120","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Infection",1
+"SUBJ-0120","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Hypertension",1
+"SUBJ-0121","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Infection",0
+"SUBJ-0122","BENCHMARK-001","C03","Diuretics","Furosemide","Thrombosis",1
+"SUBJ-0123","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Pain",1
+"SUBJ-0123","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Inflammation",1
+"SUBJ-0123","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Hypertension",1
+"SUBJ-0124","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Thrombosis",1
+"SUBJ-0124","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Inflammation",1
+"SUBJ-0125","BENCHMARK-001","N05","Psycholeptics","Diazepam","Anxiety",1
+"SUBJ-0125","BENCHMARK-001","N02","Analgesics","Paracetamol","Infection",1
+"SUBJ-0125","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Infection",1
+"SUBJ-0125","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Edema",1
+"SUBJ-0125","BENCHMARK-001","C03","Diuretics","Furosemide","Inflammation",1
+"SUBJ-0126","BENCHMARK-001","N05","Psycholeptics","Diazepam","Pain",0
+"SUBJ-0126","BENCHMARK-001","C03","Diuretics","Furosemide","Pain",0
+"SUBJ-0126","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","GERD",0
+"SUBJ-0126","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Anxiety",0
+"SUBJ-0127","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","GERD",0
+"SUBJ-0127","BENCHMARK-001","C03","Diuretics","Furosemide","Inflammation",0
+"SUBJ-0127","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Inflammation",0
+"SUBJ-0128","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Thrombosis",1
+"SUBJ-0129","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Thrombosis",0
+"SUBJ-0129","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Thrombosis",0
+"SUBJ-0130","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Edema",0
+"SUBJ-0130","BENCHMARK-001","N02","Analgesics","Ibuprofen","Anxiety",0
+"SUBJ-0130","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Anxiety",0
+"SUBJ-0130","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Infection",0
+"SUBJ-0130","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Inflammation",0
+"SUBJ-0131","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Thrombosis",0
+"SUBJ-0131","BENCHMARK-001","N02","Analgesics","Ibuprofen","Hypertension",0
+"SUBJ-0132","BENCHMARK-001","N05","Psycholeptics","Diazepam","Edema",1
+"SUBJ-0133","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","GERD",0
+"SUBJ-0133","BENCHMARK-001","N02","Analgesics","Ibuprofen","Edema",0
+"SUBJ-0133","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Inflammation",0
+"SUBJ-0133","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Infection",0
+"SUBJ-0134","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Hypertension",0
+"SUBJ-0134","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Infection",0
+"SUBJ-0134","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Hypertension",0
+"SUBJ-0134","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Inflammation",0
+"SUBJ-0135","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Anxiety",1
+"SUBJ-0136","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Edema",1
+"SUBJ-0136","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","GERD",1
+"SUBJ-0137","BENCHMARK-001","N02","Analgesics","Ibuprofen","Inflammation",1
+"SUBJ-0137","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Thrombosis",1
+"SUBJ-0138","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Infection",0
+"SUBJ-0138","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","GERD",0
+"SUBJ-0138","BENCHMARK-001","N02","Analgesics","Tramadol","Infection",0
+"SUBJ-0139","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Anxiety",0
+"SUBJ-0139","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Inflammation",0
+"SUBJ-0139","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Hypertension",0
+"SUBJ-0139","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Infection",0
+"SUBJ-0140","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Pain",1
+"SUBJ-0140","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Anxiety",1
+"SUBJ-0141","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Pain",0
+"SUBJ-0141","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Inflammation",0
+"SUBJ-0141","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Pain",0
+"SUBJ-0141","BENCHMARK-001","C03","Diuretics","Furosemide","Infection",0
+"SUBJ-0141","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Pain",0
+"SUBJ-0142","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Pain",0
+"SUBJ-0142","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Infection",0
+"SUBJ-0142","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","GERD",0
+"SUBJ-0143","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","GERD",1
+"SUBJ-0143","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Thrombosis",1
+"SUBJ-0144","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Anxiety",0
+"SUBJ-0145","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Pain",0
+"SUBJ-0145","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Thrombosis",0
+"SUBJ-0146","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Inflammation",0
+"SUBJ-0146","BENCHMARK-001","C03","Diuretics","Furosemide","Inflammation",0
+"SUBJ-0146","BENCHMARK-001","N02","Analgesics","Tramadol","GERD",0
+"SUBJ-0146","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Inflammation",0
+"SUBJ-0147","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","GERD",1
+"SUBJ-0147","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Hypertension",1
+"SUBJ-0147","BENCHMARK-001","N02","Analgesics","Tramadol","Infection",1
+"SUBJ-0148","BENCHMARK-001","N02","Analgesics","Tramadol","Hypertension",1
+"SUBJ-0148","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Anxiety",1
+"SUBJ-0148","BENCHMARK-001","C03","Diuretics","Furosemide","Thrombosis",1
+"SUBJ-0148","BENCHMARK-001","N05","Psycholeptics","Lorazepam","GERD",1
+"SUBJ-0148","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","GERD",1
+"SUBJ-0149","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Anxiety",0
+"SUBJ-0150","BENCHMARK-001","B01","Antithrombotic agents","Heparin","GERD",1
+"SUBJ-0150","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Pain",1
+"SUBJ-0150","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Anxiety",1
+"SUBJ-0150","BENCHMARK-001","N02","Analgesics","Tramadol","Edema",1
+"SUBJ-0150","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Pain",1
+"SUBJ-0151","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Pain",1
+"SUBJ-0151","BENCHMARK-001","N05","Psycholeptics","Diazepam","Hypertension",1
+"SUBJ-0151","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Infection",1
+"SUBJ-0151","BENCHMARK-001","N02","Analgesics","Tramadol","Hypertension",1
+"SUBJ-0151","BENCHMARK-001","C03","Diuretics","Furosemide","Anxiety",1
+"SUBJ-0152","BENCHMARK-001","N05","Psycholeptics","Diazepam","Infection",1
+"SUBJ-0153","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Hypertension",0
+"SUBJ-0153","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Edema",0
+"SUBJ-0153","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","Inflammation",0
+"SUBJ-0154","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Infection",0
+"SUBJ-0154","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Hypertension",0
+"SUBJ-0154","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Thrombosis",0
+"SUBJ-0154","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Hypertension",0
+"SUBJ-0155","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Thrombosis",0
+"SUBJ-0155","BENCHMARK-001","N02","Analgesics","Ibuprofen","Hypertension",0
+"SUBJ-0155","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Anxiety",0
+"SUBJ-0155","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Hypertension",0
+"SUBJ-0156","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Infection",0
+"SUBJ-0156","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Inflammation",0
+"SUBJ-0157","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Thrombosis",0
+"SUBJ-0157","BENCHMARK-001","C03","Diuretics","Furosemide","GERD",0
+"SUBJ-0157","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Pain",0
+"SUBJ-0157","BENCHMARK-001","N02","Analgesics","Ibuprofen","Edema",0
+"SUBJ-0158","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Hypertension",0
+"SUBJ-0158","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Pain",0
+"SUBJ-0158","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Inflammation",0
+"SUBJ-0158","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Inflammation",0
+"SUBJ-0159","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Thrombosis",0
+"SUBJ-0159","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Pain",0
+"SUBJ-0159","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Anxiety",0
+"SUBJ-0159","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Anxiety",0
+"SUBJ-0160","BENCHMARK-001","N02","Analgesics","Tramadol","Thrombosis",1
+"SUBJ-0160","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","Inflammation",1
+"SUBJ-0160","BENCHMARK-001","N05","Psycholeptics","Diazepam","Pain",1
+"SUBJ-0161","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Inflammation",0
+"SUBJ-0162","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Inflammation",1
+"SUBJ-0162","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Anxiety",1
+"SUBJ-0162","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Infection",1
+"SUBJ-0162","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Edema",1
+"SUBJ-0163","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Inflammation",1
+"SUBJ-0164","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Inflammation",0
+"SUBJ-0165","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Thrombosis",1
+"SUBJ-0165","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Pain",1
+"SUBJ-0167","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Pain",0
+"SUBJ-0167","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Anxiety",0
+"SUBJ-0167","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Infection",0
+"SUBJ-0167","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","GERD",0
+"SUBJ-0168","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Inflammation",0
+"SUBJ-0168","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Thrombosis",0
+"SUBJ-0168","BENCHMARK-001","C03","Diuretics","Furosemide","Edema",0
+"SUBJ-0168","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Edema",0
+"SUBJ-0168","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Hypertension",0
+"SUBJ-0170","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Thrombosis",0
+"SUBJ-0170","BENCHMARK-001","N02","Analgesics","Tramadol","Thrombosis",0
+"SUBJ-0170","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Inflammation",0
+"SUBJ-0170","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Hypertension",0
+"SUBJ-0172","BENCHMARK-001","C03","Diuretics","Furosemide","Hypertension",0
+"SUBJ-0172","BENCHMARK-001","N05","Psycholeptics","Diazepam","Pain",0
+"SUBJ-0173","BENCHMARK-001","C07","Beta blocking agents","Bisoprolol","Inflammation",1
+"SUBJ-0173","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Hypertension",1
+"SUBJ-0174","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","Anxiety",1
+"SUBJ-0174","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","GERD",1
+"SUBJ-0174","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Pain",1
+"SUBJ-0174","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Edema",1
+"SUBJ-0175","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","GERD",0
+"SUBJ-0175","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Hypertension",0
+"SUBJ-0175","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Anxiety",0
+"SUBJ-0175","BENCHMARK-001","C03","Diuretics","Furosemide","GERD",0
+"SUBJ-0176","BENCHMARK-001","N05","Psycholeptics","Zolpidem","Hypertension",1
+"SUBJ-0176","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Inflammation",1
+"SUBJ-0176","BENCHMARK-001","N02","Analgesics","Ibuprofen","GERD",1
+"SUBJ-0177","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","GERD",0
+"SUBJ-0177","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Edema",0
+"SUBJ-0177","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Pain",0
+"SUBJ-0177","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Hypertension",0
+"SUBJ-0177","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Anxiety",0
+"SUBJ-0178","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Hypertension",1
+"SUBJ-0178","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","GERD",1
+"SUBJ-0178","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Infection",1
+"SUBJ-0179","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Pain",1
+"SUBJ-0179","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Edema",1
+"SUBJ-0179","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Infection",1
+"SUBJ-0180","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Thrombosis",1
+"SUBJ-0180","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Thrombosis",1
+"SUBJ-0180","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","GERD",1
+"SUBJ-0180","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Anxiety",1
+"SUBJ-0180","BENCHMARK-001","N05","Psycholeptics","Diazepam","GERD",1
+"SUBJ-0181","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Pain",1
+"SUBJ-0182","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Inflammation",1
+"SUBJ-0182","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Hypertension",1
+"SUBJ-0182","BENCHMARK-001","C03","Diuretics","Furosemide","Inflammation",1
+"SUBJ-0182","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Anxiety",1
+"SUBJ-0183","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Inflammation",1
+"SUBJ-0184","BENCHMARK-001","B01","Antithrombotic agents","Heparin","Hypertension",0
+"SUBJ-0185","BENCHMARK-001","N05","Psycholeptics","Diazepam","Pain",1
+"SUBJ-0185","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","Inflammation",1
+"SUBJ-0185","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Infection",1
+"SUBJ-0185","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Naproxen","Anxiety",1
+"SUBJ-0186","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Thrombosis",1
+"SUBJ-0186","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","Thrombosis",1
+"SUBJ-0186","BENCHMARK-001","C07","Beta blocking agents","Atenolol","GERD",1
+"SUBJ-0186","BENCHMARK-001","N02","Analgesics","Tramadol","Thrombosis",1
+"SUBJ-0186","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Infection",1
+"SUBJ-0187","BENCHMARK-001","J01","Antibacterials for systemic use","Azithromycin","Pain",1
+"SUBJ-0187","BENCHMARK-001","N05","Psycholeptics","Diazepam","Edema",1
+"SUBJ-0187","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","GERD",1
+"SUBJ-0188","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Pain",0
+"SUBJ-0189","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Inflammation",1
+"SUBJ-0191","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Hypertension",0
+"SUBJ-0191","BENCHMARK-001","N05","Psycholeptics","Diazepam","Edema",0
+"SUBJ-0191","BENCHMARK-001","C07","Beta blocking agents","Atenolol","Pain",0
+"SUBJ-0191","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","Hypertension",0
+"SUBJ-0192","BENCHMARK-001","J01","Antibacterials for systemic use","Ciprofloxacin","Thrombosis",1
+"SUBJ-0192","BENCHMARK-001","N05","Psycholeptics","Lorazepam","Anxiety",1
+"SUBJ-0192","BENCHMARK-001","A02","Drugs for acid related disorders","Omeprazole","Hypertension",1
+"SUBJ-0193","BENCHMARK-001","N02","Analgesics","Ibuprofen","Pain",1
+"SUBJ-0194","BENCHMARK-001","C07","Beta blocking agents","Metoprolol","Edema",1
+"SUBJ-0194","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Pain",1
+"SUBJ-0194","BENCHMARK-001","B01","Antithrombotic agents","Heparin","GERD",1
+"SUBJ-0194","BENCHMARK-001","J01","Antibacterials for systemic use","Amoxicillin","Anxiety",1
+"SUBJ-0194","BENCHMARK-001","A02","Drugs for acid related disorders","Pantoprazole","Infection",1
+"SUBJ-0195","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Diclofenac","Thrombosis",1
+"SUBJ-0195","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Infection",1
+"SUBJ-0195","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Hypertension",1
+"SUBJ-0195","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Pain",1
+"SUBJ-0196","BENCHMARK-001","C03","Diuretics","Furosemide","Anxiety",1
+"SUBJ-0197","BENCHMARK-001","B01","Antithrombotic agents","Apixaban","Infection",0
+"SUBJ-0198","BENCHMARK-001","N02","Analgesics","Paracetamol","Anxiety",0
+"SUBJ-0198","BENCHMARK-001","M01","Antiinflammatory/antirheumatic products","Celecoxib","Anxiety",0
+"SUBJ-0198","BENCHMARK-001","B01","Antithrombotic agents","Warfarin","Inflammation",0
+"SUBJ-0198","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Anxiety",0
+"SUBJ-0198","BENCHMARK-001","N05","Psycholeptics","Diazepam","Inflammation",0
+"SUBJ-0199","BENCHMARK-001","N05","Psycholeptics","Lorazepam","GERD",1
+"SUBJ-0199","BENCHMARK-001","C03","Diuretics","Hydrochlorothiazide","Hypertension",1
+"SUBJ-0200","BENCHMARK-001","A02","Drugs for acid related disorders","Ranitidine","Pain",1

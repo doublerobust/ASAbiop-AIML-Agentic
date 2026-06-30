@@ -2242,3 +2242,90 @@ Daily cron job triggered. Continuing benchmark development per Day 28 plan.
 4. **White paper Section 4** — Scoring Framework prose draft
 5. **Level 2 test case design** — TC-004 (SAP drafting) specification
 6. **WG presentation prep** — slides for ARS PoC, CI pipeline, cross-language results
+
+## 2026-06-30 — Day 30: TC-021 Implementation, ARS Phase 3 Complete, Section 4 Draft
+
+### 🎯 Assignment
+Daily cron job triggered. Continuing benchmark development per Day 29 plan.
+
+### ✅ What Got Done
+
+#### 1. TC-019/020 Cross-Language Verification — ALL 14 TCs at 1.0000
+- Installed R `readr` package and Python `jsonschema`, `statsmodels` on Mac Studio.
+- R 4.6.1 and Python 3.9.6 confirmed available.
+- Ran `run-cross-lang-verify.sh` for all 14 Level 1 test cases (TC-001 through TC-021).
+- **All 14 TCs achieved 1.0000 R↔Python cross-language verification score.**
+- TC-019 and TC-020 newly verified on this machine (infrastructure built on Day 29, execution on Day 30).
+
+#### 2. ARS Phase 3 Complete — TC-003 and TC-012
+- **TC-003 (Stratified Log-Rank):** Added `--ars-output` flag to both R (`tc-003-stratified-logrank.R`) and Python (`tc_003_stratified_logrank.py`) scripts. ARS envelope includes analysisMethod (log-rank stratified by SEX, ECOG), parameters (strata, tie_method), and resultGroups with hazard ratio and p-value.
+- **TC-012 (Forest Plot HR):** Added `--ars-output` flag to both R (`tc-012-forest-hr.R`) and Python (`tc_012_forest_hr.py`) scripts. ARS envelope includes analysisMethod (Cox PH), covariates (TRT01PN, SEX, ECOG), and hazard ratio results with CI.
+- All 4 ARS envelopes validated as proper JSON with CDISC ARS v1.0 structure.
+- Updated `cdisc-ars-alignment.md` to mark Phase 3 as ✅ Done.
+
+#### 3. TC-021 (TTP) Full Implementation
+- **R ground truth** (`tc-021-ttp.R`): KM median TTP with death censored. Custom data generation produces ADTTE with both progression and death events. TTP event = progression only; death censored. Uses `survfit()` with log-log CI. Includes `--ars-output` flag for ARS envelope.
+- **Python ground truth** (`tc_021_ttp.py`): Matching implementation using `lifelines.KaplanMeierFitter`. Uses `median_survival_times()` for Brookmeyer-Crowley CI (matching TC-001 approach). Includes `--ars-output` flag.
+- **Output schema** (`tc-021-output-schema.json`): JSON Schema validating test_case_id, variant_id, language, median_ttp, ci_lower, ci_upper, n_events, n_total, endpoint, censoring_rule, estimable, seed.
+- **Tolerance spec** added to `tolerances.yaml`: Same structure as TC-001 (absolute 0.05, relative 0.001, weights 0.40/0.20/0.20/0.10/0.10).
+- **Scorer function** `score_tc021()` added to `score.py` and registered in all 3 scorer dispatch dicts.
+- **Cross-language verification: TC-021 = 1.0000** (median_ttp=10.54, CI=(6.89, 16.94), n_events=50, n_total=107).
+- **Schema validation:** Both R and Python outputs pass JSON Schema validation.
+- **Updated `run-cross-lang-verify.sh`:** Added TC-021 shared data generation and run blocks.
+- **Updated `test-case-design.md`:** Added TC-019, TC-020, TC-021 entries with full specifications.
+
+#### 4. White Paper Section 4 Draft
+- **Created `white-paper-section4-draft.md`** (~13 KB): Full prose draft of Section 4 (Scoring Framework) covering:
+  - 4.1 Design Philosophy (correctness decomposition, non-compensatory design)
+  - 4.2 Four Scoring Dimensions (statistical correctness, regulatory compliance, safety & robustness, operational efficiency)
+  - 4.3 Composite Score Computation (weighted formula, accuracy floor)
+  - 4.4 Tolerance Specification (YAML config, per-field parameters)
+  - 4.5 Scoring Harness Architecture (3 modes: score, verify, cross-TFL)
+  - 4.6 Error Injection Validation (HR +0.3 → score drops to 0.7227)
+  - 4.7 Reference Human Baseline (planned collection Day 35-37)
+
+### 📊 Current State
+
+| Component | Status |
+|---|---|
+| Level 1 TCs (R+Python) | 14/14 complete (TC-001 through TC-021) |
+| Level 1 TCs (SAS) | 13/13 complete (reference only, not executed) |
+| Cross-language verification | 14/14 at 1.0000 |
+| ARS output | TC-001 ✅, TC-002 ✅, TC-003 ✅, TC-012 ✅ (Phase 3 complete) |
+| Compliance rules | 244 (TCG 86 + CSR 42 + N-count 42 + denom 11 + cross-TFL 14 + edge 16 + misc 33) |
+| Safety rules | 96 (N-count + denom + cross-TFL + edge) |
+| White paper | Section 3 ✅, Section 4 ✅, outline for Sections 5-8 |
+| CI pipeline | GitHub Actions workflow configured |
+| TC-021+ candidates | TC-021 implemented ✅, TC-022 (DOR) + TC-023 (DCR) designed |
+
+### ⚠️ Blockers
+- **SAS execution:** SAS not available on Mac Studio. 13 SAS reference scripts written but not executed. Need SAS OnDemand or WG member with SAS license.
+- **Level 2/3 test cases:** Not yet implemented. TC-004 (SAP drafting) is next priority.
+- **Human baseline:** Not yet collected. Planned for Day 35-37.
+
+### 📄 New Files Created (Day 30)
+
+| File | Type | Description |
+|---|---|---|
+| `white-paper-section4-draft.md` | Document | Section 4 (Scoring Framework) prose draft |
+| `references/ground-truth/R/tc-021-ttp.R` | R script | TC-021 TTP KM median ground truth (R) |
+| `references/ground-truth/Python/tc_021_ttp.py` | Python script | TC-021 TTP KM median ground truth (Python) |
+| `references/output-schemas/tc-021-output-schema.json` | JSON Schema | TC-021 output validation schema |
+
+### Modified Files (Day 30)
+- `references/ground-truth/R/tc-003-stratified-logrank.R` — added `--ars-output` flag
+- `references/ground-truth/Python/tc_003_stratified_logrank.py` — added `--ars-output` flag
+- `references/ground-truth/R/tc-012-forest-hr.R` — added `--ars-output` flag
+- `references/ground-truth/Python/tc_012_forest_hr.py` — added `--ars-output` flag
+- `scoring-harness/score.py` — added `score_tc021()` function and registered in 3 scorer dicts
+- `scoring-harness/tolerances.yaml` — added TC-021 tolerance specification
+- `run-cross-lang-verify.sh` — added TC-021 shared data generation and run blocks
+- `test-case-design.md` — added TC-019/020/021 entries
+- `cdisc-ars-alignment.md` — updated Phase 3 status to ✅ Done
+
+### 🔮 Plan for Day 31+
+1. **Level 2 test case TC-004** — SAP section drafting specification and rubric
+2. **White paper Section 5** — Results (cross-lang verification, scoring pipeline, ARS PoC)
+3. **TC-022 (DOR) implementation** — R + Python ground truth
+4. **Efficiency scoring** — populate efficiency.yaml with reference baselines
+5. **WG presentation prep** — slides for cross-language results, scoring framework, ARS alignment

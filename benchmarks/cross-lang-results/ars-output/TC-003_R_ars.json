@@ -1,0 +1,97 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-003",
+    "version": "1.0",
+    "analysisReason": "Treatment comparison via stratified log-rank test",
+    "analysisMethod": {
+      "name": "Stratified Log-Rank Test",
+      "codeTemplate": "survival::survdiff(Surv(AVAL, 1-CNSR) ~ TRT01PN + strata(SEX, ECOG))",
+      "parameters": {
+        "strata_variables": ["SEX", "ECOG"],
+        "tie_method": "exact",
+        "weight_method": "equal_weight_per_stratum"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "analysis time"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring"
+      },
+      {
+        "name": "TRT01PN",
+        "dataset": "ADTTE",
+        "role": "treatment"
+      },
+      {
+        "name": "SEX",
+        "dataset": "ADTTE",
+        "role": "stratification"
+      },
+      {
+        "name": "ECOG",
+        "dataset": "ADTTE",
+        "role": "stratification"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADTTE",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 106,
+        "events": 65
+      },
+      {
+        "id": "Control",
+        "n": 86,
+        "events": 61
+      }
+    ],
+    "documentation": "Stratified log-rank test comparing PFS between arms, stratified by SEX and ECOG",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "chi_square",
+          "value": 5.0307,
+          "unit": "chi-square statistic"
+        },
+        {
+          "name": "df",
+          "value": 1,
+          "unit": "degrees of freedom"
+        },
+        {
+          "name": "p_value",
+          "value": 0.0249,
+          "unit": "two-sided p-value"
+        },
+        {
+          "name": "n_total",
+          "value": 192
+        },
+        {
+          "name": "n_events",
+          "value": 126
+        },
+        {
+          "name": "n_strata_total",
+          "value": 4
+        },
+        {
+          "name": "n_strata_with_events",
+          "value": 4
+        }
+      ]
+    }
+  }
+}

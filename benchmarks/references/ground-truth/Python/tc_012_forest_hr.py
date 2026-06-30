@@ -33,6 +33,8 @@ parser.add_argument("--n", type=int, default=300)
 parser.add_argument("--output", type=str, default="tc-012-output.json")
 parser.add_argument("--data-csv", type=str, default=None,
                     help="Load pre-generated data from CSV instead of generating")
+parser.add_argument("--ars-output", type=str, default=None,
+                    help="Write ARS v1.0-compatible JSON envelope")
 args = parser.parse_args()
 
 if args.data_csv:
@@ -238,3 +240,68 @@ with open(args.output, "w") as f:
     json.dump(output, f, indent=2)
 
 print(f"TC-012 output written to: {args.output}")
+
+# ─────────────────────────────────────────────────────
+# ARS-compatible output envelope (CDISC ARS v1.0)
+# Phase 3: extends ARS coverage to subgroup forest plot HR
+# ─────────────────────────────────────────────────────
+if args.ars_output:
+    ars_envelope = {
+        "ars_version": "1.0",
+        "analysisResult": {
+            "id": "TC-012",
+            "version": "1.0",
+            "analysisReason": "Subgroup analysis for treatment effect homogeneity",
+            "analysisMethod": {
+                "name": "Cox Proportional Hazards",
+                "codeTemplate": "lifelines.CoxPHFitter().fit(df, 'AVAL', 'EVENT', formula='TRTN')",
+                "parameters": {
+                    "tie_method": "efron",
+                    "ci_method": "Wald (log-scale)",
+                    "alpha": 0.05
+                }
+            },
+            "analysisVariables": [
+                {"name": "AVAL", "dataset": "ADTTE", "role": "analysis time"},
+                {"name": "CNSR", "dataset": "ADTTE", "role": "censoring"},
+                {"name": "TRT01A", "dataset": "ADSL", "role": "treatment"},
+                {"name": "AGEGR1", "dataset": "ADSL", "role": "subgroup"},
+                {"name": "SEX", "dataset": "ADSL", "role": "subgroup"},
+                {"name": "ECOGGR1", "dataset": "ADSL", "role": "subgroup"},
+                {"name": "REGION", "dataset": "ADSL", "role": "subgroup"},
+                {"name": "PRIORTRT", "dataset": "ADSL", "role": "subgroup"}
+            ],
+            "analysisPopulation": {
+                "name": "ITT",
+                "filter": "ITTFL = 'Y' (or all subjects in generated data)"
+            },
+            "analysisDataset": "ADTTE",
+            "resultGroups": [
+                {"id": "Experimental",
+                 "n": int((all_df["TRT01A"] == "Experimental").sum()),
+                 "events": int((all_df["TRT01A"] == "Experimental").sum() and (all_df.loc[all_df["TRT01A"] == "Experimental", "EVENT"] == 1).sum())},
+                {"id": "Control",
+                 "n": int((all_df["TRT01A"] == "Control").sum()),
+                 "events": int((all_df.loc[all_df["TRT01A"] == "Control", "EVENT"] == 1).sum())}
+            ],
+            "documentation": "Subgroup hazard ratios with 95% CIs via Cox PH model; interaction tests for treatment-by-subgroup homogeneity",
+            "analysisResultsData": {
+                "statistics": [
+                    {"name": "overall_hr", "value": overall["hr"], "unit": "hazard ratio"},
+                    {"name": "overall_ci_lower", "value": overall["ci_lower"]},
+                    {"name": "overall_ci_upper", "value": overall["ci_upper"]},
+                    {"name": "overall_n_experimental", "value": overall["n_experimental"]},
+                    {"name": "overall_n_control", "value": overall["n_control"]},
+                    {"name": "overall_events_experimental", "value": overall["events_experimental"]},
+                    {"name": "overall_events_control", "value": overall["events_control"]},
+                    {"name": "n_subgroups", "value": len(subgroup_results)}
+                ]
+            }
+        }
+    }
+    from pathlib import Path
+    ars_path = Path(args.ars_output)
+    ars_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(ars_path, "w") as f:
+        json.dump(ars_envelope, f, indent=2)
+    print(f"Wrote ARS-compatible output to: {ars_path}")

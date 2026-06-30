@@ -1,0 +1,114 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-012",
+    "version": "1.0",
+    "analysisReason": "Subgroup analysis for treatment effect homogeneity",
+    "analysisMethod": {
+      "name": "Cox Proportional Hazards",
+      "codeTemplate": "survival::coxph(Surv(AVAL, 1-CNSR) ~ TRT01A)",
+      "parameters": {
+        "tie_method": "efron",
+        "ci_method": "Wald (log-scale)",
+        "alpha": 0.05
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "analysis time"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "AGEGR1",
+        "dataset": "ADSL",
+        "role": "subgroup"
+      },
+      {
+        "name": "SEX",
+        "dataset": "ADSL",
+        "role": "subgroup"
+      },
+      {
+        "name": "ECOGGR1",
+        "dataset": "ADSL",
+        "role": "subgroup"
+      },
+      {
+        "name": "REGION",
+        "dataset": "ADSL",
+        "role": "subgroup"
+      },
+      {
+        "name": "PRIORTRT",
+        "dataset": "ADSL",
+        "role": "subgroup"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y' (or all subjects in generated data)"
+    },
+    "analysisDataset": "ADTTE",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 150,
+        "events": 74
+      },
+      {
+        "id": "Control",
+        "n": 150,
+        "events": 104
+      }
+    ],
+    "documentation": "Subgroup hazard ratios with 95% CIs via Cox PH model; interaction tests for treatment-by-subgroup homogeneity",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "overall_hr",
+          "value": 0.555,
+          "unit": "hazard ratio"
+        },
+        {
+          "name": "overall_ci_lower",
+          "value": 0.411
+        },
+        {
+          "name": "overall_ci_upper",
+          "value": 0.748
+        },
+        {
+          "name": "overall_n_experimental",
+          "value": 150
+        },
+        {
+          "name": "overall_n_control",
+          "value": 150
+        },
+        {
+          "name": "overall_events_experimental",
+          "value": 74
+        },
+        {
+          "name": "overall_events_control",
+          "value": 104
+        },
+        {
+          "name": "n_subgroups",
+          "value": 11
+        }
+      ]
+    }
+  }
+}

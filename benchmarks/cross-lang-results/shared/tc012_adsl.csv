@@ -1,5 +1,5 @@
 "USUBJID","TRT01A","AGEGR1","SEX","ECOGGR1","REGION","PRIORTRT","AVAL","CNSR"
-"SUBJ-E-0001","Experimental","<65","Male","0","North America","No",23.7891766740941,1
+"SUBJ-E-0001","Experimental","<65","Male","0","North America","No",23.789176674094,1
 "SUBJ-E-0002","Experimental",">=65","Female","0","Europe","Yes",7.66339739704998,0
 "SUBJ-E-0003","Experimental","<65","Male","1+","North America","Yes",7.29409215950253,0
 "SUBJ-E-0004","Experimental","<65","Female","0","Europe","Yes",13.107865178882,0
@@ -119,7 +119,7 @@
 "SUBJ-E-0118","Experimental","<65","Female","0","North America","No",1.79053214020454,0
 "SUBJ-E-0119","Experimental",">=65","Male","0","Asia","No",22.0444965753704,1
 "SUBJ-E-0120","Experimental","<65","Male","1+","Asia","Yes",21.6899633863941,1
-"SUBJ-E-0121","Experimental","<65","Female","0","Asia","Yes",14.0099341097551,0
+"SUBJ-E-0121","Experimental","<65","Female","0","Asia","Yes",14.009934109755,0
 "SUBJ-E-0122","Experimental","<65","Female","0","Europe","No",15.9525145726246,0
 "SUBJ-E-0123","Experimental","<65","Male","1+","North America","No",0.299476661139885,0
 "SUBJ-E-0124","Experimental",">=65","Male","1+","Asia","No",1.53408644229665,0
@@ -220,7 +220,7 @@
 "SUBJ-C-0069","Control",">=65","Female","1+","North America","No",3.72770569464635,0
 "SUBJ-C-0070","Control","<65","Male","1+","North America","No",8.30977738701871,0
 "SUBJ-C-0071","Control",">=65","Female","1+","Europe","Yes",23.7764865132049,1
-"SUBJ-C-0072","Control","<65","Female","0","Asia","Yes",6.05029870445529,0
+"SUBJ-C-0072","Control","<65","Female","0","Asia","Yes",6.0502987044553,0
 "SUBJ-C-0073","Control","<65","Male","0","Europe","Yes",12.7116876964768,0
 "SUBJ-C-0074","Control","<65","Female","1+","Europe","No",6.20567835867405,0
 "SUBJ-C-0075","Control","<65","Male","1+","Europe","No",11.4850649886061,0
@@ -243,7 +243,7 @@
 "SUBJ-C-0092","Control","<65","Female","1+","Europe","No",22.1746892742813,1
 "SUBJ-C-0093","Control","<65","Male","1+","Asia","No",23.2628992390819,1
 "SUBJ-C-0094","Control","<65","Female","0","Europe","No",18.1004341458902,1
-"SUBJ-C-0095","Control","<65","Male","0","North America","No",13.9729479230979,0
+"SUBJ-C-0095","Control","<65","Male","0","North America","No",13.972947923098,0
 "SUBJ-C-0096","Control",">=65","Male","0","Europe","No",0.0349177280440927,0
 "SUBJ-C-0097","Control","<65","Female","1+","Europe","No",5.37264729583902,0
 "SUBJ-C-0098","Control","<65","Female","1+","North America","No",19.8202898441814,1

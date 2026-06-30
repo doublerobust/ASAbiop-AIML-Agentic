@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-021 Output Schema — Time-to-Progression KM Median",
+  "description": "Validation schema for TC-021 benchmark output (TTP with death censored)",
+  "type": "object",
+  "required": [
+    "test_case_id",
+    "variant_id",
+    "language",
+    "package",
+    "median_ttp",
+    "n_events",
+    "n_total",
+    "ci_method",
+    "endpoint",
+    "censoring_rule",
+    "estimable",
+    "seed"
+  ],
+  "properties": {
+    "test_case_id": {
+      "type": "string",
+      "const": "TC-021"
+    },
+    "variant_id": {
+      "type": ["string", "null"],
+      "pattern": "^v[0-9]+$"
+    },
+    "language": {
+      "type": "string",
+      "enum": ["R", "Python", "SAS"]
+    },
+    "package": {
+      "type": "string"
+    },
+    "package_version": {
+      "type": "string"
+    },
+    "median_ttp": {
+      "type": ["number", "null"],
+      "description": "Median time to progression in months (null if not estimable)"
+    },
+    "ci_lower": {
+      "type": ["number", "null"],
+      "description": "95% CI lower bound for median TTP"
+    },
+    "ci_upper": {
+      "type": ["number", "null"],
+      "description": "95% CI upper bound for median TTP"
+    },
+    "n_events": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of progression events (death excluded)"
+    },
+    "n_total": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total number of subjects in the analysis population"
+    },
+    "ci_method": {
+      "type": "string",
+      "description": "Confidence interval method (e.g., log-log)"
+    },
+    "endpoint": {
+      "type": "string",
+      "const": "TTP",
+      "description": "Endpoint identifier"
+    },
+    "censoring_rule": {
+      "type": "string",
+      "description": "Censoring rule: death censored (progression only)"
+    },
+    "estimable": {
+      "type": "boolean",
+      "description": "Whether median TTP is estimable"
+    },
+    "seed": {
+      "type": ["integer", "null"]
+    }
+  },
+  "additionalProperties": false
+}

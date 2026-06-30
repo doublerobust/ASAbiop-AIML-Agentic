@@ -8,7 +8,7 @@
     "population": "SAFETY",
     "duration_unit": "weeks",
     "dose_unit": "mg",
-    "python_version": "3.14.4"
+    "python_version": "3.9.6"
   },
   "treatment_duration": {
     "experimental": {

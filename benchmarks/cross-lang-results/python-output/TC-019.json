@@ -1,0 +1,292 @@
+{
+  "test_case_id": "TC-019",
+  "variant_id": "v42",
+  "language": "Python",
+  "package": "pandas",
+  "package_version": "2.3.3",
+  "summary_rows": [
+    {
+      "category": "Any concomitant medication",
+      "n_experimental": 103,
+      "pct_experimental": 100.0,
+      "n_control": 86,
+      "pct_control": 100.0
+    }
+  ],
+  "detailed_rows": [
+    {
+      "atc_class": "A02",
+      "atc_class_name": "Drugs for acid related disorders",
+      "n_experimental": 38,
+      "pct_experimental": 36.9,
+      "n_control": 40,
+      "pct_control": 46.5
+    },
+    {
+      "atc_class": "A02",
+      "atc_class_name": "Drugs for acid related disorders",
+      "medication": "Omeprazole",
+      "n_experimental": 9,
+      "pct_experimental": 8.7,
+      "n_control": 12,
+      "pct_control": 14.0
+    },
+    {
+      "atc_class": "A02",
+      "atc_class_name": "Drugs for acid related disorders",
+      "medication": "Pantoprazole",
+      "n_experimental": 10,
+      "pct_experimental": 9.7,
+      "n_control": 9,
+      "pct_control": 10.5
+    },
+    {
+      "atc_class": "A02",
+      "atc_class_name": "Drugs for acid related disorders",
+      "medication": "Ranitidine",
+      "n_experimental": 19,
+      "pct_experimental": 18.4,
+      "n_control": 19,
+      "pct_control": 22.1
+    },
+    {
+      "atc_class": "B01",
+      "atc_class_name": "Antithrombotic agents",
+      "n_experimental": 24,
+      "pct_experimental": 23.3,
+      "n_control": 31,
+      "pct_control": 36.0
+    },
+    {
+      "atc_class": "B01",
+      "atc_class_name": "Antithrombotic agents",
+      "medication": "Apixaban",
+      "n_experimental": 8,
+      "pct_experimental": 7.8,
+      "n_control": 5,
+      "pct_control": 5.8
+    },
+    {
+      "atc_class": "B01",
+      "atc_class_name": "Antithrombotic agents",
+      "medication": "Heparin",
+      "n_experimental": 9,
+      "pct_experimental": 8.7,
+      "n_control": 13,
+      "pct_control": 15.1
+    },
+    {
+      "atc_class": "B01",
+      "atc_class_name": "Antithrombotic agents",
+      "medication": "Warfarin",
+      "n_experimental": 7,
+      "pct_experimental": 6.8,
+      "n_control": 13,
+      "pct_control": 15.1
+    },
+    {
+      "atc_class": "C03",
+      "atc_class_name": "Diuretics",
+      "n_experimental": 41,
+      "pct_experimental": 39.8,
+      "n_control": 33,
+      "pct_control": 38.4
+    },
+    {
+      "atc_class": "C03",
+      "atc_class_name": "Diuretics",
+      "medication": "Furosemide",
+      "n_experimental": 20,
+      "pct_experimental": 19.4,
+      "n_control": 17,
+      "pct_control": 19.8
+    },
+    {
+      "atc_class": "C03",
+      "atc_class_name": "Diuretics",
+      "medication": "Hydrochlorothiazide",
+      "n_experimental": 21,
+      "pct_experimental": 20.4,
+      "n_control": 16,
+      "pct_control": 18.6
+    },
+    {
+      "atc_class": "C07",
+      "atc_class_name": "Beta blocking agents",
+      "n_experimental": 40,
+      "pct_experimental": 38.8,
+      "n_control": 30,
+      "pct_control": 34.9
+    },
+    {
+      "atc_class": "C07",
+      "atc_class_name": "Beta blocking agents",
+      "medication": "Atenolol",
+      "n_experimental": 16,
+      "pct_experimental": 15.5,
+      "n_control": 5,
+      "pct_control": 5.8
+    },
+    {
+      "atc_class": "C07",
+      "atc_class_name": "Beta blocking agents",
+      "medication": "Bisoprolol",
+      "n_experimental": 10,
+      "pct_experimental": 9.7,
+      "n_control": 9,
+      "pct_control": 10.5
+    },
+    {
+      "atc_class": "C07",
+      "atc_class_name": "Beta blocking agents",
+      "medication": "Metoprolol",
+      "n_experimental": 14,
+      "pct_experimental": 13.6,
+      "n_control": 16,
+      "pct_control": 18.6
+    },
+    {
+      "atc_class": "J01",
+      "atc_class_name": "Antibacterials for systemic use",
+      "n_experimental": 35,
+      "pct_experimental": 34.0,
+      "n_control": 33,
+      "pct_control": 38.4
+    },
+    {
+      "atc_class": "J01",
+      "atc_class_name": "Antibacterials for systemic use",
+      "medication": "Amoxicillin",
+      "n_experimental": 11,
+      "pct_experimental": 10.7,
+      "n_control": 11,
+      "pct_control": 12.8
+    },
+    {
+      "atc_class": "J01",
+      "atc_class_name": "Antibacterials for systemic use",
+      "medication": "Azithromycin",
+      "n_experimental": 13,
+      "pct_experimental": 12.6,
+      "n_control": 10,
+      "pct_control": 11.6
+    },
+    {
+      "atc_class": "J01",
+      "atc_class_name": "Antibacterials for systemic use",
+      "medication": "Ciprofloxacin",
+      "n_experimental": 11,
+      "pct_experimental": 10.7,
+      "n_control": 12,
+      "pct_control": 14.0
+    },
+    {
+      "atc_class": "M01",
+      "atc_class_name": "Antiinflammatory/antirheumatic products",
+      "n_experimental": 36,
+      "pct_experimental": 35.0,
+      "n_control": 34,
+      "pct_control": 39.5
+    },
+    {
+      "atc_class": "M01",
+      "atc_class_name": "Antiinflammatory/antirheumatic products",
+      "medication": "Celecoxib",
+      "n_experimental": 11,
+      "pct_experimental": 10.7,
+      "n_control": 14,
+      "pct_control": 16.3
+    },
+    {
+      "atc_class": "M01",
+      "atc_class_name": "Antiinflammatory/antirheumatic products",
+      "medication": "Diclofenac",
+      "n_experimental": 12,
+      "pct_experimental": 11.7,
+      "n_control": 11,
+      "pct_control": 12.8
+    },
+    {
+      "atc_class": "M01",
+      "atc_class_name": "Antiinflammatory/antirheumatic products",
+      "medication": "Naproxen",
+      "n_experimental": 13,
+      "pct_experimental": 12.6,
+      "n_control": 9,
+      "pct_control": 10.5
+    },
+    {
+      "atc_class": "N02",
+      "atc_class_name": "Analgesics",
+      "n_experimental": 38,
+      "pct_experimental": 36.9,
+      "n_control": 31,
+      "pct_control": 36.0
+    },
+    {
+      "atc_class": "N02",
+      "atc_class_name": "Analgesics",
+      "medication": "Ibuprofen",
+      "n_experimental": 15,
+      "pct_experimental": 14.6,
+      "n_control": 13,
+      "pct_control": 15.1
+    },
+    {
+      "atc_class": "N02",
+      "atc_class_name": "Analgesics",
+      "medication": "Paracetamol",
+      "n_experimental": 7,
+      "pct_experimental": 6.8,
+      "n_control": 6,
+      "pct_control": 7.0
+    },
+    {
+      "atc_class": "N02",
+      "atc_class_name": "Analgesics",
+      "medication": "Tramadol",
+      "n_experimental": 16,
+      "pct_experimental": 15.5,
+      "n_control": 12,
+      "pct_control": 14.0
+    },
+    {
+      "atc_class": "N05",
+      "atc_class_name": "Psycholeptics",
+      "n_experimental": 35,
+      "pct_experimental": 34.0,
+      "n_control": 25,
+      "pct_control": 29.1
+    },
+    {
+      "atc_class": "N05",
+      "atc_class_name": "Psycholeptics",
+      "medication": "Diazepam",
+      "n_experimental": 10,
+      "pct_experimental": 9.7,
+      "n_control": 7,
+      "pct_control": 8.1
+    },
+    {
+      "atc_class": "N05",
+      "atc_class_name": "Psycholeptics",
+      "medication": "Lorazepam",
+      "n_experimental": 12,
+      "pct_experimental": 11.7,
+      "n_control": 10,
+      "pct_control": 11.6
+    },
+    {
+      "atc_class": "N05",
+      "atc_class_name": "Psycholeptics",
+      "medication": "Zolpidem",
+      "n_experimental": 13,
+      "pct_experimental": 12.6,
+      "n_control": 8,
+      "pct_control": 9.3
+    }
+  ],
+  "n_experimental": 103,
+  "n_control": 86,
+  "seed": 42
+}

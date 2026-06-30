@@ -15,7 +15,7 @@
     ],
     "endpoint": "Tumor Size",
     "endpoint_unit": "mm",
-    "python_version": "3.14.4"
+    "python_version": "3.9.6"
   },
   "visits": {
     "BASELINE": {

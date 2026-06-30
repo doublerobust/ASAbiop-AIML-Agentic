@@ -354,3 +354,30 @@ TC-020:
     ci_bounds:
       absolute: 0.5
       weight: 0.10
+
+TC-021:
+  description: "Time-to-Progression (TTP) KM Median — death censored"
+  tolerances:
+    median_ttp:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.40
+    ci_lower:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.20
+      allow_null: true
+    ci_upper:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.20
+      allow_null: true
+    n_events:
+      absolute: 0       # exact match
+      weight: 0.10
+    n_total:
+      absolute: 0       # exact match
+      weight: 0.10
+    estimable:
+      exact: true       # must match
+      weight: 0.00      # gate flag, not scored

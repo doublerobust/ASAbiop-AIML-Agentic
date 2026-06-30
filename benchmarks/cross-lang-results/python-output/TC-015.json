@@ -21,7 +21,7 @@
       24,
       30
     ],
-    "python_version": "3.14.4",
+    "python_version": "3.9.6",
     "package": "lifelines"
   },
   "overall_median": {

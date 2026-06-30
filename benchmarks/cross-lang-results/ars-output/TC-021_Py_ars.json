@@ -1,0 +1,76 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-021",
+    "version": "1.0",
+    "analysisReason": "Secondary efficacy endpoint: time to disease progression",
+    "analysisMethod": {
+      "name": "Kaplan-Meier",
+      "codeTemplate": "lifelines.KaplanMeierFitter().fit(AVAL, 1-CNSR)",
+      "parameters": {
+        "conf_type": "log-log",
+        "alpha": 0.05,
+        "censoring_rule": "death censored"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "analysis time"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring (death = censored)"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADTTE",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 107,
+        "events": 50
+      }
+    ],
+    "documentation": "KM median TTP estimation; death treated as censoring (progression-only events)",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "median_ttp",
+          "value": 10.54,
+          "unit": "months"
+        },
+        {
+          "name": "ci_lower",
+          "value": 0.3578
+        },
+        {
+          "name": "ci_upper",
+          "value": 0.6003
+        },
+        {
+          "name": "n_events",
+          "value": 50
+        },
+        {
+          "name": "n_total",
+          "value": 107
+        },
+        {
+          "name": "estimable",
+          "value": true
+        }
+      ]
+    }
+  }
+}

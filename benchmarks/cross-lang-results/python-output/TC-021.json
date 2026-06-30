@@ -1,0 +1,17 @@
+{
+  "test_case_id": "TC-021",
+  "variant_id": "v42",
+  "language": "Python",
+  "package": "lifelines",
+  "package_version": "0.30.0",
+  "median_ttp": 10.54,
+  "ci_lower": 6.89,
+  "ci_upper": 16.94,
+  "n_events": 50,
+  "n_total": 107,
+  "ci_method": "log-log",
+  "endpoint": "TTP",
+  "censoring_rule": "death censored (progression only)",
+  "estimable": true,
+  "seed": 42
+}

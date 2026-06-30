@@ -145,6 +145,8 @@ def main():
     parser.add_argument("--data", type=str, default=None,
                        help="Shared ADTTE CSV (for cross-language verification)")
     parser.add_argument("--output", type=str, default=None)
+    parser.add_argument("--ars-output", type=str, default=None,
+                       help="Write ARS v1.0-compatible JSON envelope")
     args = parser.parse_args()
 
     strata_vars = [v.strip() for v in args.strata.split(",")]
@@ -187,6 +189,66 @@ def main():
         with open(outpath, "w") as f:
             json.dump(result, f, indent=2)
         print(f"Wrote output to: {outpath}")
+
+    # ─────────────────────────────────────────────────────
+    # ARS-compatible output envelope (CDISC ARS v1.0)
+    # Phase 3: extends ARS coverage to stratified log-rank test
+    # ─────────────────────────────────────────────────────
+    if args.ars_output:
+        itt_data = adtte[adtte["ITTFL"] == "Y"]
+        ars_envelope = {
+            "ars_version": "1.0",
+            "analysisResult": {
+                "id": "TC-003",
+                "version": "1.0",
+                "analysisReason": "Treatment comparison via stratified log-rank test",
+                "analysisMethod": {
+                    "name": "Stratified Log-Rank Test",
+                    "codeTemplate": "lifelines + scipy.stats.chi2 (manual stratified Mantel-Haenszel)",
+                    "parameters": {
+                        "strata_variables": strata_vars,
+                        "weight_method": "equal_weight_per_stratum"
+                    }
+                },
+                "analysisVariables": [
+                    {"name": "AVAL", "dataset": "ADTTE", "role": "analysis time"},
+                    {"name": "CNSR", "dataset": "ADTTE", "role": "censoring"},
+                    {"name": "TRT01PN", "dataset": "ADTTE", "role": "treatment"},
+                    {"name": "SEX", "dataset": "ADTTE", "role": "stratification"},
+                    {"name": "ECOG", "dataset": "ADTTE", "role": "stratification"}
+                ],
+                "analysisPopulation": {
+                    "name": "ITT",
+                    "filter": "ITTFL = 'Y'"
+                },
+                "analysisDataset": "ADTTE",
+                "resultGroups": [
+                    {"id": "Experimental",
+                     "n": int((itt_data["TRT01PN"] == 1).sum()),
+                     "events": int((itt_data["TRT01PN"] == 1).sum() and (itt_data.loc[itt_data["TRT01PN"] == 1, "CNSR"] == 0).sum())},
+                    {"id": "Control",
+                     "n": int((itt_data["TRT01PN"] == 0).sum()),
+                     "events": int((itt_data.loc[itt_data["TRT01PN"] == 0, "CNSR"] == 0).sum())}
+                ],
+                "documentation": "Stratified log-rank test comparing PFS between arms, stratified by SEX and ECOG",
+                "analysisResultsData": {
+                    "statistics": [
+                        {"name": "chi_square", "value": result["chi_square"], "unit": "chi-square statistic"},
+                        {"name": "df", "value": result["df"], "unit": "degrees of freedom"},
+                        {"name": "p_value", "value": result["p_value"], "unit": "two-sided p-value"},
+                        {"name": "n_total", "value": result["n_total"]},
+                        {"name": "n_events", "value": result["n_events"]},
+                        {"name": "n_strata_total", "value": result["n_strata_total"]},
+                        {"name": "n_strata_with_events", "value": result["n_strata_with_events"]}
+                    ]
+                }
+            }
+        }
+        ars_path = Path(args.ars_output)
+        ars_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(ars_path, "w") as f:
+            json.dump(ars_envelope, f, indent=2)
+        print(f"Wrote ARS-compatible output to: {ars_path}")
 
 
 if __name__ == "__main__":

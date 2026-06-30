@@ -33,6 +33,7 @@ parse_args <- function() {
     n = as.integer(get_arg("--n", "400")),
     strata_vars = get_arg("--strata", "SEX,ECOG"),
     data = get_arg("--data", NA),
+    ars_output = get_arg("--ars-output", NA),
     output = get_arg("--output", NA)
   )
 }
@@ -167,5 +168,65 @@ if (sys.nframe() == 0) {
 
   if (!is.na(opts$output)) {
     write_output(result, opts$output)
+  }
+
+  # ─────────────────────────────────────────────────────
+  # ARS-compatible output envelope (CDISC ARS v1.0)
+  # Phase 3: extends ARS coverage to stratified log-rank test
+  # ─────────────────────────────────────────────────────
+  if (!is.na(opts$ars_output)) {
+    ars_envelope <- list(
+      ars_version = "1.0",
+      analysisResult = list(
+        id = "TC-003",
+        version = "1.0",
+        analysisReason = "Treatment comparison via stratified log-rank test",
+        analysisMethod = list(
+          name = "Stratified Log-Rank Test",
+          codeTemplate = "survival::survdiff(Surv(AVAL, 1-CNSR) ~ TRT01PN + strata(SEX, ECOG))",
+          parameters = list(
+            strata_variables = strata_vars,
+            tie_method = "exact",
+            weight_method = "equal_weight_per_stratum"
+          )
+        ),
+        analysisVariables = list(
+          list(name = "AVAL", dataset = "ADTTE", role = "analysis time"),
+          list(name = "CNSR", dataset = "ADTTE", role = "censoring"),
+          list(name = "TRT01PN", dataset = "ADTTE", role = "treatment"),
+          list(name = "SEX", dataset = "ADTTE", role = "stratification"),
+          list(name = "ECOG", dataset = "ADTTE", role = "stratification")
+        ),
+        analysisPopulation = list(
+          name = "ITT",
+          filter = "ITTFL = 'Y'"
+        ),
+        analysisDataset = "ADTTE",
+        resultGroups = list(
+          list(id = "Experimental",
+               n = as.integer(sum(adtte$TRT01PN == 1 & adtte$ITTFL == "Y")),
+               events = as.integer(sum(adtte$TRT01PN == 1 & adtte$ITTFL == "Y" & adtte$CNSR == 0))),
+          list(id = "Control",
+               n = as.integer(sum(adtte$TRT01PN == 0 & adtte$ITTFL == "Y")),
+               events = as.integer(sum(adtte$TRT01PN == 0 & adtte$ITTFL == "Y" & adtte$CNSR == 0)))
+        ),
+        documentation = "Stratified log-rank test comparing PFS between arms, stratified by SEX and ECOG",
+        analysisResultsData = list(
+          statistics = list(
+            list(name = "chi_square", value = result$chi_square, unit = "chi-square statistic"),
+            list(name = "df", value = result$df, unit = "degrees of freedom"),
+            list(name = "p_value", value = result$p_value, unit = "two-sided p-value"),
+            list(name = "n_total", value = as.integer(result$n_total)),
+            list(name = "n_events", value = as.integer(result$n_events)),
+            list(name = "n_strata_total", value = as.integer(result$n_strata_total)),
+            list(name = "n_strata_with_events", value = as.integer(result$n_strata_with_events))
+          )
+        )
+      )
+    )
+
+    ars_json <- jsonlite::toJSON(ars_envelope, auto_unbox = TRUE, pretty = TRUE)
+    writeLines(ars_json, opts$ars_output)
+    cat(sprintf("Wrote ARS-compatible output to: %s\n", opts$ars_output))
   }
 }

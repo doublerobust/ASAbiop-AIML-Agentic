@@ -3,7 +3,7 @@
   "variant_id": "v42",
   "language": "Python",
   "package": "lifelines",
-  "package_version": "0.30.3",
+  "package_version": "0.30.0",
   "median_pfs": 11.01,
   "ci_lower": 7.12,
   "ci_upper": 15.1,

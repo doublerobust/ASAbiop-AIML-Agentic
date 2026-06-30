@@ -1677,3 +1677,57 @@ Each test case needs reproducible synthetic data. The generation strategy:
 4. **Develop scoring harness:** Start with the 3 auto-scorable Level 1 test cases (TC-001, TC-002, TC-003) as the pilot evaluation
 
 5. **Human baseline study:** Recruit 2-3 WG biostatisticians to complete TC-001 through TC-003 and record time/accuracy as the human performance baseline
+
+---
+
+## Level 1 Extension: TC-019 through TC-021
+
+### TC-019: Concomitant Medications Summary
+| Field | Value |
+|---|---|
+| **Domain** | Safety |
+| **TFL Type** | Table |
+| **Statistical Method** | Descriptive summary (counts + percentages by ATC class and medication) |
+| **Description** | Concomitant medications summary by treatment arm, sorted by ATC class |
+| **ADaM Dataset** | ADCM |
+| **Output Fields** | summary_rows, detailed_rows (atc_class, medication, n, pct per arm) |
+| **Scoring** | Tolerance-based (exact n, ±0.1 pct) |
+| **Languages** | R + Python + SAS |
+| **Cross-language Score** | 1.0000 (Day 30) |
+
+### TC-020: ORR by Subgroup
+| Field | Value |
+|---|---|
+| **Domain** | Efficacy |
+| **TFL Type** | Table |
+| **Statistical Method** | Binomial proportion (ORR) by subgroup with CMH interaction test |
+| **Description** | Objective Response Rate (CR+PR) by subgroup (SEX, AGEGR1, ECOG) with 95% CI and interaction p-values |
+| **ADaM Dataset** | ADVS (tumor response) |
+| **Output Fields** | overall ORR, subgroup ORRs, CI bounds, ORR difference, CMH p-values |
+| **Scoring** | Tolerance-based (±0.1 pct, exact n) |
+| **Languages** | R + Python + SAS |
+| **Cross-language Score** | 1.0000 (Day 30) |
+
+### TC-021: Time-to-Progression (TTP) KM Median
+| Field | Value |
+|---|---|
+| **Domain** | Efficacy |
+| **TFL Type** | Table |
+| **Statistical Method** | Kaplan-Meier TTP estimation with 95% CI (death censored) |
+| **Description** | Time from randomization to first documented disease progression; death is censored (unlike PFS which counts death as an event) |
+| **ADaM Dataset** | ADTTE (PARAM = "Time to Progression") |
+| **Output Fields** | median_ttp, ci_lower, ci_upper, n_events, n_total, estimable |
+| **Scoring** | Tolerance-based (same as TC-001) |
+| **Languages** | R + Python + SAS |
+| **Cross-language Score** | 1.0000 (Day 30) |
+| **Compliance Rules** | TCG: death censoring documented; CSR: TTP vs PFS distinction stated |
+| **Safety Rules** | TTP events ≤ PFS events (PFS includes death); N-count consistency with TC-001 |
+| **Differentiation** | Tests censoring rule knowledge: death is censored for TTP, event for PFS |
+| **ARS Envelope** | ✅ Available (--ars-output flag) |
+
+### TC-021 Differentiation from TC-001
+TC-021 uses the same KM methodology as TC-001 but with a different event definition:
+- **PFS (TC-001):** Event = disease progression OR death (whichever comes first)
+- **TTP (TC-021):** Event = disease progression only (death censored)
+
+This tests whether the agent correctly handles censoring rules — a common source of programming errors in oncology trials.

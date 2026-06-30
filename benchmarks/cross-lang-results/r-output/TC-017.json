@@ -14,7 +14,7 @@
       "high": 160
     },
     "n_post_baseline_visits": 3,
-    "r_version": "R version 4.6.0 (2026-04-24)"
+    "r_version": "R version 4.6.1 (2026-06-24)"
   },
   "shift_overall": {
     "counts": {

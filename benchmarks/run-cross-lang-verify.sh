@@ -144,6 +144,15 @@ cat('TC-020 tumor response:', nrow(data), 'subjects
 ')
 ") 2>&1
 
+# Generate shared TTP ADTTE for TC-021 (Time-to-Progression)
+(cd "$RDIR" && Rscript -e "
+source('tc-021-ttp.R')
+adtte <- generate_ttp_adtte(seed=$SEED, n_subjects=$N)
+write.csv(adtte, '$SHARED/tc021_adtte.csv', row.names=FALSE)
+cat('TC-021 TTP ADTTE:', nrow(adtte), 'rows
+')
+") 2>&1
+
 echo ""
 echo "Shared datasets:"
 ls -la "$SHARED/"
@@ -369,6 +378,22 @@ else
 fi
 echo "  Py:  tc_020_orr_by_subgroup.py"
 if (cd "$PYDIR" && python3 "tc_020_orr_by_subgroup.py" --seed $SEED --n $N --data "$SHARED/tc020_tumor_response.csv" --output "$PY_OUT/TC-020.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# TC-021: TTP KM Median (shared TTP ADTTE data)
+echo ""
+echo "── TC-021 ──────────────────────────────────────────"
+echo "  R:   tc-021-ttp.R"
+if (cd "$RDIR" && Rscript "tc-021-ttp.R" --seed $SEED --n $N --arm 1 --data "$SHARED/tc021_adtte.csv" --output "$R_OUT/TC-021.json") 2>&1; then
+  echo "  ✓ R completed"
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_021_ttp.py"
+if (cd "$PYDIR" && python3 "tc_021_ttp.py" --seed $SEED --n $N --arm 1 --data "$SHARED/tc021_adtte.csv" --output "$PY_OUT/TC-021.json") 2>&1; then
   echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
 else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))

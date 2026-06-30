@@ -14,13 +14,14 @@ suppressPackageStartupMessages({
 
 # --- Argument parsing ---
 args <- commandArgs(trailingOnly = TRUE)
-seed <- 42; n_subjects <- 300; output_file <- "tc-012-output.json"; data_csv <- ""
+seed <- 42; n_subjects <- 300; output_file <- "tc-012-output.json"; data_csv <- ""; ars_output <- ""
 i <- 1
 while (i <= length(args)) {
   if (args[i] == "--seed") { seed <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--n") { n_subjects <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--output") { output_file <- args[i + 1]; i <- i + 2 }
   else if (args[i] == "--data") { data_csv <- args[i + 1]; i <- i + 2 }
+  else if (args[i] == "--ars-output") { ars_output <- args[i + 1]; i <- i + 2 }
   else { i <- i + 1 }
 }
 
@@ -149,3 +150,65 @@ output <- list(
 
 write_json(output, output_file, auto_unbox = TRUE, pretty = TRUE)
 cat("TC-012 output written to:", output_file, "\n")
+
+# ─────────────────────────────────────────────────────
+# ARS-compatible output envelope (CDISC ARS v1.0)
+# Phase 3: extends ARS coverage to subgroup forest plot HR
+# ─────────────────────────────────────────────────────
+if (ars_output != "") {
+  ars_envelope <- list(
+    ars_version = "1.0",
+    analysisResult = list(
+      id = "TC-012",
+      version = "1.0",
+      analysisReason = "Subgroup analysis for treatment effect homogeneity",
+      analysisMethod = list(
+        name = "Cox Proportional Hazards",
+        codeTemplate = "survival::coxph(Surv(AVAL, 1-CNSR) ~ TRT01A)",
+        parameters = list(
+          tie_method = "efron",
+          ci_method = "Wald (log-scale)",
+          alpha = 0.05
+        )
+      ),
+      analysisVariables = list(
+        list(name = "AVAL", dataset = "ADTTE", role = "analysis time"),
+        list(name = "CNSR", dataset = "ADTTE", role = "censoring"),
+        list(name = "TRT01A", dataset = "ADSL", role = "treatment"),
+        list(name = "AGEGR1", dataset = "ADSL", role = "subgroup"),
+        list(name = "SEX", dataset = "ADSL", role = "subgroup"),
+        list(name = "ECOGGR1", dataset = "ADSL", role = "subgroup"),
+        list(name = "REGION", dataset = "ADSL", role = "subgroup"),
+        list(name = "PRIORTRT", dataset = "ADSL", role = "subgroup")
+      ),
+      analysisPopulation = list(
+        name = "ITT",
+        filter = "ITTFL = 'Y' (or all subjects in generated data)"
+      ),
+      analysisDataset = "ADTTE",
+      resultGroups = list(
+        list(id = "Experimental",
+             n = as.integer(sum(adsl$TRT01A == "Experimental")),
+             events = as.integer(sum(adsl$TRT01A == "Experimental" & adsl$CNSR == 0))),
+        list(id = "Control",
+             n = as.integer(sum(adsl$TRT01A == "Control")),
+             events = as.integer(sum(adsl$TRT01A == "Control" & adsl$CNSR == 0)))
+      ),
+      documentation = "Subgroup hazard ratios with 95% CIs via Cox PH model; interaction tests for treatment-by-subgroup homogeneity",
+      analysisResultsData = list(
+        statistics = list(
+          list(name = "overall_hr", value = overall$hr, unit = "hazard ratio"),
+          list(name = "overall_ci_lower", value = overall$ci_lower),
+          list(name = "overall_ci_upper", value = overall$ci_upper),
+          list(name = "overall_n_experimental", value = overall$n_experimental),
+          list(name = "overall_n_control", value = overall$n_control),
+          list(name = "overall_events_experimental", value = overall$events_experimental),
+          list(name = "overall_events_control", value = overall$events_control),
+          list(name = "n_subgroups", value = length(subgroup_results))
+        )
+      )
+    )
+  )
+  write_json(ars_envelope, ars_output, auto_unbox = TRUE, pretty = TRUE)
+  cat("Wrote ARS-compatible output to:", ars_output, "\n")
+}

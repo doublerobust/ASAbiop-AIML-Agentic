@@ -3,7 +3,7 @@
   "variant_id": "v42",
   "language": "Python",
   "package": "lifelines+scipy",
-  "package_version": "0.30.3",
+  "package_version": "0.30.0",
   "chi_square": 5.0307,
   "df": 1,
   "p_value": 0.024902,
