@@ -2329,3 +2329,95 @@ Daily cron job triggered. Continuing benchmark development per Day 29 plan.
 3. **TC-022 (DOR) implementation** — R + Python ground truth
 4. **Efficiency scoring** — populate efficiency.yaml with reference baselines
 5. **WG presentation prep** — slides for cross-language results, scoring framework, ARS alignment
+
+## 2026-07-01 — Day 31: TC-022 (DOR) Implementation, Level 2 TC-004 Spec, White Paper Section 5
+
+### 🎯 Assignment
+Daily cron job triggered. Continuing benchmark development per Day 30 plan.
+
+### ✅ What Got Done
+
+#### 1. TC-022 (Duration of Response) Full Implementation
+- **R ground truth** (`tc-022-dor.R`): KM median DOR among responders (CR+PR). Event = progression or death. Data generation produces ADTTE with responder flag, time-to-response, and BOR. Includes `--ars-output` flag for ARS v1.0 envelope.
+- **Python ground truth** (`tc_022_dor.py`): Matching implementation using `lifelines.KaplanMeierFitter`. Same data generation logic, same output schema. Includes `--ars-output` flag.
+- **Output schema** (`tc-022-output-schema.json`): JSON Schema validating test_case_id, variant_id, language, median_dor, ci_lower, ci_upper, n_responders, n_events, n_total, endpoint, population, censoring_rule, estimable, seed.
+- **Tolerance spec** added to `tolerances.yaml`: Fields median_dor (0.35 weight), ci_lower (0.20), ci_upper (0.20), n_responders (0.10), n_events (0.10), n_total (0.05).
+- **Scorer function** `score_tc022()` added to `score.py` and registered in all 3 scorer dispatch dicts.
+- **Cross-language verification: TC-022 = 1.0000** (median_dor=5.85, CI=(2.72, 13.11), n_responders=23, n_events=16, n_total=106).
+- **ARS envelopes** generated for both R and Python.
+- **Updated `run-cross-lang-verify.sh`:** Added TC-022 shared data generation and run blocks.
+- **Updated `test-case-design.md`:** Added TC-022 entry with full specification.
+- **Updated `efficiency.yaml`:** Added TC-022 verification time estimates and updated Level 1 test_cases list.
+
+#### 2. Level 2 TC-004 Detailed Specification
+- **Created `tc-004-level2-spec.md`** (~10 KB): Full specification for SAP Section Drafting test case including:
+  - Complete design parameters (indication, endpoint, sample size, interim/final analysis, stratification)
+  - 10 parametric variants (indication × endpoint × sample size × HR × interim timing × stratification)
+  - Required output structure following ICH E9 conventions (7 sections)
+  - Detailed scoring rubric: 40% auto-scorable (schema validation + keyword extraction), 40% LLM-as-judge, 20% human expert review
+  - Input YAML format specification
+  - Output JSON schema for automated validation
+  - Contamination mitigation via parametric variants
+  - Cross-TC relationships (TC-004 ↔ TC-001/003/005/006)
+  - Implementation notes for LLM-as-judge configuration and human review
+
+#### 3. White Paper Section 5 Draft
+- **Created `white-paper-section5-draft.md`** (~12.5 KB): Full prose draft of Section 5 (Results) covering:
+  - 5.1 Cross-Language Verification (protocol, results table for 15 TCs, tolerance framework, CI pipeline)
+  - 5.2 Scoring Pipeline Coverage (4-dimensional scoring, 244 compliance rules, 96 safety rules, error injection validation)
+  - 5.3 CDISC ARS Proof-of-Concept (8 core ARS concepts, 6 TCs with ARS output, backward compatibility, CI integration)
+  - 5.4 Test Case Coverage Summary (Level 1: 15 TCs, Level 2: 3 TCs spec'd, Level 3: 4 TCs designed)
+  - 5.5 Operational Efficiency Framework (pricing, adjustments, targets, scoring profiles)
+  - 5.6 Key Findings (6 major findings with implications)
+
+#### 4. Documentation Updates
+- Updated `cdisc-ars-alignment.md` — Phase 3 now includes TC-021 and TC-022
+- Updated `cross-lang-results/VERIFICATION-RESULTS.md` — Added TC-022 results
+- Updated `white-paper-outline.md` — Updated TC counts (13→15), ARS status, compliance/safety rule counts
+
+### 📊 Current State
+
+| Component | Status |
+|---|---|
+| Level 1 TCs (R+Python) | 15/15 complete (TC-001 through TC-022) |
+| Level 1 TCs (SAS) | 13/13 complete (reference only, not executed) |
+| Cross-language verification | 15/15 at 1.0000 |
+| ARS output | 6 TCs: TC-001 ✅, TC-002 ✅, TC-003 ✅, TC-012 ✅, TC-021 ✅, TC-022 ✅ |
+| Compliance rules | 244 (TCG 86 + CSR 42 + N-count 42 + denom 11 + cross-TFL 14 + edge 16 + misc 33) |
+| Safety rules | 96 (N-count + denom + cross-TFL + edge) |
+| White paper | Section 3 ✅, Section 4 ✅, Section 5 ✅, outline for Sections 6-8 |
+| Level 2 specs | TC-004 ✅ (detailed), TC-005/006 (in test-case-design.md) |
+| CI pipeline | GitHub Actions workflow configured |
+
+### ⚠️ Blockers
+- **SAS execution:** SAS not available on Mac Studio. 13 SAS reference scripts written but not executed.
+- **Level 2/3 implementation:** TC-004 spec complete; TC-005/006 specs need same level of detail. Implementation pending.
+- **Human baseline:** Not yet collected. Planned for Day 35-37.
+- **Efficiency baselines:** Framework in place but no actual agent run data collected yet.
+
+### 📄 New Files Created (Day 31)
+
+| File | Type | Description |
+|---|---|---|
+| `references/ground-truth/R/tc-022-dor.R` | R script | TC-022 DOR KM median ground truth (R) |
+| `references/ground-truth/Python/tc_022_dor.py` | Python script | TC-022 DOR KM median ground truth (Python) |
+| `references/output-schemas/tc-022-output-schema.json` | JSON Schema | TC-022 output validation schema |
+| `tc-004-level2-spec.md` | Document | TC-004 SAP drafting detailed specification with rubric |
+| `white-paper-section5-draft.md` | Document | Section 5 (Results) prose draft |
+
+### Modified Files (Day 31)
+- `scoring-harness/score.py` — added `score_tc022()` function and registered in 3 scorer dicts
+- `scoring-harness/tolerances.yaml` — added TC-022 tolerance specification
+- `scoring-harness/efficiency.yaml` — added TC-022 verification time, updated Level 1 test_cases list
+- `run-cross-lang-verify.sh` — added TC-022 shared data generation and run blocks
+- `test-case-design.md` — added TC-022 entry with full specification
+- `cdisc-ars-alignment.md` — updated Phase 3 status to include TC-021 and TC-022
+- `cross-lang-results/VERIFICATION-RESULTS.md` — added TC-022 results
+- `white-paper-outline.md` — updated TC counts, ARS status, compliance/safety rule counts
+
+### 🔮 Plan for Day 32+
+1. **TC-023 (DCR) implementation** — R + Python ground truth, output schema, scoring
+2. **Level 2 TC-005 spec** — TFL QC review detailed specification (same depth as TC-004)
+3. **White paper Section 6** — Discussion prose draft
+4. **Efficiency scoring** — collect reference baselines from actual agent runs
+5. **WG presentation prep** — slides for cross-language results, scoring framework, ARS alignment

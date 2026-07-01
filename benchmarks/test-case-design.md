@@ -1731,3 +1731,32 @@ TC-021 uses the same KM methodology as TC-001 but with a different event definit
 - **TTP (TC-021):** Event = disease progression only (death censored)
 
 This tests whether the agent correctly handles censoring rules — a common source of programming errors in oncology trials.
+
+### TC-022: Duration of Response (DOR) KM Median
+
+| Field | Value |
+|---|---|
+| **Domain** | Efficacy |
+| **TFL Type** | Table |
+| **Statistical Method** | Kaplan-Meier DOR estimation with 95% CI among responders |
+| **Description** | Time from first documented response (CR or PR) to disease progression or death, among subjects who achieved a response |
+| **ADaM Dataset** | ADTTE (with PARAM = "Duration of Response", filtered to responders) |
+| **Key Variables** | AVAL, CNSR, TRT01PN, TRT01A, BOR, IS_RESPONDER |
+| **Output Fields** | median_dor, ci_lower, ci_upper, n_responders, n_events, n_total, estimable |
+| **Scoring** | Tolerance-based (same structure as TC-021) |
+| **Languages** | R + Python (+ SAS planned) |
+| **Variants** | 5 (seed variation, response thresholds, N) |
+| **Compliance Rules** | TCG: responder population definition; CSR: DOR population footnote |
+| **Safety Rules** | n_responders ≤ n_total (from TC-020), responder subset consistency |
+| **ARS Output** | ✅ `--ars-output` flag with ARS v1.0 envelope |
+| **Cross-language Score** | 1.0000 (verified Day 31) |
+
+### TC-022 Differentiation from TC-001/021
+DOR is calculated only among responders (CR+PR), testing:
+1. Correct subsetting to responder population
+2. KM estimation on a selected subset (not the full ITT)
+3. Handling of left truncation (response occurs after randomization)
+
+- **PFS (TC-001):** All subjects, event = progression OR death
+- **TTP (TC-021):** All subjects, event = progression only (death censored)
+- **DOR (TC-022):** Responders only, event = progression OR death

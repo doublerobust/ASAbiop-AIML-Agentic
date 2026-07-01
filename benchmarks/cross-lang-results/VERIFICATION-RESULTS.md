@@ -102,3 +102,18 @@ python3 scoring-harness/score.py verify --tc TC-001 \
    differences for edge cases (small strata, boundary p-values)
 4. **Extend to SAS** — where SAS license is available, run the 11 SAS
    reference scripts on the same shared CSVs for trilingual verification
+
+---
+
+## Update: Day 31 (2026-07-01) — TC-022 Added
+
+**New test case:** TC-022 (Duration of Response, DOR)
+
+| Test Case | Domain | Shared Data | Score | Status |
+|---|---|---|---|---|
+| TC-022 | DOR KM Median | tc022_adtte.csv (shared) | 1.0000 | ✅ PASS |
+
+- R: median_dor=5.85, CI=(2.72, 13.11), n_responders=23, n_events=16
+- Python: median_dor=5.85, CI=(2.72, 13.11), n_responders=23, n_events=16
+- ARS envelopes generated for both R and Python
+- **Total Level 1 TCs verified: 15/15 at 1.0000**

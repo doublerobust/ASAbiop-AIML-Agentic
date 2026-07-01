@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-022 Output Schema — Duration of Response (DOR) KM Median",
+  "description": "Validates the output of the TC-022 ground truth implementation",
+  "type": "object",
+  "required": [
+    "test_case_id",
+    "variant_id",
+    "language",
+    "package",
+    "package_version",
+    "median_dor",
+    "ci_lower",
+    "ci_upper",
+    "n_responders",
+    "n_events",
+    "n_total",
+    "ci_method",
+    "endpoint",
+    "population",
+    "censoring_rule",
+    "estimable",
+    "seed"
+  ],
+  "properties": {
+    "test_case_id": {
+      "type": "string",
+      "const": "TC-022",
+      "description": "Unique test case identifier"
+    },
+    "variant_id": {
+      "type": ["string", "null"],
+      "description": "Variant identifier (e.g., v42)"
+    },
+    "language": {
+      "type": "string",
+      "enum": ["R", "Python", "SAS"],
+      "description": "Implementation language"
+    },
+    "package": {
+      "type": "string",
+      "description": "Package used (survival, lifelines, etc.)"
+    },
+    "package_version": {
+      "type": "string",
+      "description": "Package version"
+    },
+    "median_dor": {
+      "type": ["number", "null"],
+      "description": "Median duration of response in months",
+      "minimum": 0
+    },
+    "ci_lower": {
+      "type": ["number", "null"],
+      "description": "95% CI lower bound for median DOR",
+      "minimum": 0
+    },
+    "ci_upper": {
+      "type": ["number", "null"],
+      "description": "95% CI upper bound for median DOR",
+      "minimum": 0
+    },
+    "n_responders": {
+      "type": "integer",
+      "description": "Number of responders (CR+PR) in the arm",
+      "minimum": 0
+    },
+    "n_events": {
+      "type": "integer",
+      "description": "Number of events (progression or death) among responders",
+      "minimum": 0
+    },
+    "n_total": {
+      "type": "integer",
+      "description": "Total number of subjects in the arm (ITT)",
+      "minimum": 0
+    },
+    "ci_method": {
+      "type": "string",
+      "description": "Confidence interval method"
+    },
+    "endpoint": {
+      "type": "string",
+      "const": "DOR",
+      "description": "Endpoint identifier"
+    },
+    "population": {
+      "type": "string",
+      "description": "Analysis population (responders)"
+    },
+    "censoring_rule": {
+      "type": "string",
+      "description": "Censoring rule description"
+    },
+    "estimable": {
+      "type": "boolean",
+      "description": "Whether the median DOR is estimable"
+    },
+    "seed": {
+      "type": ["integer", "null"],
+      "description": "Random seed used"
+    }
+  },
+  "additionalProperties": false
+}

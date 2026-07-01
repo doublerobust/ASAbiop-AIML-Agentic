@@ -1,0 +1,86 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-022",
+    "version": "1.0",
+    "analysisReason": "Secondary efficacy endpoint: duration of response among responders",
+    "analysisMethod": {
+      "name": "Kaplan-Meier",
+      "codeTemplate": "lifelines.KaplanMeierFitter().fit(AVAL, 1-CNSR)",
+      "parameters": {
+        "conf_type": "log-log",
+        "alpha": 0.05,
+        "population": "responders (CR+PR)",
+        "event_definition": "progression or death"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "analysis time (from response)"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring"
+      },
+      {
+        "name": "BOR",
+        "dataset": "ADRS",
+        "role": "best overall response"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "Responders",
+      "filter": "IS_RESPONDER = 1 AND ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADTTE",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 23,
+        "events": 16
+      }
+    ],
+    "documentation": "KM median DOR estimation among responders (CR+PR); event = progression or death",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "median_dor",
+          "value": 5.85,
+          "unit": "months"
+        },
+        {
+          "name": "ci_lower",
+          "value": 2.72
+        },
+        {
+          "name": "ci_upper",
+          "value": 13.11
+        },
+        {
+          "name": "n_responders",
+          "value": 23
+        },
+        {
+          "name": "n_events",
+          "value": 16
+        },
+        {
+          "name": "n_total",
+          "value": 106
+        },
+        {
+          "name": "estimable",
+          "value": true
+        }
+      ]
+    }
+  }
+}

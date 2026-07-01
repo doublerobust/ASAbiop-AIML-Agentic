@@ -78,7 +78,7 @@ efficiency_targets:
   level_1:
     cost_target_usd: 0.10
     time_target_min: 2.0
-    test_cases: [TC-001, TC-002, TC-003, TC-011, TC-012, TC-013, TC-014, TC-015, TC-016, TC-017, TC-018, TC-019, TC-020]
+    test_cases: [TC-001, TC-002, TC-003, TC-011, TC-012, TC-013, TC-014, TC-015, TC-016, TC-017, TC-018, TC-019, TC-020, TC-021, TC-022]
   level_2:
     cost_target_usd: 2.00
     time_target_min: 10.0
@@ -218,6 +218,18 @@ verification_time:
       R: 6.0
       SAS: 5.0
       Python: 7.0
+  tc_021:
+    human_from_scratch_min: 15
+    human_verify_agent_min:
+      R: 4.0
+      SAS: 3.5
+      Python: 5.0
+  tc_022:
+    human_from_scratch_min: 20
+    human_verify_agent_min:
+      R: 5.0
+      SAS: 4.0
+      Python: 6.0
 
 # ────────────────────────────────────────────────────────────
 # Cost transparency configuration

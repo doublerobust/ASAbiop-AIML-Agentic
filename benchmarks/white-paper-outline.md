@@ -51,7 +51,7 @@ The rapid emergence of agentic AI systems for Tables, Figures, and Listings (TFL
 
 | Level | Count | Description | Scoring |
 |---|---|---|---|
-| 1 | 13 | Automated numerical comparison | Tolerance-based (0–1) |
+| 1 | 15 | Automated numerical comparison | Tolerance-based (0–1) |
 | 2 | 3 | Partial auto + rubric | Checklist + LLM-judge |
 | 3 | 4 | Expert review | Human rubric |
 
@@ -77,6 +77,8 @@ The rapid emergence of agentic AI systems for Tables, Figures, and Listings (TFL
 | TC-018 | Efficacy | Table | Change from baseline | R+Py+SAS |
 | TC-019 | Safety | Table | Concomitant medications | R+Py (NEW) |
 | TC-020 | Efficacy | Table | ORR by subgroup | R+Py (NEW) |
+| TC-021 | Efficacy | Table | TTP (death censored) | R+Py |
+| TC-022 | Efficacy | Table | DOR (responders only) | R+Py (NEW) |
 
 ---
 
@@ -123,18 +125,17 @@ The rapid emergence of agentic AI systems for Tables, Figures, and Listings (TFL
 ## 5. Results
 
 ### 5.1 Cross-Language Verification
-- 11/11 Level 1 TCs: score=1.0000 (perfect R↔Python agreement on shared data)
-- 3 TCs with SAS: TC-001/002/003 trilingual verification
-- 8 additional SAS implementations (TC-011–018, not executed)
+- 15/15 Level 1 TCs: score=1.0000 (perfect R↔Python agreement on shared data)
+- 13 SAS reference scripts written (not executed — no SAS license on Mac Studio)
 - CI pipeline: automated regression detection on every push/PR
 
 ### 5.2 Scoring Pipeline Coverage
-- 13 Level 1 TCs with: scorer + tolerances + schema + ground truth + compliance + safety
-- 128 compliance rules, 83 safety rules
+- 15 Level 1 TCs with: scorer + tolerances + schema + ground truth + compliance + safety
+- 244 compliance rules, 96 safety rules
 - Error injection validated: HR +0.3 → score drops to 0.7227
 
 ### 5.3 ARS Proof-of-Concept
-- TC-001 `--ars-output` flag emits ARS v1.0-compatible JSON envelope
+- 6 TCs with `--ars-output` flag: TC-001, TC-002, TC-003, TC-012, TC-021, TC-022
 - R and Python implementations both support ARS output
 - Backward compatible with existing scoring pipeline
 

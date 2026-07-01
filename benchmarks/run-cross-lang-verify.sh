@@ -153,6 +153,15 @@ cat('TC-021 TTP ADTTE:', nrow(adtte), 'rows
 ')
 ") 2>&1
 
+# Generate shared DOR ADTTE for TC-022 (Duration of Response)
+(cd "$RDIR" && Rscript -e "
+source('tc-022-dor.R')
+adtte <- generate_dor_adtte(seed=$SEED, n_subjects=$N)
+write.csv(adtte, '$SHARED/tc022_adtte.csv', row.names=FALSE)
+cat('TC-022 DOR ADTTE:', nrow(adtte), 'rows
+')
+") 2>&1
+
 echo ""
 echo "Shared datasets:"
 ls -la "$SHARED/"
@@ -394,6 +403,22 @@ else
 fi
 echo "  Py:  tc_021_ttp.py"
 if (cd "$PYDIR" && python3 "tc_021_ttp.py" --seed $SEED --n $N --arm 1 --data "$SHARED/tc021_adtte.csv" --output "$PY_OUT/TC-021.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# TC-022: DOR KM Median (shared DOR ADTTE data)
+echo ""
+echo "── TC-022 ──────────────────────────────────────────"
+echo "  R:   tc-022-dor.R"
+if (cd "$RDIR" && Rscript "tc-022-dor.R" --seed $SEED --n $N --arm 1 --data "$SHARED/tc022_adtte.csv" --output "$R_OUT/TC-022.json") 2>&1; then
+  echo "  ✓ R completed"
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_022_dor.py"
+if (cd "$PYDIR" && python3 "tc_022_dor.py" --seed $SEED --n $N --arm 1 --data "$SHARED/tc022_adtte.csv" --output "$PY_OUT/TC-022.json") 2>&1; then
   echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
 else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))

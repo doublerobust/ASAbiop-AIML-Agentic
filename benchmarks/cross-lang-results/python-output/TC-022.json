@@ -1,0 +1,19 @@
+{
+  "test_case_id": "TC-022",
+  "variant_id": "v42",
+  "language": "Python",
+  "package": "lifelines",
+  "package_version": "0.30.0",
+  "median_dor": 5.85,
+  "ci_lower": 2.72,
+  "ci_upper": 13.11,
+  "n_responders": 23,
+  "n_events": 16,
+  "n_total": 106,
+  "ci_method": "log-log",
+  "endpoint": "DOR",
+  "population": "responders (CR+PR)",
+  "censoring_rule": "event = progression or death",
+  "estimable": true,
+  "seed": 42
+}

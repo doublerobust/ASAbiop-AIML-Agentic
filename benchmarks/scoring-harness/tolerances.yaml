@@ -381,3 +381,33 @@ TC-021:
     estimable:
       exact: true       # must match
       weight: 0.00      # gate flag, not scored
+
+TC-022:
+  description: "Duration of Response (DOR) KM Median — responders only"
+  tolerances:
+    median_dor:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.35
+    ci_lower:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.20
+      allow_null: true
+    ci_upper:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.20
+      allow_null: true
+    n_responders:
+      absolute: 0       # exact match
+      weight: 0.10
+    n_events:
+      absolute: 0       # exact match
+      weight: 0.10
+    n_total:
+      absolute: 0       # exact match
+      weight: 0.05
+    estimable:
+      exact: true       # must match
+      weight: 0.00      # gate flag, not scored

@@ -1327,6 +1327,49 @@ def score_tc021(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
     }
 
 
+def score_tc022(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-022 (DOR KM Median) agent output against ground truth.
+
+    Same structure as TC-021 but uses median_dor and endpoint=DOR.
+    Fields: median_dor, ci_lower, ci_upper, n_responders, n_events, n_total.
+    """
+    tol_spec = tolerances.get("TC-022", {}).get("tolerances", {})
+    fields = ["median_dor", "ci_lower", "ci_upper", "n_responders", "n_events", "n_total"]
+
+    component_scores = {}
+    total_weight = 0
+    weighted_sum = 0
+
+    for field in fields:
+        field_tol = tol_spec.get(field, {"absolute": 0.05, "weight": 0.10})
+        weight = field_tol.get("weight", 0.10)
+        abs_tol = field_tol.get("absolute", 0.05)
+
+        if field in ("n_responders", "n_events", "n_total"):
+            result = compare_count(agent_output.get(field), ground_truth.get(field))
+        else:
+            result = compare_numeric(
+                agent_output.get(field), ground_truth.get(field),
+                field_tol, field
+            )
+
+        component_scores[field] = result
+        score = result["score"]
+        weighted_sum += score * weight
+        total_weight += weight
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-022",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
 # --------------------------------------------------------------------
 # Efficiency Helpers
 # --------------------------------------------------------------------
@@ -1645,6 +1688,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-019": score_tc019,
         "TC-020": score_tc020,
         "TC-021": score_tc021,
+        "TC-022": score_tc022,
     }
 
     scorer = scorers.get(tc)
@@ -1773,6 +1817,7 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-019": score_tc019,
         "TC-020": score_tc020,
         "TC-021": score_tc021,
+        "TC-022": score_tc022,
     }
 
     scorer = scorers.get(tc)
@@ -1979,6 +2024,7 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-019": score_tc019,
         "TC-020": score_tc020,
         "TC-021": score_tc021,
+        "TC-022": score_tc022,
     }
     scorer = scorers.get(tc)
     if scorer is None:
