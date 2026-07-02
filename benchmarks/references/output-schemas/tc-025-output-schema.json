@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-025 Best Overall Response Summary — Output Schema",
+  "description": "Validates TC-025 BOR summary ground truth output",
+  "type": "object",
+  "required": ["test_case_id", "endpoint", "population", "summary"],
+  "properties": {
+    "test_case_id": {"const": "TC-025"},
+    "endpoint": {"const": "Best Overall Response"},
+    "population": {"const": "ITT"},
+    "summary": {
+      "type": "object",
+      "required": ["by_arm", "orr_difference", "fisher_exact_p"],
+      "properties": {
+        "by_arm": {
+          "type": "object",
+          "properties": {
+            "0": {
+              "type": "object",
+              "required": ["arm", "n_total", "bor_counts", "orr_n", "orr_rate", "dcr_n", "dcr_rate"],
+              "properties": {
+                "arm": {"type": "integer"},
+                "n_total": {"type": "integer", "minimum": 1},
+                "n_evaluable": {"type": "integer", "minimum": 0},
+                "bor_counts": {
+                  "type": "object",
+                  "required": ["CR", "PR", "SD", "PD", "NE"],
+                  "properties": {
+                    "CR": {"type": "integer", "minimum": 0},
+                    "PR": {"type": "integer", "minimum": 0},
+                    "SD": {"type": "integer", "minimum": 0},
+                    "PD": {"type": "integer", "minimum": 0},
+                    "NE": {"type": "integer", "minimum": 0}
+                  }
+                },
+                "orr_n": {"type": "integer", "minimum": 0},
+                "orr_rate": {"type": "number", "minimum": 0, "maximum": 1},
+                "orr_ci_lower": {"type": "number", "minimum": 0},
+                "orr_ci_upper": {"type": "number", "maximum": 1},
+                "dcr_n": {"type": "integer", "minimum": 0},
+                "dcr_rate": {"type": "number", "minimum": 0, "maximum": 1},
+                "dcr_ci_lower": {"type": "number", "minimum": 0},
+                "dcr_ci_upper": {"type": "number", "maximum": 1}
+              }
+            },
+            "1": {
+              "type": "object",
+              "required": ["arm", "n_total", "bor_counts", "orr_n", "orr_rate", "dcr_n", "dcr_rate"],
+              "properties": {
+                "arm": {"type": "integer"},
+                "n_total": {"type": "integer", "minimum": 1},
+                "n_evaluable": {"type": "integer", "minimum": 0},
+                "bor_counts": {
+                  "type": "object",
+                  "required": ["CR", "PR", "SD", "PD", "NE"],
+                  "properties": {
+                    "CR": {"type": "integer", "minimum": 0},
+                    "PR": {"type": "integer", "minimum": 0},
+                    "SD": {"type": "integer", "minimum": 0},
+                    "PD": {"type": "integer", "minimum": 0},
+                    "NE": {"type": "integer", "minimum": 0}
+                  }
+                },
+                "orr_n": {"type": "integer", "minimum": 0},
+                "orr_rate": {"type": "number", "minimum": 0, "maximum": 1},
+                "orr_ci_lower": {"type": "number", "minimum": 0},
+                "orr_ci_upper": {"type": "number", "maximum": 1},
+                "dcr_n": {"type": "integer", "minimum": 0},
+                "dcr_rate": {"type": "number", "minimum": 0, "maximum": 1},
+                "dcr_ci_lower": {"type": "number", "minimum": 0},
+                "dcr_ci_upper": {"type": "number", "maximum": 1}
+              }
+            }
+          }
+        },
+        "orr_difference": {"type": "number", "minimum": -1, "maximum": 1},
+        "orr_diff_ci_lower": {"type": "number"},
+        "orr_diff_ci_upper": {"type": "number"},
+        "fisher_exact_p": {"type": "number", "minimum": 0, "maximum": 1},
+        "chi_square_p": {"type": "number", "minimum": 0, "maximum": 1},
+        "bor_distribution": {
+          "type": "object",
+          "properties": {
+            "CR": {"type": "object"},
+            "PR": {"type": "object"},
+            "SD": {"type": "object"},
+            "PD": {"type": "object"},
+            "NE": {"type": "object"}
+          }
+        }
+      }
+    },
+    "language": {"type": "string"},
+    "version": {"type": "string"}
+  }
+}

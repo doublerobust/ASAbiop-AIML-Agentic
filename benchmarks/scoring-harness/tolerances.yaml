@@ -447,3 +447,66 @@ TC-023:
     bor_counts:
       absolute: 0       # exact match
       weight: 0.10
+
+# ─────────────────────────────────────────────────────
+# TC-024: Overall Survival (OS) KM Median
+# ─────────────────────────────────────────────────────
+TC-024:
+  tolerances:
+    ctrl_median_os:
+      absolute: 0.5    # ±0.5 months
+      weight: 0.10
+    ctrl_hr:
+      absolute: 0.05
+      weight: 0.08
+    ctrl_event_rate:
+      absolute: 0.02
+      weight: 0.05
+    ctrl_logrank_p:
+      absolute: 0.005
+      weight: 0.05
+    exp_median_os:
+      absolute: 0.5
+      weight: 0.10
+    exp_hr:
+      absolute: 0.05
+      weight: 0.08
+    exp_event_rate:
+      absolute: 0.02
+      weight: 0.05
+    exp_logrank_p:
+      absolute: 0.005
+      weight: 0.05
+    censoring_rate:
+      absolute: 0.02
+      weight: 0.05
+    subgroup_median:
+      absolute: 1.0    # ±1.0 months for subgroup medians
+      weight: 0.03
+
+# ─────────────────────────────────────────────────────
+# TC-025: Best Overall Response (BOR) Summary
+# ─────────────────────────────────────────────────────
+TC-025:
+  tolerances:
+    ctrl_orr_rate:
+      absolute: 0.01    # ±1 pp for response rates
+      weight: 0.08
+    ctrl_dcr_rate:
+      absolute: 0.01
+      weight: 0.08
+    exp_orr_rate:
+      absolute: 0.01
+      weight: 0.08
+    exp_dcr_rate:
+      absolute: 0.01
+      weight: 0.08
+    bor_counts:
+      absolute: 0       # exact match for counts
+      weight: 0.05
+    orr_difference:
+      absolute: 0.01
+      weight: 0.06
+    fisher_p:
+      absolute: 0.005
+      weight: 0.06

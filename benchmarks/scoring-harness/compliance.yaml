@@ -735,3 +735,51 @@ TC-023:
     - id: CSR-33
       desc: "Footnotes: RECIST 1.1 criteria, CI method (Wilson), risk difference CI method"
       penalty: 0.1
+
+# ─────────────────────────────────────────────────────
+# TC-024: Overall Survival — Compliance Rules
+# ─────────────────────────────────────────────────────
+  # (appended to tcg_rules)
+  # Note: These are added under the TC-024 test case
+  # In a future refactor, compliance.yaml should use per-TC sections
+  # For now, TC-024 rules are TCG-77 through TCG-84
+
+# TC-024 specific rules (OS endpoint):
+# TCG-77: OS event = death from any cause (not progression)
+# TCG-78: ITT population required for OS analysis
+# TCG-79: KM median with 95% CI (Brookmeyer-Crowley / log-log)
+# TCG-80: Log-rank test for treatment comparison
+# TCG-81: Cox PH hazard ratio with 95% CI
+# TCG-82: Median OS reported in months
+# TCG-83: Event rate and censoring rate reported
+# TCG-84: Subgroup analysis (SEX, AGEGR1, ECOG) for OS
+
+# TC-025 specific rules (BOR Summary):
+# TCG-85: BOR per RECIST 1.1 (CR, PR, SD, PD, NE)
+# TCG-86: ORR = (CR + PR) / Total with Clopper-Pearson exact CI
+# TCG-87: DCR = (CR + PR + SD) / Total with Clopper-Pearson exact CI
+# TCG-88: Fisher exact test for treatment comparison
+# TCG-89: BOR distribution table by treatment arm
+# TCG-90: NE (Not Evaluable) reported separately
+# TCG-91: Cross-TFL consistency: ORR in TC-025 matches TC-020
+# TCG-92: Cross-TFL consistency: DCR in TC-025 matches TC-023
+
+tc024_tc025_csr_rules:
+  - id: CSR-34
+    desc: "OS table title includes endpoint (Overall Survival), population (ITT)"
+    penalty: 0.2
+  - id: CSR-35
+    desc: "OS median with 95% CI reported by arm"
+    penalty: 0.15
+  - id: CSR-36
+    desc: "Log-rank p-value and Cox HR (95% CI) reported"
+    penalty: 0.15
+  - id: CSR-37
+    desc: "BOR table: response category, n (%), by arm with totals"
+    penalty: 0.15
+  - id: CSR-38
+    desc: "ORR and DCR with 95% CI (Clopper-Pearson) by arm"
+    penalty: 0.15
+  - id: CSR-39
+    desc: "Fisher exact p-value for ORR comparison"
+    penalty: 0.1

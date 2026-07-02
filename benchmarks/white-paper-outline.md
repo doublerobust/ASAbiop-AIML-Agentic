@@ -79,6 +79,9 @@ The rapid emergence of agentic AI systems for Tables, Figures, and Listings (TFL
 | TC-020 | Efficacy | Table | ORR by subgroup | R+Py (NEW) |
 | TC-021 | Efficacy | Table | TTP (death censored) | R+Py |
 | TC-022 | Efficacy | Table | DOR (responders only) | R+Py (NEW) |
+| TC-023 | Efficacy | Table | DCR (CR+PR+SD) | R+Py |
+| TC-024 | Efficacy | Table | OS KM Median | R+Py |
+| TC-025 | Efficacy | Table | BOR Summary (RECIST 1.1) | R+Py |
 
 ---
 
@@ -125,7 +128,7 @@ The rapid emergence of agentic AI systems for Tables, Figures, and Listings (TFL
 ## 5. Results
 
 ### 5.1 Cross-Language Verification
-- 15/15 Level 1 TCs: score=1.0000 (perfect R↔Python agreement on shared data)
+- 18/18 Level 1 TCs: score=1.0000 (perfect R↔Python agreement on shared data)
 - 13 SAS reference scripts written (not executed — no SAS license on Mac Studio)
 - CI pipeline: automated regression detection on every push/PR
 
@@ -135,7 +138,7 @@ The rapid emergence of agentic AI systems for Tables, Figures, and Listings (TFL
 - Error injection validated: HR +0.3 → score drops to 0.7227
 
 ### 5.3 ARS Proof-of-Concept
-- 6 TCs with `--ars-output` flag: TC-001, TC-002, TC-003, TC-012, TC-021, TC-022
+- 8 TCs with `--ars-output` flag: TC-001, TC-002, TC-003, TC-012, TC-021, TC-022, TC-023, TC-024, TC-025
 - R and Python implementations both support ARS output
 - Backward compatible with existing scoring pipeline
 

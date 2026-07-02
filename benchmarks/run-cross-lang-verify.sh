@@ -176,6 +176,26 @@ cat('TC-023 tumor response:', nrow(data), 'rows
 ')
 ") 2>&1
 
+# TC-024: Generate OS ADTTE shared data
+echo "Generating TC-024 OS ADTTE..."
+(cd "$RDIR" && Rscript -e "
+source('tc-024-os.R')
+adtte <- generate_os_adtte(seed=$SEED, n_subjects=$N)
+write.csv(adtte, '$SHARED/tc024_os_adtte.csv', row.names=FALSE)
+cat('TC-024 OS ADTTE:', nrow(adtte), 'rows
+')
+") 2>&1
+
+# TC-025: Generate BOR shared data
+echo "Generating TC-025 BOR data..."
+(cd "$RDIR" && Rscript -e "
+source('tc-025-bor-summary.R')
+data <- generate_bor_data(seed=$SEED, n_subjects=$N)
+write.csv(data, '$SHARED/tc025_bor.csv', row.names=FALSE)
+cat('TC-025 BOR data:', nrow(data), 'rows
+')
+") 2>&1
+
 # ───────────────────────────────────────────────────────────────────
 # Step 2: Run each TC in R and Python
 # ───────────────────────────────────────────────────────────────────
@@ -445,6 +465,38 @@ else
 fi
 echo "  Py:  tc_023_dcr.py"
 if (cd "$PYDIR" && python3 "tc_023_dcr.py" --seed $SEED --n $N --data "$SHARED/tc023_tumor_response.csv" --output "$PY_OUT/TC-023.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# TC-024: Overall Survival (shared OS ADTTE data)
+echo ""
+echo "── TC-024 ──────────────────────────────────────────"
+echo "  R:   tc-024-os.R"
+if (cd "$RDIR" && Rscript "tc-024-os.R" --seed $SEED --n $N --data "$SHARED/tc024_os_adtte.csv" --output "$R_OUT/TC-024.json") 2>&1; then
+  echo "  ✓ R completed"
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_024_os.py"
+if (cd "$PYDIR" && python3 "tc_024_os.py" --seed $SEED --n $N --data "$SHARED/tc024_os_adtte.csv" --output "$PY_OUT/TC-024.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# TC-025: BOR Summary (shared BOR data)
+echo ""
+echo "── TC-025 ──────────────────────────────────────────"
+echo "  R:   tc-025-bor-summary.R"
+if (cd "$RDIR" && Rscript "tc-025-bor-summary.R" --seed $SEED --n $N --data "$SHARED/tc025_bor.csv" --output "$R_OUT/TC-025.json") 2>&1; then
+  echo "  ✓ R completed"
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_025_bor_summary.py"
+if (cd "$PYDIR" && python3 "tc_025_bor_summary.py" --seed $SEED --n $N --data "$SHARED/tc025_bor.csv" --output "$PY_OUT/TC-025.json") 2>&1; then
   echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
 else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))

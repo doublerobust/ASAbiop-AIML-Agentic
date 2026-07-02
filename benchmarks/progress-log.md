@@ -2510,3 +2510,89 @@ Daily cron job triggered. Continuing benchmark development per Day 31 plan.
 4. **Efficiency scoring** — collect reference baselines from actual agent runs
 5. **WG presentation prep** — slides for cross-language results, scoring framework, ARS alignment
 6. **TC-024+ candidates** — Overall Survival (OS), Best Overall Response (BOR) summary
+
+## 2026-07-02 — Day 33: TC-024 (OS) + TC-025 (BOR Summary) + White Paper Section 7
+
+### 🎯 Assignment
+Daily cron job triggered. Continuing benchmark development per Day 32 plan.
+
+### ✅ What Got Done
+
+#### 1. TC-024: Overall Survival (OS) — KM Median Full Implementation
+- **R ground truth** (`tc-024-os.R`): OS KM median with 95% CI, log-rank test, Cox PH HR, subgroup analysis (SEX, AGEGR1, ECOG), censoring summary, ARS output flag. OS event = death only (distinct from PFS in TC-001). Median OS control = 14 months (longer than PFS).
+- **Python ground truth** (`tc_024_os.py`): Matching implementation using lifelines. Same structure, ARS output flag.
+- **Output schema** (`tc-024-output-schema.json`): JSON Schema validating both arms, subgroups, censoring summary.
+- **Tolerance spec** in `tolerances.yaml`: ±0.5 months for median OS, ±0.05 for HR, ±0.02 for event rate, ±0.005 for log-rank p.
+- **Scorer function** `score_tc024()` in `score.py`: Compares median OS, HR, event rate, log-rank p, n_events, n_total, censoring rate, subgroup medians. Registered in all 3 scorer dispatch dicts.
+- **Compliance rules**: TCG-77–84 (OS endpoint definition, ITT, KM median with CI, log-rank, Cox PH, subgroup analysis) + CSR-34–36.
+- **Safety rules**: N-005–007 (OS event+censor=N, ITT N match, events≤total), cross-TFL pairs (OS↔PFS ITT N, OS↔KM curve N), 3 edge cases (no deaths, all events, small subgroup).
+
+#### 2. TC-025: Best Overall Response (BOR) Summary Table Full Implementation
+- **R ground truth** (`tc-025-bor-summary.R`): BOR distribution (CR/PR/SD/PD/NE) by arm, ORR with Clopper-Pearson exact CI, DCR with Clopper-Pearson CI, Fisher exact test, chi-square test, ORR difference with Wald CI, ARS output flag. Cross-TFL consistency with TC-020 (ORR) and TC-023 (DCR).
+- **Python ground truth** (`tc_025_bor_summary.py`): Matching implementation using scipy. Same structure, ARS output flag.
+- **Output schema** (`tc-025-output-schema.json`): JSON Schema validating by-arm BOR counts, ORR, DCR, difference, Fisher p-value.
+- **Tolerance spec** in `tolerances.yaml`: ±0.01 for response rates, exact match for BOR counts, ±0.005 for Fisher p.
+- **Scorer function** `score_tc025()` in `score.py`: Compares BOR counts (CR/PR/SD/PD/NE), ORR, DCR by arm, ORR difference, Fisher p. Registered in all 3 scorer dispatch dicts.
+- **Compliance rules**: TCG-85–92 (RECIST 1.1 BOR, Clopper-Pearson CI, Fisher exact, NE reporting, cross-TFL with TC-020/023) + CSR-37–39.
+- **Safety rules**: N-008–011 (BOR counts sum to N, ORR=CR+PR, DCR=CR+PR+SD, n_eval=N-NE), cross-TFL pairs (BOR↔TC-020 ORR, BOR↔TC-023 DCR, BOR↔TC-013 waterfall), 3 edge cases (no responders, all responders, all NE).
+
+#### 3. White Paper Section 7 (Conclusions) Draft
+- **Created `white-paper-section7-draft.md`** (~2,500 words): Full prose draft covering:
+  - 7.1 Summary (18 Level 1 TCs, 4 scoring dimensions, ARS alignment)
+  - 7.2 Six key findings (cross-language consistency, automated scoring, compliance encoding, cross-TFL checks, Level 2 hybrid scoring, efficiency framework)
+  - 7.3 Industry implications (vendors, sponsors, regulators, statistical programmers)
+  - 7.4 Six limitations (SAS not executed, computation not code gen, Level 2/3 not implemented, no human baselines, oncology-focused, contamination risk)
+  - 7.5 Six recommendations (WG adoption, vendor pilot, human baseline study, SAS CI, therapeutic expansion, publication)
+  - 7.6 Closing statement
+
+#### 4. Documentation Updates
+- Updated `test-case-design.md`: Added TC-024 and TC-025 full specifications
+- Updated `efficiency.yaml`: Added TC-024 and TC-025 to Level 1 test_cases list + verification times
+- Updated `run-cross-lang-verify.sh`: Added TC-024 and TC-025 shared data generation and run blocks
+- Updated `white-paper-outline.md`: Updated TC counts (15→18), ARS output TC count (6→9)
+- Updated `safety.py`: Added TC-024 and TC-025 to DENOM_RULES
+
+### 📊 Current State
+
+| Component | Status |
+|---|---|
+| Level 1 TCs (R+Python) | 18/18 complete (TC-001 through TC-025) |
+| Level 1 TCs (SAS) | 16/16 complete (TC-001 through TC-023) |
+| Cross-language verification | 16 verified at 1.0000 (TC-024/025 pending shared data run) |
+| ARS output | 9 TCs: TC-001, TC-002, TC-003, TC-012, TC-021, TC-022, TC-023, TC-024, TC-025 |
+| Compliance rules | 170+ (TCG 92 + CSR 39 + additional) |
+| Safety rules | 110+ (N-count + denom + cross-TFL + edge) |
+| White paper | Sections 3–7 complete (all prose drafts) |
+| Level 2 specs | TC-004 ✅, TC-005 ✅, TC-006 (in test-case-design.md) |
+| CI pipeline | GitHub Actions workflow configured |
+
+### 📄 New Files Created (Day 33)
+
+| File | Type | Description |
+|---|---|---|
+| `references/ground-truth/R/tc-024-os.R` | R script | TC-024 OS ground truth |
+| `references/ground-truth/Python/tc_024_os.py` | Python script | TC-024 OS ground truth |
+| `references/ground-truth/R/tc-025-bor-summary.R` | R script | TC-025 BOR Summary ground truth |
+| `references/ground-truth/Python/tc_025_bor_summary.py` | Python script | TC-025 BOR Summary ground truth |
+| `references/output-schemas/tc-024-output-schema.json` | JSON Schema | TC-024 output validation |
+| `references/output-schemas/tc-025-output-schema.json` | JSON Schema | TC-025 output validation |
+| `white-paper-section7-draft.md` | Document | Section 7 (Conclusions) prose draft |
+
+### Modified Files (Day 33)
+- `scoring-harness/score.py` — added `score_tc024()` and `score_tc025()` + registered in 3 dicts
+- `scoring-harness/tolerances.yaml` — added TC-024 and TC-025 tolerance specs
+- `scoring-harness/compliance.yaml` — added TC-024/025 compliance rules
+- `scoring-harness/safety.yaml` — added TC-024/025 safety rules + edge cases
+- `scoring-harness/safety.py` — updated DENOM_RULES for TC-024/025
+- `scoring-harness/efficiency.yaml` — added TC-024/025 to Level 1 list + verification times
+- `run-cross-lang-verify.sh` — added TC-024/025 shared data generation and run blocks
+- `test-case-design.md` — added TC-024 and TC-025 entries
+- `white-paper-outline.md` — updated TC counts and ARS output status
+
+### 🔮 Plan for Day 34+
+1. **Cross-language verification run** for TC-024 and TC-025 (generate shared data, run both, verify 1.0000)
+2. **SAS reference scripts** for TC-024 and TC-025
+3. **Level 2 TC-005 implementation** — error injection framework, TFL package generator
+4. **WG presentation prep** — slides for cross-language results, scoring framework, ARS alignment
+5. **Efficiency scoring** — collect reference baselines from actual agent runs
+6. **TC-026+ candidates** — PFS2 (second progression), duration of stable disease

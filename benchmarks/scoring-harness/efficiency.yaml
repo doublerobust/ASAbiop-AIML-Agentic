@@ -78,7 +78,7 @@ efficiency_targets:
   level_1:
     cost_target_usd: 0.10
     time_target_min: 2.0
-    test_cases: [TC-001, TC-002, TC-003, TC-011, TC-012, TC-013, TC-014, TC-015, TC-016, TC-017, TC-018, TC-019, TC-020, TC-021, TC-022, TC-023]
+    test_cases: [TC-001, TC-002, TC-003, TC-011, TC-012, TC-013, TC-014, TC-015, TC-016, TC-017, TC-018, TC-019, TC-020, TC-021, TC-022, TC-023, TC-024, TC-025]
   level_2:
     cost_target_usd: 2.00
     time_target_min: 10.0
@@ -253,3 +253,16 @@ cost_transparency_defaults:
     - model_training_cost
     - opportunity_cost
   efficiency_score_floor: 0.50  # Only compute for runs with accuracy >= 0.50
+
+  tc_024:
+    human_from_scratch_min: 5
+    human_verify_agent_min:
+      R: 2.0
+      SAS: 2.0
+      Python: 3.0
+  tc_025:
+    human_from_scratch_min: 8
+    human_verify_agent_min:
+      R: 3.0
+      SAS: 2.5
+      Python: 4.0

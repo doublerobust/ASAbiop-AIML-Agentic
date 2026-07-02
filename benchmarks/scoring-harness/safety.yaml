@@ -520,3 +520,87 @@ scoring_weights:
   denominator_correctness: 0.35
   cross_tfl_agreement: 0.15
   edge_case_resilience: 0.20
+
+# ──────────────────────────────────────────────────────
+# TC-024: Overall Survival — Safety Rules
+# ──────────────────────────────────────────────────────
+TC-024:
+  n_count_rules:
+    - id: N-005
+      desc: "OS n_events + n_censored = n_total (ITT)"
+      severity: critical
+    - id: N-006
+      desc: "OS n_total matches ITT population count"
+      severity: critical
+    - id: N-007
+      desc: "OS n_events <= n_total (cannot have more events than subjects)"
+      severity: critical
+  denominator:
+    expected_population: ITT
+    expected_flag: ITTFL
+    expected_value: "Y"
+  cross_tfl_agreement:
+    - pair: [TC-024, TC-001]
+      rule: "ITT N from OS matches ITT N from PFS (same study population)"
+      severity: major
+    - pair: [TC-024, TC-015]
+      rule: "OS KM curve N at risk table consistent with OS median N"
+      severity: major
+  edge_case_expectations:
+    no_deaths_in_arm:
+      expected_behavior: "Median OS = NA, reported as not reached with CI"
+      score_if_met: 1.0
+      score_if_not: 0.0
+    all_events:
+      expected_behavior: "Event rate = 1.0, no censoring, median computable"
+      score_if_met: 1.0
+      score_if_not: 0.5
+    small_subgroup:
+      expected_behavior: "Subgroup n<10: CI may be wide, HR may not converge"
+      score_if_met: 1.0
+      score_if_not: 0.5
+
+# ──────────────────────────────────────────────────────
+# TC-025: BOR Summary — Safety Rules
+# ──────────────────────────────────────────────────────
+TC-025:
+  n_count_rules:
+    - id: N-008
+      desc: "BOR counts (CR+PR+SD+PD+NE) = n_total per arm"
+      severity: critical
+    - id: N-009
+      desc: "ORR_n = CR + PR"
+      severity: critical
+    - id: N-010
+      desc: "DCR_n = CR + PR + SD"
+      severity: critical
+    - id: N-011
+      desc: "n_evaluable = n_total - NE"
+      severity: major
+  denominator:
+    expected_population: ITT
+    expected_flag: ITTFL
+    expected_value: "Y"
+  cross_tfl_agreement:
+    - pair: [TC-025, TC-020]
+      rule: "ORR in BOR summary matches ORR by subgroup (TC-020 overall)"
+      severity: critical
+    - pair: [TC-025, TC-023]
+      rule: "DCR in BOR summary matches DCR (TC-023 overall)"
+      severity: critical
+    - pair: [TC-025, TC-013]
+      rule: "BOR distribution consistent with waterfall plot subjects"
+      severity: major
+  edge_case_expectations:
+    no_responders:
+      expected_behavior: "ORR=0% with Clopper-Pearson CI [0, upper], DCR may be nonzero"
+      score_if_met: 1.0
+      score_if_not: 0.0
+    all_responders:
+      expected_behavior: "ORR=100% with CI upper=1.0, DCR=100%"
+      score_if_met: 1.0
+      score_if_not: 0.5
+    all_ne:
+      expected_behavior: "n_evaluable=0, ORR and DCR reported as NA/undefined"
+      score_if_met: 1.0
+      score_if_not: 0.0

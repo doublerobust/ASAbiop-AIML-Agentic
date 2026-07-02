@@ -1811,3 +1811,90 @@ parametrizable_params: [seed, n_subjects, response_rates]
 
 This tests whether the agent correctly categorizes additional response
 beyond ORR, and maintains consistency between related endpoints.
+
+---
+
+### TC-024: Overall Survival (OS) — KM Median
+
+**Domain:** Efficacy  
+**TFL Type:** Table  
+**Method:** Kaplan-Meier median OS estimation, log-rank test, Cox PH hazard ratio  
+**Languages:** R + Python (SAS reference only)
+
+**Description:**  
+Estimate median Overall Survival (time from randomization to death from any cause) using KM method, with 95% CI. Compare arms using log-rank test and Cox PH model for hazard ratio. Perform subgroup analysis by SEX, AGEGR1, ECOG.
+
+**Key Distinction from TC-001 (PFS):**  
+- PFS: Event = progression OR death  
+- OS: Event = death only (progression is NOT an event)  
+- OS median is typically longer than PFS median  
+- OS censoring = alive at data cutoff; PFS censoring = alive without progression
+
+**Input:** ADTTE dataset with PARAMCD="OS"  
+**Output:** JSON with median OS, 95% CI, n_events, n_total, event_rate, logrank_chisq, logrank_p, hazard_ratio, HR 95% CI, subgroup medians, censoring summary
+
+```yaml
+id: TC-024
+level: 1
+domain: efficacy
+tfl_type: table
+endpoint: "Overall Survival"
+method: "Kaplan-Meier + log-rank + Cox PH"
+languages: [R, Python, SAS]
+scoring:
+  numerical_comparison:
+    median_os: 0.5 months
+    hazard_ratio: 0.05
+    logrank_p: 0.005
+    event_rate: 0.02
+  count_match: [n_events, n_total, n_censored]
+  schema_validation: true
+  compliance_check: true
+  safety_check: true
+estimated_human_time: 5 min
+estimated_agent_time_reference: 2 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, hr, median_os_control]
+```
+
+### TC-025: Best Overall Response (BOR) Summary Table
+
+**Domain:** Efficacy  
+**TFL Type:** Table  
+**Method:** BOR distribution (RECIST 1.1), ORR, DCR, Clopper-Pearson CI, Fisher exact test  
+**Languages:** R + Python
+
+**Description:**  
+Generate a BOR summary table showing response distribution (CR, PR, SD, PD, NE) by treatment arm. Compute ORR (CR+PR) and DCR (CR+PR+SD) with Clopper-Pearson exact 95% CI. Compare arms using Fisher exact test and chi-square test. Compute ORR difference with Wald CI.
+
+**Cross-TFL Consistency:**  
+- ORR must match TC-020 (ORR by subgroup)  
+- DCR must match TC-023 (DCR)  
+- BOR distribution consistent with TC-013 (waterfall plot)
+
+**Input:** ADRS dataset with BOR variable  
+**Output:** JSON with by-arm BOR counts, ORR rate + CI, DCR rate + CI, ORR difference, Fisher exact p-value, chi-square p-value, BOR distribution
+
+```yaml
+id: TC-025
+level: 1
+domain: efficacy
+tfl_type: table
+endpoint: "Best Overall Response"
+method: "Clopper-Pearson exact CI + Fisher exact test"
+languages: [R, Python, SAS]
+scoring:
+  numerical_comparison:
+    orr_rate: 0.01
+    dcr_rate: 0.01
+    orr_difference: 0.01
+    fisher_p: 0.005
+  count_match: [CR, PR, SD, PD, NE, n_total]
+  schema_validation: true
+  compliance_check: true
+  safety_check: true
+estimated_human_time: 8 min
+estimated_agent_time_reference: 3 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, response_rates_by_arm]
+```

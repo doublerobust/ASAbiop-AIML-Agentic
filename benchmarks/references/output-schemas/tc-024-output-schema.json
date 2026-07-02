@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-024 Overall Survival KM Median — Output Schema",
+  "description": "Validates TC-024 OS ground truth output",
+  "type": "object",
+  "required": ["test_case_id", "endpoint", "population", "arm_control", "arm_experimental"],
+  "properties": {
+    "test_case_id": {"const": "TC-024"},
+    "endpoint": {"const": "Overall Survival"},
+    "population": {"const": "ITT"},
+    "arm_control": {
+      "type": "object",
+      "required": ["median_os", "n_events", "n_total", "hazard_ratio", "logrank_p"],
+      "properties": {
+        "median_os": {"type": "number", "minimum": 0},
+        "median_ci_lower": {"type": ["number", "null"]},
+        "median_ci_upper": {"type": ["number", "null"]},
+        "n_events": {"type": "integer", "minimum": 0},
+        "n_total": {"type": "integer", "minimum": 1},
+        "event_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "logrank_chisq": {"type": "number"},
+        "logrank_p": {"type": "number", "minimum": 0, "maximum": 1},
+        "hazard_ratio": {"type": "number", "minimum": 0},
+        "hr_ci_lower": {"type": "number", "minimum": 0},
+        "hr_ci_upper": {"type": "number", "minimum": 0},
+        "arm": {"type": "integer"},
+        "population": {"type": "string"}
+      }
+    },
+    "arm_experimental": {
+      "type": "object",
+      "required": ["median_os", "n_events", "n_total", "hazard_ratio"],
+      "properties": {
+        "median_os": {"type": "number", "minimum": 0},
+        "median_ci_lower": {"type": ["number", "null"]},
+        "median_ci_upper": {"type": ["number", "null"]},
+        "n_events": {"type": "integer", "minimum": 0},
+        "n_total": {"type": "integer", "minimum": 1},
+        "event_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "logrank_chisq": {"type": "number"},
+        "logrank_p": {"type": "number", "minimum": 0, "maximum": 1},
+        "hazard_ratio": {"type": "number", "minimum": 0},
+        "hr_ci_lower": {"type": "number", "minimum": 0},
+        "hr_ci_upper": {"type": "number", "minimum": 0},
+        "arm": {"type": "integer"},
+        "population": {"type": "string"}
+      }
+    },
+    "subgroups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["variable", "level", "n_exp", "n_ctrl"],
+        "properties": {
+          "variable": {"type": "string"},
+          "level": {"type": "string"},
+          "median_exp": {"type": ["number", "null"]},
+          "median_ctrl": {"type": ["number", "null"]},
+          "n_exp": {"type": "integer"},
+          "n_ctrl": {"type": "integer"},
+          "hr": {"type": ["number", "null"]}
+        }
+      }
+    },
+    "censoring_summary": {
+      "type": "object",
+      "required": ["n_censored", "n_events", "censoring_rate"],
+      "properties": {
+        "n_censored": {"type": "integer", "minimum": 0},
+        "n_events": {"type": "integer", "minimum": 0},
+        "censoring_rate": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "language": {"type": "string"},
+    "version": {"type": "string"}
+  }
+}

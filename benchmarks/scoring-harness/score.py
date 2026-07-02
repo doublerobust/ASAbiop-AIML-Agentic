@@ -1454,6 +1454,153 @@ def score_tc023(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# TC-024: Overall Survival (OS) KM Median
+# --------------------------------------------------------------------
+
+def score_tc024(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-024 (Overall Survival) agent output against ground truth.
+
+    Compares median OS, HR, log-rank p-value, event rates, and subgroup medians.
+    Similar structure to TC-001 but for OS endpoint.
+    """
+    tol_spec = tolerances.get("TC-024", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    # Compare both arms
+    for arm_key, arm_label in [("arm_control", "ctrl"), ("arm_experimental", "exp")]:
+        ag_arm = agent_output.get(arm_key, {})
+        gt_arm = ground_truth.get(arm_key, {})
+
+        for field, tol_key, label in [
+            ("median_os", f"{arm_label}_median_os", f"{arm_label}_median"),
+            ("hazard_ratio", f"{arm_label}_hr", f"{arm_label}_hr"),
+            ("event_rate", f"{arm_label}_event_rate", f"{arm_label}_event_rate"),
+            ("logrank_p", f"{arm_label}_logrank_p", f"{arm_label}_logrank_p"),
+        ]:
+            tol = tol_spec.get(tol_key, {})
+            r = compare_numeric(ag_arm.get(field), gt_arm.get(field), tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.10)
+            total_weight += tol.get("weight", 0.10)
+
+        # N counts
+        for field, label in [("n_events", f"{arm_label}_n_events"), ("n_total", f"{arm_label}_n_total")]:
+            r = compare_count(ag_arm.get(field), gt_arm.get(field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * 0.05
+            total_weight += 0.05
+
+    # Censoring summary
+    ag_cens = agent_output.get("censoring_summary", {})
+    gt_cens = ground_truth.get("censoring_summary", {})
+    cens_tol = tol_spec.get("censoring_rate", {})
+    r = compare_numeric(ag_cens.get("censoring_rate"), gt_cens.get("censoring_rate"), cens_tol, "censoring_rate")
+    component_scores["censoring_rate"] = r
+    weighted_sum += r["score"] * cens_tol.get("weight", 0.05)
+    total_weight += cens_tol.get("weight", 0.05)
+
+    # Subgroup medians
+    ag_sgs = agent_output.get("subgroups", [])
+    gt_sgs = ground_truth.get("subgroups", [])
+    sg_tol = tol_spec.get("subgroup_median", {})
+    for i in range(min(len(ag_sgs), len(gt_sgs))):
+        ag_s = ag_sgs[i] if i < len(ag_sgs) else {}
+        gt_s = gt_sgs[i] if i < len(gt_sgs) else {}
+        for field, label in [("median_exp", f"sg_{i}_median_exp"), ("median_ctrl", f"sg_{i}_median_ctrl")]:
+            r = compare_numeric(ag_s.get(field), gt_s.get(field), sg_tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * sg_tol.get("weight", 0.03)
+            total_weight += sg_tol.get("weight", 0.03)
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-024",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
+# TC-025: Best Overall Response (BOR) Summary
+# --------------------------------------------------------------------
+
+def score_tc025(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-025 (BOR Summary) agent output against ground truth.
+
+    Compares BOR counts, ORR, DCR, Fisher exact p-value, and ORR difference.
+    Cross-TFL consistency with TC-020 (ORR) and TC-023 (DCR).
+    """
+    tol_spec = tolerances.get("TC-025", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    ag_summary = agent_output.get("summary", {})
+    gt_summary = ground_truth.get("summary", {})
+
+    # By-arm comparison
+    for arm_key in ["0", "1"]:
+        ag_arm = ag_summary.get("by_arm", {}).get(arm_key, {})
+        gt_arm = gt_summary.get("by_arm", {}).get(arm_key, {})
+        arm_label = "ctrl" if arm_key == "0" else "exp"
+
+        # BOR counts
+        ag_bor = ag_arm.get("bor_counts", {})
+        gt_bor = gt_arm.get("bor_counts", {})
+        bor_tol = tol_spec.get("bor_counts", {})
+        for bor_val in ["CR", "PR", "SD", "PD", "NE"]:
+            r = compare_count(ag_bor.get(bor_val), gt_bor.get(bor_val))
+            component_scores[f"{arm_label}_bor_{bor_val}"] = r
+            weighted_sum += r["score"] * bor_tol.get("weight", 0.05)
+            total_weight += bor_tol.get("weight", 0.05)
+
+        # ORR and DCR
+        for field, tol_key, label in [
+            ("orr_rate", f"{arm_label}_orr_rate", f"{arm_label}_orr"),
+            ("dcr_rate", f"{arm_label}_dcr_rate", f"{arm_label}_dcr"),
+        ]:
+            tol = tol_spec.get(tol_key, {})
+            r = compare_numeric(ag_arm.get(field), gt_arm.get(field), tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.08)
+            total_weight += tol.get("weight", 0.08)
+
+        # N total
+        r = compare_count(ag_arm.get("n_total"), gt_arm.get("n_total"))
+        component_scores[f"{arm_label}_n_total"] = r
+        weighted_sum += r["score"] * 0.03
+        total_weight += 0.03
+
+    # ORR difference and tests
+    for field, tol_key, label in [
+        ("orr_difference", "orr_difference", "orr_diff"),
+        ("fisher_exact_p", "fisher_p", "fisher_p"),
+    ]:
+        tol = tol_spec.get(tol_key, {})
+        r = compare_numeric(ag_summary.get(field), gt_summary.get(field), tol, label)
+        component_scores[label] = r
+        weighted_sum += r["score"] * tol.get("weight", 0.06)
+        total_weight += tol.get("weight", 0.06)
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-025",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
 # Efficiency Helpers
 # --------------------------------------------------------------------
 
@@ -1773,6 +1920,8 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-021": score_tc021,
         "TC-022": score_tc022,
         "TC-023": score_tc023,
+        "TC-024": score_tc024,
+        "TC-025": score_tc025,
     }
 
     scorer = scorers.get(tc)
@@ -1903,6 +2052,8 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-021": score_tc021,
         "TC-022": score_tc022,
         "TC-023": score_tc023,
+        "TC-024": score_tc024,
+        "TC-025": score_tc025,
     }
 
     scorer = scorers.get(tc)
@@ -2111,6 +2262,8 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-021": score_tc021,
         "TC-022": score_tc022,
         "TC-023": score_tc023,
+        "TC-024": score_tc024,
+        "TC-025": score_tc025,
     }
     scorer = scorers.get(tc)
     if scorer is None:
