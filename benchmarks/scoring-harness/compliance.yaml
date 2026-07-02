@@ -676,3 +676,62 @@ TC-020:
     - id: CSR-30
       desc: "Footnotes: RECIST 1.1 criteria, CI method, CMH test description"
       penalty: 0.1
+
+TC-023:
+  adam_mapping:
+    required_variables: [USUBJID, STUDYID, TRT01PN, BOR, ITTFL]
+    population_flag: ITTFL
+    population_value: "Y"
+    treatment_variable: TRT01PN
+    derived_variables:
+      - name: AVAL_DCR
+        desc: "1 if BOR in (CR, PR, SD), 0 otherwise"
+      - name: AVAL_ORR
+        desc: "1 if BOR in (CR, PR), 0 otherwise"
+  tcg_rules:
+    - id: TCG-68
+      desc: "ITT population filter (ITTFL = 'Y') applied"
+      critical: true
+    - id: TCG-69
+      desc: "Treatment variable TRT01PN used"
+      critical: true
+    - id: TCG-70
+      desc: "DCR defined as CR+PR+SD (best overall response)"
+      critical: true
+    - id: TCG-71
+      desc: "Wilson score CI method for binomial proportion"
+      critical: true
+    - id: TCG-72
+      desc: "Risk difference (Experimental - Control) with 95% CI"
+      critical: true
+    - id: TCG-73
+      desc: "Subgroup analysis: SEX, AGEGR1, ECOG"
+      critical: true
+    - id: TCG-74
+      desc: "Subgroup N must sum to overall N"
+      critical: true
+    - id: TCG-75
+      desc: "BOR distribution (CR/PR/SD/PD) reported by arm"
+      critical: false
+    - id: TCG-76
+      desc: "Cross-TFL consistency: DCR >= ORR (every responder has disease control)"
+      critical: true
+    - id: TCG-06
+      desc: "Software version documented"
+      critical: false
+  csr_rules:
+    - id: CSR-01
+      desc: "Table numbered per ICH E3 appendix"
+      penalty: 0.1
+    - id: CSR-02
+      desc: "Title includes population, endpoint (DCR), and definition (CR+PR+SD)"
+      penalty: 0.2
+    - id: CSR-31
+      desc: "Each row: subgroup level, n/N (%), 95% CI, risk difference (95% CI)"
+      penalty: 0.15
+    - id: CSR-32
+      desc: "DCR definition (CR+PR+SD) stated in title or footnotes"
+      penalty: 0.1
+    - id: CSR-33
+      desc: "Footnotes: RECIST 1.1 criteria, CI method (Wilson), risk difference CI method"
+      penalty: 0.1

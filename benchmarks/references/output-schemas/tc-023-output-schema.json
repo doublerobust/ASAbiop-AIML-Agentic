@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "TC-023: Disease Control Rate (DCR) Output Schema",
+  "description": "Structured output from DCR benchmark test case",
+  "type": "object",
+  "required": [
+    "test_case_id", "variant_id", "language", "package",
+    "overall", "subgroups", "bor_distribution", "endpoint",
+    "population", "dcr_definition", "seed"
+  ],
+  "properties": {
+    "test_case_id": {
+      "type": "string",
+      "const": "TC-023",
+      "description": "Test case identifier"
+    },
+    "variant_id": {
+      "type": ["string", "null"],
+      "description": "Variant identifier based on seed"
+    },
+    "language": {
+      "type": "string",
+      "enum": ["R", "SAS", "Python"],
+      "description": "Implementation language"
+    },
+    "package": {
+      "type": "string",
+      "description": "Primary package used"
+    },
+    "package_version": {
+      "type": "string",
+      "description": "Package version string"
+    },
+    "overall": {
+      "type": "object",
+      "required": [
+        "dcr_experimental", "dcr_control", "n_experimental", "n_control",
+        "disease_controlled_exp", "disease_controlled_ctrl", "dcr_difference"
+      ],
+      "properties": {
+        "dcr_experimental": {"type": "number", "minimum": 0, "maximum": 100},
+        "dcr_control": {"type": "number", "minimum": 0, "maximum": 100},
+        "n_experimental": {"type": "integer", "minimum": 0},
+        "n_control": {"type": "integer", "minimum": 0},
+        "disease_controlled_exp": {"type": "integer", "minimum": 0},
+        "disease_controlled_ctrl": {"type": "integer", "minimum": 0},
+        "ci_lower_experimental": {"type": "number"},
+        "ci_upper_experimental": {"type": "number"},
+        "ci_lower_control": {"type": "number"},
+        "ci_upper_control": {"type": "number"},
+        "dcr_difference": {"type": "number"},
+        "diff_ci_lower": {"type": "number"},
+        "diff_ci_upper": {"type": "number"}
+      }
+    },
+    "subgroups": {
+      "type": "array",
+      "description": "Subgroup-level DCR results",
+      "items": {
+        "type": "object",
+        "required": [
+          "subgroup", "level", "dcr_experimental", "dcr_control",
+          "n_experimental", "n_control", "dcr_difference"
+        ],
+        "properties": {
+          "subgroup": {"type": "string"},
+          "level": {"type": "string"},
+          "dcr_experimental": {"type": "number", "minimum": 0, "maximum": 100},
+          "dcr_control": {"type": "number", "minimum": 0, "maximum": 100},
+          "n_experimental": {"type": "integer", "minimum": 0},
+          "n_control": {"type": "integer", "minimum": 0},
+          "disease_controlled_exp": {"type": "integer", "minimum": 0},
+          "disease_controlled_ctrl": {"type": "integer", "minimum": 0},
+          "ci_lower_experimental": {"type": "number"},
+          "ci_upper_experimental": {"type": "number"},
+          "ci_lower_control": {"type": "number"},
+          "ci_upper_control": {"type": "number"},
+          "dcr_difference": {"type": "number"},
+          "diff_ci_lower": {"type": "number"},
+          "diff_ci_upper": {"type": "number"}
+        }
+      }
+    },
+    "bor_distribution": {
+      "type": "array",
+      "description": "Best overall response distribution by arm",
+      "items": {
+        "type": "object",
+        "required": ["arm", "bor", "n", "pct"],
+        "properties": {
+          "arm": {"type": "string", "enum": ["Experimental", "Control"]},
+          "bor": {"type": "string", "enum": ["CR", "PR", "SD", "PD"]},
+          "n": {"type": "integer", "minimum": 0},
+          "pct": {"type": "number", "minimum": 0, "maximum": 100}
+        }
+      }
+    },
+    "endpoint": {
+      "type": "string",
+      "const": "DCR"
+    },
+    "population": {
+      "type": "string",
+      "const": "ITT"
+    },
+    "dcr_definition": {
+      "type": "string",
+      "description": "Definition of disease control"
+    },
+    "seed": {
+      "type": ["integer", "null"]
+    }
+  }
+}

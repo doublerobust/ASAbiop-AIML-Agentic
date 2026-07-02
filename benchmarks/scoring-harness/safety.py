@@ -54,6 +54,9 @@ DENOM_RULES = {
     "TC-018": {"expected_pop": "ITT", "expected_flag": "ITTFL"},
     "TC-019": {"expected_pop": "SAFETY", "expected_flag": "SAFFL"},
     "TC-020": {"expected_pop": "ITT", "expected_flag": "ITTFL"},
+    "TC-021": {"expected_pop": "ITT", "expected_flag": "ITTFL"},
+    "TC-022": {"expected_pop": "ITT", "expected_flag": "ITTFL"},
+    "TC-023": {"expected_pop": "ITT", "expected_flag": "ITTFL"},
 }
 
 

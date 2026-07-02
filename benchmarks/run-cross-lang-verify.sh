@@ -166,6 +166,16 @@ echo ""
 echo "Shared datasets:"
 ls -la "$SHARED/"
 
+# Generate shared tumor response data for TC-023 (DCR)
+# Uses the same generation function as TC-020 for cross-TFL consistency
+(cd "$RDIR" && Rscript -e "
+source('tc-023-dcr.R')
+data <- generate_tumor_response(seed=$SEED, n_subjects=$N)
+write.csv(data, '$SHARED/tc023_tumor_response.csv', row.names=FALSE)
+cat('TC-023 tumor response:', nrow(data), 'rows
+')
+") 2>&1
+
 # ───────────────────────────────────────────────────────────────────
 # Step 2: Run each TC in R and Python
 # ───────────────────────────────────────────────────────────────────
@@ -419,6 +429,22 @@ else
 fi
 echo "  Py:  tc_022_dor.py"
 if (cd "$PYDIR" && python3 "tc_022_dor.py" --seed $SEED --n $N --arm 1 --data "$SHARED/tc022_adtte.csv" --output "$PY_OUT/TC-022.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# TC-023: Disease Control Rate (shared tumor response data)
+echo ""
+echo "── TC-023 ──────────────────────────────────────────"
+echo "  R:   tc-023-dcr.R"
+if (cd "$RDIR" && Rscript "tc-023-dcr.R" --seed $SEED --n $N --data "$SHARED/tc023_tumor_response.csv" --output "$R_OUT/TC-023.json") 2>&1; then
+  echo "  ✓ R completed"
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_023_dcr.py"
+if (cd "$PYDIR" && python3 "tc_023_dcr.py" --seed $SEED --n $N --data "$SHARED/tc023_tumor_response.csv" --output "$PY_OUT/TC-023.json") 2>&1; then
   echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
 else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))

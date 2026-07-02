@@ -411,3 +411,39 @@ TC-022:
     estimable:
       exact: true       # must match
       weight: 0.00      # gate flag, not scored
+
+TC-023:
+  description: "Disease Control Rate (DCR) — CR+PR+SD rate by arm"
+  tolerances:
+    # Overall DCR
+    overall_dcr_exp:
+      absolute: 0.1     # ±0.1 percentage points
+      weight: 0.10
+    overall_dcr_ctrl:
+      absolute: 0.1
+      weight: 0.10
+    overall_dcr_diff:
+      absolute: 0.1
+      weight: 0.10
+    # Disease control counts
+    dc_counts:
+      absolute: 0       # exact match
+      weight: 0.10
+    # Subgroup DCR
+    subgroup_dcr_exp:
+      absolute: 0.1
+      weight: 0.10
+    subgroup_dcr_ctrl:
+      absolute: 0.1
+      weight: 0.10
+    subgroup_dcr_diff:
+      absolute: 0.1
+      weight: 0.10
+    # N per subgroup per arm
+    subgroup_n:
+      absolute: 0       # exact match
+      weight: 0.10
+    # BOR distribution counts
+    bor_counts:
+      absolute: 0       # exact match
+      weight: 0.10

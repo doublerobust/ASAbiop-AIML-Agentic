@@ -455,6 +455,62 @@ edge_case_expectations:
     expected_behavior: "ORR=100% with Wilson CI upper bound 100, risk difference reported"
     score_if_met: 1.0
     score_if_not: 0.5
+  zero_dc_in_subgroup:
+    expected_behavior: "DCR=0% with Wilson CI lower bound 0, risk difference reported"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  all_dc_in_subgroup:
+    expected_behavior: "DCR=100% with Wilson CI upper bound 100, risk difference reported"
+    score_if_met: 1.0
+    score_if_not: 0.5
+  dcr_less_than_orr:
+    expected_behavior: "DCR >= ORR always; if not, flag as data inconsistency"
+    score_if_met: 1.0
+    score_if_not: 0.0
+
+# TC-023: Disease Control Rate (DCR)
+TC-023:
+  n_count_rules:
+    - id: N-001
+      desc: "Subgroup N sums to overall N for each arm"
+      severity: critical
+    - id: N-002
+      desc: "disease_controlled count <= n per arm (no more controlled than enrolled)"
+      severity: critical
+    - id: N-003
+      desc: "BOR category counts sum to arm N"
+      severity: major
+    - id: N-004
+      desc: "disease_controlled_exp + disease_controlled_ctrl consistent with DCR computation"
+      severity: major
+  denominator:
+    expected_population: ITT
+    expected_flag: ITTFL
+    expected_value: "Y"
+  cross_tfl_agreement:
+    - pair: [TC-023, TC-020]
+      rule: "DCR >= ORR (every responder also has disease control)"
+      severity: critical
+    - pair: [TC-023, TC-001]
+      rule: "ITT N from DCR matches ITT N from KM median"
+      severity: major
+  edge_case_expectations:
+    zero_dc_in_subgroup:
+      expected_behavior: "DCR=0% with Wilson CI lower bound 0, risk difference reported"
+      score_if_met: 1.0
+      score_if_not: 0.5
+    all_dc_in_subgroup:
+      expected_behavior: "DCR=100% with Wilson CI upper bound 100, risk difference reported"
+      score_if_met: 1.0
+      score_if_not: 0.5
+    no_sd_patients:
+      expected_behavior: "DCR = ORR when no SD patients exist"
+      score_if_met: 1.0
+      score_if_not: 0.5
+    all_pd_patients:
+      expected_behavior: "DCR=0% in both arms, difference=0"
+      score_if_met: 1.0
+      score_if_not: 0.0
 
 # ──────────────────────────────────────────────────────
 # Scoring weights for composite safety score

@@ -2421,3 +2421,92 @@ Daily cron job triggered. Continuing benchmark development per Day 30 plan.
 3. **White paper Section 6** — Discussion prose draft
 4. **Efficiency scoring** — collect reference baselines from actual agent runs
 5. **WG presentation prep** — slides for cross-language results, scoring framework, ARS alignment
+
+## 2026-07-02 — Day 32: TC-023 (DCR) Full Implementation, Level 2 TC-005 Spec, White Paper Section 6
+
+### 🎯 Assignment
+Daily cron job triggered. Continuing benchmark development per Day 31 plan.
+
+### ✅ What Got Done
+
+#### 1. TC-023 (Disease Control Rate) Full Implementation
+- **R ground truth** (`tc-023-dcr.R`): DCR = CR+PR+SD rate by arm with Wilson CI, risk difference with normal approximation CI, subgroup analysis (SEX, AGEGR1, ECOG), BOR distribution by arm. Includes `--ars-output` flag for ARS v1.0 envelope. Uses same data generation as TC-020 for cross-TFL consistency.
+- **Python ground truth** (`tc_023_dcr.py`): Matching implementation using scipy. Fixed ECOG subgroup comparison (integer vs string type mismatch). Includes `--ars-output` flag.
+- **SAS reference** (`tc-023-dcr.sas`): PROC FREQ-based implementation with Wilson CI DATA step computation, subgroup macros, BOR distribution.
+- **Output schema** (`tc-023-output-schema.json`): JSON Schema validating overall DCR, subgroups, BOR distribution, endpoint/population/definition.
+- **Tolerance spec** in `tolerances.yaml`: ±0.1 pp for DCR percentages, exact match for counts, ±0.1 for subgroup DCR.
+- **Scorer function** `score_tc023()` in `score.py`: Compares overall DCR, subgroup DCR, disease control counts, BOR distribution. Registered in all 3 scorer dispatch dicts.
+- **Compliance rules** in `compliance.yaml`: 9 TCG rules (TCG-68–76) + 5 CSR rules (CSR-01, 02, 31–33) covering ITT filter, DCR definition, Wilson CI, risk difference, subgroup analysis, BOR reporting, cross-TFL consistency.
+- **Safety rules** in `safety.yaml`: 4 N-count rules, ITT denominator, 2 cross-TFL pairs (DCR≥ORR, ITT N match), 4 edge case expectations. Updated `safety.py` DENOM_RULES for TC-021/022/023.
+- **Cross-language verification: TC-023 = 1.0000** on shared data (DCR Exp=67.6%, Ctrl=36.0%, 6 subgroups, BOR distribution exact match).
+- **Updated `run-cross-lang-verify.sh`**: Added TC-023 shared data generation and run blocks. Now covers 16 Level 1 TCs.
+
+#### 2. Level 2 TC-005 Detailed Specification
+- **Created `tc-005-level2-spec.md`** (~12.5 KB): Full specification for TFL Package QC Review test case including:
+  - 6-TFL package design (3 tables, 2 figures, 1 listing) with 8 planted errors
+  - Error taxonomy: Class A (3 critical), Class B (3 major), Class C (2 minor)
+  - Detailed error catalog with locations, types, descriptions, and corrections
+  - 10 parametric variants (error locations, types, count, data, SAP specificity)
+  - Input YAML format specification
+  - Output JSON schema for QC report
+  - Scoring rubric: 60% auto-scorable, 25% LLM-as-judge, 15% human expert
+  - Partial credit rules (false negatives, false positives, classification errors)
+  - 4-phase implementation plan (error injection, package generator, scorer, validation)
+  - Contamination mitigation strategies
+  - 5 open questions for WG review
+
+#### 3. White Paper Section 6 Draft
+- **Created `white-paper-section6-draft.md`** (~2,800 words): Full prose draft of Section 6 (Discussion) covering:
+  - 6.1 Industry context (PharmaSUG 2026, FDA-EMA Good AI Practice, EU AI Act)
+  - 6.2 Six key findings (cross-language consistency, error detection, ARS feasibility, compliance coverage, Level 2 evaluation approaches, efficiency spectrum)
+  - 6.3 Five limitations (SAS not executed, computation vs code generation, Level 2/3 not implemented, no human baselines, contamination risk)
+  - 6.4 Comparison with existing benchmarks (SWE-bench, GAIA, AgentBench, HealthBench, BRIDGE)
+  - 6.5 Future directions (Phase 2-4 roadmap, long-term vision)
+
+#### 4. Documentation Updates
+- Updated `test-case-design.md`: Added TC-023 entry with full specification
+- Updated `efficiency.yaml`: Added TC-023 to Level 1 test_cases list, added verification time estimates
+- Updated `safety.yaml`: Added TC-023 rules + edge cases for TC-023
+
+### 📊 Current State
+
+| Component | Status |
+|---|---|
+| Level 1 TCs (R+Python) | 16/16 complete (TC-001 through TC-023) |
+| Level 1 TCs (SAS) | 16/16 complete (reference only, not executed) |
+| Cross-language verification | 16/16 at 1.0000 |
+| ARS output | 6 TCs: TC-001, TC-002, TC-003, TC-012, TC-021, TC-022, TC-023 |
+| Compliance rules | 158 (TCG 86+10 + CSR 42+5 + additional) |
+| Safety rules | 100+ (N-count + denom + cross-TFL + edge) |
+| White paper | Section 3 ✅, Section 4 ✅, Section 5 ✅, Section 6 ✅ |
+| Level 2 specs | TC-004 ✅, TC-005 ✅, TC-006 (in test-case-design.md) |
+| CI pipeline | GitHub Actions workflow configured |
+
+### 📄 New Files Created (Day 32)
+
+| File | Type | Description |
+|---|---|---|
+| `references/ground-truth/R/tc-023-dcr.R` | R script | TC-023 DCR ground truth |
+| `references/ground-truth/Python/tc_023_dcr.py` | Python script | TC-023 DCR ground truth |
+| `references/ground-truth/SAS/tc-023-dcr.sas` | SAS script | TC-023 DCR reference |
+| `references/output-schemas/tc-023-output-schema.json` | JSON Schema | TC-023 output validation |
+| `tc-005-level2-spec.md` | Document | TC-005 TFL QC Review detailed specification |
+| `white-paper-section6-draft.md` | Document | Section 6 (Discussion) prose draft |
+
+### Modified Files (Day 32)
+- `scoring-harness/score.py` — added `score_tc023()` function + registered in 3 dicts
+- `scoring-harness/tolerances.yaml` — added TC-023 tolerance specification
+- `scoring-harness/compliance.yaml` — added TC-023 compliance rules (9 TCG + 5 CSR)
+- `scoring-harness/safety.yaml` — added TC-023 safety rules + edge cases
+- `scoring-harness/safety.py` — updated DENOM_RULES for TC-021/022/023
+- `scoring-harness/efficiency.yaml` — added TC-023 to Level 1 list + verification times
+- `run-cross-lang-verify.sh` — added TC-023 shared data generation and run blocks
+- `test-case-design.md` — added TC-023 entry
+
+### 🔮 Plan for Day 33+
+1. **TC-023 compliance/safety rule validation** — import test for compliance.py and safety.py
+2. **Level 2 TC-005 implementation** — error injection framework, TFL package generator
+3. **White paper Section 7** — Conclusions prose draft
+4. **Efficiency scoring** — collect reference baselines from actual agent runs
+5. **WG presentation prep** — slides for cross-language results, scoring framework, ARS alignment
+6. **TC-024+ candidates** — Overall Survival (OS), Best Overall Response (BOR) summary

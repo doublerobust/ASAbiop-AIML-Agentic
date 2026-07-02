@@ -1760,3 +1760,54 @@ DOR is calculated only among responders (CR+PR), testing:
 - **PFS (TC-001):** All subjects, event = progression OR death
 - **TTP (TC-021):** All subjects, event = progression only (death censored)
 - **DOR (TC-022):** Responders only, event = progression OR death
+
+---
+
+### TC-023: Disease Control Rate (DCR)
+
+```yaml
+id: TC-023
+title: "Disease Control Rate (DCR) by Arm"
+level: 1
+domain: efficacy
+statistical_methods: [binomial proportion, Wilson CI, risk difference]
+data_requirements:
+  format: ADRS (tumor response)
+  source: synthetic tumor response data
+  n_subjects: 200
+n_variants: 10
+description: |
+  Computes DCR (CR+PR+SD rate) by treatment arm with Wilson score
+  95% CI, risk difference with normal approximation CI, and
+  subgroup analysis (SEX, AGEGR1, ECOG). Reports BOR distribution.
+  
+  Key differentiation from TC-020 (ORR):
+  - ORR = CR + PR rate
+  - DCR = CR + PR + SD rate (broader benefit measure)
+  - Cross-TFL: DCR >= ORR always
+inputs:
+  - tumor_response: ADRS-like dataset with BOR, TRT01PN, ITTFL
+expected_output:
+  type: structured_json
+  fields: [dcr_experimental, dcr_control, ci_lower, ci_upper, dcr_difference, subgroups, bor_distribution]
+ground_truth_method: Auto (numerical comparison with tolerance)
+scoring:
+  exact_match_weight: 0.8
+  functional_equiv_weight: 0.2
+  tolerance:
+    dcr_pct: 0.1 pp
+    counts: 0
+    ci: 0.1 pp
+estimated_human_time: 15 min
+estimated_agent_time_reference: 3 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, response_rates]
+```
+
+### TC-023 Differentiation from TC-020
+
+- **ORR (TC-020):** CR + PR rate only
+- **DCR (TC-023):** CR + PR + SD rate (includes stable disease)
+
+This tests whether the agent correctly categorizes additional response
+beyond ORR, and maintains consistency between related endpoints.

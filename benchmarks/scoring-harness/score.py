@@ -1370,6 +1370,89 @@ def score_tc022(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
     }
 
 
+def score_tc023(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-023 (Disease Control Rate) agent output against ground truth.
+
+    Compares overall DCR, subgroup-level DCR, disease control counts,
+    and BOR distribution. Same structure as TC-020 but for DCR.
+    """
+    tol_spec = tolerances.get("TC-023", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    # Overall
+    ag_ov = agent_output.get("overall", {})
+    gt_ov = ground_truth.get("overall", {})
+
+    for field, tol_key, label in [
+        ("dcr_experimental", "overall_dcr_exp", "dcr_exp"),
+        ("dcr_control", "overall_dcr_ctrl", "dcr_ctrl"),
+        ("dcr_difference", "overall_dcr_diff", "dcr_diff"),
+    ]:
+        tol = tol_spec.get(tol_key, {})
+        r = compare_numeric(ag_ov.get(field), gt_ov.get(field), tol, label)
+        component_scores[f"overall_{label}"] = r
+        weighted_sum += r["score"] * tol.get("weight", 0.10)
+        total_weight += tol.get("weight", 0.10)
+
+    # Disease control counts
+    dc_tol = tol_spec.get("dc_counts", {})
+    for field, label in [("disease_controlled_exp", "dc_exp"), ("disease_controlled_ctrl", "dc_ctrl")]:
+        r = compare_count(ag_ov.get(field), gt_ov.get(field))
+        component_scores[f"overall_{label}"] = r
+        weighted_sum += r["score"] * dc_tol.get("weight", 0.10)
+        total_weight += dc_tol.get("weight", 0.10)
+
+    # Subgroup-level
+    ag_sgs = agent_output.get("subgroups", [])
+    gt_sgs = ground_truth.get("subgroups", [])
+
+    for i in range(min(len(ag_sgs), len(gt_sgs))):
+        ag_s = ag_sgs[i] if i < len(ag_sgs) else {}
+        gt_s = gt_sgs[i] if i < len(gt_sgs) else {}
+
+        for field, tol_key, label in [
+            ("dcr_experimental", "subgroup_dcr_exp", f"sg_{i}_dcr_exp"),
+            ("dcr_control", "subgroup_dcr_ctrl", f"sg_{i}_dcr_ctrl"),
+            ("dcr_difference", "subgroup_dcr_diff", f"sg_{i}_dcr_diff"),
+        ]:
+            tol = tol_spec.get(tol_key, {})
+            r = compare_numeric(ag_s.get(field), gt_s.get(field), tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.10)
+            total_weight += tol.get("weight", 0.10)
+
+        # Subgroup N counts
+        sg_n_tol = tol_spec.get("subgroup_n", {})
+        for field, label in [("n_experimental", f"sg_{i}_n_exp"), ("n_control", f"sg_{i}_n_ctrl")]:
+            r = compare_count(ag_s.get(field), gt_s.get(field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * sg_n_tol.get("weight", 0.10)
+            total_weight += sg_n_tol.get("weight", 0.10)
+
+    # BOR distribution
+    bor_tol = tol_spec.get("bor_counts", {})
+    ag_bor = agent_output.get("bor_distribution", [])
+    gt_bor = ground_truth.get("bor_distribution", [])
+    for i in range(min(len(ag_bor), len(gt_bor))):
+        r = compare_count(ag_bor[i].get("n"), gt_bor[i].get("n"))
+        component_scores[f"bor_{i}"] = r
+        weighted_sum += r["score"] * bor_tol.get("weight", 0.10)
+        total_weight += bor_tol.get("weight", 0.10)
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-023",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
 # --------------------------------------------------------------------
 # Efficiency Helpers
 # --------------------------------------------------------------------
@@ -1689,6 +1772,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-020": score_tc020,
         "TC-021": score_tc021,
         "TC-022": score_tc022,
+        "TC-023": score_tc023,
     }
 
     scorer = scorers.get(tc)
@@ -1818,6 +1902,7 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-020": score_tc020,
         "TC-021": score_tc021,
         "TC-022": score_tc022,
+        "TC-023": score_tc023,
     }
 
     scorer = scorers.get(tc)
@@ -2025,6 +2110,7 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-020": score_tc020,
         "TC-021": score_tc021,
         "TC-022": score_tc022,
+        "TC-023": score_tc023,
     }
     scorer = scorers.get(tc)
     if scorer is None:
