@@ -78,7 +78,7 @@ efficiency_targets:
   level_1:
     cost_target_usd: 0.10
     time_target_min: 2.0
-    test_cases: [TC-001, TC-002, TC-003, TC-011, TC-012, TC-013, TC-014, TC-015, TC-016, TC-017, TC-018, TC-019, TC-020, TC-021, TC-022, TC-023, TC-024, TC-025]
+    test_cases: [TC-001, TC-002, TC-003, TC-011, TC-012, TC-013, TC-014, TC-015, TC-016, TC-017, TC-018, TC-019, TC-020, TC-021, TC-022, TC-023, TC-024, TC-025, TC-026]
   level_2:
     cost_target_usd: 2.00
     time_target_min: 10.0

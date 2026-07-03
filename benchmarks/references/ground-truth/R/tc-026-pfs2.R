@@ -1,19 +1,21 @@
 #!/usr/bin/env Rscript
-# TC-024 Ground Truth: Overall Survival (OS) — KM Median
+# TC-026 Ground Truth: Time to Second Progression (PFS2) — KM Median
 # Part of the ASA Biopharm AI/ML WG Agentic AI Benchmark
 #
-# OS is defined as the time from randomization to death from any cause.
-# Unlike PFS (TC-001), the event is death only (not progression).
-# Subjects who are alive at data cutoff are censored.
+# PFS2 is defined as the time from randomization to the second disease
+# progression or death, whichever comes first. Unlike PFS (TC-001) which
+# captures time to first progression/death, PFS2 captures the total
+# duration of disease control including post-progression benefit.
 #
 # This tests:
-#   1. Correct identification of OS endpoint (death event, not progression)
-#   2. KM median estimation with death-only event
-#   3. Log-rank test for treatment comparison
-#   4. Hazard ratio from Cox PH model
+#   1. Correct identification of PFS2 endpoint (second progression, not first)
+#   2. Handling of subjects without first progression (cannot have PFS2 event)
+#   3. KM median estimation with complex censoring
+#   4. Log-rank test and Cox PH HR
+#   5. Subgroup analysis (SEX, AGEGR1, ECOG)
 #
 # Dependencies: survival (>= 3.5), jsonlite, dplyr
-# Usage: Rscript tc-024-os.R --seed 42 --n 200 --output results.json
+# Usage: Rscript tc-026-pfs2.R --seed 42 --n 200 --output results.json
 
 library(survival)
 library(jsonlite)
@@ -45,27 +47,57 @@ parse_args <- function() {
 }
 
 # ─────────────────────────────────────────────────────
-# Generate OS-specific ADTTE data
+# Generate PFS2-specific ADTTE data
 # ─────────────────────────────────────────────────────
-# OS dataset: time from randomization to death (any cause).
-# Progression is NOT an event for OS — only death.
-# Censoring: alive at data cutoff.
+# PFS2 dataset: time from randomization to second progression or death.
+# Subjects who do not have a first progression cannot have a PFS2 event.
+# PFS2 time >= PFS time for all subjects (by construction).
 
-generate_os_adtte <- function(seed = 42, n_subjects = 200, hr = 0.75) {
+generate_pfs2_adtte <- function(seed = 42, n_subjects = 200, hr = 0.65) {
   set.seed(seed)
-  base_rate <- log(2) / 14.0  # median OS control = 14 months (longer than PFS)
+  base_rate <- log(2) / 9.0  # median PFS2 control = 9 months (longer than PFS)
   trt <- sample(0:1, n_subjects, replace = TRUE)
   hazard_mult <- ifelse(trt == 0, 1.0, hr)
 
-  # Time to death (exponential)
-  death_time <- rexp(n_subjects, rate = base_rate * hazard_mult)
+  # Time to first progression
+  prog1_time <- rexp(n_subjects, rate = base_rate * 1.5 * hazard_mult)
 
-  # Censoring (lost to follow-up, study end)
-  cens_time <- rexp(n_subjects, rate = base_rate * 0.2)
+  # Time to second progression (only for those who had first progression)
+  # Additional time from first to second progression
+  prog2_gap <- rexp(n_subjects, rate = base_rate * 0.8 * hazard_mult)
 
-  # Observed time
-  observed_time <- pmin(death_time, cens_time)
-  cnsr <- ifelse(death_time <= cens_time, 0, 1)  # 0 = event (death), 1 = censored
+  # Time to death
+  death_time <- rexp(n_subjects, rate = base_rate * 0.4 * hazard_mult)
+
+  # PFS2 event time: second progression or death, whichever comes first
+  # Subject must have first progression to be eligible for second progression
+  prog2_time <- prog1_time + prog2_gap  # absolute time of second progression
+
+  # PFS2 observed time: min(prog2_time, death_time) for those with first progression
+  # For those without first progression (censored before first), PFS2 is censored
+  cens_time <- rexp(n_subjects, rate = base_rate * 0.15)
+
+  # Determine observed time and event
+  observed_time <- numeric(n_subjects)
+  cnsr <- integer(n_subjects)
+
+  for (i in 1:n_subjects) {
+    if (prog1_time[i] > cens_time[i]) {
+      # No first progression observed (censored before first progression)
+      observed_time[i] <- cens_time[i]
+      cnsr[i] <- 1  # censored
+    } else {
+      # First progression observed; now check second progression vs death vs censoring
+      t2 <- min(prog2_time[i], death_time[i])
+      if (t2 <= cens_time[i]) {
+        observed_time[i] <- t2
+        cnsr[i] <- 0  # event (second progression or death)
+      } else {
+        observed_time[i] <- cens_time[i]
+        cnsr[i] <- 1  # censored
+      }
+    }
+  }
 
   # Stratification factors
   sex <- sample(c("M", "F"), n_subjects, replace = TRUE, prob = c(0.55, 0.45))
@@ -80,8 +112,8 @@ generate_os_adtte <- function(seed = 42, n_subjects = 200, hr = 0.75) {
     TRT01P = ifelse(trt == 0, "Placebo", "Active"),
     AVAL = round(observed_time, 2),
     CNSR = cnsr,
-    PARAMCD = "OS",
-    PARAM = "Overall Survival",
+    PARAMCD = "PFS2",
+    PARAM = "Progression-Free Survival 2",
     ITTFL = ifelse(runif(n_subjects) < 0.95, "Y", "N"),
     SAFFL = ifelse(runif(n_subjects) < 0.98, "Y", "N"),
     SEX = sex,
@@ -92,12 +124,11 @@ generate_os_adtte <- function(seed = 42, n_subjects = 200, hr = 0.75) {
 }
 
 # ─────────────────────────────────────────────────────
-# TC-024 Core Computation
+# TC-026 Core Computation
 # ─────────────────────────────────────────────────────
 
-compute_os_median <- function(adtte, arm = 1, population = "ITT",
-                              conf_type = "log-log") {
-  # Apply population filter
+compute_pfs2_median <- function(adtte, arm = 1, population = "ITT",
+                                 conf_type = "log-log") {
   if (population == "ITT") {
     data <- adtte %>% filter(ITTFL == "Y", TRT01PN == arm)
   } else {
@@ -112,13 +143,12 @@ compute_os_median <- function(adtte, arm = 1, population = "ITT",
   fit <- survfit(Surv(AVAL, 1 - CNSR) ~ 1, data = data, conf.type = conf_type)
 
   tab <- summary(fit)$table
-  median_os <- unname(tab["median"])
-  ci_lower   <- unname(tab["0.95LCL"])
-  ci_upper   <- unname(tab["0.95UCL"])
-  n_events   <- unname(tab["events"])
-  n_total    <- unname(tab["records"])
+  median_pfs2 <- unname(tab["median"])
+  ci_lower <- unname(tab["0.95LCL"])
+  ci_upper <- unname(tab["0.95UCL"])
+  n_events <- unname(tab["events"])
+  n_total <- unname(tab["records"])
 
-  # Event rate
   event_rate <- round(n_events / n_total, 4)
 
   # Log-rank test (treatment comparison)
@@ -134,7 +164,7 @@ compute_os_median <- function(adtte, arm = 1, population = "ITT",
   hr_ci_upper <- exp(confint(cox_fit)["TRT01PN", 2])
 
   list(
-    median_os = round(median_os, 2),
+    median_pfs2 = round(median_pfs2, 2),
     median_ci_lower = round(ci_lower, 2),
     median_ci_upper = round(ci_upper, 2),
     n_events = as.integer(n_events),
@@ -157,22 +187,22 @@ compute_os_median <- function(adtte, arm = 1, population = "ITT",
 write_ars_output <- function(results, filepath) {
   ars <- list(
     reportingEvent = list(
-      id = "TC-024-OS",
-      name = "Overall Survival KM Median",
+      id = "TC-026-PFS2",
+      name = "PFS2 KM Median",
       version = "1.0"
     ),
     analysisResults = list(
       list(
-        id = "TC-024-OS-001",
-        analysisId = "OS-KM-MEDIAN",
+        id = "TC-026-PFS2-001",
+        analysisId = "PFS2-KM-MEDIAN",
         method = "KaplanMeier",
-        purpose = "Estimate median overall survival",
+        purpose = "Estimate median progression-free survival 2",
         results = results
       )
     ),
     referencingMetadata = list(
       dataset = "ADTTE",
-      paramcd = "OS",
+      paramcd = "PFS2",
       population = "ITT"
     )
   )
@@ -187,20 +217,18 @@ write_ars_output <- function(results, filepath) {
 main <- function() {
   args <- parse_args()
 
-  # Get data
   if (!is.na(args$data) && nzchar(args$data)) {
     adtte <- read_shared_data(args$data)
   } else {
-    adtte <- generate_os_adtte(seed = args$seed, n_subjects = args$n)
+    adtte <- generate_pfs2_adtte(seed = args$seed, n_subjects = args$n)
   }
 
-  # Compute for both arms
-  results_arm0 <- compute_os_median(adtte, arm = 0, population = "ITT",
-                                     conf_type = args$conf_type)
-  results_arm1 <- compute_os_median(adtte, arm = 1, population = "ITT",
-                                     conf_type = args$conf_type)
+  results_arm0 <- compute_pfs2_median(adtte, arm = 0, population = "ITT",
+                                       conf_type = args$conf_type)
+  results_arm1 <- compute_pfs2_median(adtte, arm = 1, population = "ITT",
+                                       conf_type = args$conf_type)
 
-  # Subgroup analysis: by SEX, AGEGR1, ECOG
+  # Subgroup analysis
   subgroups <- list()
   for (var in c("SEX", "AGEGR1", "ECOG")) {
     data_itt <- adtte %>% filter(ITTFL == "Y")
@@ -215,7 +243,6 @@ main <- function() {
         )
         tab_sub <- summary(fit_sub)$table
         row_names <- rownames(tab_sub)
-        # Find rows for arm=1 (Experimental) and arm=0 (Control)
         exp_row <- grep("=1$", row_names, value = TRUE)[1]
         ctrl_row <- grep("=0$", row_names, value = TRUE)[1]
         subgroups[[length(subgroups) + 1]] <- list(
@@ -231,16 +258,11 @@ main <- function() {
     }
   }
 
-  # BOR summary (for cross-TFL consistency with TC-020/023)
   data_itt <- adtte %>% filter(ITTFL == "Y")
-  bor_dist <- data_itt %>%
-    group_by(TRT01PN, CNSR) %>%
-    summarise(n = n(), .groups = "drop") %>%
-    arrange(TRT01PN, CNSR)
 
   result <- list(
-    test_case_id = "TC-024",
-    endpoint = "Overall Survival",
+    test_case_id = "TC-026",
+    endpoint = "Progression-Free Survival 2",
     population = "ITT",
     arm_control = results_arm0,
     arm_experimental = results_arm1,
@@ -260,7 +282,6 @@ main <- function() {
     print_output(result)
   }
 
-  # ARS output
   if (!is.na(args$ars_output) && nzchar(args$ars_output)) {
     write_ars_output(result, args$ars_output)
   }

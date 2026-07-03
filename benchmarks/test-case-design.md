@@ -1898,3 +1898,54 @@ estimated_agent_time_reference: 3 min
 contamination_risk: low
 parametrizable_params: [seed, n_subjects, response_rates_by_arm]
 ```
+
+---
+
+### TC-026: Time to Second Progression (PFS2) — KM Median
+
+**Level:** 1 (auto-scorable)
+**Domain:** Efficacy (time-to-event)
+**Endpoint:** PFS2 — time from randomization to second disease progression or death
+**Population:** ITT (ITTFL = "Y")
+
+**What it tests:**
+1. Correct understanding of PFS2 endpoint (second progression, not first)
+2. Handling of subjects without first progression (cannot have PFS2 event)
+3. KM median estimation with complex censoring
+4. Log-rank test and Cox PH HR
+5. Subgroup analysis (SEX, AGEGR1, ECOG)
+
+**Cross-TFL relationships:**
+- TC-026 ↔ TC-001 (PFS): Same ITT N, PFS2 median ≥ PFS median
+- TC-026 ↔ TC-024 (OS): PFS2 events ≤ OS events
+
+**Tolerances:** ±0.05 for median, ±0.005 for HR, ±0.005 for log-rank p
+
+```yaml
+id: TC-026
+title: "PFS2 KM Median with 95% CI"
+level: 1
+domain: efficacy
+tfl_type: table
+endpoint: PFS2
+population: ITT
+ground_truth:
+  r: tc-026-pfs2.R
+  python: tc_026_pfs2.py
+  sas: (pending)
+output_schema: tc-026-output-schema.json
+scoring:
+  numerical: [median_pfs2, ci_lower, ci_upper, n_events, n_total, hazard_ratio, logrank_p]
+  tolerance:
+    median_pfs2: 0.05
+    hazard_ratio: 0.005
+    logrank_p: 0.005
+  count_match: [n_events, n_total]
+  schema_validation: true
+  compliance_check: true
+  safety_check: true
+estimated_human_time: 10 min
+estimated_agent_time_reference: 4 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, hr, base_rate]
+```

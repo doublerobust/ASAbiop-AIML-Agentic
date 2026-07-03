@@ -2596,3 +2596,90 @@ Daily cron job triggered. Continuing benchmark development per Day 32 plan.
 4. **WG presentation prep** — slides for cross-language results, scoring framework, ARS alignment
 5. **Efficiency scoring** — collect reference baselines from actual agent runs
 6. **TC-026+ candidates** — PFS2 (second progression), duration of stable disease
+
+## 2026-07-03 — Day 34: TC-024/025 Cross-Language Verification, TC-026 (PFS2) Implementation, SAS References, TC-026/027 Design
+
+### 🎯 Assignment
+Daily cron job triggered. Continuing benchmark development per Day 33 plan.
+
+### ✅ What Got Done
+
+#### 1. TC-024 and TC-025 Cross-Language Verification — 18/18 at 1.0000
+- Generated shared data for TC-024 (OS ADTTE) and TC-025 (BOR data) using R
+- Ran both R and Python implementations on shared data
+- **TC-024 (OS): score = 1.0000** — median OS (ctrl)=16.41, (exp)=24.58, HR=0.6727, log-rank p=0.0158
+- **TC-025 (BOR Summary): score = 1.0000** — BOR distribution, ORR with Clopper-Pearson CI, DCR, Fisher exact test
+- Fixed R TC-024 subgroup row-name extraction bug (grep pattern for survfit strata was matching "1" in "TRT01PN=0" incorrectly; changed to `=1$` and `=0$` patterns)
+- All 18 Level 1 test cases now verified at 1.0000 R↔Python cross-language score
+
+#### 2. TC-026 (PFS2) Full Implementation
+- **R ground truth** (`tc-026-pfs2.R`): KM median PFS2 with complex data generation (first progression → second progression → death competing risks). Only subjects with first progression can have PFS2 event. Log-rank test, Cox PH HR, subgroup analysis. Includes `--ars-output` flag.
+- **Python ground truth** (`tc_026_pfs2.py`): Matching implementation using lifelines. Fixed CoxPHFitter to use DataFrame instead of list. Fixed confidence interval column name (`95% lower-bound` with hyphen). Includes `--ars-output` flag.
+- **Output schema** (`tc-026-output-schema.json`): JSON Schema validating both arms, subgroups, censoring summary.
+- **Tolerance spec** in `tolerances.yaml`: ±0.05 for median PFS2, ±0.005 for HR, ±0.005 for log-rank p.
+- **Scorer function** `score_tc026()` in `score.py`: Compares median PFS2, CI bounds, HR, log-rank p, n_events, n_total, censoring rate, subgroup medians. Registered in all 3 scorer dispatch dicts.
+- **Compliance rules** in `compliance.yaml`: 9 TCG rules (TCG-85–93) + 5 CSR rules (CSR-40–44) covering PFS2 endpoint definition, ITT filter, KM median, log-rank, Cox PH, subgroup analysis, PFS2≥PFS constraint.
+- **Safety rules** in `safety.yaml`: N-count rules (events+censor=ITT N), denominator rules (ITT/ITTFL), 3 cross-TFL pairs (PFS2↔PFS ITT N, PFS2 median≥PFS median, PFS2↔OS ITT N), 3 edge case expectations.
+- **Cross-language verification: TC-026 = 1.0000** on shared data.
+- **Updated `run-cross-lang-verify.sh`**: Added TC-026 shared data generation and run blocks.
+- **Updated `test-case-design.md`**: Added TC-026 entry with full specification.
+- **Updated `safety.py`**: Added TC-026 to DENOM_RULES.
+- **Updated `efficiency.yaml`**: Added TC-026 to Level 1 test_cases list.
+
+#### 3. SAS Reference Scripts for TC-024 and TC-025
+- **`tc-024-os.sas`**: PROC LIFETEST for KM median with log-log CI, PROC PHREG for Cox HR, subgroup analysis macros for SEX/AGEGR1/ECOG, censoring summary via PROC FREQ.
+- **`tc-025-bor-summary.sas`**: BOR distribution via PROC FREQ, ORR/DCR with binomial exact CI, Fisher exact test, chi-square test, ORR difference with Wald CI, subgroup ORR macros.
+- All 19 Level 1 test cases now have SAS reference scripts (TC-001 through TC-026).
+
+#### 4. TC-026/TC-027 Candidate Design Document
+- **Created `tc-026-027-candidates.md`**: Design specifications for:
+  - **TC-026 (PFS2)**: Time to second progression or death — captures post-progression benefit. PFS2 time ≥ PFS time by definition. Priority P1 (implemented this day).
+  - **TC-027 (DOSD)**: Duration of Stable Disease — time from SD documentation to progression/death among BOR=SD subjects. Tests subset analysis on non-trivial population. Priority P2 (next session).
+  - New cross-TFL safety rules: PFS2 median ≥ PFS median, DOSD N = TC-025 SD count, DOSD N ≤ DCR N.
+
+### 📊 Current State
+
+| Component | Status |
+|---|---|
+| Level 1 TCs (R+Python) | 19/19 complete (TC-001 through TC-026) |
+| Level 1 TCs (SAS) | 19/19 complete (reference only, not executed) |
+| Cross-language verification | 19/19 at 1.0000 |
+| ARS output | 10 TCs: TC-001, TC-002, TC-003, TC-012, TC-021, TC-022, TC-023, TC-024, TC-025, TC-026 |
+| Compliance rules | 162+ (TCG 93 + CSR 44 + additional) |
+| Safety rules | 115+ (N-count + denom + cross-TFL + edge) |
+| White paper | Sections 3–7 complete (all prose drafts) |
+| Level 2 specs | TC-004 ✅, TC-005 ✅, TC-006 (in test-case-design.md) |
+| CI pipeline | GitHub Actions workflow configured |
+
+### 📄 New Files Created (Day 34)
+
+| File | Type | Description |
+|---|---|---|
+| `references/ground-truth/R/tc-026-pfs2.R` | R script | TC-026 PFS2 ground truth |
+| `references/ground-truth/Python/tc_026_pfs2.py` | Python script | TC-026 PFS2 ground truth |
+| `references/output-schemas/tc-026-output-schema.json` | JSON Schema | TC-026 output validation |
+| `references/ground-truth/SAS/tc-024-os.sas` | SAS script | TC-024 OS reference |
+| `references/ground-truth/SAS/tc-025-bor-summary.sas` | SAS script | TC-025 BOR Summary reference |
+| `tc-026-027-candidates.md` | Document | Design specs for PFS2 and DOSD test cases |
+
+### Modified Files (Day 34)
+- `references/ground-truth/R/tc-024-os.R` — fixed subgroup row-name extraction bug (grep `=1$`/`=0$`)
+- `scoring-harness/score.py` — added `score_tc026()` + registered in 3 dicts
+- `scoring-harness/tolerances.yaml` — added TC-026 tolerance spec
+- `scoring-harness/compliance.yaml` — added TC-026 compliance rules (9 TCG + 5 CSR)
+- `scoring-harness/safety.yaml` — added TC-026 safety rules + edge cases
+- `scoring-harness/safety.py` — added TC-026 to DENOM_RULES
+- `scoring-harness/efficiency.yaml` — added TC-026 to Level 1 list
+- `run-cross-lang-verify.sh` — added TC-026 shared data generation and run blocks
+- `test-case-design.md` — added TC-026 entry
+- `cdisc-ars-alignment.md` — updated Phase 3 to include TC-023/024/025/026
+- `white-paper-outline.md` — updated TC counts (18→19), ARS output count (9→10)
+- `cross-lang-results/VERIFICATION-RESULTS.md` — added TC-024/025/026 results
+
+### 🔮 Plan for Day 35+
+1. **TC-027 (DOSD) implementation** — R + Python ground truth, output schema, scoring
+2. **Level 2 TC-005 implementation** — error injection framework, TFL package generator
+3. **White paper Section 8** — References and appendices
+4. **WG presentation prep** — slides for cross-language results, scoring framework, ARS alignment
+5. **Efficiency scoring** — collect reference baselines from actual agent runs
+6. **TC-028+ candidates** — Change in Tumor Size (waterfall shift), Best Response by Cycle

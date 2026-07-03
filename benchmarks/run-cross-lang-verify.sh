@@ -195,6 +195,16 @@ write.csv(data, '$SHARED/tc025_bor.csv', row.names=FALSE)
 cat('TC-025 BOR data:', nrow(data), 'rows
 ')
 ") 2>&1
+# TC-026: Generate PFS2 ADTTE shared data
+echo "Generating TC-026 PFS2 ADTTE..."
+(cd "$RDIR" && Rscript -e "
+source('tc-026-pfs2.R')
+adtte <- generate_pfs2_adtte(seed=$SEED, n_subjects=$N)
+write.csv(adtte, '$SHARED/tc026_pfs2_adtte.csv', row.names=FALSE)
+cat('TC-026 PFS2 ADTTE:', nrow(adtte), 'rows
+')
+") 2>&1
+
 
 # ───────────────────────────────────────────────────────────────────
 # Step 2: Run each TC in R and Python
@@ -500,6 +510,21 @@ if (cd "$PYDIR" && python3 "tc_025_bor_summary.py" --seed $SEED --n $N --data "$
   echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
 else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+# TC-026: PFS2 (shared PFS2 ADTTE data)
+echo "── TC-026 ──────────────────────────────────────────"
+echo "  R:   tc-026-pfs2.R"
+if (cd "$RDIR" && Rscript "tc-026-pfs2.R" --seed $SEED --n $N --data "$SHARED/tc026_pfs2_adtte.csv" --output "$R_OUT/TC-026.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_026_pfs2.py"
+if (cd "$PYDIR" && python3 "tc_026_pfs2.py" --seed $SEED --n $N --data "$SHARED/tc026_pfs2_adtte.csv" --output "$PY_OUT/TC-026.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
 fi
 
 # ───────────────────────────────────────────────────────────────────

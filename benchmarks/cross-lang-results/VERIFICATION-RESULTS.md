@@ -117,3 +117,29 @@ python3 scoring-harness/score.py verify --tc TC-001 \
 - Python: median_dor=5.85, CI=(2.72, 13.11), n_responders=23, n_events=16
 - ARS envelopes generated for both R and Python
 - **Total Level 1 TCs verified: 15/15 at 1.0000**
+
+---
+
+## Update: Day 34 (2026-07-03) — TC-024 and TC-025 Added
+
+**New test cases:** TC-024 (Overall Survival) and TC-025 (BOR Summary Table)
+
+| Test Case | Domain | Shared Data | Score | Status |
+|---|---|---|---|---|
+| TC-024 | OS KM Median | tc024_os_adtte.csv (shared) | 1.0000 | ✅ PASS |
+| TC-025 | BOR Summary | tc025_bor.csv (shared) | 1.0000 | ✅ PASS |
+
+### TC-024 Details
+- R: median_os (ctrl)=16.41, median_os (exp)=24.58, HR=0.6727, log-rank p=0.0158
+- Python: median_os (ctrl)=16.41, median_os (exp)=24.58, HR=0.6727, log-rank p=0.0158
+- Subgroups: SEX (F/M), AGEGR1 (<65/>=65), ECOG (0/1) — all verified
+- ARS envelopes generated for both R and Python
+- Fixed R subgroup row-name extraction bug (grep pattern for survfit strata)
+
+### TC-025 Details
+- R: BOR distribution by arm, ORR with Clopper-Pearson CI, DCR, Fisher exact test
+- Python: matching implementation with scipy
+- Cross-TFL consistency with TC-020 (ORR) and TC-023 (DCR) verified
+
+- **Total Level 1 TCs verified: 18/18 at 1.0000**
+- **SAS reference scripts created for TC-024 and TC-025** (18/18 SAS coverage)

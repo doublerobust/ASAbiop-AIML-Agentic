@@ -783,3 +783,52 @@ tc024_tc025_csr_rules:
   - id: CSR-39
     desc: "Fisher exact p-value for ORR comparison"
     penalty: 0.1
+
+# ─────────────────────────────────────────────────────
+# TC-026: PFS2 (Time to Second Progression) — Compliance Rules
+# ─────────────────────────────────────────────────────
+TC-026:
+  tcg_rules:
+    - id: TCG-85
+      desc: "PFS2 endpoint defined as time to second progression or death, whichever first"
+      penalty: 0.5
+    - id: TCG-86
+      desc: "ITT population filter applied (ITTFL = Y)"
+      penalty: 0.3
+    - id: TCG-87
+      desc: "TRT01PN used as treatment variable (0=Control, 1=Experimental)"
+      penalty: 0.2
+    - id: TCG-88
+      desc: "KM median estimated with 95% CI (log-log or equivalent)"
+      penalty: 0.2
+    - id: TCG-89
+      desc: "Log-rank test for treatment comparison"
+      penalty: 0.2
+    - id: TCG-90
+      desc: "Cox PH model for hazard ratio with 95% CI"
+      penalty: 0.2
+    - id: TCG-91
+      desc: "Subgroup analysis by SEX, AGEGR1, ECOG"
+      penalty: 0.1
+    - id: TCG-92
+      desc: "PFS2 time >= PFS time for all subjects (by definition)"
+      penalty: 0.3
+    - id: TCG-93
+      desc: "Software version documented"
+      penalty: 0.05
+  csr_rules:
+    - id: CSR-40
+      desc: "PFS2 table numbered per TLF shell"
+      penalty: 0.15
+    - id: CSR-41
+      desc: "PFS2 table title includes endpoint, population (ITT)"
+      penalty: 0.2
+    - id: CSR-42
+      desc: "PFS2 median with 95% CI reported by arm"
+      penalty: 0.15
+    - id: CSR-43
+      desc: "Log-rank p-value and Cox HR (95% CI) reported"
+      penalty: 0.15
+    - id: CSR-44
+      desc: "PFS2 endpoint definition footnote (second progression or death)"
+      penalty: 0.1

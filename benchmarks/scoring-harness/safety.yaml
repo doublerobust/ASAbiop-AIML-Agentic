@@ -604,3 +604,38 @@ TC-025:
       expected_behavior: "n_evaluable=0, ORR and DCR reported as NA/undefined"
       score_if_met: 1.0
       score_if_not: 0.0
+
+# ─────────────────────────────────────────────────────
+# TC-026: PFS2 — Safety Rules
+# ─────────────────────────────────────────────────────
+TC-026:
+  n_count_rules:
+    - id: N-001
+      desc: "PFS2 events + censored = ITT N"
+      severity: critical
+    - id: N-002
+      desc: "PFS2 events <= ITT N"
+      severity: critical
+    - id: N-003
+      desc: "PFS2 N matches ITT N (cross-TFL with TC-001 PFS, TC-024 OS)"
+      severity: major
+  denominator_rules:
+    population: ITT
+    flag: ITTFL
+  cross_tfl_pairs:
+    - pair: "TC-026 ↔ TC-001"
+      rule: "PFS2 ITT N = PFS ITT N"
+      severity: major
+    - pair: "TC-026 ↔ TC-001"
+      rule: "PFS2 median >= PFS median (PFS2 captures more events later)"
+      severity: major
+    - pair: "TC-026 ↔ TC-024"
+      rule: "PFS2 ITT N = OS ITT N"
+      severity: major
+  edge_case_expectations:
+    - case: "no_second_progressions"
+      desc: "All subjects censored before second progression — median not estimable"
+    - case: "all_events"
+      desc: "All subjects have PFS2 event — no censoring"
+    - case: "small_subgroup"
+      desc: "Subgroup with <10 subjects — median unstable"

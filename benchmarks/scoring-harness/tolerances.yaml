@@ -510,3 +510,44 @@ TC-025:
     fisher_p:
       absolute: 0.005
       weight: 0.06
+
+# ─────────────────────────────────────────────────────
+# TC-026: PFS2 (Time to Second Progression) KM Median
+# ─────────────────────────────────────────────────────
+TC-026:
+  tolerances:
+    ctrl_median_pfs2:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.15
+    ctrl_median_ci_lower:
+      absolute: 0.05
+      weight: 0.07
+    ctrl_median_ci_upper:
+      absolute: 0.05
+      weight: 0.07
+    ctrl_n_events:
+      weight: 0.05
+    ctrl_n_total:
+      weight: 0.03
+    exp_median_pfs2:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.15
+    exp_median_ci_lower:
+      absolute: 0.05
+      weight: 0.07
+    exp_median_ci_upper:
+      absolute: 0.05
+      weight: 0.07
+    hr:
+      absolute: 0.005
+      weight: 0.10
+    logrank_p:
+      absolute: 0.005
+      weight: 0.07
+    censoring_rate:
+      absolute: 0.01
+      weight: 0.04
+    exp_n_events:
+      weight: 0.03
