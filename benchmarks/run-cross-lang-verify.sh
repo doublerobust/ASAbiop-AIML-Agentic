@@ -204,6 +204,15 @@ write.csv(adtte, '$SHARED/tc026_pfs2_adtte.csv', row.names=FALSE)
 cat('TC-026 PFS2 ADTTE:', nrow(adtte), 'rows
 ')
 ") 2>&1
+# TC-027: Generate DOSD ADTTE shared data
+echo "Generating TC-027 DOSD ADTTE..."
+(cd "$RDIR" && Rscript -e "
+source('tc-027-dosd.R')
+adtte <- generate_dosd_adtte(seed=$SEED, n_subjects=$N)
+write.csv(adtte, '$SHARED/tc027_dosd_adtte.csv', row.names=FALSE)
+cat('TC-027 DOSD ADTTE:', nrow(adtte), 'rows
+')
+") 2>&1
 
 
 # ───────────────────────────────────────────────────────────────────
@@ -520,6 +529,21 @@ else
 fi
 echo "  Py:  tc_026_pfs2.py"
 if (cd "$PYDIR" && python3 "tc_026_pfs2.py" --seed $SEED --n $N --data "$SHARED/tc026_pfs2_adtte.csv" --output "$PY_OUT/TC-026.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# TC-027: DOSD (shared DOSD ADTTE data)
+echo "── TC-027 ──────────────────────────────────────────"
+echo "  R:   tc-027-dosd.R"
+if (cd "$RDIR" && Rscript "tc-027-dosd.R" --seed $SEED --n $N --data "$SHARED/tc027_dosd_adtte.csv" --output "$R_OUT/TC-027.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_027_dosd.py"
+if (cd "$PYDIR" && python3 "tc_027_dosd.py" --seed $SEED --n $N --data "$SHARED/tc027_dosd_adtte.csv" --output "$PY_OUT/TC-027.json") 2>&1; then
   echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
 else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))

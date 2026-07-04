@@ -639,3 +639,38 @@ TC-026:
       desc: "All subjects have PFS2 event — no censoring"
     - case: "small_subgroup"
       desc: "Subgroup with <10 subjects — median unstable"
+
+# ─────────────────────────────────────────────────────
+# TC-027: DOSD — Safety Rules
+# ─────────────────────────────────────────────────────
+TC-027:
+  n_count_rules:
+    - id: N-001
+      desc: "DOSD events + censored = N SD subjects"
+      severity: critical
+    - id: N-002
+      desc: "DOSD events <= N SD subjects"
+      severity: critical
+    - id: N-003
+      desc: "DOSD N (SD subjects) <= DCR N (TC-023, since SD is subset of DCR)"
+      severity: major
+  denominator_rules:
+    population: "ITT with BOR=SD"
+    flag: ITTFL
+  cross_tfl_pairs:
+    - pair: "TC-027 ↔ TC-025"
+      rule: "DOSD N = TC-025 SD count from BOR distribution"
+      severity: critical
+    - pair: "TC-027 ↔ TC-023"
+      rule: "DOSD N <= DCR N (SD is subset of DCR = CR+PR+SD)"
+      severity: major
+    - pair: "TC-027 ↔ TC-022"
+      rule: "DOSD subjects and DOR subjects are disjoint (SD vs CR+PR)"
+      severity: major
+  edge_case_expectations:
+    - case: "no_sd_subjects"
+      desc: "No subjects with BOR=SD — DOSD not estimable, report NA"
+    - case: "all_sd_progress"
+      desc: "All SD subjects progress — no censoring, median well-defined"
+    - case: "small_sd_subgroup"
+      desc: "Subgroup with <5 SD subjects — median unstable, flag in output"

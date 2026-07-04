@@ -832,3 +832,52 @@ TC-026:
     - id: CSR-44
       desc: "PFS2 endpoint definition footnote (second progression or death)"
       penalty: 0.1
+
+# ─────────────────────────────────────────────────────
+# TC-027: Duration of Stable Disease (DOSD) — Compliance Rules
+# ─────────────────────────────────────────────────────
+TC-027:
+  tcg_rules:
+    - id: TCG-94
+      desc: "DOSD endpoint defined as time from first SD documentation to progression or death"
+      penalty: 0.5
+    - id: TCG-95
+      desc: "Subset filter: BOR = SD only (not CR/PR/PD/NE)"
+      penalty: 0.4
+    - id: TCG-96
+      desc: "ITT population filter applied (ITTFL = Y)"
+      penalty: 0.3
+    - id: TCG-97
+      desc: "TRT01PN used as treatment variable (0=Control, 1=Experimental)"
+      penalty: 0.2
+    - id: TCG-98
+      desc: "KM median estimated with 95% CI (log-log or equivalent)"
+      penalty: 0.2
+    - id: TCG-99
+      desc: "Log-rank test for treatment comparison among SD subjects"
+      penalty: 0.2
+    - id: TCG-100
+      desc: "Cox PH model for hazard ratio with 95% CI"
+      penalty: 0.2
+    - id: TCG-101
+      desc: "Subgroup analysis by SEX, AGEGR1, ECOG among SD subjects"
+      penalty: 0.1
+    - id: TCG-102
+      desc: "Software version documented"
+      penalty: 0.05
+  csr_rules:
+    - id: CSR-45
+      desc: "DOSD table numbered per TLF shell"
+      penalty: 0.15
+    - id: CSR-46
+      desc: "DOSD table title includes endpoint, population (ITT with BOR=SD)"
+      penalty: 0.2
+    - id: CSR-47
+      desc: "DOSD median with 95% CI reported by arm"
+      penalty: 0.15
+    - id: CSR-48
+      desc: "Log-rank p-value and Cox HR (95% CI) reported"
+      penalty: 0.15
+    - id: CSR-49
+      desc: "DOSD subset definition footnote (among subjects with BOR=SD)"
+      penalty: 0.1

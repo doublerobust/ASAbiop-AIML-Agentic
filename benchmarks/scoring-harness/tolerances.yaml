@@ -551,3 +551,50 @@ TC-026:
       weight: 0.04
     exp_n_events:
       weight: 0.03
+
+# ─────────────────────────────────────────────────────
+# TC-027: Duration of Stable Disease (DOSD) KM Median
+# ─────────────────────────────────────────────────────
+TC-027:
+  tolerances:
+    ctrl_median_dosd:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.15
+    ctrl_median_ci_lower:
+      absolute: 0.05
+      weight: 0.07
+    ctrl_median_ci_upper:
+      absolute: 0.05
+      weight: 0.07
+    ctrl_n_sd:
+      weight: 0.03
+    ctrl_n_events:
+      weight: 0.04
+    ctrl_n_total:
+      weight: 0.02
+    exp_median_dosd:
+      absolute: 0.05
+      relative: 0.001
+      weight: 0.15
+    exp_median_ci_lower:
+      absolute: 0.05
+      weight: 0.07
+    exp_median_ci_upper:
+      absolute: 0.05
+      weight: 0.07
+    exp_n_sd:
+      weight: 0.03
+    exp_n_events:
+      weight: 0.04
+    exp_n_total:
+      weight: 0.02
+    hr:
+      absolute: 0.01
+      weight: 0.08
+    logrank_p:
+      absolute: 0.01
+      weight: 0.06
+    censoring_rate:
+      absolute: 0.01
+      weight: 0.04

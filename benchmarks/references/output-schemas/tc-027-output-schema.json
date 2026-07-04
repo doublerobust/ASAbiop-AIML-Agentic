@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-027 Duration of Stable Disease KM Median Output Schema",
+  "type": "object",
+  "required": ["test_case_id", "endpoint", "population", "arm_control", "arm_experimental", "language", "version"],
+  "properties": {
+    "test_case_id": {"type": "string", "const": "TC-027"},
+    "endpoint": {"type": "string", "const": "Duration of Stable Disease"},
+    "population": {"type": "string", "const": "ITT with BOR=SD"},
+    "arm_control": {
+      "type": "object",
+      "required": ["median_dosd", "n_sd", "n_events", "n_total", "event_rate", "hazard_ratio", "logrank_p", "arm", "population"]
+    },
+    "arm_experimental": {
+      "type": "object",
+      "required": ["median_dosd", "n_sd", "n_events", "n_total", "event_rate", "hazard_ratio", "logrank_p", "arm", "population"]
+    },
+    "subgroups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["variable", "level", "median_exp", "median_ctrl", "n_exp", "n_ctrl", "hr"]
+      }
+    },
+    "censoring_summary": {
+      "type": "object",
+      "required": ["n_censored", "n_events", "censoring_rate"]
+    },
+    "language": {"type": "string"},
+    "version": {"type": "string"}
+  }
+}

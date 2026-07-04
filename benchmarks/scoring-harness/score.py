@@ -1673,6 +1673,76 @@ def score_tc026(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
     }
 
 
+def score_tc027(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-027 (DOSD) agent output against ground truth.
+
+    Compares median DOSD, HR, log-rank p-value, event rates, CI bounds,
+    and subgroup medians. Similar structure to TC-022 (DOR) but for
+    the Duration of Stable Disease endpoint (BOR=SD subset).
+    """
+    tol_spec = tolerances.get("TC-027", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    for arm_key, arm_label in [("arm_control", "ctrl"), ("arm_experimental", "exp")]:
+        ag_arm = agent_output.get(arm_key, {})
+        gt_arm = ground_truth.get(arm_key, {})
+
+        for field, tol_key, label in [
+            ("median_dosd", f"{arm_label}_median_dosd", f"{arm_label}_median"),
+            ("median_ci_lower", f"{arm_label}_median_ci_lower", f"{arm_label}_ci_lower"),
+            ("median_ci_upper", f"{arm_label}_median_ci_upper", f"{arm_label}_ci_upper"),
+            ("hazard_ratio", "hr", f"{arm_label}_hr"),
+            ("logrank_p", "logrank_p", f"{arm_label}_logrank_p"),
+        ]:
+            tol = tol_spec.get(tol_key, {})
+            r = compare_numeric(ag_arm.get(field), gt_arm.get(field), tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.10)
+            total_weight += tol.get("weight", 0.10)
+
+        for field, label in [("n_sd", f"{arm_label}_n_sd"), ("n_events", f"{arm_label}_n_events"), ("n_total", f"{arm_label}_n_total")]:
+            tol = tol_spec.get(label, {})
+            r = compare_count(ag_arm.get(field), gt_arm.get(field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.03)
+            total_weight += tol.get("weight", 0.03)
+
+    # Censoring summary
+    ag_cens = agent_output.get("censoring_summary", {})
+    gt_cens = ground_truth.get("censoring_summary", {})
+    cens_tol = tol_spec.get("censoring_rate", {})
+    r = compare_numeric(ag_cens.get("censoring_rate"), gt_cens.get("censoring_rate"), cens_tol, "censoring_rate")
+    component_scores["censoring_rate"] = r
+    weighted_sum += r["score"] * cens_tol.get("weight", 0.04)
+    total_weight += cens_tol.get("weight", 0.04)
+
+    # Subgroup medians
+    ag_sgs = agent_output.get("subgroups", [])
+    gt_sgs = ground_truth.get("subgroups", [])
+    for i in range(min(len(ag_sgs), len(gt_sgs))):
+        ag_s = ag_sgs[i] if i < len(ag_sgs) else {}
+        gt_s = gt_sgs[i] if i < len(gt_sgs) else {}
+        for field, label in [("median_exp", f"sg_{i}_median_exp"), ("median_ctrl", f"sg_{i}_median_ctrl")]:
+            sg_tol = {"absolute": 0.05}
+            r = compare_numeric(ag_s.get(field), gt_s.get(field), sg_tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * 0.02
+            total_weight += 0.02
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-027",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
 # --------------------------------------------------------------------
 # Efficiency Helpers
 # --------------------------------------------------------------------
@@ -1996,6 +2066,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-024": score_tc024,
         "TC-025": score_tc025,
         "TC-026": score_tc026,
+        "TC-027": score_tc027,
     }
 
     scorer = scorers.get(tc)
@@ -2129,6 +2200,7 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-024": score_tc024,
         "TC-025": score_tc025,
         "TC-026": score_tc026,
+        "TC-027": score_tc027,
     }
 
     scorer = scorers.get(tc)
@@ -2340,6 +2412,7 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-024": score_tc024,
         "TC-025": score_tc025,
         "TC-026": score_tc026,
+        "TC-027": score_tc027,
     }
     scorer = scorers.get(tc)
     if scorer is None:

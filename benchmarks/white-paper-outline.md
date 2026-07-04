@@ -114,7 +114,7 @@ The rapid emergence of agentic AI systems for Tables, Figures, and Listings (TFL
 ### 4.2 Cross-Language Verification Protocol
 - Shared CSV datasets (R-generated, Python-loaded)
 - Per-TC pairwise comparison with scoring harness
-- All 19 Level 1 TCs achieve 1.0000 R↔Python agreement
+- All 20 Level 1 TCs achieve 1.0000 R↔Python agreement
 - GitHub Actions CI for regression detection
 
 ### 4.3 CDISC ARS Alignment
@@ -128,12 +128,12 @@ The rapid emergence of agentic AI systems for Tables, Figures, and Listings (TFL
 ## 5. Results
 
 ### 5.1 Cross-Language Verification
-- 19/19 Level 1 TCs: score=1.0000 (perfect R↔Python agreement on shared data)
+- 19/20 Level 1 TCs: score=1.0000 (perfect R↔Python agreement on shared data)
 - 13 SAS reference scripts written (not executed — no SAS license on Mac Studio)
 - CI pipeline: automated regression detection on every push/PR
 
 ### 5.2 Scoring Pipeline Coverage
-- 19 Level 1 TCs with: scorer + tolerances + schema + ground truth + compliance + safety
+- 20 Level 1 TCs with: scorer + tolerances + schema + ground truth + compliance + safety
 - 244 compliance rules, 96 safety rules
 - Error injection validated: HR +0.3 → score drops to 0.7227
 
@@ -160,7 +160,7 @@ The rapid emergence of agentic AI systems for Tables, Figures, and Listings (TFL
 
 ### 6.3 Future Directions
 - Level 2 test cases: SAP section drafting, TFL QC review
-- Full ARS compliance for all 19 Level 1 TCs
+- Full ARS compliance for all 20 Level 1 TCs
 - Vendor evaluation: invite Saama, JDIX, others to run benchmark
 - WG presentation with scoring findings
 - Python `pyards` library for ARS-native Python output

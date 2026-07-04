@@ -254,7 +254,7 @@ structure is already compatible with ARS's statistical-summary model. A future
 |---|---|---|
 | **Phase 1** (current) | Document mapping (this file) | ✅ Done |
 | **Phase 2** | Add `--ars-output` to TC-001 as proof-of-concept | ✅ Done (Day 27) |
-| **Phase 3** | Extend ARS envelope to TC-002, TC-003, TC-012, TC-021, TC-022, TC-023, TC-024, TC-025, TC-026 | ✅ Done (TC-002 Day 29, TC-003 + TC-012 Day 30, TC-021 Day 30, TC-022 Day 31, TC-023 Day 32, TC-024 + TC-025 Day 33, TC-026 Day 34) |
+| **Phase 3** | Extend ARS envelope to TC-002, TC-003, TC-012, TC-021, TC-022, TC-023, TC-024, TC-025, TC-026, TC-027 | ✅ Done (TC-002 Day 29, TC-003 + TC-012 Day 30, TC-021 Day 30, TC-022 Day 31, TC-023 Day 32, TC-024 + TC-025 Day 33, TC-026 Day 34, TC-027 Day 35) |
 | **Phase 4** | Scoring harness: unwrap ARS envelope in `score.py` | Day 32 |
 | **Phase 5** | Full ARS compliance for all 11 Level 1 TCs | Day 33-35 |
 | **Phase 6** | CDISC ARS JSON Schema validation in CI | Day 36+ |

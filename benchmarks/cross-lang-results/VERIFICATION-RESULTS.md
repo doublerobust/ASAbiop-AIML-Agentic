@@ -143,3 +143,26 @@ python3 scoring-harness/score.py verify --tc TC-001 \
 
 - **Total Level 1 TCs verified: 18/18 at 1.0000**
 - **SAS reference scripts created for TC-024 and TC-025** (18/18 SAS coverage)
+
+---
+
+## Update: Day 35 (2026-07-04) — TC-027 Added
+
+**New test case:** TC-027 (Duration of Stable Disease, DOSD)
+
+| Test Case | Domain | Shared Data | Score | Status |
+|---|---|---|---|---|
+| TC-027 | DOSD KM Median | tc027_dosd_adtte.csv (shared) | 1.0000 | ✅ PASS |
+
+### TC-027 Details
+- R: median_dosd (ctrl)=2.33, median_dosd (exp)=5.44, HR=0.5223, log-rank p=0.0214
+- Python: median_dosd (ctrl)=2.33, median_dosd (exp)=5.44, HR=0.5223, log-rank p=0.0214
+- Subgroups: SEX (F/M), AGEGR1 (<65/>=65), ECOG (0/1) — all verified at 1.0000
+- ARS envelopes generated for both R and Python
+- BOR distribution: Control (CR 2%, PR 18%, SD 45%, PD 30%, NE 5%), Active (CR 8%, PR 35%, SD 35%, PD 15%, NE 7%)
+- 89 SD subjects out of 200 (44.5%), 83 in ITT with valid DOSD times
+- Cross-TFL: DOSD N = TC-025 SD count, DOSD N ≤ DCR N (TC-023)
+
+- **Total Level 1 TCs verified: 20/20 at 1.0000**
+- **White paper Section 8 (References and Appendices) drafted**
+- **Test case design updated with TC-027 specification**

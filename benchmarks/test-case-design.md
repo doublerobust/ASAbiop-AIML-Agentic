@@ -1949,3 +1949,56 @@ estimated_agent_time_reference: 4 min
 contamination_risk: low
 parametrizable_params: [seed, n_subjects, hr, base_rate]
 ```
+
+---
+
+### TC-027: Duration of Stable Disease (DOSD) — KM Median
+
+**Level:** 1 (auto-scorable)
+**Domain:** Efficacy (time-to-event, subset analysis)
+**Endpoint:** DOSD — time from first SD documentation to disease progression or death
+**Population:** ITT subjects with BOR = SD (subset analysis)
+
+**What it tests:**
+1. Correct subset identification (BOR = SD only, not CR/PR/PD/NE)
+2. Time-to-event analysis on a non-trivial subset (typically 30-45% of ITT)
+3. KM estimation with small-to-moderate sample sizes
+4. Cross-TFL consistency: DOSD N = SD count from TC-025 BOR Summary
+5. DOSD N ≤ DCR N (TC-023, since SD is a subset of DCR)
+6. DOSD subjects and DOR subjects are disjoint (SD vs CR+PR)
+
+**Cross-TFL relationships:**
+- TC-027 ↔ TC-025 (BOR Summary): DOSD N = SD count from BOR distribution
+- TC-027 ↔ TC-023 (DCR): DOSD N ≤ DCR N (SD is subset of DCR = CR+PR+SD)
+- TC-027 ↔ TC-022 (DOR): DOSD and DOR subjects are disjoint (SD vs CR+PR)
+
+**Tolerances:** ±0.05 for median, ±0.01 for HR, ±0.01 for log-rank p
+
+```yaml
+id: TC-027
+title: "DOSD KM Median with 95% CI"
+level: 1
+domain: efficacy
+tfl_type: table
+endpoint: DOSD
+population: "ITT with BOR=SD"
+ground_truth:
+  r: tc-027-dosd.R
+  python: tc_027_dosd.py
+  sas: (pending)
+output_schema: tc-027-output-schema.json
+scoring:
+  numerical: [median_dosd, ci_lower, ci_upper, n_sd, n_events, n_total, hazard_ratio, logrank_p]
+  tolerance:
+    median_dosd: 0.05
+    hazard_ratio: 0.01
+    logrank_p: 0.01
+  count_match: [n_sd, n_events, n_total]
+  schema_validation: true
+  compliance_check: true
+  safety_check: true
+estimated_human_time: 12 min
+estimated_agent_time_reference: 5 min
+contamination_risk: low
+parametrizable_params: [seed, n_subjects, hr, base_rate]
+```

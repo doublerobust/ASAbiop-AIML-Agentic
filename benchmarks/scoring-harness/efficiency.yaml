@@ -266,3 +266,15 @@ cost_transparency_defaults:
       R: 3.0
       SAS: 2.5
       Python: 4.0
+  tc_026:
+    human_from_scratch_min: 8
+    human_verify_agent_min:
+      R: 3.0
+      SAS: 2.5
+      Python: 4.0
+  tc_027:
+    human_from_scratch_min: 10
+    human_verify_agent_min:
+      R: 4.0
+      SAS: 3.0
+      Python: 5.0

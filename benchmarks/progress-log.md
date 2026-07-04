@@ -2683,3 +2683,101 @@ Daily cron job triggered. Continuing benchmark development per Day 33 plan.
 4. **WG presentation prep** — slides for cross-language results, scoring framework, ARS alignment
 5. **Efficiency scoring** — collect reference baselines from actual agent runs
 6. **TC-028+ candidates** — Change in Tumor Size (waterfall shift), Best Response by Cycle
+
+---
+
+## Day 35 — 2026-07-04 (Saturday)
+
+### Summary
+
+**TC-027 (Duration of Stable Disease, DOSD) fully implemented and verified at 1.0000.** White paper Section 8 (References and Appendices) drafted. Total Level 1 TCs now at 20/20 with perfect cross-language verification.
+
+### Completed Today
+
+#### 1. TC-027: Duration of Stable Disease (DOSD) — Full Implementation
+
+**Ground Truth Scripts:**
+- **R** (`references/ground-truth/R/tc-027-dosd.R`): KM median DOSD with log-rank, Cox PH, subgroup analysis, ARS output
+- **Python** (`references/ground-truth/Python/tc_027_dosd.py`): Matching implementation with lifelines
+
+**Key Design:**
+- DOSD = time from first SD documentation to disease progression or death
+- Population: ITT subjects with BOR = SD (subset analysis, ~44.5% of ITT)
+- BOR distribution consistent with TC-025 (BOR Summary): Control SD=45%, Active SD=35%
+- HR = 0.80 (modest treatment effect on DOSD)
+- Cross-TFL: DOSD N = TC-025 SD count, DOSD N ≤ DCR N (TC-023), DOSD ∩ DOR = ∅ (TC-022)
+
+**Scoring Infrastructure:**
+- Output schema: `references/output-schemas/tc-027-output-schema.json`
+- Scorer: `score_tc027()` added to `scoring-harness/score.py` (all 3 dispatch dicts updated)
+- Tolerances: ±0.05 for median, ±0.01 for HR, ±0.01 for log-rank p
+- Compliance rules: TCG-94–102 (DOSD endpoint, SD subset, ITT filter, KM, log-rank, Cox PH, subgroups) + CSR-45–49
+- Safety rules: N-count (DOSD events + censored = N SD), cross-TFL pairs (TC-027 ↔ TC-025, TC-023, TC-022), edge cases (no SD subjects, all progress, small subgroup)
+- Efficiency: human_from_scratch=10 min, human_verify R=4/SAS=3/Python=5
+- `safety.py` DENOM_RULES updated with TC-027
+
+**Cross-Language Verification Results:**
+- Shared data: 200 subjects, 89 SD subjects, 83 in ITT with valid DOSD times
+- R: median_dosd (ctrl)=2.33, (exp)=5.44, HR=0.5223, log-rank p=0.0214
+- Python: median_dosd (ctrl)=2.33, (exp)=5.44, HR=0.5223, log-rank p=0.0214
+- **Score: 1.0000 (all 29 component scores pass)**
+- Subgroups verified: SEX (F/M), AGEGR1 (<65/>=65), ECOG (0/1) — all at 1.0000
+
+**Cross-Language Verification Script:**
+- `run-cross-lang-verify.sh` updated with TC-027 shared data generation and run blocks
+
+#### 2. White Paper Section 8 (References and Appendices)
+
+**Created `white-paper-section8-draft.md`** (~12,800 words):
+- **Section 8: References** — 38 references across 6 categories (regulatory, software, statistical methodology, AI/ML benchmarks, industry/vendor, cross-language verification)
+- **Section 9: Appendices** — 6 appendices:
+  - Appendix A: Complete test case catalogue (20 Level 1, 3 Level 2, 4 Level 3)
+  - Appendix B: Scoring dimensions and tolerance framework
+  - Appendix C: Cross-language verification results (20/20 at 1.0000)
+  - Appendix D: CDISC ARS alignment summary (11 TCs with ARS envelopes)
+  - Appendix E: Compliance rule catalogue summary (102 TCG, 49 CSR, 110+ safety)
+  - Appendix F: Efficiency scoring framework (cost, time, reliability, composite formula)
+- **Section 10: Acknowledgments**
+
+#### 3. Documentation Updates
+
+- **`test-case-design.md`**: Added TC-027 specification with YAML metadata
+- **`cdisc-ars-alignment.md`**: Updated Phase 3 to include TC-027
+- **`white-paper-outline.md`**: Updated count from 19 to 20 Level 1 TCs
+- **`cross-lang-results/VERIFICATION-RESULTS.md`**: Added Day 35 update
+
+### Cross-Language Verification Score Summary
+
+| TC | Domain | R | Python | Score |
+|---|---|---|---|---|
+| TC-001 | PFS KM Median | ✅ | ✅ | 1.0000 |
+| TC-002 | Demographics | ✅ | ✅ | 1.0000 |
+| TC-003 | Stratified Log-Rank | ✅ | ✅ | 1.0000 |
+| TC-011 | AE Summary | ✅ | ✅ | 1.0000 |
+| TC-012 | Forest Plot HR | ✅ | ✅ | 1.0000 |
+| TC-013 | Waterfall Plot | ✅ | ✅ | 1.0000 |
+| TC-014 | Protocol Deviations | ✅ | ✅ | 1.0000 |
+| TC-015 | KM Curve | ✅ | ✅ | 1.0000 |
+| TC-016 | Exposure | ✅ | ✅ | 1.0000 |
+| TC-017 | Lab Shift Table | ✅ | ✅ | 1.0000 |
+| TC-018 | Change from Baseline | ✅ | ✅ | 1.0000 |
+| TC-019 | Concomitant Meds | ✅ | ✅ | 1.0000 |
+| TC-020 | ORR by Subgroup | ✅ | ✅ | 1.0000 |
+| TC-021 | TTP KM Median | ✅ | ✅ | 1.0000 |
+| TC-022 | DOR KM Median | ✅ | ✅ | 1.0000 |
+| TC-023 | DCR | ✅ | ✅ | 1.0000 |
+| TC-024 | OS KM Median | ✅ | ✅ | 1.0000 |
+| TC-025 | BOR Summary | ✅ | ✅ | 1.0000 |
+| TC-026 | PFS2 KM Median | ✅ | ✅ | 1.0000 |
+| TC-027 | DOSD KM Median | ✅ | ✅ | 1.0000 |
+
+**Total: 20/20 Level 1 TCs at score=1.0000**
+
+### 🔮 Plan for Day 36+
+
+1. **SAS reference scripts** for TC-021, TC-022, TC-026, TC-027 (gap filling — 4 TCs missing SAS)
+2. **Level 2 TC-005 implementation** — error injection framework, TFL package generator
+3. **WG presentation prep** — slides for cross-language results, scoring framework, ARS alignment
+4. **Efficiency scoring** — collect reference baselines from actual agent runs
+5. **TC-028+ candidates** — Change in Tumor Size (waterfall shift), Best Response by Cycle
+6. **White paper assembly** — combine Sections 1-8 into single document for WG review
