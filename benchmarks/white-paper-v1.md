@@ -1,9 +1,9 @@
 # A Standardized Benchmark for Evaluating Agentic AI in Clinical Trial Statistical Analysis and Reporting
 
 **Working Paper — ASA Biopharmaceutical Section AI/ML Working Group**
-**Version:** 1.1 (Day 34, post-4-model panel review)
+**Version:** 1.2 (Day 36, SAS gap-fill + TC-027 added)
 **Status:** Draft for WG Review
-**Date:** 2026-07-03
+**Date:** 2026-07-05
 
 ---
 
@@ -11,7 +11,7 @@
 
 The rapid emergence of agentic AI systems for clinical trial statistical analysis — encompassing Tables, Figures, and Listings (TFL) programming, Statistical Analysis Plan (SAP) drafting, and quality control review — has outpaced the availability of standardized evaluation frameworks. Vendor claims of manual effort reduction lack independent verification, and no existing benchmark measures the combination of statistical correctness, regulatory compliance, safety awareness, and operational efficiency that defines acceptable performance in regulated clinical development.
 
-We present a multilingual (R and Python, with SAS reference scripts) benchmark with 19 Level 1 test cases covering survival analysis, baseline demographics, safety summaries, tumor response, exposure, lab shifts, change from baseline, concomitant medications, and subgroup analyses — all with cross-language-verified ground truth achieving perfect (1.0000) R↔Python agreement on shared data. An additional 7 Level 2 and Level 3 test cases address SAP section drafting, TFL quality control review, sample size re-estimation, regulatory response, dose-finding design, safety signal evaluation, and CSR statistical sections.
+We present a multilingual (R and Python, with SAS reference scripts) benchmark with 20 Level 1 test cases covering survival analysis, baseline demographics, safety summaries, tumor response, exposure, lab shifts, change from baseline, concomitant medications, and subgroup analyses — all with cross-language-verified ground truth achieving perfect (1.0000) R↔Python agreement on shared data. An additional 7 Level 2 and Level 3 test cases address SAP section drafting, TFL quality control review, sample size re-estimation, regulatory response, dose-finding design, safety signal evaluation, and CSR statistical sections.
 
 The benchmark evaluates AI agents along four dimensions: statistical correctness (tolerance-based numerical comparison against cross-verified bilingual ground truth), regulatory compliance (194 encoded rules spanning FDA Study Data TCG checklist and ICH E3 CSR formatting), safety and robustness (covering N-count consistency, denominator validation, cross-TFL agreement, and edge case handling), and operational efficiency (cost, time, reliability with use-case-specific weighting profiles). CDISC Analysis Results Standard (ARS) v1.0 alignment has been demonstrated for 9 test cases via a backward-compatible envelope wrapper.
 
@@ -130,14 +130,15 @@ The Level 1 test case library spans four therapeutic domains and nine statistica
 | TC-018 | Efficacy | Table | Change from baseline | R+Py+SAS | 8 |
 | TC-019 | Safety | Table | Concomitant medications by ATC class | R+Py+SAS | 5 |
 | TC-020 | Efficacy | Table | ORR by subgroup with CMH interaction test | R+Py+SAS | 4 |
-| TC-021 | Efficacy | Table | Time-to-progression (TTP, death censored) | R+Py | 8 |
-| TC-022 | Efficacy | Table | Duration of response (DOR, responders only) | R+Py | 8 |
-| TC-023 | Efficacy | Table | Disease control rate (DCR = CR+PR+SD) | R+Py | 8 |
-| TC-024 | Efficacy | Table | Overall survival KM median | R+Py | 8 |
-| TC-025 | Efficacy | Table | Best overall response summary (RECIST 1.1) | R+Py | 8 |
-| TC-026 | Efficacy | Table | PFS2 (progression-free survival after next-line therapy) | R+Py | 4 |
+| TC-021 | Efficacy | Table | Time-to-progression (TTP, death censored) | R+Py+SAS | 8 |
+| TC-022 | Efficacy | Table | Duration of response (DOR, responders only) | R+Py+SAS | 8 |
+| TC-023 | Efficacy | Table | Disease control rate (DCR = CR+PR+SD) | R+Py+SAS | 8 |
+| TC-024 | Efficacy | Table | Overall survival KM median | R+Py+SAS | 8 |
+| TC-025 | Efficacy | Table | Best overall response summary (RECIST 1.1) | R+Py+SAS | 8 |
+| TC-026 | Efficacy | Table | PFS2 (progression-free survival after next-line therapy) | R+Py+SAS | 4 |
+| TC-027 | Efficacy | Table | Duration of stable disease (DOSD, SD subjects only) | R+Py+SAS | 4 |
 
-**Total Level 1:** 19 test cases, 147+ parametric variants, 48 ground truth implementations (19 × 2.5 languages on average — all R+Python, 13 with SAS reference scripts).
+**Total Level 1:** 19 test cases, 147+ parametric variants, 48 ground truth implementations (20 × 2.5 languages on average — all R+Python, 13 with SAS reference scripts).
 
 **Note on TC numbering:** TC-004 through TC-010 are reserved for Level 2 and Level 3 test cases. TC-027 is a candidate for future expansion.
 
@@ -162,7 +163,7 @@ Cross-language verification ensures that ground truth implementations produce nu
 3. **Pairwise comparison:** Scoring harness compares R↔Python outputs field-by-field with tolerance-based verification
 4. **Score computation:** Weighted composite score per TC
 
-All 19 Level 1 test cases achieve a cross-language verification score of 1.0000 (perfect R↔Python agreement on shared data). SAS reference scripts exist for 13 test cases but have not been executed due to licensing constraints on the CI runner; cross-language verification is currently R↔Python only.
+All 20 Level 1 test cases achieve a cross-language verification score of 1.0000 (perfect R↔Python agreement on shared data). SAS reference scripts exist for 16 test cases but have not been executed due to licensing constraints on the CI runner; cross-language verification is currently R↔Python only.
 
 ### 2.7 CDISC ARS Alignment
 
@@ -175,14 +176,14 @@ Output schemas are aligned with CDISC Analysis Results Standard (ARS) v1.0. Each
 - **ResultGroups:** Treatment groups with subject counts
 - **AnalysisResultsData (ARD):** Machine-readable statistical results
 
-**Current ARS coverage (9 TCs):** TC-001, TC-002, TC-003, TC-012, TC-021, TC-022, TC-023, TC-024, TC-025.
+**Current ARS coverage (10 TCs):** TC-001, TC-002, TC-003, TC-012, TC-021, TC-022, TC-023, TC-024, TC-025, TC-027.
 
 ### 2.8 CI/CD Integration
 
 A GitHub Actions workflow runs the full cross-language verification suite on every push and PR:
 1. Sets up R and Python environments with pinned package versions
 2. Generates shared datasets with a canonical seed
-3. Runs all 19 Level 1 TCs in both R and Python
+3. Runs all 20 Level 1 TCs in both R and Python
 4. Compares outputs using the scoring harness
 5. Fails if any TC score drops below 1.0000
 
@@ -279,7 +280,7 @@ To confirm that the scoring framework is not trivially passing, we validated it 
 
 ### 4.1 Cross-Language Verification
 
-All 19 Level 1 test cases achieve a cross-language verification score of 1.0000 — perfect R↔Python agreement on shared data within specified tolerances.
+All 20 Level 1 test cases achieve a cross-language verification score of 1.0000 — perfect R↔Python agreement on shared data within specified tolerances.
 
 | TC | Domain | TFL Type | Method | Score |
 |---|---|---|---|---|
@@ -302,8 +303,9 @@ All 19 Level 1 test cases achieve a cross-language verification score of 1.0000 
 | TC-024 | Efficacy | Table | Overall Survival KM Median | 1.0000 |
 | TC-025 | Efficacy | Table | BOR Summary (RECIST 1.1) | 1.0000 |
 | TC-026 | Efficacy | Table | PFS2 | 1.0000 |
+| TC-027 | Efficacy | Table | Duration of Stable Disease (DOSD) | 1.0000 |
 
-All verified across 147+ parametric variants. SAS reference scripts written for 13 test cases (pending licensed execution). No confidence intervals are reported on these scores — the 1.0000 is exact pairwise agreement within tolerances derived from floating-point precision limits, not a sample estimate.
+All verified across 147+ parametric variants. SAS reference scripts written for 16 test cases (pending licensed execution). No confidence intervals are reported on these scores — the 1.0000 is exact pairwise agreement within tolerances derived from floating-point precision limits, not a sample estimate.
 
 ### 4.2 Scoring Pipeline Coverage
 
@@ -326,7 +328,7 @@ The efficiency framework defines model pricing references for 8 models, language
 
 ### 4.4 Key Findings (Benchmark Design Phase)
 
-1. **Cross-language reproducibility is achievable with shared data:** All 19 Level 1 TCs produce identical results across R and Python, validating language-independent ground truth for standard statistical methods when input data is identical.
+1. **Cross-language reproducibility is achievable with shared data:** All 20 Level 1 TCs produce identical results across R and Python, validating language-independent ground truth for standard statistical methods when input data is identical.
 
 2. **Scoring harness detects a clinically significant error:** Single-case error injection (TC-012, HR +0.3 → score drops to 0.7227) confirms the tolerance system can distinguish correct from incorrect outputs.
 
@@ -346,7 +348,7 @@ The efficiency framework defines model pricing references for 8 models, language
 
 This benchmark fills a critical gap identified across multiple 2026 industry venues. At PharmaSUG 2026, at least four papers addressed agentic AI for TFL generation (AI-206, AI-123, AI-438, AI-207), yet none proposed a standardized evaluation methodology. Each vendor evaluated their own systems using proprietary test sets, making cross-comparison impossible.
 
-Our benchmark provides the first standardized, multilingual, regulatory-aware evaluation framework for TFL programming agents. The 19 Level 1 test cases cover the most common TFL types in oncology trials. Each includes ground truth implementations in R and Python (with SAS reference scripts), with automated scoring against tolerances derived from regulatory standards.
+Our benchmark provides the first standardized, multilingual, regulatory-aware evaluation framework for TFL programming agents. The 20 Level 1 test cases cover the most common TFL types in oncology trials. Each includes ground truth implementations in R and Python (with SAS reference scripts), with automated scoring against tolerances derived from regulatory standards.
 
 The regulatory dimension is particularly timely. The FDA-EMA Good AI Practice guidance (January 2026) establishes 10 principles for risk-based AI governance. Principle 3 (adherence to standards) and Principle 8 (risk-based performance assessment) directly motivate our compliance and safety scoring dimensions. The EU AI Act, with provisions from August 2026, classifies clinical AI systems as high-risk, creating an urgent need for standardized verification tools.
 
@@ -354,7 +356,7 @@ The regulatory dimension is particularly timely. The FDA-EMA Good AI Practice gu
 
 ### 5.2 Key Findings from Benchmark Development
 
-**Finding 1: Cross-language numerical consistency requires shared data.** All 19 Level 1 TCs achieve 1.0000 R↔Python verification on shared input data, confirming that standard statistical methods (KM estimation, binomial proportions, Cox PH) produce identical results when using standard packages (R `survival`, Python `lifelines`) on identical input. This finding has practical implications: organizations can validate AI-generated TFL code in one language and deploy in another with confidence, provided the same input data is used.
+**Finding 1: Cross-language numerical consistency requires shared data.** All 20 Level 1 TCs achieve 1.0000 R↔Python verification on shared input data, confirming that standard statistical methods (KM estimation, binomial proportions, Cox PH) produce identical results when using standard packages (R `survival`, Python `lifelines`) on identical input. This finding has practical implications: organizations can validate AI-generated TFL code in one language and deploy in another with confidence, provided the same input data is used.
 
 **Finding 2: The scoring harness detects clinically significant errors.** Error injection testing on TC-012 (HR +0.3 bias → score 0.7227) confirms the framework is neither too lenient (allowing clinically significant errors) nor too strict (penalizing floating-point noise). However, this is a single-case validation; systematic error injection across all TCs with varying effect sizes is needed.
 
@@ -412,7 +414,7 @@ Our benchmark is unique in combining statistical correctness, regulatory complia
 
 ### 6.1 Summary
 
-This benchmark establishes the first standardized, multilingual evaluation framework for agentic AI in clinical trial TFL programming. Across 19 Level 1 test cases spanning efficacy (KM median PFS, overall survival, duration of response, time to progression, disease control rate, best overall response, ORR by subgroup, PFS2, forest plot, waterfall, KM curve), safety (AE summary, exposure, lab shifts, protocol deviation listing, concomitant medications), and general statistics (demographics, stratified log-rank, change from baseline), the benchmark demonstrates that cross-language ground truth can be established with perfect agreement (score = 1.0000) between R and Python implementations on shared data. Thirteen SAS reference scripts provide a foundation for pending trilingual verification.
+This benchmark establishes the first standardized, multilingual evaluation framework for agentic AI in clinical trial TFL programming. Across 20 Level 1 test cases spanning efficacy (KM median PFS, overall survival, duration of response, time to progression, disease control rate, best overall response, ORR by subgroup, PFS2, forest plot, waterfall, KM curve), safety (AE summary, exposure, lab shifts, protocol deviation listing, concomitant medications), and general statistics (demographics, stratified log-rank, change from baseline), the benchmark demonstrates that cross-language ground truth can be established with perfect agreement (score = 1.0000) between R and Python implementations on shared data. Sixteen SAS reference scripts provide a foundation for pending trilingual verification.
 
 The scoring framework evaluates four dimensions — statistical correctness (tolerance-based numerical comparison), regulatory compliance (194 TCG/CSR rules), safety and robustness (N-count consistency, denominator validation, cross-TFL agreement, edge case handling), and operational efficiency (cost, time, reliability) — providing a composite score reflecting the real-world demands of clinical trial statistical programming. CDISC ARS alignment has been demonstrated for 9 test cases, establishing a path toward metadata-driven TFL generation.
 
@@ -428,7 +430,7 @@ The scoring framework evaluates four dimensions — statistical correctness (tol
 
 ### 6.3 Limitations and Caveats
 
-1. **SAS not executed in CI.** SAS reference implementations exist for 13 test cases but no license is available on the CI runner.
+1. **SAS not executed in CI.** SAS reference implementations exist for 16 test cases but no license is available on the CI runner.
 2. **Computation, not code quality.** The benchmark evaluates numerical outputs, not code maintainability or design judgment.
 3. **Level 2/3 not yet implemented.** Specifications exist but infrastructure is incomplete.
 4. **No human baselines.** Efficiency targets are estimated, not measured.
