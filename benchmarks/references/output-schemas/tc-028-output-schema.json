@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-028 Change in Tumor Size by Cycle Output Schema",
+  "type": "object",
+  "required": ["test_case_id", "title", "cycles", "baseline_cycle", "visit_summaries", "overall_summary", "subject_summaries", "n_subjects", "language", "version"],
+  "properties": {
+    "test_case_id": {"type": "string", "const": "TC-028"},
+    "title": {"type": "string", "const": "Change in Tumor Size by Cycle (Longitudinal)"},
+    "cycles": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "baseline_cycle": {"type": "string"},
+    "visit_summaries": {
+      "type": "object",
+      "description": "Per-cycle summary statistics by arm",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "all": {"$ref": "#/definitions/visitSummary"},
+          "experimental": {"$ref": "#/definitions/visitSummary"},
+          "control": {"$ref": "#/definitions/visitSummary"}
+        },
+        "required": ["all", "experimental", "control"]
+      }
+    },
+    "overall_summary": {
+      "type": "object",
+      "properties": {
+        "experimental": {"$ref": "#/definitions/armSummary"},
+        "control": {"$ref": "#/definitions/armSummary"}
+      },
+      "required": ["experimental", "control"]
+    },
+    "subject_summaries": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/subjectSummary"}
+    },
+    "n_subjects": {"type": "integer", "minimum": 0},
+    "language": {"type": "string"},
+    "version": {"type": "string"}
+  },
+  "definitions": {
+    "visitSummary": {
+      "type": "object",
+      "required": ["cycle", "arm", "n_total", "n_assessed", "n_missing", "mean_pct_change", "median_pct_change", "se_pct_change", "mean_sld", "median_sld", "min_pct_change", "max_pct_change"],
+      "properties": {
+        "cycle": {"type": "string"},
+        "arm": {"type": "string"},
+        "n_total": {"type": "integer", "minimum": 0},
+        "n_assessed": {"type": "integer", "minimum": 0},
+        "n_missing": {"type": "integer", "minimum": 0},
+        "mean_pct_change": {"type": ["number", "null"]},
+        "median_pct_change": {"type": ["number", "null"]},
+        "se_pct_change": {"type": ["number", "null"]},
+        "mean_sld": {"type": ["number", "null"]},
+        "median_sld": {"type": ["number", "null"]},
+        "min_pct_change": {"type": ["number", "null"]},
+        "max_pct_change": {"type": ["number", "null"]}
+      }
+    },
+    "armSummary": {
+      "type": "object",
+      "required": ["arm", "n_subjects", "mean_best_pct_change", "median_best_pct_change", "mean_worst_pct_change", "median_worst_pct_change", "mean_n_assessments"],
+      "properties": {
+        "arm": {"type": "string"},
+        "n_subjects": {"type": "integer", "minimum": 0},
+        "mean_best_pct_change": {"type": ["number", "null"]},
+        "median_best_pct_change": {"type": ["number", "null"]},
+        "mean_worst_pct_change": {"type": ["number", "null"]},
+        "median_worst_pct_change": {"type": ["number", "null"]},
+        "mean_n_assessments": {"type": ["number", "null"]}
+      }
+    },
+    "subjectSummary": {
+      "type": "object",
+      "required": ["USUBJID", "TRT01A", "best_pct_change", "worst_pct_change", "n_assessments"],
+      "properties": {
+        "USUBJID": {"type": "string"},
+        "TRT01A": {"type": "string"},
+        "best_pct_change": {"type": ["number", "null"]},
+        "worst_pct_change": {"type": ["number", "null"]},
+        "time_to_best_cycle": {"type": ["string", "null"]},
+        "time_to_worst_cycle": {"type": ["string", "null"]},
+        "n_assessments": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

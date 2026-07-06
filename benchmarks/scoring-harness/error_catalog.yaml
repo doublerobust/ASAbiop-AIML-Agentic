@@ -1,0 +1,290 @@
+# Error Catalog for TC-005 (TFL Package QC Review)
+# Version: 0.1
+# Date: 2026-07-06
+#
+# Defines all planted errors for the TFL QC review test case.
+# Each error has a unique ID, class (A/B/C), type, and injection parameters.
+#
+# Class A (Critical): regulatory rejection risk or patient harm
+# Class B (Major):   correction required before submission
+# Class C (Minor):   cosmetic or stylistic
+
+version: 0.1
+date: 2026-07-06
+
+# --------------------------------------------------------------------
+# Default error set (8 errors across 6 TFLs, 1 clean TFL)
+# --------------------------------------------------------------------
+default_errors:
+  - error_id: "E-001"
+    tfl_id: "table-001"
+    type: "n_count"
+    class: "B"
+    location: "Column 'Experimental', N row"
+    description: "N=98 but should be N=100 (ITT population)"
+    sap_reference: "Section 14.1.1: ITT population defined as all randomized subjects"
+    correction: "Re-run with ITTFL='Y'"
+    delta: -2
+
+  - error_id: "E-002"
+    tfl_id: "table-001"
+    type: "missing_category"
+    class: "B"
+    location: "RACE category"
+    description: "'Asian' category missing from race breakdown"
+    sap_reference: "Section 14.1.2: All race categories per CDISC should be reported"
+    correction: "Check ADSL RACE derivation; include all non-empty categories"
+    category_field: "race"
+    category_value: "Asian"
+
+  - error_id: "E-003"
+    tfl_id: "table-002"
+    type: "denominator"
+    class: "A"
+    location: "ORR denominator"
+    description: "Denominator=85 (evaluable) instead of 100 (ITT)"
+    sap_reference: "Section 14.2.1: ORR computed on ITT population per ICH E9"
+    correction: "Use ITT population denominator (N=100)"
+    old_denom: 100
+    new_denom: 85
+
+  - error_id: "E-004"
+    tfl_id: "table-003"
+    type: "sorting"
+    class: "C"
+    location: "SOC column"
+    description: "SOC sorted alphabetically instead of by frequency"
+    sap_reference: "Section 14.3.1: SOC sorted by descending AE frequency"
+    correction: "Re-sort by descending AE count"
+    sort_field: "soc"
+
+  - error_id: "E-005"
+    tfl_id: "table-003"
+    type: "typo"
+    class: "C"
+    location: "PT 'Dyspnoea'"
+    description: "'Dyspnoea' misspelled as 'Dysponea'"
+    sap_reference: "MedDRA PT spelling must match preferred term exactly"
+    correction: "Correct spelling to 'Dyspnoea' (MedDRA PT)"
+    field: "preferred_term"
+    old_value: "Dyspnoea"
+    new_value: "Dysponea"
+
+  - error_id: "E-006"
+    tfl_id: "table-003"
+    type: "denominator"
+    class: "B"
+    location: "n/N for 'Nausea'"
+    description: "Shows 15/85 instead of 15/100 (wrong denominator)"
+    sap_reference: "Section 14.3.2: Percentages based on safety population N"
+    correction: "Correct denominator to safety population N"
+    old_denom: 100
+    new_denom: 85
+
+  - error_id: "E-007"
+    tfl_id: "figure-001"
+    type: "method"
+    class: "A"
+    location: "KM curve censoring indicator"
+    description: "Uses 1-CNSR instead of event indicator (CNSR=0 → event)"
+    sap_reference: "Section 14.4.1: KM curve uses event=1 (progression/death), CNSR=0"
+    correction: "Fix event indicator: event = (1-CNSR) is wrong; should use event = (1-CNSR) when CNSR=1 means censored"
+    description_method: "Wrong censoring logic: flipped event/censor flags"
+
+  - error_id: "E-008"
+    tfl_id: "listing-001"
+    type: "population"
+    class: "A"
+    location: "PD listing population filter"
+    description: "Uses SAFETY population instead of ITT"
+    sap_reference: "Section 14.5.1: Protocol deviations listed for ITT population"
+    correction: "Re-run with ITTFL='Y'"
+    old_pop: "ITT"
+    new_pop: "SAFETY"
+
+# --------------------------------------------------------------------
+# Variant configurations
+# --------------------------------------------------------------------
+variants:
+  v1:
+    description: "Standard 8-error package (default)"
+    errors: default_errors  # Uses default_errors list above
+
+  v2:
+    description: "Shuffled error locations"
+    errors:
+      - error_id: "E-001"
+        tfl_id: "table-002"   # Move N-count error to ORR table
+        type: "n_count"
+        class: "B"
+        location: "Column 'Control', N row"
+        description: "N=50 but should be N=52"
+        sap_reference: "Section 14.2.1"
+        correction: "Re-run with ITTFL='Y'"
+        delta: -2
+
+      - error_id: "E-002"
+        tfl_id: "table-003"
+        type: "missing_category"
+        class: "B"
+        location: "SOC 'General disorders'"
+        description: "SOC 'General disorders' missing from AE table"
+        sap_reference: "Section 14.3.1"
+        correction: "Include all SOC categories"
+        category_field: "soc"
+        category_value: "General disorders"
+
+      - error_id: "E-003"
+        tfl_id: "table-001"
+        type: "denominator"
+        class: "A"
+        location: "Age mean denominator"
+        description: "Mean age computed on N=85 instead of N=100"
+        sap_reference: "Section 14.1.2"
+        correction: "Use ITT N for demographics"
+        old_denom: 100
+        new_denom: 85
+
+      - error_id: "E-004"
+        tfl_id: "table-003"
+        type: "sorting"
+        class: "C"
+        location: "PT within SOC"
+        description: "PT sorted alphabetically instead of by frequency"
+        sap_reference: "Section 14.3.1"
+        correction: "Re-sort by descending frequency within SOC"
+        sort_field: "pt"
+
+      - error_id: "E-005"
+        tfl_id: "table-001"
+        type: "typo"
+        class: "C"
+        location: "SEX label"
+        description: "'Male' misspelled as 'Malle'"
+        sap_reference: "CDISC ADSL SEX variable standard"
+        correction: "Correct to 'Male'"
+        field: "sex"
+        old_value: "Male"
+        new_value: "Malle"
+
+      - error_id: "E-006"
+        tfl_id: "table-002"
+        type: "denominator"
+        class: "B"
+        location: "Subgroup ORR denominator"
+        description: "Uses evaluable N per subgroup instead of ITT subgroup N"
+        sap_reference: "Section 14.2.2"
+        correction: "Use ITT subgroup N"
+        old_denom: 50
+        new_denom: 42
+
+      - error_id: "E-007"
+        tfl_id: "figure-002"
+        type: "method"
+        class: "A"
+        location: "Forest plot HR calculation"
+        description: "HR computed with Breslow ties instead of Efron"
+        sap_reference: "Section 14.4.2: Cox PH with Efron tie correction"
+        correction: "Use Efron tie handling"
+        description_method: "Wrong tie handling: Breslow instead of Efron"
+
+      - error_id: "E-008"
+        tfl_id: "listing-001"
+        type: "population"
+        class: "A"
+        location: "PD listing population"
+        description: "Uses safety population instead of ITT"
+        sap_reference: "Section 14.5.1"
+        correction: "Use ITTFL='Y'"
+        old_pop: "ITT"
+        new_pop: "SAFETY"
+
+  v3:
+    description: "Reduced error count (6 errors, higher difficulty)"
+    errors:
+      - error_id: "E-001"
+        tfl_id: "table-001"
+        type: "n_count"
+        class: "B"
+        location: "Column 'Control', N row"
+        description: "N=50 but should be N=52"
+        sap_reference: "Section 14.1.1"
+        correction: "Re-run with ITTFL='Y'"
+        delta: -2
+
+      - error_id: "E-002"
+        tfl_id: "table-002"
+        type: "denominator"
+        class: "A"
+        location: "ORR denominator"
+        description: "Uses evaluable N instead of ITT N"
+        sap_reference: "Section 14.2.1"
+        correction: "Use ITT population"
+        old_denom: 100
+        new_denom: 85
+
+      - error_id: "E-003"
+        tfl_id: "table-003"
+        type: "sorting"
+        class: "C"
+        location: "SOC column"
+        description: "Alphabetical sort instead of frequency"
+        sap_reference: "Section 14.3.1"
+        correction: "Sort by descending frequency"
+        sort_field: "soc"
+
+      - error_id: "E-004"
+        tfl_id: "figure-001"
+        type: "method"
+        class: "A"
+        location: "KM curve censoring"
+        description: "Flipped event/censor indicator"
+        sap_reference: "Section 14.4.1"
+        correction: "Fix event indicator"
+        description_method: "Flipped censoring logic"
+
+      - error_id: "E-005"
+        tfl_id: "listing-001"
+        type: "population"
+        class: "A"
+        location: "PD listing population"
+        description: "SAFETY instead of ITT"
+        sap_reference: "Section 14.5.1"
+        correction: "Use ITTFL='Y'"
+        old_pop: "ITT"
+        new_pop: "SAFETY"
+
+      - error_id: "E-006"
+        tfl_id: "table-003"
+        type: "typo"
+        class: "C"
+        location: "PT 'Nausea'"
+        description: "'Nausea' misspelled as 'Nausia'"
+        sap_reference: "MedDRA PT"
+        correction: "Correct to 'Nausea'"
+        field: "preferred_term"
+        old_value: "Nausea"
+        new_value: "Nausia"
+
+# --------------------------------------------------------------------
+# Error class distribution per variant
+# --------------------------------------------------------------------
+error_class_distribution:
+  v1:
+    A: 3  # Critical
+    B: 3  # Major
+    C: 2  # Minor
+    total: 8
+    clean_tfls: ["figure-002"]
+  v2:
+    A: 3
+    B: 3
+    C: 2
+    total: 8
+    clean_tfls: ["figure-001"]
+  v3:
+    A: 3
+    B: 1
+    C: 2
+    total: 6
+    clean_tfls: ["figure-001", "figure-002"]

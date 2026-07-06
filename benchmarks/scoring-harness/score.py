@@ -1744,6 +1744,106 @@ def score_tc027(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# TC-028: Change in Tumor Size by Cycle (Longitudinal)
+# --------------------------------------------------------------------
+
+def score_tc028(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-028 (Change in Tumor Size by Cycle) agent output.
+
+    Compares visit-wise summary statistics (mean, median, SE, N assessed)
+    for each cycle and arm, plus overall arm-level best/worst % change
+    summaries.
+    """
+    tol_spec = tolerances.get("TC-028", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    ag_visits = agent_output.get("visit_summaries", {})
+    gt_visits = ground_truth.get("visit_summaries", {})
+
+    # Visit-wise comparison for each cycle and arm
+    for cycle in gt_visits:
+        gt_cycle = gt_visits.get(cycle, {})
+        ag_cycle = ag_visits.get(cycle, {})
+        for arm_key, arm_label in [("experimental", "exp"), ("control", "ctrl")]:
+            gt_arm = gt_cycle.get(arm_key, {})
+            ag_arm = ag_cycle.get(arm_key, {})
+
+            # Mean % change
+            tol = tol_spec.get(f"{arm_label}_mean_pct_change", {})
+            r = compare_numeric(ag_arm.get("mean_pct_change"), gt_arm.get("mean_pct_change"),
+                               tol, f"{cycle}_{arm_label}_mean_pct")
+            component_scores[f"{cycle}_{arm_label}_mean_pct"] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.025)
+            total_weight += tol.get("weight", 0.025)
+
+            # Median % change
+            tol = tol_spec.get(f"{arm_label}_median_pct_change", {})
+            r = compare_numeric(ag_arm.get("median_pct_change"), gt_arm.get("median_pct_change"),
+                               tol, f"{cycle}_{arm_label}_median_pct")
+            component_scores[f"{cycle}_{arm_label}_median_pct"] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.017)
+            total_weight += tol.get("weight", 0.017)
+
+            # SE
+            tol = tol_spec.get("se_pct_change", {})
+            r = compare_numeric(ag_arm.get("se_pct_change"), gt_arm.get("se_pct_change"),
+                               tol, f"{cycle}_{arm_label}_se_pct")
+            component_scores[f"{cycle}_{arm_label}_se_pct"] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.013)
+            total_weight += tol.get("weight", 0.013)
+
+            # N assessed (exact match)
+            tol = tol_spec.get("n_assessed", {})
+            r = compare_count(ag_arm.get("n_assessed"), gt_arm.get("n_assessed"))
+            component_scores[f"{cycle}_{arm_label}_n_assessed"] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.017)
+            total_weight += tol.get("weight", 0.017)
+
+    # Overall arm-level summaries
+    ag_overall = agent_output.get("overall_summary", {})
+    gt_overall = ground_truth.get("overall_summary", {})
+    for arm_key, arm_label in [("experimental", "exp"), ("control", "ctrl")]:
+        ag_arm = ag_overall.get(arm_key, {})
+        gt_arm = gt_overall.get(arm_key, {})
+
+        # Mean best % change
+        tol = tol_spec.get(f"overall_mean_best_{arm_label}", {})
+        r = compare_numeric(ag_arm.get("mean_best_pct_change"), gt_arm.get("mean_best_pct_change"),
+                           tol, f"overall_{arm_label}_mean_best")
+        component_scores[f"overall_{arm_label}_mean_best"] = r
+        weighted_sum += r["score"] * tol.get("weight", 0.10)
+        total_weight += tol.get("weight", 0.10)
+
+        # Median best % change
+        tol = tol_spec.get(f"overall_median_best_{arm_label}", {})
+        r = compare_numeric(ag_arm.get("median_best_pct_change"), gt_arm.get("median_best_pct_change"),
+                           tol, f"overall_{arm_label}_median_best")
+        component_scores[f"overall_{arm_label}_median_best"] = r
+        weighted_sum += r["score"] * tol.get("weight", 0.05)
+        total_weight += tol.get("weight", 0.05)
+
+        # N per arm
+        tol = tol_spec.get("n_per_arm", {})
+        r = compare_count(ag_arm.get("n_subjects"), gt_arm.get("n_subjects"))
+        component_scores[f"overall_{arm_label}_n_subjects"] = r
+        weighted_sum += r["score"] * tol.get("weight", 0.02)
+        total_weight += tol.get("weight", 0.02)
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-028",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", agent_output.get("metadata", {}).get("language", "unknown")),
+        "ground_truth_language": ground_truth.get("language", ground_truth.get("metadata", {}).get("language", "unknown")),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
 # Efficiency Helpers
 # --------------------------------------------------------------------
 
@@ -2067,6 +2167,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-025": score_tc025,
         "TC-026": score_tc026,
         "TC-027": score_tc027,
+        "TC-028": score_tc028,
     }
 
     scorer = scorers.get(tc)
@@ -2201,6 +2302,7 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-025": score_tc025,
         "TC-026": score_tc026,
         "TC-027": score_tc027,
+        "TC-028": score_tc028,
     }
 
     scorer = scorers.get(tc)
@@ -2413,6 +2515,7 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-025": score_tc025,
         "TC-026": score_tc026,
         "TC-027": score_tc027,
+        "TC-028": score_tc028,
     }
     scorer = scorers.get(tc)
     if scorer is None:

@@ -2902,3 +2902,127 @@ Updated `white-paper-v1.md` to v1.2:
 4. **Efficiency scoring** — collect reference baselines from actual agent runs
 5. **TC-028+ candidates** — Change in Tumor Size (waterfall shift), Best Response by Cycle
 6. **White paper WG review package** — finalize v1.2 for circulation
+
+---
+
+## 2026-07-06 — Day 37: TC-005 Error Injection Framework + TC-028 Longitudinal Tumor Size
+
+### 🎯 Objectives
+1. Implement TC-005 (Level 2) Phase 1: Error injection framework
+2. Implement TC-005 (Level 2) Phase 2: TFL package generator
+3. Create TC-028: Change in Tumor Size by Cycle (Level 1)
+4. Cross-language verify TC-028 at 1.0000
+
+### ✅ Completed
+
+#### 1. TC-005 Error Injection Framework
+
+**Files created:**
+- `scoring-harness/error_injection.py` — 7 error injection functions + scoring
+- `scoring-harness/error_catalog.yaml` — 8 planted errors across 6 TFLs, 3 variants
+
+**Error injection functions:**
+| Function | Class | Description |
+|----------|-------|-------------|
+| `inject_error_n_count` | B | Reduce N count for a specified arm |
+| `inject_error_missing_category` | B | Remove a category from categorical breakdown |
+| `inject_error_denominator` | A | Replace denominator in n/N calculations |
+| `inject_error_sorting` | C | Change sort order from frequency to alphabetical |
+| `inject_error_typo` | C | Inject spelling error in text field |
+| `inject_error_method` | A | Change statistical method (censoring indicator) |
+| `inject_error_population` | A | Change population filter (ITT → SAFETY) |
+
+**Error catalog variants:**
+- v1: Standard 8-error package (3A, 3B, 2C), clean TFL: figure-002
+- v2: Shuffled locations (3A, 3B, 2C), clean TFL: figure-001
+- v3: Reduced 6-error package (3A, 1B, 2C), clean TFLs: figure-001, figure-002
+
+**TC-005 scoring** (`score_tc005`):
+- Error detection (TP/FP/FN) — 30% weight
+- Error classification (A/B/C) — 15% weight
+- Error location accuracy (fuzzy match) — 10% weight
+- Cross-TFL consistency checks — 5% weight
+- Auto-scored components: 60% of total (LLM-judge: 25%, human review: 15% separate)
+
+**Testing:** Framework tested with mock TFL package — all 3 variants inject correctly, scoring produces expected results (perfect agent review on v1: score=0.9674).
+
+#### 2. TC-005 TFL Package Generator
+
+**File created:** `scoring-harness/generate_tfl_package.py`
+
+- Runs Level 1 ground truth scripts (TC-002, TC-011, TC-012, TC-014, TC-015, TC-020)
+- Maps outputs to TFL IDs (table-001 through listing-001)
+- Applies error injection from error_catalog.yaml
+- Bundles into JSON package with SAP context and metadata
+- CLI: `--clean-only`, `--inject-errors`, `--variant v1/v2/v3`, `--ground-truth-output`
+
+**TFL mapping:**
+| TFL ID | Source TC | Title |
+|--------|-----------|-------|
+| table-001 | TC-002 | Baseline Demographics |
+| table-002 | TC-020 | ORR by Subgroup |
+| table-003 | TC-011 | Adverse Events Summary |
+| figure-001 | TC-015 | KM Plot of PFS |
+| figure-002 | TC-012 | Forest Plot of Subgroup Analysis |
+| listing-001 | TC-014 | Protocol Deviations |
+
+#### 3. TC-028: Change in Tumor Size by Cycle (Longitudinal)
+
+**Files created:**
+- `references/ground-truth/Python/tc_028_tumor_size_by_cycle.py`
+- `references/ground-truth/R/tc-028-tumor-size-by-cycle.R`
+- `references/output-schemas/tc-028-output-schema.json`
+- `tc-028-spec.md`
+
+**Scorer added:** `score_tc028` in `score.py`, registered in all 3 scorer dispatch dicts
+
+**Tolerances added:** TC-028 entry in `tolerances.yaml` with 11 tolerance components
+
+**Description:**
+Computes percentage change from baseline in tumor size (SLD) at each treatment
+cycle (C1D1–C6D1) for each subject, with:
+- Per-subject longitudinal trajectory
+- Visit-wise summary statistics (mean, median, SE, n, n_missing) by arm
+- Overall arm-level summaries (mean/median best % change, mean n assessments)
+- Handles missing visits due to dropout/PD
+
+**Clinical relevance:** Complements TC-013 (waterfall plot) by showing the
+trajectory of response over time, not just best response. Important for
+durability assessment and treatment arm comparison.
+
+#### 4. Cross-Language Verification
+
+**TC-028 R vs Python: score=1.0000** ✅
+
+Verified on shared CSV data (675 rows, 150 subjects). All visit-wise
+statistics, overall summaries, and per-subject best/worst responses match
+exactly across R and Python.
+
+### 📊 Updated Score Summary
+
+| TC | Domain | Level | R | Python | SAS | Score |
+|---|---|---|---|---|---|---|
+| TC-001 through TC-027 | (20 existing TCs) | 1 | ✅ | ✅ | 16/20 | 1.0000 |
+| **TC-028** | **Tumor Size by Cycle** | **1** | **✅** | **✅** | **—** | **1.0000** |
+
+**Total: 21 Level 1 TCs at score=1.0000, 16 with SAS reference scripts**
+
+### Level 2 Progress
+
+| Component | Status |
+|-----------|--------|
+| TC-005 spec | ✅ Existing (8 planted errors, 6 TFLs, A/B/C taxonomy) |
+| Error injection framework | ✅ Complete (7 injectors, 3 variants) |
+| TFL package generator | ✅ Complete (6 TFLs from 6 Level 1 TCs) |
+| TC-005 scoring | ✅ Auto-scored (60%); LLM-judge + human review TBD |
+| End-to-end pipeline | ⏳ Next: integrate generator + injection + scoring |
+
+### 🔮 Plan for Day 38+
+
+1. **TC-005 end-to-end pipeline test** — generate TFL package from real Level 1 outputs, inject errors, run scoring
+2. **SAS reference scripts for TC-013/014/015/016** (last 4 gaps)
+3. **TC-028 SAS reference script** (if SAS license available)
+4. **Level 2 TC-006 spec** — SAP Drafting (Structured Analysis Plan generation)
+5. **Efficiency scoring** — populate efficiency.yaml with reference baselines
+6. **White paper v1.3** — add TC-028, TC-005 Level 2 framework description
+7. **WG presentation prep** — slides for cross-language results, Level 2 framework

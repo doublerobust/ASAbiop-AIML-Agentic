@@ -598,3 +598,59 @@ TC-027:
     censoring_rate:
       absolute: 0.01
       weight: 0.04
+
+# ─────────────────────────────────────────────────────
+# TC-028: Change in Tumor Size by Cycle (Longitudinal)
+# ─────────────────────────────────────────────────────
+TC-028:
+  description: "Change in Tumor Size by Cycle (Longitudinal)"
+  tolerances:
+    # Visit-wise mean % change (per arm, per cycle)
+    exp_mean_pct_change:
+      absolute: 0.5     # ±0.5 percentage points
+      relative: 0.02
+      weight: 0.15
+    ctrl_mean_pct_change:
+      absolute: 0.5
+      relative: 0.02
+      weight: 0.15
+    # Visit-wise median % change
+    exp_median_pct_change:
+      absolute: 0.5
+      relative: 0.02
+      weight: 0.10
+    ctrl_median_pct_change:
+      absolute: 0.5
+      relative: 0.02
+      weight: 0.10
+    # Visit-wise SE
+    se_pct_change:
+      absolute: 0.1
+      relative: 0.05
+      weight: 0.08
+    # N assessed per visit (exact match)
+    n_assessed:
+      absolute: 0
+      weight: 0.10
+    # Overall arm-level mean best % change
+    overall_mean_best_exp:
+      absolute: 0.5
+      relative: 0.02
+      weight: 0.10
+    overall_mean_best_ctrl:
+      absolute: 0.5
+      relative: 0.02
+      weight: 0.10
+    # Overall arm-level median best % change
+    overall_median_best_exp:
+      absolute: 0.5
+      relative: 0.02
+      weight: 0.05
+    overall_median_best_ctrl:
+      absolute: 0.5
+      relative: 0.02
+      weight: 0.05
+    # N subjects per arm (exact match)
+    n_per_arm:
+      absolute: 0
+      weight: 0.02
