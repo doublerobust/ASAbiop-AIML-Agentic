@@ -287,4 +287,4 @@ error_class_distribution:
     B: 1
     C: 2
     total: 6
-    clean_tfls: ["figure-001", "figure-002"]
+    clean_tfls: ["figure-002"]

@@ -3026,3 +3026,111 @@ exactly across R and Python.
 5. **Efficiency scoring** — populate efficiency.yaml with reference baselines
 6. **White paper v1.3** — add TC-028, TC-005 Level 2 framework description
 7. **WG presentation prep** — slides for cross-language results, Level 2 framework
+
+---
+
+## 2026-07-07 — Day 38: TC-005 End-to-End Pipeline Validation + TC-006 Spec + Efficiency Baselines + White Paper v1.3
+
+### 🎯 Objectives
+1. Validate TC-005 end-to-end pipeline (clean generation → error injection → scoring)
+2. Create TC-006 (Level 2) detailed specification — Sample Size Re-Estimation at Interim
+3. Populate efficiency.yaml with reference baselines for all 21 Level 1 + 3 Level 2 + 4 Level 3 TCs
+4. Update white paper to v1.3
+
+### ✅ Completed
+
+#### 1. TC-005 End-to-End Pipeline Validation
+
+**Bug fix:** `inject_error_population()` in `error_injection.py` — `summary` field contained mixed types (dicts and strings), causing `AttributeError`. Fixed with `isinstance(row, dict)` guard.
+
+**Catalog fix:** v3 `clean_tfls` metadata listed `['figure-001', 'figure-002']` but v3 has an error targeting figure-001 (E-004 method error). Corrected to `['figure-002']`.
+
+**End-to-end test suite created:** `scoring-harness/test_tc005_pipeline.py` with 6 tests:
+
+| Test | Description | Result |
+|------|-------------|--------|
+| 1. Clean package generation | 6 TFLs generated with correct structure | ✅ Pass |
+| 2. Error injection (v1, v2, v3) | All 3 variants inject correct error counts/classes/clean TFLs | ✅ Pass |
+| 3. Perfect agent scoring | Perfect response → score=1.0000 (TP=8, FP=0, FN=0) | ✅ Pass |
+| 4. Partial agent scoring | 5/8 found → score=0.7292 (TP=5, FN=3) | ✅ Pass |
+| 5. Empty agent scoring | No errors found → score=0.0000 | ✅ Pass |
+| 6. Variant consistency | Same seed → identical clean packages | ✅ Pass |
+
+**All 6 tests pass.** TC-005 Level 2 pipeline is fully validated.
+
+#### 2. TC-006 Detailed Specification (Level 2 — Sample Size Re-Estimation)
+
+**File created:** `tc-006-level2-spec.md`
+
+- 10 parametric variants with varying pooled medians (4.5–6.0 mo), event counts (100–150), enrollment (170–250), and HR assumptions (0.70–0.80)
+- Blinded SSR design: pooled KM median → control median deconvolution → Schoenfeld re-estimation → conditional power
+- 3 HR scenarios per variant (pessimistic 0.80, original 0.75, optimistic 0.70)
+- Scoring: 50% auto-scored (numerical), 30% LLM-judge (recommendation/rationale), 20% human review (regulatory appropriateness)
+- Ground truth methods: R `gsDesign::ssrCP()`, SAS `PROC SEQDESIGN`, Python custom
+- Implementation status: spec complete, ground truth scripts pending
+
+#### 3. Efficiency Scoring — Reference Baselines Populated
+
+**File updated:** `scoring-harness/efficiency.yaml` (v0.2 → v0.3)
+
+Added `reference_baselines` section with estimated time, tokens, cost, and success rate for all TCs:
+
+| Level | TCs | Median Time | Median Cost | Notes |
+|-------|-----|-------------|-------------|-------|
+| Level 1 | 21 TCs | 15–35 sec | $0.002–0.006 | All at 1.0 success rate |
+| Level 2 | 3 TCs | 120–180 sec | $0.050–0.080 | Success rate TBD (needs agent runs) |
+| Level 3 | 4 TCs | 600–900 sec | $0.50–1.00 | Success rate TBD (needs agent runs) |
+
+Added `human_baselines` section:
+- Level 1: 15 min, $25 (mid-level programmer)
+- Level 2: 60 min, $100 (senior biostatistician)
+- Level 3: 240 min, $400 (senior + regulatory reviewer)
+
+Also added verification times for TC-028 (5 min R/4 min SAS/6 min Python verify) and TC-006 (10 min R/8 min SAS/12 min Python verify).
+
+Fixed structural issue: TC-024–027 verification times were outside the `verification_time` block — now properly nested.
+
+#### 4. White Paper v1.3
+
+**File updated:** `white-paper-v1.md` (v1.2 → v1.3)
+
+Key changes:
+- Updated TC count from 20 → 21 (TC-028 added to abstract)
+- Updated ARS coverage from 9 → 10 TCs
+- Added TC-005 Level 2 implementation details to Finding 5
+- Updated limitations to reflect TC-005 implementation status
+- Updated Phase 2 roadmap to reflect completed deliverables
+- Updated SAS script count from 13 → 16 in limitations
+
+### 📊 Updated Score Summary
+
+| TC | Domain | Level | R | Python | SAS | Score |
+|---|---|---|---|---|---|---|
+| TC-001 through TC-027 | (20 existing TCs) | 1 | ✅ | ✅ | 16/20 | 1.0000 |
+| TC-028 | Tumor Size by Cycle | 1 | ✅ | ✅ | — | 1.0000 |
+
+**Total: 21 Level 1 TCs at score=1.0000, 16 with SAS reference scripts**
+
+### Level 2 Progress
+
+| Component | Status |
+|-----------|--------|
+| TC-005 spec | ✅ Complete (8 planted errors, 6 TFLs, A/B/C taxonomy) |
+| Error injection framework | ✅ Complete (7 injectors, 3 variants) |
+| TFL package generator | ✅ Complete (6 TFLs from 6 Level 1 TCs) |
+| TC-005 scoring | ✅ Auto-scored (60%); LLM-judge + human review TBD |
+| End-to-end pipeline test | ✅ Complete (6/6 tests passing) |
+| TC-006 spec | ✅ Complete (10 variants, 3 HR scenarios, scoring rubric) |
+| TC-006 ground truth | ⏳ Pending (R/Python/SAS scripts) |
+| Efficiency baselines | ✅ Complete (v0.3, all 28 TCs + human baselines) |
+| White paper | ✅ v1.3 (updated abstract, findings, limitations, roadmap) |
+
+### 🔮 Plan for Day 39+
+
+1. **TC-006 ground truth implementation** — R `gsDesign::ssrCP()` + Python + SAS `PROC SEQDESIGN`
+2. **TC-006 cross-language verification** — verify at 1.0000
+3. **TC-006 data generator** — blinded interim enrollment + event CSV
+4. **TC-004 implementation** — SAP drafting LLM-judge integration
+5. **WG presentation prep** — slides for cross-language results, Level 2 framework, efficiency baselines
+6. **SAS reference script for TC-028** (tumor size by cycle)
+7. **Frontier model evaluation run** — test 2–3 models on Level 1 TCs for real efficiency data

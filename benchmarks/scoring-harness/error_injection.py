@@ -268,9 +268,9 @@ def inject_error_population(tfl_data: dict, tfl_id: str,
 
     _replace_pop(data)
     # Also adjust N counts to the safety population (typically smaller)
-    if "summary" in data:
+    if "summary" in data and isinstance(data["summary"], list):
         for row in data["summary"]:
-            if row.get("label") == "N":
+            if isinstance(row, dict) and row.get("label") == "N":
                 for arm in ["control", "experimental"]:
                     if arm in row:
                         row[arm] = int(row[arm]) - 2  # Simulate safety < ITT

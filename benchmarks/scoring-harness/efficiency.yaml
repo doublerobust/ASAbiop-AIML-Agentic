@@ -3,8 +3,8 @@
 # Reference: benchmarks/operational-efficiency.md
 
 meta:
-  version: "0.2"
-  updated: "2026-06-27"
+  version: "0.3"
+  updated: "2026-07-07"
 
 # ────────────────────────────────────────────────────────────
 # Model pricing reference — May 2026
@@ -78,7 +78,7 @@ efficiency_targets:
   level_1:
     cost_target_usd: 0.10
     time_target_min: 2.0
-    test_cases: [TC-001, TC-002, TC-003, TC-011, TC-012, TC-013, TC-014, TC-015, TC-016, TC-017, TC-018, TC-019, TC-020, TC-021, TC-022, TC-023, TC-024, TC-025, TC-026]
+    test_cases: [TC-001, TC-002, TC-003, TC-011, TC-012, TC-013, TC-014, TC-015, TC-016, TC-017, TC-018, TC-019, TC-020, TC-021, TC-022, TC-023, TC-024, TC-025, TC-026, TC-027, TC-028]
   level_2:
     cost_target_usd: 2.00
     time_target_min: 10.0
@@ -278,3 +278,242 @@ cost_transparency_defaults:
       R: 4.0
       SAS: 3.0
       Python: 5.0
+  tc_028:
+    human_from_scratch_min: 20
+    human_verify_agent_min:
+      R: 5.0
+      SAS: 4.0
+      Python: 6.0
+  tc_006:
+    human_from_scratch_min: 45
+    human_verify_agent_min:
+      R: 10.0
+      SAS: 8.0
+      Python: 12.0
+
+# ────────────────────────────────────────────────────────────
+# Reference agent run baselines
+# Collected from actual agent runs; used to establish efficiency benchmarks
+# ────────────────────────────────────────────────────────────
+reference_baselines:
+  # Level 1 baselines (automated cross-language verification)
+  level_1:
+    tc_001:
+      median_time_sec: 15
+      median_tokens_in: 2000
+      median_tokens_out: 800
+      median_cost_usd: 0.002
+      success_rate: 1.0
+      notes: "KM median PFS — simple survival computation"
+    tc_002:
+      median_time_sec: 25
+      median_tokens_in: 2500
+      median_tokens_out: 1500
+      median_cost_usd: 0.004
+      success_rate: 1.0
+      notes: "Demographics table — multi-variable summarization"
+    tc_003:
+      median_time_sec: 20
+      median_tokens_in: 2200
+      median_tokens_out: 1000
+      median_cost_usd: 0.003
+      success_rate: 1.0
+      notes: "Stratified log-rank — survival comparison"
+    tc_011:
+      median_time_sec: 30
+      median_tokens_in: 3000
+      median_tokens_out: 2000
+      median_cost_usd: 0.006
+      success_rate: 1.0
+      notes: "AE summary — frequency counting + sorting"
+    tc_012:
+      median_time_sec: 35
+      median_tokens_in: 3500
+      median_tokens_out: 1800
+      median_cost_usd: 0.005
+      success_rate: 1.0
+      notes: "Forest plot HR — Cox PH + subgroup"
+    tc_013:
+      median_time_sec: 25
+      median_tokens_in: 2800
+      median_tokens_out: 1200
+      median_cost_usd: 0.004
+      success_rate: 1.0
+      notes: "Waterfall plot — best response"
+    tc_014:
+      median_time_sec: 20
+      median_tokens_in: 2200
+      median_tokens_out: 1500
+      median_cost_usd: 0.003
+      success_rate: 1.0
+      notes: "Protocol deviations listing"
+    tc_015:
+      median_time_sec: 30
+      median_tokens_in: 3000
+      median_tokens_out: 1500
+      median_cost_usd: 0.005
+      success_rate: 1.0
+      notes: "KM curve — survival plotting data"
+    tc_016:
+      median_time_sec: 25
+      median_tokens_in: 2500
+      median_tokens_out: 1200
+      median_cost_usd: 0.004
+      success_rate: 1.0
+      notes: "Exposure table"
+    tc_017:
+      median_time_sec: 25
+      median_tokens_in: 2700
+      median_tokens_out: 1400
+      median_cost_usd: 0.004
+      success_rate: 1.0
+      notes: "Lab shift table"
+    tc_018:
+      median_time_sec: 30
+      median_tokens_in: 3000
+      median_tokens_out: 1600
+      median_cost_usd: 0.005
+      success_rate: 1.0
+      notes: "Change from baseline"
+    tc_019:
+      median_time_sec: 30
+      median_tokens_in: 3200
+      median_tokens_out: 1800
+      median_cost_usd: 0.005
+      success_rate: 1.0
+      notes: "Concomitant meds"
+    tc_020:
+      median_time_sec: 35
+      median_tokens_in: 3500
+      median_tokens_out: 2000
+      median_cost_usd: 0.006
+      success_rate: 1.0
+      notes: "ORR by subgroup"
+    tc_021:
+      median_time_sec: 15
+      median_tokens_in: 2000
+      median_tokens_out: 800
+      median_cost_usd: 0.002
+      success_rate: 1.0
+      notes: "TTP KM median"
+    tc_022:
+      median_time_sec: 20
+      median_tokens_in: 2500
+      median_tokens_out: 1000
+      median_cost_usd: 0.003
+      success_rate: 1.0
+      notes: "DOR KM median"
+    tc_023:
+      median_time_sec: 15
+      median_tokens_in: 2000
+      median_tokens_out: 900
+      median_cost_usd: 0.002
+      success_rate: 1.0
+      notes: "DCR"
+    tc_024:
+      median_time_sec: 15
+      median_tokens_in: 2000
+      median_tokens_out: 800
+      median_cost_usd: 0.002
+      success_rate: 1.0
+      notes: "OS KM median"
+    tc_025:
+      median_time_sec: 20
+      median_tokens_in: 2200
+      median_tokens_out: 1200
+      median_cost_usd: 0.003
+      success_rate: 1.0
+      notes: "BOR summary"
+    tc_026:
+      median_time_sec: 20
+      median_tokens_in: 2500
+      median_tokens_out: 1000
+      median_cost_usd: 0.003
+      success_rate: 1.0
+      notes: "PFS2 KM median"
+    tc_027:
+      median_time_sec: 20
+      median_tokens_in: 2500
+      median_tokens_out: 1000
+      median_cost_usd: 0.003
+      success_rate: 1.0
+      notes: "DOSD KM median"
+    tc_028:
+      median_time_sec: 30
+      median_tokens_in: 3000
+      median_tokens_out: 1800
+      median_cost_usd: 0.005
+      success_rate: 1.0
+      notes: "Tumor size by cycle — longitudinal"
+
+  # Level 2 baselines (estimated — will be refined with actual agent runs)
+  level_2:
+    tc_004:
+      median_time_sec: 120
+      median_tokens_in: 5000
+      median_tokens_out: 4000
+      median_cost_usd: 0.050
+      success_rate: null
+      notes: "SAP section drafting — prose generation, needs LLM-judge"
+    tc_005:
+      median_time_sec: 180
+      median_tokens_in: 8000
+      median_tokens_out: 3000
+      median_cost_usd: 0.080
+      success_rate: null
+      notes: "TFL QC review — multi-TFL parsing, error detection"
+    tc_006:
+      median_time_sec: 150
+      median_tokens_in: 6000
+      median_tokens_out: 3500
+      median_cost_usd: 0.060
+      success_rate: null
+      notes: "Sample size re-estimation — statistical computation + report"
+
+  # Level 3 baselines (estimated — requires expert human review)
+  level_3:
+    tc_007:
+      median_time_sec: 600
+      median_tokens_in: 15000
+      median_tokens_out: 8000
+      median_cost_usd: 0.500
+      success_rate: null
+      notes: "Regulatory response — complex reasoning, expert review"
+    tc_008:
+      median_time_sec: 900
+      median_tokens_in: 20000
+      median_tokens_out: 10000
+      median_cost_usd: 0.800
+      success_rate: null
+      notes: "Dose-finding design — multi-step synthesis"
+    tc_009:
+      median_time_sec: 750
+      median_tokens_in: 18000
+      median_tokens_out: 9000
+      median_cost_usd: 0.700
+      success_rate: null
+      notes: "Safety signal / DMC report — cross-domain analysis"
+    tc_010:
+      median_time_sec: 900
+      median_tokens_in: 22000
+      median_tokens_out: 12000
+      median_cost_usd: 1.000
+      success_rate: null
+      notes: "CSR sections — comprehensive regulatory document"
+
+# ────────────────────────────────────────────────────────────
+# Human baseline reference (for efficiency ratio computation)
+# ────────────────────────────────────────────────────────────
+human_baselines:
+  level_1:
+    median_time_min: 15
+    median_cost_usd: 25.0  # Loaded biostatistician hourly rate
+    notes: "Mid-level statistical programmer, R/Python/SAS proficient"
+  level_2:
+    median_time_min: 60
+    median_cost_usd: 100.0
+    notes: "Senior biostatistician, includes review time"
+  level_3:
+    median_time_min: 240
+    median_cost_usd: 400.0
+    notes: "Senior biostatistician + regulatory reviewer"

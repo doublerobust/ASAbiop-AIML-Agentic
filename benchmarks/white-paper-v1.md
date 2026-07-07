@@ -1,9 +1,9 @@
 # A Standardized Benchmark for Evaluating Agentic AI in Clinical Trial Statistical Analysis and Reporting
 
 **Working Paper — ASA Biopharmaceutical Section AI/ML Working Group**
-**Version:** 1.2 (Day 36, SAS gap-fill + TC-027 added)
+**Version:** 1.3 (Day 38, TC-028 + TC-005 Level 2 framework + efficiency baselines)
 **Status:** Draft for WG Review
-**Date:** 2026-07-05
+**Date:** 2026-07-07
 
 ---
 
@@ -11,9 +11,9 @@
 
 The rapid emergence of agentic AI systems for clinical trial statistical analysis — encompassing Tables, Figures, and Listings (TFL) programming, Statistical Analysis Plan (SAP) drafting, and quality control review — has outpaced the availability of standardized evaluation frameworks. Vendor claims of manual effort reduction lack independent verification, and no existing benchmark measures the combination of statistical correctness, regulatory compliance, safety awareness, and operational efficiency that defines acceptable performance in regulated clinical development.
 
-We present a multilingual (R and Python, with SAS reference scripts) benchmark with 20 Level 1 test cases covering survival analysis, baseline demographics, safety summaries, tumor response, exposure, lab shifts, change from baseline, concomitant medications, and subgroup analyses — all with cross-language-verified ground truth achieving perfect (1.0000) R↔Python agreement on shared data. An additional 7 Level 2 and Level 3 test cases address SAP section drafting, TFL quality control review, sample size re-estimation, regulatory response, dose-finding design, safety signal evaluation, and CSR statistical sections.
+We present a multilingual (R and Python, with SAS reference scripts) benchmark with 21 Level 1 test cases covering survival analysis, baseline demographics, safety summaries, tumor response, exposure, lab shifts, change from baseline, concomitant medications, subgroup analyses, and longitudinal tumor size trajectories — all with cross-language-verified ground truth achieving perfect (1.0000) R↔Python agreement on shared data. An additional 7 Level 2 and Level 3 test cases address SAP section drafting, TFL quality control review (with a fully implemented error injection framework), sample size re-estimation, regulatory response, dose-finding design, safety signal evaluation, and CSR statistical sections.
 
-The benchmark evaluates AI agents along four dimensions: statistical correctness (tolerance-based numerical comparison against cross-verified bilingual ground truth), regulatory compliance (194 encoded rules spanning FDA Study Data TCG checklist and ICH E3 CSR formatting), safety and robustness (covering N-count consistency, denominator validation, cross-TFL agreement, and edge case handling), and operational efficiency (cost, time, reliability with use-case-specific weighting profiles). CDISC Analysis Results Standard (ARS) v1.0 alignment has been demonstrated for 9 test cases via a backward-compatible envelope wrapper.
+The benchmark evaluates AI agents along four dimensions: statistical correctness (tolerance-based numerical comparison against cross-verified bilingual ground truth), regulatory compliance (194 encoded rules spanning FDA Study Data TCG checklist and ICH E3 CSR formatting), safety and robustness (covering N-count consistency, denominator validation, cross-TFL agreement, and edge case handling), and operational efficiency (cost, time, reliability with use-case-specific weighting profiles and reference baselines for all 21 Level 1 test cases). CDISC Analysis Results Standard (ARS) v1.0 alignment has been demonstrated for 10 test cases via a backward-compatible envelope wrapper. The Level 2 error injection framework for TC-005 (TFL QC Review) is fully implemented with 3 parametric variants, 7 error injection functions, and automated scoring across detection, classification, and location accuracy.
 
 This paper describes the benchmark design principles, scoring framework architecture, cross-language verification methodology, test case inventory, and implications for AI governance in clinical development. The benchmark is available as an open-source resource for the ASA Biopharmaceutical Section's Agentic AI Working Group and the broader clinical development community.
 
@@ -364,19 +364,19 @@ The regulatory dimension is particularly timely. The FDA-EMA Good AI Practice gu
 
 **Finding 4: Compliance rules are extensible.** The YAML-based rule configuration allows organizations to add therapeutic-area-specific or sponsor-specific rules without modifying the scoring harness code.
 
-**Finding 5: Level 2 evaluation requires hybrid approaches.** TC-004 and TC-005 specifications demonstrate that auto-scoring (~60%), LLM-as-judge (~25%), and human expert review (~15%) can be combined for interpretive tasks. The LLM-as-judge methodology (model selection, prompt template, inter-rater reliability assessment) remains to be finalized.
+**Finding 5: Level 2 evaluation requires hybrid approaches.** TC-004 and TC-005 specifications demonstrate that auto-scoring (~60%), LLM-as-judge (~25%), and human expert review (~15%) can be combined for interpretive tasks. The TC-005 error injection framework is now fully implemented with 3 parametric variants, 7 error injection functions covering A/B/C error classes, and automated scoring across detection, classification, and location accuracy. End-to-end pipeline testing confirms correct error injection, variant consistency, and scoring validity (perfect agent response = 1.0000, partial = 0.7292, empty = 0.0000). The LLM-as-judge methodology (model selection, prompt template, inter-rater reliability assessment) remains to be finalized.
 
 **Finding 6: Projected cost-accuracy spectrum shows wide variation.** At current API pricing, estimated cost per TFL ranges from ~$0.50 (DeepSeek V4) to ~$35 (GPT-4 class models). **These are projections, not measured results** — formal efficiency benchmarking is planned for Phase 2.
 
 ### 5.3 Limitations
 
-1. **SAS implementations are reference-only.** All 13 SAS scripts follow standard SAS programming conventions but have not been executed due to licensing constraints. Cross-language verification is currently R↔Python only.
+1. **SAS implementations are reference-only.** All 16 SAS scripts follow standard SAS programming conventions but have not been executed due to licensing constraints. Cross-language verification is currently R↔Python only.
 
 2. **Level 1 tests computation, not code generation or design reasoning.** The benchmark evaluates whether an agent produces the correct numerical output, not whether it demonstrates design judgment, writes maintainable code, or interprets SAP requirements. The "agentic" label for Level 1 is limited — these are reproduction tasks.
 
-3. **Level 2 and Level 3 test cases are not yet implemented.** TC-004 and TC-005 specifications are complete; the error injection framework, LLM-as-judge integration, and human review infrastructure require additional effort.
+3. **Level 2 TC-005 is implemented; TC-004 and TC-006 specifications are complete.** The TC-005 error injection framework, TFL package generator, and auto-scorer are fully functional with end-to-end pipeline tests passing. TC-006 (sample size re-estimation) specification is complete with 10 parametric variants; ground truth implementation is pending. LLM-as-judge integration and human review infrastructure for Level 2 require additional effort.
 
-4. **Human baseline data has not been collected.** Efficiency targets are estimated from the authors' experience, not measured from actual human programmer runs.
+4. **Human baseline data has not been collected.** Efficiency targets and reference baselines are estimated from the authors' experience and projected API pricing, not measured from actual human programmer or agent runs.
 
 5. **Contamination risk for standard methods.** KM, log-rank, and Cox PH are extensively represented in model training data. Parametric variants (different seeds, sample sizes) mitigate but do not eliminate this risk.
 
@@ -400,7 +400,7 @@ Our benchmark is unique in combining statistical correctness, regulatory complia
 
 ### 5.5 Future Directions
 
-**Phase 2 (Days 33–40):** Implement Level 2 test cases (TC-004 SAP drafting, TC-005 TFL QC review). Build error injection framework. Begin human baseline collection from WG volunteers. Run 2–3 frontier models across all Level 1 TCs for initial efficiency measurement.
+**Phase 2 (Days 33–45):** Implement Level 2 test cases. TC-005 error injection framework is complete with end-to-end pipeline tests passing. TC-006 (sample size re-estimation) specification complete with 10 variants. Begin human baseline collection from WG volunteers. Run 2–3 frontier models across all Level 1 TCs for initial efficiency measurement. Populate efficiency baselines from actual agent runs.
 
 **Phase 3 (Days 41–50):** Extend ARS compliance to all Level 1 TCs. Implement Level 3 test cases. Begin vendor evaluation pilot with 3–5 vendors (Saama, JDIX/Taimei, Certara, others).
 
@@ -432,8 +432,8 @@ The scoring framework evaluates four dimensions — statistical correctness (tol
 
 1. **SAS not executed in CI.** SAS reference implementations exist for 16 test cases but no license is available on the CI runner.
 2. **Computation, not code quality.** The benchmark evaluates numerical outputs, not code maintainability or design judgment.
-3. **Level 2/3 not yet implemented.** Specifications exist but infrastructure is incomplete.
-4. **No human baselines.** Efficiency targets are estimated, not measured.
+3. **Level 2 TC-005 implemented; TC-006 spec complete.** TC-005 error injection framework and auto-scorer are functional. TC-006 (sample size re-estimation) spec is ready for implementation. Level 3 TCs remain as specifications only.
+4. **Reference baselines estimated, not measured.** Efficiency targets and reference agent run baselines are projected from API pricing and author experience. Human baseline data collection is planned.
 5. **Oncology-focused.** Generalization requires additional test case development.
 6. **Contamination risk partially mitigated.** Parametric variants help but standard methods remain at risk.
 7. **Single-case error injection validation.** Systematic multi-TC validation is needed.
