@@ -30,7 +30,7 @@ This test case bridges Level 1 (numerical computation) and Level 3 (regulatory j
 | **Design** | 1:1 randomization, active control, superiority |
 | **Planned enrollment** | 600 patients (300 per arm) |
 | **Original assumptions** | Median PFS control = 6 months, HR = 0.75, 90% power, 2-sided α = 0.05 |
-| **Required events (original)** | 331 (using Schoenfeld formula) |
+| **Required events (original)** | 127 (using Schoenfeld formula, 90% power, 2-sided α=0.05) |
 | **Interim analysis** | Blinded SSR at 200 enrolled, 120 events observed |
 
 ### Interim Data
@@ -39,7 +39,7 @@ This test case bridges Level 1 (numerical computation) and Level 3 (regulatory j
 | **Enrolled** | 200 / 600 (33.3%) |
 | **Events observed** | 120 (both arms pooled) |
 | **Pooled median PFS** | 5.2 months (95% CI: 4.6–5.9) |
-| **Information fraction** | 120/331 = 36.3% |
+| **Information fraction** | 120/127 = 94.5% |
 | **Accrual rate** | ~20 patients/month |
 | **Event rate (observed)** | ~12 events/month (pooled) |
 

@@ -1,9 +1,9 @@
 # A Standardized Benchmark for Evaluating Agentic AI in Clinical Trial Statistical Analysis and Reporting
 
 **Working Paper — ASA Biopharmaceutical Section AI/ML Working Group**
-**Version:** 1.3 (Day 38, TC-028 + TC-005 Level 2 framework + efficiency baselines)
+**Version:** 1.4 (Day 39, TC-006 Level 2 ground truth + cross-lang verification 1.0000)
 **Status:** Draft for WG Review
-**Date:** 2026-07-07
+**Date:** 2026-07-08
 
 ---
 
@@ -11,7 +11,7 @@
 
 The rapid emergence of agentic AI systems for clinical trial statistical analysis — encompassing Tables, Figures, and Listings (TFL) programming, Statistical Analysis Plan (SAP) drafting, and quality control review — has outpaced the availability of standardized evaluation frameworks. Vendor claims of manual effort reduction lack independent verification, and no existing benchmark measures the combination of statistical correctness, regulatory compliance, safety awareness, and operational efficiency that defines acceptable performance in regulated clinical development.
 
-We present a multilingual (R and Python, with SAS reference scripts) benchmark with 21 Level 1 test cases covering survival analysis, baseline demographics, safety summaries, tumor response, exposure, lab shifts, change from baseline, concomitant medications, subgroup analyses, and longitudinal tumor size trajectories — all with cross-language-verified ground truth achieving perfect (1.0000) R↔Python agreement on shared data. An additional 7 Level 2 and Level 3 test cases address SAP section drafting, TFL quality control review (with a fully implemented error injection framework), sample size re-estimation, regulatory response, dose-finding design, safety signal evaluation, and CSR statistical sections.
+We present a multilingual (R and Python, with SAS reference scripts) benchmark with 21 Level 1 test cases covering survival analysis, baseline demographics, safety summaries, tumor response, exposure, lab shifts, change from baseline, concomitant medications, subgroup analyses, and longitudinal tumor size trajectories — all with cross-language-verified ground truth achieving perfect (1.0000) R↔Python agreement on shared data. An additional 7 Level 2 and Level 3 test cases address SAP section drafting, TFL quality control review (with a fully implemented error injection framework), sample size re-estimation (with fully implemented ground truth and cross-language verification), regulatory response, dose-finding design, safety signal evaluation, and CSR statistical sections.
 
 The benchmark evaluates AI agents along four dimensions: statistical correctness (tolerance-based numerical comparison against cross-verified bilingual ground truth), regulatory compliance (194 encoded rules spanning FDA Study Data TCG checklist and ICH E3 CSR formatting), safety and robustness (covering N-count consistency, denominator validation, cross-TFL agreement, and edge case handling), and operational efficiency (cost, time, reliability with use-case-specific weighting profiles and reference baselines for all 21 Level 1 test cases). CDISC Analysis Results Standard (ARS) v1.0 alignment has been demonstrated for 10 test cases via a backward-compatible envelope wrapper. The Level 2 error injection framework for TC-005 (TFL QC Review) is fully implemented with 3 parametric variants, 7 error injection functions, and automated scoring across detection, classification, and location accuracy.
 

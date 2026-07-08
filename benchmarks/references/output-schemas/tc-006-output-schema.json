@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-006 Blinded Sample Size Re-Estimation Output Schema",
+  "type": "object",
+  "required": ["test_case_id", "title", "level", "current_status", "blinded_estimation", "scenarios", "overall_recommendation", "language", "version"],
+  "properties": {
+    "test_case_id": {"type": "string", "const": "TC-006"},
+    "title": {"type": "string", "const": "Blinded Sample Size Re-Estimation at Interim"},
+    "level": {"type": "string", "const": "Level 2"},
+    "input_parameters": {
+      "type": "object",
+      "properties": {
+        "seed": {"type": "integer"},
+        "enrolled": {"type": "integer"},
+        "events_observed": {"type": "integer"},
+        "pooled_median_pfs": {"type": "number"},
+        "accrual_rate": {"type": "number"},
+        "original_hr": {"type": "number"},
+        "original_events": {"type": "integer"},
+        "planned_n": {"type": "integer"},
+        "alpha": {"type": "number"},
+        "power": {"type": "number"}
+      }
+    },
+    "current_status": {
+      "type": "object",
+      "required": ["enrolled", "planned_n", "enrollment_pct", "events_observed", "original_events", "information_fraction", "accrual_rate"],
+      "properties": {
+        "enrolled": {"type": "integer"},
+        "planned_n": {"type": "integer"},
+        "enrollment_pct": {"type": "number"},
+        "events_observed": {"type": "integer"},
+        "original_events": {"type": "integer"},
+        "information_fraction": {"type": "number"},
+        "accrual_rate": {"type": "number"}
+      }
+    },
+    "blinded_estimation": {
+      "type": "object",
+      "required": ["pooled_median_pfs", "estimated_event_rate_monthly", "lambda"],
+      "properties": {
+        "pooled_median_pfs": {"type": "number"},
+        "pooled_median_ci_lower": {"type": ["number", "null"]},
+        "pooled_median_ci_upper": {"type": ["number", "null"]},
+        "estimated_event_rate_monthly": {"type": "number"},
+        "lambda": {"type": "number"}
+      }
+    },
+    "scenarios": {
+      "type": "object",
+      "required": ["optimistic", "original", "pessimistic"],
+      "properties": {
+        "optimistic": {"$ref": "#/definitions/scenario"},
+        "original": {"$ref": "#/definitions/scenario"},
+        "pessimistic": {"$ref": "#/definitions/scenario"}
+      }
+    },
+    "overall_recommendation": {
+      "type": "string",
+      "enum": ["continue_as_planned", "increase_sample_size", "consider_futility"]
+    },
+    "recommendation_rationale": {"type": "string"},
+    "assumptions": {"type": "array", "items": {"type": "string"}},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "language": {"type": "string"},
+    "version": {"type": "string"}
+  },
+  "definitions": {
+    "scenario": {
+      "type": "object",
+      "required": ["hr", "control_median_pfs", "treatment_median_pfs", "events_needed", "total_n_needed", "incremental_n", "conditional_power", "recommendation"],
+      "properties": {
+        "hr": {"type": "number"},
+        "control_median_pfs": {"type": "number"},
+        "treatment_median_pfs": {"type": "number"},
+        "events_needed": {"type": "number"},
+        "total_n_needed": {"type": "integer"},
+        "incremental_n": {"type": "integer"},
+        "conditional_power": {"type": ["number", "null"]},
+        "recommendation": {
+          "type": "string",
+          "enum": ["continue_as_planned", "increase_sample_size", "consider_futility"]
+        }
+      }
+    }
+  }
+}

@@ -1844,6 +1844,127 @@ def score_tc028(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# TC-006: Blinded Sample Size Re-Estimation at Interim (Level 2)
+# --------------------------------------------------------------------
+
+def score_tc006(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-006 (Blinded SSR at Interim) agent output.
+
+    Compares current status, blinded estimation, and per-scenario
+    computations (control median, events needed, total N, conditional power)
+    across 3 HR scenarios (optimistic=0.70, original=0.75, pessimistic=0.80).
+    """
+    tol_spec = tolerances.get("TC-006", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    # --- Current status ---
+    ag_cs = agent_output.get("current_status", {})
+    gt_cs = ground_truth.get("current_status", {})
+
+    # Enrollment pct
+    tol = tol_spec.get("enrollment_pct", {})
+    r = compare_numeric(ag_cs.get("enrollment_pct"), gt_cs.get("enrollment_pct"),
+                       tol, "enrollment_pct")
+    component_scores["enrollment_pct"] = r
+    weighted_sum += r["score"] * tol.get("weight", 0.02)
+    total_weight += tol.get("weight", 0.02)
+
+    # Information fraction
+    tol = tol_spec.get("information_fraction", {})
+    r = compare_numeric(ag_cs.get("information_fraction"), gt_cs.get("information_fraction"),
+                       tol, "information_fraction")
+    component_scores["information_fraction"] = r
+    weighted_sum += r["score"] * tol.get("weight", 0.05)
+    total_weight += tol.get("weight", 0.05)
+
+    # --- Blinded estimation ---
+    ag_be = agent_output.get("blinded_estimation", {})
+    gt_be = ground_truth.get("blinded_estimation", {})
+
+    # Pooled median PFS
+    tol = tol_spec.get("pooled_median_pfs", {})
+    r = compare_numeric(ag_be.get("pooled_median_pfs"), gt_be.get("pooled_median_pfs"),
+                       tol, "pooled_median_pfs")
+    component_scores["pooled_median_pfs"] = r
+    weighted_sum += r["score"] * tol.get("weight", 0.05)
+    total_weight += tol.get("weight", 0.05)
+
+    # Estimated event rate monthly
+    tol = tol_spec.get("estimated_event_rate_monthly", {})
+    r = compare_numeric(ag_be.get("estimated_event_rate_monthly"),
+                        gt_be.get("estimated_event_rate_monthly"),
+                       tol, "estimated_event_rate_monthly")
+    component_scores["estimated_event_rate_monthly"] = r
+    weighted_sum += r["score"] * tol.get("weight", 0.05)
+    total_weight += tol.get("weight", 0.05)
+
+    # Lambda
+    tol = tol_spec.get("lambda", {})
+    r = compare_numeric(ag_be.get("lambda"), gt_be.get("lambda"),
+                       tol, "lambda")
+    component_scores["lambda"] = r
+    weighted_sum += r["score"] * tol.get("weight", 0.03)
+    total_weight += tol.get("weight", 0.03)
+
+    # --- Per-scenario comparisons ---
+    ag_scenarios = agent_output.get("scenarios", {})
+    gt_scenarios = ground_truth.get("scenarios", {})
+
+    for scenario_name in ["optimistic", "original", "pessimistic"]:
+        ag_s = ag_scenarios.get(scenario_name, {})
+        gt_s = gt_scenarios.get(scenario_name, {})
+
+        # Control median
+        tol = tol_spec.get("control_median", {})
+        r = compare_numeric(ag_s.get("control_median_pfs"),
+                            gt_s.get("control_median_pfs"),
+                           tol, f"{scenario_name}_control_median")
+        component_scores[f"{scenario_name}_control_median"] = r
+        weighted_sum += r["score"] * tol.get("weight", 0.10) / 3
+        total_weight += tol.get("weight", 0.10) / 3
+
+        # Events needed
+        tol = tol_spec.get("events_needed", {})
+        r = compare_numeric(ag_s.get("events_needed"),
+                            gt_s.get("events_needed"),
+                           tol, f"{scenario_name}_events_needed")
+        component_scores[f"{scenario_name}_events_needed"] = r
+        weighted_sum += r["score"] * tol.get("weight", 0.10) / 3
+        total_weight += tol.get("weight", 0.10) / 3
+
+        # Total N needed
+        tol = tol_spec.get("total_n_needed", {})
+        r = compare_numeric(ag_s.get("total_n_needed"),
+                            gt_s.get("total_n_needed"),
+                           tol, f"{scenario_name}_total_n_needed")
+        component_scores[f"{scenario_name}_total_n_needed"] = r
+        weighted_sum += r["score"] * tol.get("weight", 0.10) / 3
+        total_weight += tol.get("weight", 0.10) / 3
+
+        # Conditional power
+        tol = tol_spec.get("conditional_power", {})
+        r = compare_numeric(ag_s.get("conditional_power"),
+                            gt_s.get("conditional_power"),
+                           tol, f"{scenario_name}_conditional_power")
+        component_scores[f"{scenario_name}_conditional_power"] = r
+        weighted_sum += r["score"] * tol.get("weight", 0.10) / 3
+        total_weight += tol.get("weight", 0.10) / 3
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-006",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", agent_output.get("metadata", {}).get("language", "unknown")),
+        "ground_truth_language": ground_truth.get("language", ground_truth.get("metadata", {}).get("language", "unknown")),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
 # Efficiency Helpers
 # --------------------------------------------------------------------
 
@@ -2168,6 +2289,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-026": score_tc026,
         "TC-027": score_tc027,
         "TC-028": score_tc028,
+        "TC-006": score_tc006,
     }
 
     scorer = scorers.get(tc)
@@ -2303,6 +2425,7 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-026": score_tc026,
         "TC-027": score_tc027,
         "TC-028": score_tc028,
+        "TC-006": score_tc006,
     }
 
     scorer = scorers.get(tc)
@@ -2516,6 +2639,7 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-026": score_tc026,
         "TC-027": score_tc027,
         "TC-028": score_tc028,
+        "TC-006": score_tc006,
     }
     scorer = scorers.get(tc)
     if scorer is None:

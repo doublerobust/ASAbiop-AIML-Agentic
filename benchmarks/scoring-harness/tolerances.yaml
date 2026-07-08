@@ -654,3 +654,55 @@ TC-028:
     n_per_arm:
       absolute: 0
       weight: 0.02
+
+# ─────────────────────────────────────────────────────────────────────
+# TC-006: Blinded Sample Size Re-Estimation at Interim (Level 2)
+# ─────────────────────────────────────────────────────────────────────
+TC-006:
+  description: "Blinded Sample Size Re-Estimation at Interim"
+  tolerances:
+    # Pooled median PFS
+    pooled_median_pfs:
+      absolute: 0.1
+      relative: 0.01
+      weight: 0.05
+    # Information fraction
+    information_fraction:
+      absolute: 0.005
+      relative: 0.01
+      weight: 0.05
+    # Control median (3 scenarios)
+    control_median:
+      absolute: 0.2
+      relative: 0.02
+      weight: 0.10
+    # Events needed (3 scenarios)
+    events_needed:
+      absolute: 5
+      relative: 0.02
+      weight: 0.10
+    # Total N needed (3 scenarios)
+    total_n_needed:
+      absolute: 15
+      relative: 0.03
+      weight: 0.10
+    # Conditional power (3 scenarios)
+    conditional_power:
+      absolute: 0.03
+      relative: 0.05
+      weight: 0.10
+    # Estimated event rate
+    estimated_event_rate_monthly:
+      absolute: 0.5
+      relative: 0.05
+      weight: 0.05
+    # Lambda
+    lambda:
+      absolute: 0.001
+      relative: 0.01
+      weight: 0.03
+    # Enrollment pct
+    enrollment_pct:
+      absolute: 0.1
+      relative: 0.01
+      weight: 0.02
