@@ -1,0 +1,65 @@
+{
+  "test_case_id": "TC-004",
+  "title": "SAP Primary Efficacy Analysis Section — Reference (Ground Truth)",
+  "level": "Level 2",
+  "version": "1.0",
+  "trial_design": {
+    "indication": "First-line metastatic non-small cell lung cancer (NSCLC)",
+    "endpoint": "Overall survival (OS)",
+    "design": "1:1 randomization, active control, superiority",
+    "sample_size": 600,
+    "interim_analysis": {
+      "timing": "60% of target events",
+      "n_events": 199
+    },
+    "final_analysis": {
+      "n_events": 331
+    },
+    "power": 0.90,
+    "target_hr": 0.75,
+    "alpha": 0.05,
+    "group_sequential": "O'Brien-Fleming",
+    "stratification_factors": [
+      "PD-L1 expression (≥50%, 1-49%, <1%)",
+      "ECOG performance status (0, 1)"
+    ],
+    "primary_method": "Stratified log-rank test"
+  },
+  "sections": [
+    {
+      "title": "1. Analysis Population Definition",
+      "content": "The Intent-to-Treat (ITT) population is defined as all randomized subjects, regardless of whether they received study treatment, discontinued treatment early, or deviated from the protocol. The ITT principle is upheld for the primary analysis: all randomized subjects are analyzed according to the arm to which they were assigned. Subjects who discontinue treatment continue to be followed for overall survival per protocol. The Per-Protocol (PP) population excludes subjects with major protocol deviations that could affect the primary endpoint. The As-Treated (AT) population includes only subjects who received at least one dose of study treatment and are analyzed according to the treatment actually received."
+    },
+    {
+      "title": "2. Primary Endpoint Definition and Estimand",
+      "content": "The primary endpoint is Overall Survival (OS), defined as the time from randomization to death from any cause. Subjects who are alive at the data cut-off date or lost to follow-up are censored at their last known alive date. The estimand is specified per ICH E9(R1) with the following five attributes: (1) Population: Intent-to-Treat (ITT) — all randomized subjects. (2) Variable: OS, a time-to-event outcome measured from randomization to death from any cause. (3) Intercurrent Events: Treatment switching (handled by the treatment policy strategy — ITT principle applies, no adjustment for switching in the primary analysis); Death without prior progression (counted as an event for OS, as OS counts all-cause mortality); Loss to follow-up (handled by the composite strategy — censored at last known alive date, with sensitivity analyses for informative censoring). (4) Summary Measure: Hazard ratio (HR) from a stratified log-rank test, estimating the relative risk of death between the experimental and active control arms. (5) Treatment Effect: Experimental arm vs. Active control, with a target HR of 0.75 representing a 25% reduction in the risk of death."
+    },
+    {
+      "title": "3. Statistical Hypothesis",
+      "content": "The primary analysis tests the following hypotheses: H₀: HR = 1 (no difference in overall survival between the experimental and control arms). H₁: HR ≠ 1 (two-sided alternative; there is a difference in overall survival between arms). The significance level is α = 0.05 (two-sided). The study is powered at 90% to detect a target HR of 0.75 (25% risk reduction) with 331 events. The group sequential design uses the O'Brien-Fleming alpha spending function, with one interim analysis at 60% of target events (199 events) and a final analysis at 331 events. The O'Brien-Fleming boundary is conservative at early looks, preserving most of the alpha for the final analysis, minimizing the risk of stopping prematurely. The overall Type I error is controlled at 0.05 (two-sided) across both looks."
+    },
+    {
+      "title": "4. Analysis Method Specification",
+      "content": "The primary analysis is a stratified log-rank test, stratified by PD-L1 expression (≥50%, 1-49%, <1%) and ECOG performance status (0, 1). The hazard ratio and its 95% confidence interval are estimated from a stratified Cox proportional hazards model with treatment as the sole covariate, stratified by PD-L1 and ECOG. The proportional hazards assumption is tested using Schoenfeld residuals; if the assumption is violated, a sensitivity analysis using RMST is performed. The log-rank p-value and HR with 95% CI are reported. Median OS for each arm is estimated using the Kaplan-Meier method with 95% CIs computed using the Brookmeyer-Crowley method with log-log transformation."
+    },
+    {
+      "title": "5. Handling of Intercurrent Events",
+      "content": "Intercurrent events are handled per the ICH E9(R1) framework: (1) Treatment switching: The primary analysis follows the treatment policy strategy (ITT principle) — all subjects are analyzed as randomized regardless of treatment switching or discontinuation. No adjustment for treatment switching is made in the primary analysis. A sensitivity analysis using the Rank Preserving Structural Failure Time Model (RPSFTM) or Inverse Probability of Censoring Weighting (IPCW) may be considered to estimate the treatment effect in the absence of switching. (2) Death without prior progression: For OS, all deaths are counted as events regardless of whether progression preceded death. (3) Loss to follow-up: Subjects lost to follow-up are censored at their last known alive date. A sensitivity analysis using a tipping point analysis assesses the impact of informative censoring by varying assumptions about the survival of censored subjects. (4) Treatment discontinuation: Subjects who discontinue treatment are followed for OS per the ITT principle."
+    },
+    {
+      "title": "6. Sensitivity and Supplementary Analyses",
+      "content": "The following sensitivity analyses are pre-specified to assess the robustness of the primary result: (1) Unstratified log-rank test — to evaluate the impact of stratification on the treatment comparison. (2) Cox PH model with stratification factors as covariates (main effects model) — to estimate the treatment effect adjusting for strata as covariates rather than via stratification. (3) Restricted Mean Survival Time (RMST) at 12, 24, and 36 months — a non-parametric alternative that does not rely on the proportional hazards assumption, providing an absolute measure of treatment benefit. (4) Tipping point analysis for informative censoring — systematically varying the assumed survival of censored subjects to identify the threshold at which the primary conclusion changes. (5) Per-protocol analysis — excluding subjects with major protocol deviations to assess the treatment effect in a compliant population. (6) Landmark analysis at 6 and 12 months — to assess survival probabilities at fixed time points. All sensitivity analyses are considered supportive and do not affect the primary conclusion."
+    },
+    {
+      "title": "7. Subgroup Analyses (Pre-specified)",
+      "content": "Pre-specified subgroup analyses are conducted to evaluate the consistency of treatment effect across key subgroups: (1) PD-L1 expression: ≥50% vs. 1-49% vs. <1% (stratification factor). (2) ECOG performance status: 0 vs. 1 (stratification factor). (3) Age: <65 vs. ≥65 years. (4) Sex: Male vs. Female. (5) Histology: Squamous vs. Non-squamous. (6) Region: Asia vs. Non-Asia. Treatment-by-subgroup interaction tests are performed for each subgroup using a Cox PH model with the subgroup, treatment, and treatment×subgroup interaction term. Results are presented as a forest plot showing the HR and 95% CI for each subgroup. Subgroup analyses are exploratory and intended to assess consistency, not to establish efficacy within subgroups. No formal multiplicity adjustment is applied to subgroup analyses; they are presented with nominal 95% CIs."
+    }
+  ],
+  "estimand": {
+    "population": "ITT — all randomized subjects",
+    "variable": "OS — time from randomization to death from any cause",
+    "intercurrent_events": "Treatment switching (ITT/treatment policy), death (counted as event), loss to follow-up (censored at last known alive)",
+    "summary_measure": "Hazard ratio from stratified log-rank test",
+    "treatment": "Experimental vs. Active control"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-004 SAP Section Drafting Output Schema",
+  "type": "object",
+  "required": ["test_case_id", "title", "sections", "estimand"],
+  "properties": {
+    "test_case_id": {"type": "string", "const": "TC-004"},
+    "title": {"type": "string"},
+    "level": {"type": "string", "const": "Level 2"},
+    "sections": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["title", "content"],
+        "properties": {
+          "title": {"type": "string", "minLength": 5},
+          "content": {"type": "string", "minLength": 50}
+        }
+      }
+    },
+    "estimand": {
+      "type": "object",
+      "required": ["population", "variable", "intercurrent_events", "summary_measure", "treatment"],
+      "properties": {
+        "population": {"type": "string"},
+        "variable": {"type": "string"},
+        "intercurrent_events": {"type": "string"},
+        "summary_measure": {"type": "string"},
+        "treatment": {"type": "string"}
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "language": {"type": "string"},
+        "model": {"type": "string"},
+        "generation_time_sec": {"type": "number"},
+        "tokens_in": {"type": "integer"},
+        "tokens_out": {"type": "integer"}
+      }
+    }
+  }
+}

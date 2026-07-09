@@ -706,3 +706,53 @@ TC-006:
       absolute: 0.1
       relative: 0.01
       weight: 0.02
+
+# ─────────────────────────────────────────────────────
+# TC-004: SAP Section Drafting (Level 2)
+# Scoring is rubric-based (not tolerance-based).
+# See tc004_scorer.py for the full scoring implementation.
+# Auto-scorable: 40%, LLM-as-judge: 40%, Human review: 20%
+# ─────────────────────────────────────────────────────
+TC-004:
+  scoring_method: rubric
+  auto_score_weight: 0.40
+  llm_judge_weight: 0.40
+  human_review_weight: 0.20
+  auto_criteria:
+    sections_present:
+      weight: 0.08
+      required_count: 7
+    estimand_5_attributes:
+      weight: 0.08
+      required_attributes: [population, variable, intercurrent, summary_measure, treatment]
+    hypothesis_stated:
+      weight: 0.04
+    alpha_power_match:
+      weight: 0.04
+      alpha: 0.05
+      power: 0.90
+    stratified_logrank:
+      weight: 0.04
+      strata: [PD-L1, ECOG]
+    sensitivity_count:
+      weight: 0.04
+      min_count: 2
+    obf_alpha_spending:
+      weight: 0.04
+    subgroup_count:
+      weight: 0.04
+      min_count: 3
+  llm_judge_criteria:
+    itt_population: 0.04
+    intercurrent_events: 0.06
+    estimand_attributes: 0.06
+    statistical_reasoning: 0.06
+    sensitivity_justification: 0.04
+    multiplicity_control: 0.04
+    sample_size_futility: 0.04
+    e9_terminology: 0.06
+  human_review_criteria:
+    clinical_relevance: 0.05
+    sensitivity_appropriateness: 0.05
+    regulatory_clarity: 0.05
+    design_consistency: 0.05

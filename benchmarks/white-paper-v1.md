@@ -1,9 +1,9 @@
 # A Standardized Benchmark for Evaluating Agentic AI in Clinical Trial Statistical Analysis and Reporting
 
 **Working Paper — ASA Biopharmaceutical Section AI/ML Working Group**
-**Version:** 1.4 (Day 39, TC-006 Level 2 ground truth + cross-lang verification 1.0000)
+**Version:** 1.5 (Day 40, TC-004 LLM-judge scorer + SAS TC-028 + TC-029-035 candidates)
 **Status:** Draft for WG Review
-**Date:** 2026-07-08
+**Date:** 2026-07-09
 
 ---
 
@@ -11,9 +11,9 @@
 
 The rapid emergence of agentic AI systems for clinical trial statistical analysis — encompassing Tables, Figures, and Listings (TFL) programming, Statistical Analysis Plan (SAP) drafting, and quality control review — has outpaced the availability of standardized evaluation frameworks. Vendor claims of manual effort reduction lack independent verification, and no existing benchmark measures the combination of statistical correctness, regulatory compliance, safety awareness, and operational efficiency that defines acceptable performance in regulated clinical development.
 
-We present a multilingual (R and Python, with SAS reference scripts) benchmark with 21 Level 1 test cases covering survival analysis, baseline demographics, safety summaries, tumor response, exposure, lab shifts, change from baseline, concomitant medications, subgroup analyses, and longitudinal tumor size trajectories — all with cross-language-verified ground truth achieving perfect (1.0000) R↔Python agreement on shared data. An additional 7 Level 2 and Level 3 test cases address SAP section drafting, TFL quality control review (with a fully implemented error injection framework), sample size re-estimation (with fully implemented ground truth and cross-language verification), regulatory response, dose-finding design, safety signal evaluation, and CSR statistical sections.
+We present a multilingual (R and Python, with SAS reference scripts) benchmark with 21 Level 1 test cases covering survival analysis, baseline demographics, safety summaries, tumor response, exposure, lab shifts, change from baseline, concomitant medications, subgroup analyses, and longitudinal tumor size trajectories — all with cross-language-verified ground truth achieving perfect (1.0000) R↔Python agreement on shared data. SAS reference scripts are available for all 21 Level 1 test cases. An additional 7 Level 2 and Level 3 test cases address SAP section drafting (with auto-scorer and LLM-judge integration), TFL quality control review (with a fully implemented error injection framework), sample size re-estimation (with fully implemented ground truth and cross-language verification), regulatory response, dose-finding design, safety signal evaluation, and CSR statistical sections. Seven candidate test cases (TC-029–035) are proposed for benchmark expansion, covering AE by severity, ORR with interaction tests, dose intensity, immune-related AEs, and multi-TC composite integration.
 
-The benchmark evaluates AI agents along four dimensions: statistical correctness (tolerance-based numerical comparison against cross-verified bilingual ground truth), regulatory compliance (194 encoded rules spanning FDA Study Data TCG checklist and ICH E3 CSR formatting), safety and robustness (covering N-count consistency, denominator validation, cross-TFL agreement, and edge case handling), and operational efficiency (cost, time, reliability with use-case-specific weighting profiles and reference baselines for all 21 Level 1 test cases). CDISC Analysis Results Standard (ARS) v1.0 alignment has been demonstrated for 10 test cases via a backward-compatible envelope wrapper. The Level 2 error injection framework for TC-005 (TFL QC Review) is fully implemented with 3 parametric variants, 7 error injection functions, and automated scoring across detection, classification, and location accuracy.
+The benchmark evaluates AI agents along four dimensions: statistical correctness (tolerance-based numerical comparison against cross-verified bilingual ground truth), regulatory compliance (194 encoded rules spanning FDA Study Data TCG checklist and ICH E3 CSR formatting), safety and robustness (covering N-count consistency, denominator validation, cross-TFL agreement, and edge case handling), and operational efficiency (cost, time, reliability with use-case-specific weighting profiles and reference baselines for all 21 Level 1 test cases). CDISC Analysis Results Standard (ARS) v1.0 alignment has been demonstrated for 10 test cases via a backward-compatible envelope wrapper. The Level 2 error injection framework for TC-005 (TFL QC Review) is fully implemented with 3 parametric variants, 7 error injection functions, and automated scoring across detection, classification, and location accuracy. The TC-004 SAP drafting auto-scorer implements 8 auto-scorable criteria (40% weight) with an LLM-as-judge prompt template for the remaining 40%, and a reference ground-truth SAP is provided for calibration.
 
 This paper describes the benchmark design principles, scoring framework architecture, cross-language verification methodology, test case inventory, and implications for AI governance in clinical development. The benchmark is available as an open-source resource for the ASA Biopharmaceutical Section's Agentic AI Working Group and the broader clinical development community.
 
@@ -106,7 +106,7 @@ The benchmark defines three difficulty levels that mirror the cognitive demands 
 The agent receives a TFL specification (including ADaM dataset, statistical method, and output format) and must produce the correct TFL output. Scoring is fully automated through numerical comparison with tolerance-based verification against bilingual ground truth. 19 test cases implemented, all achieving 1.0000 R↔Python cross-language agreement. Note that these are **reproduction tasks** — the agent generates the same output from the same specification, exercising statistical computation rather than autonomous design.
 
 **Level 2: Multi-Step with Interpretation (Partial Auto + Rubric)**
-The agent must interpret a SAP section or QC checklist, identify the relevant analyses, and produce or review TFL outputs. Scoring combines automated numerical checks with a structured rubric for interpretive components. 3 test cases specified (TC-004 through TC-006). A hybrid scoring model is proposed: 60% auto-scoring (schema validation, error detection), 25% LLM-as-judge (with prompt template and rubric to be finalized), and 15% human expert review.
+The agent must interpret a SAP section or QC checklist, identify the relevant analyses, and produce or review TFL outputs. Scoring combines automated numerical checks with a structured rubric for interpretive components. 3 test cases specified (TC-004 through TC-006). TC-005 and TC-006 are fully implemented with auto-scorers. TC-004 has a complete auto-scorer (8 criteria, 40% weight) and LLM-as-judge prompt template (40% weight), with a reference ground-truth SAP for calibration. Hybrid scoring model: 40% auto-scoring, 40% LLM-as-judge, 20% human expert review.
 
 **Level 3: Complex Regulatory Scenarios (Expert Review)**
 The agent must handle open-ended regulatory scenarios requiring domain judgment, multi-source synthesis, and narrative reasoning. Scoring requires expert human review against a detailed rubric. 4 test cases designed (TC-007 through TC-010).
@@ -137,10 +137,11 @@ The Level 1 test case library spans four therapeutic domains and nine statistica
 | TC-025 | Efficacy | Table | Best overall response summary (RECIST 1.1) | R+Py+SAS | 8 |
 | TC-026 | Efficacy | Table | PFS2 (progression-free survival after next-line therapy) | R+Py+SAS | 4 |
 | TC-027 | Efficacy | Table | Duration of stable disease (DOSD, SD subjects only) | R+Py+SAS | 4 |
+| TC-028 | Efficacy | Table | Change in tumor size by cycle (longitudinal) | R+Py+SAS | 8 |
 
-**Total Level 1:** 19 test cases, 147+ parametric variants, 48 ground truth implementations (20 × 2.5 languages on average — all R+Python, 13 with SAS reference scripts).
+**Total Level 1:** 21 test cases, 155+ parametric variants, 50 ground truth implementations (21 × R+Python + 21 SAS reference scripts).
 
-**Note on TC numbering:** TC-004 through TC-010 are reserved for Level 2 and Level 3 test cases. TC-027 is a candidate for future expansion.
+**Note on TC numbering:** TC-004 through TC-010 are reserved for Level 2 and Level 3 test cases. TC-029–035 are proposed candidates for benchmark expansion (see `tc-029-035-candidates.md`).
 
 ### 2.5 Data Generation Strategy
 
@@ -280,7 +281,7 @@ To confirm that the scoring framework is not trivially passing, we validated it 
 
 ### 4.1 Cross-Language Verification
 
-All 20 Level 1 test cases achieve a cross-language verification score of 1.0000 — perfect R↔Python agreement on shared data within specified tolerances.
+All 21 Level 1 test cases achieve a cross-language verification score of 1.0000 — perfect R↔Python agreement on shared data within specified tolerances. SAS reference scripts exist for all 21 Level 1 TCs (pending licensed execution).
 
 | TC | Domain | TFL Type | Method | Score |
 |---|---|---|---|---|
@@ -304,14 +305,16 @@ All 20 Level 1 test cases achieve a cross-language verification score of 1.0000 
 | TC-025 | Efficacy | Table | BOR Summary (RECIST 1.1) | 1.0000 |
 | TC-026 | Efficacy | Table | PFS2 | 1.0000 |
 | TC-027 | Efficacy | Table | Duration of Stable Disease (DOSD) | 1.0000 |
+| TC-028 | Efficacy | Table | Tumor Size by Cycle (Longitudinal) | 1.0000 |
 
-All verified across 147+ parametric variants. SAS reference scripts written for 16 test cases (pending licensed execution). No confidence intervals are reported on these scores — the 1.0000 is exact pairwise agreement within tolerances derived from floating-point precision limits, not a sample estimate.
+All verified across 155+ parametric variants. SAS reference scripts written for 21 test cases (pending licensed execution). No confidence intervals are reported on these scores — the 1.0000 is exact pairwise agreement within tolerances derived from floating-point precision limits, not a sample estimate.
 
 ### 4.2 Scoring Pipeline Coverage
 
 | Component | Count | Status |
 |---|---|---|
-| Level 1 TCs with full scoring | 19 | ✅ Implemented |
+| Level 1 TCs with full scoring | 21 | ✅ Implemented |
+| Level 2 TCs with auto-scorer | 3 (TC-004, TC-005, TC-006) | ✅ Implemented |
 | Compliance rules (TCG + CSR) | 194 | ✅ Encoded in YAML |
 | Safety rules (N-count, denominator, cross-TFL, edge-case) | Per-TC configuration | ✅ Encoded in YAML |
 | Cross-TFL agreement pairs | 18 | ✅ Encoded |
@@ -432,7 +435,8 @@ The scoring framework evaluates four dimensions — statistical correctness (tol
 
 1. **SAS not executed in CI.** SAS reference implementations exist for 16 test cases but no license is available on the CI runner.
 2. **Computation, not code quality.** The benchmark evaluates numerical outputs, not code maintainability or design judgment.
-3. **Level 2 TC-005 implemented; TC-006 spec complete.** TC-005 error injection framework and auto-scorer are functional. TC-006 (sample size re-estimation) spec is ready for implementation. Level 3 TCs remain as specifications only.
+3. **Level 2 scoring infrastructure complete.** TC-004 (SAP drafting) auto-scorer implements 8 auto-scorable criteria with LLM-judge prompt template. TC-005 (TFL QC) error injection framework is fully functional. TC-006 (SSR) has complete cross-language ground truth and scoring. All three Level 2 TCs now have auto-scoring capability.
+4. **SAS reference scripts complete for all Level 1 TCs.** 21 SAS reference scripts cover every Level 1 test case (pending licensed execution for verification).
 4. **Reference baselines estimated, not measured.** Efficiency targets and reference agent run baselines are projected from API pricing and author experience. Human baseline data collection is planned.
 5. **Oncology-focused.** Generalization requires additional test case development.
 6. **Contamination risk partially mitigated.** Parametric variants help but standard methods remain at risk.

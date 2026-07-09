@@ -3290,3 +3290,115 @@ All 17 component scores match exactly across R and Python:
 4. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 TCs for real efficiency data
 5. **White paper v1.4** — add TC-006 Level 2 implementation details, update TC count
 6. **TC-029+ candidates** — additional Level 1/2 test cases (e.g., AE by severity, time-to-first-treatment)
+
+---
+
+## 2026-07-09 — Day 40: TC-004 Auto-Scorer + SAS TC-028 + TC-029-035 Candidates
+
+### 🎯 Objectives
+1. SAS reference script for TC-028 (close last Level 1 SAS gap)
+2. TC-004 SAP drafting auto-scorer with LLM-judge prompt template
+3. TC-004 reference ground-truth SAP
+4. TC-004 output schema and tolerances
+5. TC-029-035 candidate test case specs
+6. White paper v1.5 update
+
+### ✅ Completed
+
+#### 1. SAS Reference Script for TC-028
+
+**File created:** `references/ground-truth/SAS/tc-028-tumor-size-by-cycle.sas`
+
+Complete SAS implementation of longitudinal tumor size change analysis:
+- Data generation with realistic trajectories (initial response → nadir → regrowth)
+- Visit-wise summary statistics by arm (PROC MEANS with SE calculation)
+- Per-subject best/worst response identification (PROC MEANS + PROC SQL)
+- Overall arm-level summaries (mean/median best % change, mean n assessments)
+- N assessed per visit per arm (PROC FREQ)
+- All 21 Level 1 TCs now have SAS reference scripts ✅
+
+#### 2. TC-004 SAP Drafting Auto-Scorer
+
+**File created:** `scoring-harness/tc004_scorer.py`
+
+Implements 8 auto-scorable criteria (40% of total TC-004 score):
+- **Sections present** (8%): All 7 required SAP sections detected
+- **Estimand 5 attributes** (8%): ICH E9(R1) population, variable, intercurrent events, summary measure, treatment
+- **Hypothesis stated** (4%): H₀: HR=1 and H₁: HR≠1 pattern matching
+- **Alpha/power match** (4%): α=0.05 and 90% power detected
+- **Stratified log-rank** (4%): Keywords + correct strata (PD-L1, ECOG)
+- **Sensitivity count** (4%): ≥2 sensitivity analyses listed
+- **OBF alpha spending** (4%): O'Brien-Fleming mentioned
+- **Subgroup count** (4%): ≥3 pre-specified subgroups
+
+Also includes:
+- **LLM-as-judge prompt template** (40% weight): 8 semantic criteria with structured 0-1 scoring rubric
+- **Judge callback interface**: Pluggable API for OpenAI/Anthropic integration
+- **CLI entry point**: `python tc004_scorer.py --actual <agent_output.json> [--judge-model gpt-4o]`
+
+Self-test against reference SAP: auto-score 0.3693/0.40 (92.3% normalized)
+
+#### 3. TC-004 Reference Ground-Truth SAP
+
+**File created:** `references/ground-truth/tc-004-sap-reference.json`
+
+Complete model SAP "Primary Efficacy Analysis" section with:
+- 7 fully-written sections following ICH E9 structure
+- Estimand with all 5 ICH E9(R1) attributes
+- Stratified log-rank, Cox PH, O'Brien-Fleming, sensitivity analyses (6 listed)
+- 6 pre-specified subgroups with interaction tests
+- Trial design metadata (NSCLC, OS, 600 patients, HR=0.75)
+
+#### 4. TC-004 Output Schema and Tolerances
+
+**File created:** `references/output-schemas/tc-004-output-schema.json`
+- JSON Schema for SAP output validation
+- Required: test_case_id, title, sections (minItems=7), estimand
+
+**File updated:** `scoring-harness/tolerances.yaml`
+- TC-004 section with rubric-based scoring configuration
+- Auto-score, LLM-judge, and human-review weights and criteria
+
+#### 5. TC-029-035 Candidate Test Cases
+
+**File created:** `tc-029-035-candidates.md`
+
+Seven proposed test cases for benchmark expansion:
+- TC-029: AE by Severity (Level 1, High priority)
+- TC-030: ORR by Subgroup with Interaction Test (Level 1)
+- TC-031: Time-to-First-Treatment (Level 1)
+- TC-032: Immune-Related AE Summary (Level 1)
+- TC-033: Dose Intensity Summary (Level 1)
+- TC-034: Sufficient Follow-up Assessment (Level 1)
+- TC-035: ORR/DCR/DOR Composite (Level 2, multi-TC integration)
+
+#### 6. White Paper v1.5
+
+**File updated:** `white-paper-v1.md`
+- Version bumped to 1.5
+- Updated TC count: 21 Level 1 (TC-028 added to table)
+- Updated SAS coverage: 21/21 Level 1 TCs
+- Updated Level 2 scoring: TC-004 auto-scorer + LLM-judge described
+- Updated results table with TC-028
+- Updated key findings: Level 2 scoring infrastructure complete
+- Updated candidate TC section (TC-029-035)
+
+### 📊 Updated Score Summary
+
+| TC | Domain | Level | R | Python | SAS | Score |
+|---|---|---|---|---|---|---|
+| TC-001 through TC-028 | (21 Level 1 TCs) | 1 | ✅ | ✅ | 21/21 | 1.0000 |
+| TC-004 | SAP Drafting | 2 | — | — | — | Auto-scorer ✅ |
+| TC-005 | TFL QC Review | 2 | ✅ | ✅ | ✅ | Auto-scorer ✅ |
+| TC-006 | Blinded SSR | 2 | ✅ | ✅ | ✅ | 1.0000 |
+
+**Totals: 21 Level 1 TCs at 1.0000, 3 Level 2 TCs with auto-scorers, 21/21 SAS reference scripts**
+
+### 🔮 Plan for Day 41+
+
+1. **TC-029 implementation** — AE by Severity (high priority, straightforward)
+2. **TC-033 implementation** — Dose Intensity Summary
+3. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 TCs
+4. **WG presentation slides** — cross-language results, Level 2 framework, efficiency baselines
+5. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
+6. **White paper v1.6** — add TC-029 implementation details
