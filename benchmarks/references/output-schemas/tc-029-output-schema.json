@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tc-029-output-schema",
+  "title": "TC-029: Adverse Event Summary Table by SOC, PT, and Severity Output",
+  "description": "Schema for adverse event summary table grouped by severity grade",
+  "type": "object",
+  "required": [
+    "test_case_id",
+    "title",
+    "parameters",
+    "population",
+    "severity_grades",
+    "severity_summary",
+    "summary",
+    "ae_table",
+    "metadata"
+  ],
+  "properties": {
+    "test_case_id": {
+      "type": "string",
+      "const": "TC-029"
+    },
+    "title": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "object",
+      "required": ["seed", "n_subjects"],
+      "properties": {
+        "seed": { "type": "integer" },
+        "n_subjects": { "type": "integer", "minimum": 20 }
+      }
+    },
+    "population": {
+      "type": "object",
+      "required": ["n_experimental", "n_control"],
+      "properties": {
+        "description": { "type": "string" },
+        "n_experimental": { "type": "integer", "minimum": 1 },
+        "n_control": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "severity_grades": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 1, "maximum": 5 },
+      "minItems": 5,
+      "maxItems": 5
+    },
+    "severity_summary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["grade", "n_experimental", "pct_experimental", "n_control", "pct_control"],
+        "properties": {
+          "grade": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "n_experimental": { "type": "integer", "minimum": 0 },
+          "pct_experimental": { "type": "number", "minimum": 0, "maximum": 100 },
+          "n_control": { "type": "integer", "minimum": 0 },
+          "pct_control": { "type": "number", "minimum": 0, "maximum": 100 }
+        }
+      },
+      "minItems": 5,
+      "maxItems": 5
+    },
+    "summary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "n_experimental", "pct_experimental", "n_control", "pct_control"],
+        "properties": {
+          "category": { "type": "string" },
+          "n_experimental": { "type": "integer", "minimum": 0 },
+          "pct_experimental": { "type": "number", "minimum": 0, "maximum": 100 },
+          "n_control": { "type": "integer", "minimum": 0 },
+          "pct_control": { "type": "number", "minimum": 0, "maximum": 100 }
+        }
+      },
+      "minItems": 3
+    },
+    "ae_table": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "soc", "n_experimental", "pct_experimental", "n_control", "pct_control"],
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": ["soc", "soc_severity", "pt", "pt_severity"]
+          },
+          "soc": { "type": "string" },
+          "pt": { "type": ["string", "null"] },
+          "severity": { "type": ["integer", "null"], "minimum": 1, "maximum": 5 },
+          "n_experimental": { "type": "integer", "minimum": 0 },
+          "pct_experimental": { "type": "number", "minimum": 0, "maximum": 100 },
+          "n_control": { "type": "integer", "minimum": 0 },
+          "pct_control": { "type": "number", "minimum": 0, "maximum": 100 }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["language"],
+      "properties": {
+        "language": { "type": "string" },
+        "packages": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

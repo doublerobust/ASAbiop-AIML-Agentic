@@ -3402,3 +3402,68 @@ Seven proposed test cases for benchmark expansion:
 4. **WG presentation slides** — cross-language results, Level 2 framework, efficiency baselines
 5. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
 6. **White paper v1.6** — add TC-029 implementation details
+
+---
+
+## Day 41 (2026-07-10): TC-029 Implementation — AE Summary by Severity
+
+**Date:** July 10, 2026 (Friday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### Completed
+
+#### 1. TC-029: Adverse Event Summary Table by SOC, PT, and Severity
+
+**Domain:** Safety | **Level:** 1 | **Priority:** High
+
+Implemented full TC-029 test case with CTCAE v5.0 severity dimension added to AE summary:
+
+**Files created:**
+- `references/ground-truth/Python/tc_029_ae_severity.py` — Python ground truth with severity grades 1-5
+- `references/ground-truth/R/tc-029-ae-severity.R` — R ground truth with matching severity logic
+- `references/ground-truth/SAS/tc-029-ae-severity.sas` — SAS reference script
+- `references/output-schemas/tc-029-output-schema.json` — JSON schema for output validation
+
+**Files updated:**
+- `scoring-harness/score.py` — Added `score_tc029()` scorer function + `_ae_severity_table_index()` helper; wired TC-029 into all 3 dispatch dicts (score, verify, evaluate)
+- `scoring-harness/tolerances.yaml` — Added TC-029 tolerance section (severity_n, severity_pct, summary_n, summary_pct, ae_table_n, ae_table_pct, n_per_arm)
+- `references/ground-truth/R/generate_shared_datasets.R` — Added AESEV field to shared ADAE dataset for TC-029 compatibility
+- `run-cross-lang-verify.sh` — Added TC-029 to cross-language verification script
+
+#### 2. ARS Proof-of-Concept
+
+TC-029 scripts include `--ars-output` flag that emits CDISC ARS v1.0-compatible JSON envelope with:
+- `analysisResult.id`, `version`, `analysisReason`
+- `analysisMethod` with code template and parameters
+- `analysisVariables` with dataset/role mapping
+- `analysisPopulation` with filter and N
+- `resultGroups` with arm-level N
+- `analysisResultsData` with grade-level statistics
+
+#### 3. Cross-Language Verification Results
+
+TC-029 verified at **score=1.0000** for R↔Python using shared ADAE dataset:
+- 953 AE records, 199 subjects (Exp=100, Ctrl=99)
+- Severity grades: G1(97,92), G2(84,72), G3(57,49), G4(14,13), G5(3,2)
+- Schema validation passed
+- ARS envelope output verified
+
+### 📊 Updated Score Summary
+
+| TC | Domain | Level | R | Python | SAS | Score |
+|---|---|---|---|---|---|---|
+| TC-001 through TC-029 | (22 Level 1 TCs) | 1 | ✅ | ✅ | 22/22 | 1.0000 |
+| TC-004 | SAP Drafting | 2 | — | — | — | Auto-scorer ✅ |
+| TC-005 | TFL QC Review | 2 | ✅ | ✅ | ✅ | Auto-scorer ✅ |
+| TC-006 | Blinded SSR | 2 | ✅ | ✅ | ✅ | 1.0000 |
+
+**Totals: 22 Level 1 TCs at 1.0000, 3 Level 2 TCs with auto-scorers, 22/22 SAS reference scripts**
+
+### 🔮 Plan for Day 42+
+
+1. **TC-033 implementation** — Dose Intensity Summary (Level 1)
+2. **TC-030 implementation** — ORR by Subgroup with Interaction Test
+3. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 TCs
+4. **WG presentation slides** — cross-language results, Level 2 framework, efficiency baselines
+5. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
+6. **White paper v1.6** — add TC-029 implementation details, ARS proof-of-concept results

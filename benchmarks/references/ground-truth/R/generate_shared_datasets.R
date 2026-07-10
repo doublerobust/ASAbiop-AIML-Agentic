@@ -67,6 +67,7 @@ generate_adae <- function(n_subjects, seed) {
               TRT01A = arm,
               AEBODSYS = soc,
               AEDECOD = pt,
+              AESEV = as.character(sample(1:5, 1, prob = c(0.50, 0.30, 0.15, 0.04, 0.01))),
               AESER = sample(c("Y", "N"), 1, prob = c(0.1, 0.9)),
               AEACN = sample(c("DOSE NOT CHANGED", "DOSE REDUCED", "DRUG WITHDRAWN"), 1, prob = c(0.7, 0.2, 0.1))
             )

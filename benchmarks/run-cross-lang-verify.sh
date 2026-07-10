@@ -549,6 +549,21 @@ else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
+# TC-029: AE by Severity (shared ADAE with AESEV)
+echo "── TC-029 ──────────────────────────────────────────"
+echo "  R:   tc-029-ae-severity.R"
+if (cd "$RDIR" && Rscript "tc-029-ae-severity.R" --seed $SEED --n $N --data "$SHARED/adae.csv" --output "$R_OUT/TC-029.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_029_ae_severity.py"
+if (cd "$PYDIR" && python3 "tc_029_ae_severity.py" --seed $SEED --n $N --data-csv "$SHARED/adae.csv" --output "$PY_OUT/TC-029.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
 fi
 
 # ───────────────────────────────────────────────────────────────────

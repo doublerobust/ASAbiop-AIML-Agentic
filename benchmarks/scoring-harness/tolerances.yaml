@@ -656,6 +656,38 @@ TC-028:
       weight: 0.02
 
 # ─────────────────────────────────────────────────────────────────────
+# TC-029: Adverse Event Summary Table by SOC, PT, and Severity
+# ─────────────────────────────────────────────────────────────────────
+TC-029:
+  description: "AE Summary by SOC, PT, and CTCAE Severity Grade"
+  tolerances:
+    # Severity summary counts (grade 1-5 per arm)
+    severity_n:
+      absolute: 0       # exact match
+      weight: 0.20
+    severity_pct:
+      absolute: 0.1     # ±0.1 percentage points
+      weight: 0.10
+    # Overall summary row counts (Any AE, SAE, discontinuation)
+    summary_n:
+      absolute: 0       # exact match
+      weight: 0.15
+    summary_pct:
+      absolute: 0.1
+      weight: 0.10
+    # Detailed AE table counts (SOC/PT/severity cells)
+    ae_table_n:
+      absolute: 0       # exact match
+      weight: 0.25
+    ae_table_pct:
+      absolute: 0.1
+      weight: 0.10
+    # N per arm
+    n_per_arm:
+      absolute: 0
+      weight: 0.10
+
+# ─────────────────────────────────────────────────────────────────────
 # TC-006: Blinded Sample Size Re-Estimation at Interim (Level 2)
 # ─────────────────────────────────────────────────────────────────────
 TC-006:
