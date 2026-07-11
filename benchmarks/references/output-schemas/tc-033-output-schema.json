@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-033: Dose Intensity Summary Output Schema",
+  "description": "Validation schema for TC-033 RDI summary output",
+  "type": "object",
+  "required": [
+    "tc_id",
+    "tc_name",
+    "metadata",
+    "rdi_summary",
+    "rdi_ge80",
+    "dose_reduction",
+    "dose_interruption",
+    "treatment_duration",
+    "per_subject"
+  ],
+  "properties": {
+    "tc_id": {
+      "type": "string",
+      "const": "TC-033"
+    },
+    "tc_name": {
+      "type": "string",
+      "const": "Dose Intensity Summary"
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "n_total",
+        "n_experimental",
+        "n_control",
+        "population",
+        "rdi_threshold",
+        "duration_unit",
+        "dose_unit"
+      ],
+      "properties": {
+        "n_total": { "type": "integer", "minimum": 1 },
+        "n_experimental": { "type": "integer", "minimum": 0 },
+        "n_control": { "type": "integer", "minimum": 0 },
+        "population": { "type": "string", "const": "SAFETY" },
+        "rdi_threshold": { "type": "integer", "const": 80 },
+        "duration_unit": { "type": "string", "const": "weeks" },
+        "dose_unit": { "type": "string", "const": "mg" }
+      }
+    },
+    "rdi_summary": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/cont_summary" },
+        "control": { "$ref": "#/$defs/cont_summary" }
+      }
+    },
+    "rdi_ge80": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/count_pct" },
+        "control": { "$ref": "#/$defs/count_pct" }
+      }
+    },
+    "dose_reduction": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/count_pct" },
+        "control": { "$ref": "#/$defs/count_pct" }
+      }
+    },
+    "dose_interruption": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/count_pct" },
+        "control": { "$ref": "#/$defs/count_pct" }
+      }
+    },
+    "treatment_duration": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/cont_summary" },
+        "control": { "$ref": "#/$defs/cont_summary" }
+      }
+    },
+    "per_subject": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["USUBJID", "TRT01A", "TREATDUR", "PLANDOSE", "ACTUALDOSE", "RDI", "DOSERED", "DOSEINT"],
+        "properties": {
+          "USUBJID": { "type": "string" },
+          "TRT01A": { "type": "string" },
+          "TREATDUR": { "type": "integer" },
+          "PLANDOSE": { "type": "number" },
+          "ACTUALDOSE": { "type": "number" },
+          "RDI": { "type": "number" },
+          "DOSERED": { "type": "integer" },
+          "DOSEINT": { "type": "integer" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "cont_summary": {
+      "type": "object",
+      "required": ["n", "mean", "sd", "median", "min", "max", "q1", "q3"],
+      "properties": {
+        "n": { "type": "integer" },
+        "mean": { "type": "number" },
+        "sd": { "type": "number" },
+        "median": { "type": "number" },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "q1": { "type": "number" },
+        "q3": { "type": "number" }
+      }
+    },
+    "count_pct": {
+      "type": "object",
+      "required": ["n", "pct"],
+      "properties": {
+        "n": { "type": "integer" },
+        "pct": { "type": "number" }
+      }
+    }
+  }
+}

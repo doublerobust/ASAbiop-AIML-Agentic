@@ -3467,3 +3467,77 @@ TC-029 verified at **score=1.0000** for R↔Python using shared ADAE dataset:
 4. **WG presentation slides** — cross-language results, Level 2 framework, efficiency baselines
 5. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
 6. **White paper v1.6** — add TC-029 implementation details, ARS proof-of-concept results
+
+---
+
+## Day 42 (2026-07-11): TC-033 Implementation — Dose Intensity Summary
+
+**Date:** July 11, 2026 (Saturday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### Completed
+
+#### 1. TC-033: Dose Intensity Summary (Relative Dose Intensity)
+
+**Domain:** Exposure / Treatment Compliance | **Level:** 1 | **Priority:** Medium
+
+Implements RDI = (actual cumulative dose / planned cumulative dose) × 100 with arm-level summaries:
+- Per-subject RDI with planned vs actual dose
+- Arm-level summary: N, mean, SD, median, min, max, Q1, Q3
+- % subjects with RDI ≥ 80% (standard regulatory threshold)
+- Dose reduction counts/pct by arm
+- Dose interruption counts/pct by arm
+- Treatment duration summary by arm
+
+**Files created:**
+- `references/ground-truth/Python/tc_033_dose_intensity.py` — Python ground truth with `--data-csv` support
+- `references/ground-truth/R/tc-033-dose-intensity.R` — R ground truth with `--data` support
+- `references/ground-truth/R/generate_tc033_adex.R` — Shared ADEX dataset generator for cross-language verification
+- `references/ground-truth/SAS/tc-033-dose-intensity.sas` — SAS reference script (PROC MEANS)
+- `references/output-schemas/tc-033-output-schema.json` — JSON schema for output validation
+
+**Files updated:**
+- `scoring-harness/score.py` — Added `score_tc033()` scorer function; wired TC-033 into all 3 dispatch dicts (score, verify, evaluate)
+- `scoring-harness/tolerances.yaml` — Added TC-033 tolerance section (rdi_summary, rdi_ge80, dose_reduction, dose_interruption, treatment_duration, n_per_arm)
+- `run-cross-lang-verify.sh` — Added TC-033 to cross-language verification script with shared ADEX dataset
+
+#### 2. ARS Proof-of-Concept
+
+TC-033 scripts include `--ars-output` flag that emits CDISC ARS v1.0-compatible JSON envelope with:
+- `analysisResult.id`, `version`, `analysisReason`
+- `analysisMethod` with code template and parameters (actual_dose, planned_dose, rdi_threshold)
+- `analysisVariables` with dataset/role mapping
+- `analysisPopulation` with SAFETY filter and N
+- `resultGroups` with arm-level N
+- `analysisResultsData` with mean_RDI and pct_RDI_ge80 metrics
+
+#### 3. Cross-Language Verification Results
+
+TC-033 verified at **score=1.0000** for R↔Python using shared ADEX dataset:
+- 200 subjects (Exp=100, Ctl=100)
+- RDI Exp: mean=84.01, median=84.94, range=[70.27, 99.84]
+- RDI Ctl: mean=89.58, median=89.08, range=[80.24, 99.86]
+- RDI ≥80%: Exp=66 (66%), Ctl=100 (100%)
+- Dose reductions: Exp=14 (14%), Ctl=10 (10%)
+- Dose interruptions: Exp=8 (8%), Ctl=6 (6%)
+- All 33 comparison fields matched exactly (diff=0.000000)
+
+### 📊 Updated Score Summary
+
+| TC | Domain | Level | R | Python | SAS | Score |
+|---|---|---|---|---|---|---|
+| TC-001 through TC-029, TC-033 | (23 Level 1 TCs) | 1 | ✅ | ✅ | 23/23 | 1.0000 |
+| TC-004 | SAP Drafting | 2 | — | — | — | Auto-scorer ✅ |
+| TC-005 | TFL QC Review | 2 | ✅ | ✅ | ✅ | Auto-scorer ✅ |
+| TC-006 | Blinded SSR | 2 | ✅ | ✅ | ✅ | 1.0000 |
+
+**Totals: 23 Level 1 TCs at 1.0000, 3 Level 2 TCs with auto-scorers, 23/23 SAS reference scripts**
+
+### 🔮 Plan for Day 43+
+
+1. **TC-030 implementation** — ORR by Subgroup with Interaction Test (extends TC-020)
+2. **TC-032 implementation** — Immune-Related AE Summary (I-O specific safety)
+3. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 TCs
+4. **WG presentation slides** — cross-language results, Level 2 framework, efficiency baselines
+5. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
+6. **White paper v1.6** — add TC-033 implementation details, ARS proof-of-concept results

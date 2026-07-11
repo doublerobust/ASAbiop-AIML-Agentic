@@ -788,3 +788,75 @@ TC-004:
     sensitivity_appropriateness: 0.05
     regulatory_clarity: 0.05
     design_consistency: 0.05
+
+TC-033:
+  description: "Dose Intensity Summary (RDI)"
+  tolerances:
+    # RDI summary - experimental
+    rdi_summary_experimental:
+      absolute: 0.01
+      relative: 0.001
+      weight: 0.10
+    # RDI summary - control
+    rdi_summary_control:
+      absolute: 0.01
+      relative: 0.001
+      weight: 0.10
+    # RDI >= 80% counts
+    rdi_ge80_experimental_n:
+      absolute: 0
+      weight: 0.05
+    rdi_ge80_experimental_pct:
+      absolute: 0.1
+      weight: 0.05
+    rdi_ge80_control_n:
+      absolute: 0
+      weight: 0.05
+    rdi_ge80_control_pct:
+      absolute: 0.1
+      weight: 0.05
+    # Dose reduction
+    dose_reduction_experimental_n:
+      absolute: 0
+      weight: 0.05
+    dose_reduction_experimental_pct:
+      absolute: 0.1
+      weight: 0.05
+    dose_reduction_control_n:
+      absolute: 0
+      weight: 0.05
+    dose_reduction_control_pct:
+      absolute: 0.1
+      weight: 0.05
+    # Dose interruption
+    dose_interruption_experimental_n:
+      absolute: 0
+      weight: 0.05
+    dose_interruption_experimental_pct:
+      absolute: 0.1
+      weight: 0.05
+    dose_interruption_control_n:
+      absolute: 0
+      weight: 0.05
+    dose_interruption_control_pct:
+      absolute: 0.1
+      weight: 0.05
+    # Treatment duration
+    treatdur_experimental:
+      absolute: 0.01
+      relative: 0.001
+      weight: 0.05
+    treatdur_control:
+      absolute: 0.01
+      relative: 0.001
+      weight: 0.05
+    # N per arm
+    n_total:
+      absolute: 0
+      weight: 0.02
+    n_exp:
+      absolute: 0
+      weight: 0.02
+    n_ctl:
+      absolute: 0
+      weight: 0.02

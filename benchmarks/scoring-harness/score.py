@@ -1993,6 +1993,150 @@ def score_tc029(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# TC-033: Dose Intensity Summary (Level 1)
+# --------------------------------------------------------------------
+
+def score_tc033(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-033 (Dose Intensity Summary).
+
+    Compares RDI summary stats (mean, SD, median, min, max),
+    % subjects with RDI >= 80%, dose reduction counts/pct,
+    dose interruption counts/pct, and treatment duration summary.
+    """
+    tol_spec = tolerances.get("TC-033", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    def _score_numeric(agent_val, truth_val, tol, key):
+        """Score a numeric value with absolute and relative tolerance."""
+        if agent_val is None or truth_val is None:
+            return 0.0, False, f"{key}: missing value"
+        abs_tol = tol.get("absolute", 0.01)
+        rel_tol = tol.get("relative", 0.0)
+        abs_diff = abs(agent_val - truth_val)
+        rel_diff = abs_diff / max(abs(truth_val), 1e-10)
+        passed = abs_diff <= abs_tol or rel_diff <= rel_tol
+        score = 1.0 if passed else max(0.0, 1.0 - abs_diff / max(abs_tol, 1e-10))
+        return score, passed, f"{key}: agent={agent_val:.4f} truth={truth_val:.4f} diff={abs_diff:.6f}"
+
+    def _score_summary(agent_sum, truth_sum, tol, prefix):
+        """Score a continuous summary block (mean, sd, median, min, max, q1, q3)."""
+        results = {}
+        for field in ["mean", "sd", "median", "min", "max", "q1", "q3"]:
+            sub_tol = tol.get(prefix, tol)
+            s, p, note = _score_numeric(
+                agent_sum.get(field), truth_sum.get(field), sub_tol, f"{prefix}.{field}"
+            )
+            results[f"{prefix}.{field}"] = {"score": s, "pass": p, "note": note}
+        return results
+
+    # --- RDI summary by arm ---
+    for arm in ["experimental", "control"]:
+        arm_tol = tol_spec.get(f"rdi_summary_{arm}", tol_spec.get("rdi_summary", {}))
+        arm_results = _score_summary(
+            agent_output.get("rdi_summary", {}).get(arm, {}),
+            ground_truth.get("rdi_summary", {}).get(arm, {}),
+            arm_tol,
+            f"rdi_{arm}",
+        )
+        weight = arm_tol.get("weight", 0.10)
+        for k, v in arm_results.items():
+            component_scores[k] = v
+            weighted_sum += v["score"] * (weight / len(arm_results))
+            total_weight += weight / len(arm_results)
+
+    # --- RDI >= 80% counts/pct ---
+    for arm in ["experimental", "control"]:
+        for metric in ["n", "pct"]:
+            tol_key = f"rdi_ge80_{arm}_{metric}"
+            sub_tol = tol_spec.get(tol_key, {})
+            s, p, note = _score_numeric(
+                agent_output.get("rdi_ge80", {}).get(arm, {}).get(metric),
+                ground_truth.get("rdi_ge80", {}).get(arm, {}).get(metric),
+                sub_tol,
+                f"rdi_ge80.{arm}.{metric}",
+            )
+            component_scores[f"rdi_ge80.{arm}.{metric}"] = {"score": s, "pass": p, "note": note}
+            w = sub_tol.get("weight", 0.05)
+            weighted_sum += s * w
+            total_weight += w
+
+    # --- Dose reduction counts/pct ---
+    for arm in ["experimental", "control"]:
+        for metric in ["n", "pct"]:
+            tol_key = f"dose_reduction_{arm}_{metric}"
+            sub_tol = tol_spec.get(tol_key, {})
+            s, p, note = _score_numeric(
+                agent_output.get("dose_reduction", {}).get(arm, {}).get(metric),
+                ground_truth.get("dose_reduction", {}).get(arm, {}).get(metric),
+                sub_tol,
+                f"dose_reduction.{arm}.{metric}",
+            )
+            component_scores[f"dose_reduction.{arm}.{metric}"] = {"score": s, "pass": p, "note": note}
+            w = sub_tol.get("weight", 0.05)
+            weighted_sum += s * w
+            total_weight += w
+
+    # --- Dose interruption counts/pct ---
+    for arm in ["experimental", "control"]:
+        for metric in ["n", "pct"]:
+            tol_key = f"dose_interruption_{arm}_{metric}"
+            sub_tol = tol_spec.get(tol_key, {})
+            s, p, note = _score_numeric(
+                agent_output.get("dose_interruption", {}).get(arm, {}).get(metric),
+                ground_truth.get("dose_interruption", {}).get(arm, {}).get(metric),
+                sub_tol,
+                f"dose_interruption.{arm}.{metric}",
+            )
+            component_scores[f"dose_interruption.{arm}.{metric}"] = {"score": s, "pass": p, "note": note}
+            w = sub_tol.get("weight", 0.05)
+            weighted_sum += s * w
+            total_weight += w
+
+    # --- Treatment duration summary ---
+    for arm in ["experimental", "control"]:
+        arm_tol = tol_spec.get(f"treatdur_{arm}", tol_spec.get("treatment_duration", {}))
+        arm_results = _score_summary(
+            agent_output.get("treatment_duration", {}).get(arm, {}),
+            ground_truth.get("treatment_duration", {}).get(arm, {}),
+            arm_tol,
+            f"treatdur_{arm}",
+        )
+        weight = arm_tol.get("weight", 0.05)
+        for k, v in arm_results.items():
+            component_scores[k] = v
+            weighted_sum += v["score"] * (weight / len(arm_results))
+            total_weight += weight / len(arm_results)
+
+    # --- N per arm ---
+    for arm_key, arm_label in [("n_total", "total"), ("n_experimental", "exp"), ("n_control", "ctl")]:
+        tol_key = f"n_{arm_label}"
+        sub_tol = tol_spec.get(tol_key, {})
+        s, p, note = _score_numeric(
+            agent_output.get("metadata", {}).get(arm_key),
+            ground_truth.get("metadata", {}).get(arm_key),
+            sub_tol,
+            f"metadata.{arm_key}",
+        )
+        component_scores[f"metadata.{arm_key}"] = {"score": s, "pass": p, "note": note}
+        w = sub_tol.get("weight", 0.02)
+        weighted_sum += s * w
+        total_weight += w
+
+    overall = weighted_sum / total_weight if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-033",
+        "score": round(overall, 4),
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", agent_output.get("metadata", {}).get("language", "unknown")),
+        "ground_truth_language": ground_truth.get("language", ground_truth.get("metadata", {}).get("language", "unknown")),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
 # TC-006: Blinded Sample Size Re-Estimation at Interim (Level 2)
 # --------------------------------------------------------------------
 
@@ -2439,6 +2583,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-027": score_tc027,
         "TC-028": score_tc028,
         "TC-029": score_tc029,
+        "TC-033": score_tc033,
         "TC-006": score_tc006,
     }
 
@@ -2576,6 +2721,7 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-027": score_tc027,
         "TC-028": score_tc028,
         "TC-029": score_tc029,
+        "TC-033": score_tc033,
         "TC-006": score_tc006,
     }
 
@@ -2791,6 +2937,7 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-027": score_tc027,
         "TC-028": score_tc028,
         "TC-029": score_tc029,
+        "TC-033": score_tc033,
         "TC-006": score_tc006,
     }
     scorer = scorers.get(tc)

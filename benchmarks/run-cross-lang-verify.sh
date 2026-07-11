@@ -564,6 +564,27 @@ else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
+# TC-033: Dose Intensity Summary (shared ADEX)
+echo "── TC-033 ──────────────────────────────────────────"
+echo "  Generating shared ADEX dataset..."
+if (cd "$RDIR" && Rscript "generate_tc033_adex.R" --seed $SEED --n $N --output "$SHARED/adex_tc033.csv") 2>&1; then
+  echo "  ✓ Shared ADEX generated"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Shared ADEX FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  R:   tc-033-dose-intensity.R"
+if (cd "$RDIR" && Rscript "tc-033-dose-intensity.R" --seed $SEED --n $N --data "$SHARED/adex_tc033.csv" --output "$R_OUT/TC-033.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_033_dose_intensity.py"
+if (cd "$PYDIR" && python3 "tc_033_dose_intensity.py" --seed $SEED --n $N --data-csv "$SHARED/adex_tc033.csv" --output "$PY_OUT/TC-033.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
 fi
 
 # ───────────────────────────────────────────────────────────────────
