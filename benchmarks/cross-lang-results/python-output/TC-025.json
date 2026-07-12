@@ -1,0 +1,83 @@
+{
+  "test_case_id": "TC-025",
+  "endpoint": "Best Overall Response",
+  "population": "ITT",
+  "summary": {
+    "by_arm": {
+      "0": {
+        "arm": 0,
+        "n_total": 88,
+        "n_evaluable": 80,
+        "bor_counts": {
+          "CR": 2,
+          "PR": 16,
+          "SD": 43,
+          "PD": 19,
+          "NE": 8
+        },
+        "orr_n": 18,
+        "orr_rate": 0.2045,
+        "orr_ci_lower": 0.126,
+        "orr_ci_upper": 0.3039,
+        "dcr_n": 61,
+        "dcr_rate": 0.6932,
+        "dcr_ci_lower": 0.5858,
+        "dcr_ci_upper": 0.7871
+      },
+      "1": {
+        "arm": 1,
+        "n_total": 107,
+        "n_evaluable": 100,
+        "bor_counts": {
+          "CR": 6,
+          "PR": 42,
+          "SD": 43,
+          "PD": 9,
+          "NE": 7
+        },
+        "orr_n": 48,
+        "orr_rate": 0.4486,
+        "orr_ci_lower": 0.3523,
+        "orr_ci_upper": 0.5478,
+        "dcr_n": 91,
+        "dcr_rate": 0.8505,
+        "dcr_ci_lower": 0.7686,
+        "dcr_ci_upper": 0.912
+      }
+    },
+    "orr_difference": 0.2441,
+    "orr_diff_ci_lower": 0.1177,
+    "orr_diff_ci_upper": 0.3705,
+    "fisher_exact_p": 0.000433,
+    "chi_square_p": 0.000338,
+    "bor_distribution": {
+      "CR": {
+        "BOR": "CR",
+        "n_control": 2,
+        "n_experimental": 6
+      },
+      "PR": {
+        "BOR": "PR",
+        "n_control": 16,
+        "n_experimental": 42
+      },
+      "SD": {
+        "BOR": "SD",
+        "n_control": 43,
+        "n_experimental": 43
+      },
+      "PD": {
+        "BOR": "PD",
+        "n_control": 19,
+        "n_experimental": 9
+      },
+      "NE": {
+        "BOR": "NE",
+        "n_control": 8,
+        "n_experimental": 7
+      }
+    }
+  },
+  "language": "Python",
+  "version": "1.0"
+}

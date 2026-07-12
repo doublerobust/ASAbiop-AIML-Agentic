@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "TC-030: ORR by Subgroup with Interaction Test Output Schema",
+  "description": "Structured output from ORR by subgroup with logistic interaction test benchmark test case",
+  "type": "object",
+  "required": [
+    "test_case_id", "variant_id", "language", "package",
+    "overall", "subgroups", "interaction_tests", "ci_method", "seed"
+  ],
+  "properties": {
+    "test_case_id": {
+      "type": "string",
+      "const": "TC-030",
+      "description": "Test case identifier"
+    },
+    "variant_id": {
+      "type": ["string", "null"],
+      "description": "Variant identifier based on seed"
+    },
+    "language": {
+      "type": "string",
+      "enum": ["R", "SAS", "Python"],
+      "description": "Implementation language"
+    },
+    "package": {
+      "type": "string",
+      "description": "Primary package used"
+    },
+    "package_version": {
+      "type": "string",
+      "description": "Package version string"
+    },
+    "overall": {
+      "type": "object",
+      "required": ["orr_experimental", "orr_control", "n_experimental", "n_control",
+                    "responders_experimental", "responders_control", "orr_difference"],
+      "properties": {
+        "orr_experimental": {"type": "number", "minimum": 0, "maximum": 100},
+        "orr_control": {"type": "number", "minimum": 0, "maximum": 100},
+        "n_experimental": {"type": "integer", "minimum": 0},
+        "n_control": {"type": "integer", "minimum": 0},
+        "responders_experimental": {"type": "integer", "minimum": 0},
+        "responders_control": {"type": "integer", "minimum": 0},
+        "ci_lower_experimental": {"type": "number"},
+        "ci_upper_experimental": {"type": "number"},
+        "ci_lower_control": {"type": "number"},
+        "ci_upper_control": {"type": "number"},
+        "orr_difference": {"type": "number"}
+      }
+    },
+    "subgroups": {
+      "type": "array",
+      "description": "Subgroup-level ORR results with Clopper-Pearson CIs",
+      "items": {
+        "type": "object",
+        "required": ["subgroup", "level", "orr_experimental", "orr_control",
+                      "n_experimental", "n_control", "orr_difference"],
+        "properties": {
+          "subgroup": {"type": "string"},
+          "level": {"type": "string"},
+          "orr_experimental": {"type": "number", "minimum": 0, "maximum": 100},
+          "orr_control": {"type": "number", "minimum": 0, "maximum": 100},
+          "n_experimental": {"type": "integer", "minimum": 0},
+          "n_control": {"type": "integer", "minimum": 0},
+          "responders_experimental": {"type": "integer", "minimum": 0},
+          "responders_control": {"type": "integer", "minimum": 0},
+          "ci_lower_experimental": {"type": "number"},
+          "ci_upper_experimental": {"type": "number"},
+          "ci_lower_control": {"type": "number"},
+          "ci_upper_control": {"type": "number"},
+          "orr_difference": {"type": "number"},
+          "diff_ci_lower": {"type": "number"},
+          "diff_ci_upper": {"type": "number"}
+        }
+      }
+    },
+    "interaction_tests": {
+      "type": "array",
+      "description": "Logistic regression interaction test results per subgroup",
+      "items": {
+        "type": "object",
+        "required": ["subgroup", "method"],
+        "properties": {
+          "subgroup": {"type": "string"},
+          "interaction_p_value": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+          "interaction_or": {"type": ["number", "null"]},
+          "interaction_or_ci_lower": {"type": ["number", "null"]},
+          "interaction_or_ci_upper": {"type": ["number", "null"]},
+          "breslow_day_p_value": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+          "method": {"type": "string", "enum": ["logistic_wald", "cmh_fallback", "chi2_fallback"]}
+        }
+      }
+    },
+    "ci_method": {
+      "type": "string",
+      "const": "clopper-pearson",
+      "description": "Confidence interval method for proportions"
+    },
+    "ars": {
+      "type": "object",
+      "description": "CDISC ARS v1.0-compatible JSON envelope (optional, --ars-output)"
+    },
+    "seed": {"type": ["integer", "null"]}
+  }
+}

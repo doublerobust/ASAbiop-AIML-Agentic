@@ -860,3 +860,58 @@ TC-033:
     n_ctl:
       absolute: 0
       weight: 0.02
+
+TC-030:
+  description: "ORR by Subgroup with Interaction Test"
+  tolerances:
+    # Overall ORR
+    overall_orr_exp:
+      absolute: 0.1     # ±0.1 percentage points
+      weight: 0.08
+    overall_orr_ctrl:
+      absolute: 0.1
+      weight: 0.08
+    overall_orr_diff:
+      absolute: 0.1
+      weight: 0.08
+    # Responder counts (exact)
+    responder_counts:
+      absolute: 0
+      weight: 0.05
+    # Overall Clopper-Pearson CI bounds
+    overall_ci:
+      absolute: 0.5
+      weight: 0.03
+    # Subgroup ORR
+    subgroup_orr_exp:
+      absolute: 0.1
+      weight: 0.05
+    subgroup_orr_ctrl:
+      absolute: 0.1
+      weight: 0.05
+    subgroup_orr_diff:
+      absolute: 0.1
+      weight: 0.05
+    # N per subgroup per arm (exact)
+    subgroup_n:
+      absolute: 0
+      weight: 0.03
+    # Subgroup Clopper-Pearson CI bounds
+    subgroup_ci:
+      absolute: 0.5
+      weight: 0.02
+    # Logistic interaction p-values
+    interaction_p:
+      absolute: 0.01
+      relative: 0.05
+      weight: 0.08
+    # Interaction ORs
+    interaction_or:
+      absolute: 0.05
+      relative: 0.05
+      weight: 0.05
+    # Breslow-Day p-values
+    breslow_day_p:
+      absolute: 0.01
+      relative: 0.05
+      weight: 0.05

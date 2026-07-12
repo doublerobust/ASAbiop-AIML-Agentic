@@ -519,6 +519,8 @@ if (cd "$PYDIR" && python3 "tc_025_bor_summary.py" --seed $SEED --n $N --data "$
   echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
 else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
 # TC-026: PFS2 (shared PFS2 ADTTE data)
 echo "── TC-026 ──────────────────────────────────────────"
 echo "  R:   tc-026-pfs2.R"
@@ -585,6 +587,20 @@ else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
+# TC-030: ORR by Subgroup with Interaction Test (shared tumor response data)
+echo ""
+echo "── TC-030 ──────────────────────────────────────────"
+echo "  R:   tc-030-orr-interaction.R"
+if (cd "$RDIR" && Rscript "tc-030-orr-interaction.R" --seed $SEED --n $N --data "$SHARED/tc020_tumor_response.csv" --output "$R_OUT/TC-030.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_030_orr_interaction.py"
+if (cd "$PYDIR" && python3 "tc_030_orr_interaction.py" --seed $SEED --n $N --data-csv "$SHARED/tc020_tumor_response.csv" --output "$PY_OUT/TC-030.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
 # ───────────────────────────────────────────────────────────────────

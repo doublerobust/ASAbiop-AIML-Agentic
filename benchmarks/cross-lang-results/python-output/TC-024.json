@@ -1,0 +1,98 @@
+{
+  "test_case_id": "TC-024",
+  "endpoint": "Overall Survival",
+  "population": "ITT",
+  "arm_control": {
+    "median_os": 16.41,
+    "median_ci_lower": 0.37,
+    "median_ci_upper": 0.59,
+    "n_events": 73,
+    "n_total": 85,
+    "event_rate": 0.8588,
+    "logrank_chisq": 5.8281,
+    "logrank_p": 0.015772,
+    "hazard_ratio": 0.6727,
+    "hr_ci_lower": 0.4866,
+    "hr_ci_upper": 0.93,
+    "arm": 0,
+    "population": "ITT"
+  },
+  "arm_experimental": {
+    "median_os": 24.58,
+    "median_ci_lower": 0.38,
+    "median_ci_upper": 0.59,
+    "n_events": 80,
+    "n_total": 106,
+    "event_rate": 0.7547,
+    "logrank_chisq": 5.8281,
+    "logrank_p": 0.015772,
+    "hazard_ratio": 0.6727,
+    "hr_ci_lower": 0.4866,
+    "hr_ci_upper": 0.93,
+    "arm": 1,
+    "population": "ITT"
+  },
+  "subgroups": [
+    {
+      "variable": "SEX",
+      "level": "F",
+      "median_exp": 27.78,
+      "median_ctrl": 19.83,
+      "n_exp": 41,
+      "n_ctrl": 38,
+      "hr": 0.6929
+    },
+    {
+      "variable": "SEX",
+      "level": "M",
+      "median_exp": 21.33,
+      "median_ctrl": 12.71,
+      "n_exp": 65,
+      "n_ctrl": 47,
+      "hr": 0.6182
+    },
+    {
+      "variable": "AGEGR1",
+      "level": "<65",
+      "median_exp": 24.58,
+      "median_ctrl": 16.21,
+      "n_exp": 79,
+      "n_ctrl": 66,
+      "hr": 0.6882
+    },
+    {
+      "variable": "AGEGR1",
+      "level": ">=65",
+      "median_exp": 23.9,
+      "median_ctrl": 17.91,
+      "n_exp": 27,
+      "n_ctrl": 19,
+      "hr": 0.6432
+    },
+    {
+      "variable": "ECOG",
+      "level": "0",
+      "median_exp": 23.9,
+      "median_ctrl": 16.21,
+      "n_exp": 64,
+      "n_ctrl": 44,
+      "hr": 0.7087
+    },
+    {
+      "variable": "ECOG",
+      "level": "1",
+      "median_exp": 28.01,
+      "median_ctrl": 18.61,
+      "n_exp": 42,
+      "n_ctrl": 41,
+      "hr": 0.6142
+    }
+  ],
+  "censoring_summary": {
+    "n_censored": 38,
+    "n_events": 153,
+    "censoring_rate": 0.199
+  },
+  "language": "Python",
+  "version": "1.0"
+}

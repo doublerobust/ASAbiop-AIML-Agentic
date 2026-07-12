@@ -1,0 +1,2090 @@
+{
+  "tc_id": "TC-033",
+  "tc_name": "Dose Intensity Summary",
+  "metadata": {
+    "n_total": 200,
+    "n_experimental": 100,
+    "n_control": 100,
+    "population": "SAFETY",
+    "rdi_threshold": 80,
+    "duration_unit": "weeks",
+    "dose_unit": "mg",
+    "r_version": "R version 4.6.1 (2026-06-24)"
+  },
+  "rdi_summary": {
+    "experimental": {
+      "n": 100,
+      "mean": 84.0138,
+      "sd": 8.5985,
+      "median": 84.94,
+      "min": 70.27,
+      "max": 99.84,
+      "q1": 77.0225,
+      "q3": 91.2325
+    },
+    "control": {
+      "n": 100,
+      "mean": 89.5835,
+      "sd": 5.6842,
+      "median": 89.075,
+      "min": 80.24,
+      "max": 99.86,
+      "q1": 85.055,
+      "q3": 94.3025
+    }
+  },
+  "rdi_ge80": {
+    "experimental": {
+      "n": 66,
+      "pct": 66
+    },
+    "control": {
+      "n": 100,
+      "pct": 100
+    }
+  },
+  "dose_reduction": {
+    "experimental": {
+      "n": 14,
+      "pct": 14
+    },
+    "control": {
+      "n": 10,
+      "pct": 10
+    }
+  },
+  "dose_interruption": {
+    "experimental": {
+      "n": 8,
+      "pct": 8
+    },
+    "control": {
+      "n": 6,
+      "pct": 6
+    }
+  },
+  "treatment_duration": {
+    "experimental": {
+      "n": 100,
+      "mean": 46.84,
+      "sd": 8.8394,
+      "median": 47,
+      "min": 28,
+      "max": 69,
+      "q1": 40,
+      "q3": 52.25
+    },
+    "control": {
+      "n": 100,
+      "mean": 27.36,
+      "sd": 6.5033,
+      "median": 27,
+      "min": 12,
+      "max": 48,
+      "q1": 23,
+      "q3": 31
+    }
+  },
+  "per_subject": [
+    {
+      "USUBJID": "SUB0001",
+      "TRT01A": "Experimental",
+      "TREATDUR": 43,
+      "PLANDOSE": 3612,
+      "ACTUALDOSE": 3370.68,
+      "RDI": 93.32,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0002",
+      "TRT01A": "Experimental",
+      "TREATDUR": 44,
+      "PLANDOSE": 3696,
+      "ACTUALDOSE": 3170.59,
+      "RDI": 85.78,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0003",
+      "TRT01A": "Control",
+      "TREATDUR": 28,
+      "PLANDOSE": 1176,
+      "ACTUALDOSE": 1128.27,
+      "RDI": 95.94,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0004",
+      "TRT01A": "Experimental",
+      "TREATDUR": 37,
+      "PLANDOSE": 3108,
+      "ACTUALDOSE": 2646.4,
+      "RDI": 85.15,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0005",
+      "TRT01A": "Control",
+      "TREATDUR": 32,
+      "PLANDOSE": 1344,
+      "ACTUALDOSE": 1236.25,
+      "RDI": 91.98,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0006",
+      "TRT01A": "Control",
+      "TREATDUR": 21,
+      "PLANDOSE": 882,
+      "ACTUALDOSE": 768.97,
+      "RDI": 87.18,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0007",
+      "TRT01A": "Control",
+      "TREATDUR": 32,
+      "PLANDOSE": 1344,
+      "ACTUALDOSE": 1257.46,
+      "RDI": 93.56,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0008",
+      "TRT01A": "Control",
+      "TREATDUR": 21,
+      "PLANDOSE": 882,
+      "ACTUALDOSE": 770.15,
+      "RDI": 87.32,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0009",
+      "TRT01A": "Experimental",
+      "TREATDUR": 43,
+      "PLANDOSE": 3612,
+      "ACTUALDOSE": 2592.58,
+      "RDI": 71.78,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0010",
+      "TRT01A": "Experimental",
+      "TREATDUR": 36,
+      "PLANDOSE": 3024,
+      "ACTUALDOSE": 2727.1,
+      "RDI": 90.18,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0011",
+      "TRT01A": "Experimental",
+      "TREATDUR": 48,
+      "PLANDOSE": 4032,
+      "ACTUALDOSE": 3581.21,
+      "RDI": 88.82,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0012",
+      "TRT01A": "Experimental",
+      "TREATDUR": 40,
+      "PLANDOSE": 3360,
+      "ACTUALDOSE": 2425.44,
+      "RDI": 72.19,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0013",
+      "TRT01A": "Experimental",
+      "TREATDUR": 43,
+      "PLANDOSE": 3612,
+      "ACTUALDOSE": 3002.7,
+      "RDI": 83.13,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0014",
+      "TRT01A": "Control",
+      "TREATDUR": 16,
+      "PLANDOSE": 672,
+      "ACTUALDOSE": 657.8,
+      "RDI": 97.89,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0015",
+      "TRT01A": "Control",
+      "TREATDUR": 21,
+      "PLANDOSE": 882,
+      "ACTUALDOSE": 831.47,
+      "RDI": 94.27,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0016",
+      "TRT01A": "Experimental",
+      "TREATDUR": 37,
+      "PLANDOSE": 3108,
+      "ACTUALDOSE": 2540.87,
+      "RDI": 81.75,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0017",
+      "TRT01A": "Control",
+      "TREATDUR": 24,
+      "PLANDOSE": 1008,
+      "ACTUALDOSE": 988.6,
+      "RDI": 98.08,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0018",
+      "TRT01A": "Control",
+      "TREATDUR": 25,
+      "PLANDOSE": 1050,
+      "ACTUALDOSE": 940.23,
+      "RDI": 89.55,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0019",
+      "TRT01A": "Control",
+      "TREATDUR": 26,
+      "PLANDOSE": 1092,
+      "ACTUALDOSE": 888.18,
+      "RDI": 81.34,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0020",
+      "TRT01A": "Control",
+      "TREATDUR": 25,
+      "PLANDOSE": 1050,
+      "ACTUALDOSE": 991.17,
+      "RDI": 94.4,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0021",
+      "TRT01A": "Experimental",
+      "TREATDUR": 38,
+      "PLANDOSE": 3192,
+      "ACTUALDOSE": 3127.13,
+      "RDI": 97.97,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0022",
+      "TRT01A": "Control",
+      "TREATDUR": 17,
+      "PLANDOSE": 714,
+      "ACTUALDOSE": 617.84,
+      "RDI": 86.53,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0023",
+      "TRT01A": "Experimental",
+      "TREATDUR": 49,
+      "PLANDOSE": 4116,
+      "ACTUALDOSE": 2959.69,
+      "RDI": 71.91,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0024",
+      "TRT01A": "Control",
+      "TREATDUR": 29,
+      "PLANDOSE": 1218,
+      "ACTUALDOSE": 1054.96,
+      "RDI": 86.61,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0025",
+      "TRT01A": "Control",
+      "TREATDUR": 38,
+      "PLANDOSE": 1596,
+      "ACTUALDOSE": 1308.27,
+      "RDI": 81.97,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0026",
+      "TRT01A": "Experimental",
+      "TREATDUR": 56,
+      "PLANDOSE": 4704,
+      "ACTUALDOSE": 4411.99,
+      "RDI": 93.79,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0027",
+      "TRT01A": "Control",
+      "TREATDUR": 36,
+      "PLANDOSE": 1512,
+      "ACTUALDOSE": 1438.27,
+      "RDI": 95.12,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0028",
+      "TRT01A": "Experimental",
+      "TREATDUR": 65,
+      "PLANDOSE": 5460,
+      "ACTUALDOSE": 5308.68,
+      "RDI": 97.23,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0029",
+      "TRT01A": "Control",
+      "TREATDUR": 37,
+      "PLANDOSE": 1554,
+      "ACTUALDOSE": 1328.52,
+      "RDI": 85.49,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0030",
+      "TRT01A": "Experimental",
+      "TREATDUR": 46,
+      "PLANDOSE": 3864,
+      "ACTUALDOSE": 3751.22,
+      "RDI": 97.08,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0031",
+      "TRT01A": "Experimental",
+      "TREATDUR": 34,
+      "PLANDOSE": 2856,
+      "ACTUALDOSE": 2458.2,
+      "RDI": 86.07,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0032",
+      "TRT01A": "Experimental",
+      "TREATDUR": 54,
+      "PLANDOSE": 4536,
+      "ACTUALDOSE": 3649.49,
+      "RDI": 80.46,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0033",
+      "TRT01A": "Control",
+      "TREATDUR": 28,
+      "PLANDOSE": 1176,
+      "ACTUALDOSE": 1063.42,
+      "RDI": 90.43,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0034",
+      "TRT01A": "Control",
+      "TREATDUR": 39,
+      "PLANDOSE": 1638,
+      "ACTUALDOSE": 1561.3,
+      "RDI": 95.32,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0035",
+      "TRT01A": "Experimental",
+      "TREATDUR": 50,
+      "PLANDOSE": 4200,
+      "ACTUALDOSE": 3609.58,
+      "RDI": 85.94,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0036",
+      "TRT01A": "Control",
+      "TREATDUR": 19,
+      "PLANDOSE": 798,
+      "ACTUALDOSE": 772.18,
+      "RDI": 96.76,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0037",
+      "TRT01A": "Control",
+      "TREATDUR": 30,
+      "PLANDOSE": 1260,
+      "ACTUALDOSE": 1245.07,
+      "RDI": 98.81,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0038",
+      "TRT01A": "Control",
+      "TREATDUR": 37,
+      "PLANDOSE": 1554,
+      "ACTUALDOSE": 1374.6,
+      "RDI": 88.46,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0039",
+      "TRT01A": "Control",
+      "TREATDUR": 26,
+      "PLANDOSE": 1092,
+      "ACTUALDOSE": 1005.67,
+      "RDI": 92.09,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0040",
+      "TRT01A": "Experimental",
+      "TREATDUR": 35,
+      "PLANDOSE": 2940,
+      "ACTUALDOSE": 2710.58,
+      "RDI": 92.2,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0041",
+      "TRT01A": "Experimental",
+      "TREATDUR": 55,
+      "PLANDOSE": 4620,
+      "ACTUALDOSE": 4212.15,
+      "RDI": 91.17,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0042",
+      "TRT01A": "Control",
+      "TREATDUR": 31,
+      "PLANDOSE": 1302,
+      "ACTUALDOSE": 1283.17,
+      "RDI": 98.55,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0043",
+      "TRT01A": "Control",
+      "TREATDUR": 37,
+      "PLANDOSE": 1554,
+      "ACTUALDOSE": 1424.53,
+      "RDI": 91.67,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0044",
+      "TRT01A": "Control",
+      "TREATDUR": 32,
+      "PLANDOSE": 1344,
+      "ACTUALDOSE": 1252.3,
+      "RDI": 93.18,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0045",
+      "TRT01A": "Experimental",
+      "TREATDUR": 50,
+      "PLANDOSE": 4200,
+      "ACTUALDOSE": 3297.83,
+      "RDI": 78.52,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0046",
+      "TRT01A": "Experimental",
+      "TREATDUR": 45,
+      "PLANDOSE": 3780,
+      "ACTUALDOSE": 2708.62,
+      "RDI": 71.66,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0047",
+      "TRT01A": "Control",
+      "TREATDUR": 30,
+      "PLANDOSE": 1260,
+      "ACTUALDOSE": 1136.25,
+      "RDI": 90.18,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0048",
+      "TRT01A": "Control",
+      "TREATDUR": 23,
+      "PLANDOSE": 966,
+      "ACTUALDOSE": 872.29,
+      "RDI": 90.3,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0049",
+      "TRT01A": "Experimental",
+      "TREATDUR": 38,
+      "PLANDOSE": 3192,
+      "ACTUALDOSE": 2474.74,
+      "RDI": 77.53,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0050",
+      "TRT01A": "Control",
+      "TREATDUR": 35,
+      "PLANDOSE": 1470,
+      "ACTUALDOSE": 1254.75,
+      "RDI": 85.36,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0051",
+      "TRT01A": "Control",
+      "TREATDUR": 30,
+      "PLANDOSE": 1260,
+      "ACTUALDOSE": 1181.31,
+      "RDI": 93.75,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0052",
+      "TRT01A": "Control",
+      "TREATDUR": 29,
+      "PLANDOSE": 1218,
+      "ACTUALDOSE": 1110.26,
+      "RDI": 91.15,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0053",
+      "TRT01A": "Control",
+      "TREATDUR": 25,
+      "PLANDOSE": 1050,
+      "ACTUALDOSE": 930.51,
+      "RDI": 88.62,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0054",
+      "TRT01A": "Control",
+      "TREATDUR": 34,
+      "PLANDOSE": 1428,
+      "ACTUALDOSE": 1388.28,
+      "RDI": 97.22,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0055",
+      "TRT01A": "Experimental",
+      "TREATDUR": 28,
+      "PLANDOSE": 2352,
+      "ACTUALDOSE": 1663.11,
+      "RDI": 70.71,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0056",
+      "TRT01A": "Control",
+      "TREATDUR": 21,
+      "PLANDOSE": 882,
+      "ACTUALDOSE": 761.4,
+      "RDI": 86.33,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0057",
+      "TRT01A": "Control",
+      "TREATDUR": 27,
+      "PLANDOSE": 1134,
+      "ACTUALDOSE": 1075.26,
+      "RDI": 94.82,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0058",
+      "TRT01A": "Experimental",
+      "TREATDUR": 69,
+      "PLANDOSE": 5796,
+      "ACTUALDOSE": 4246.3,
+      "RDI": 73.26,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0059",
+      "TRT01A": "Control",
+      "TREATDUR": 23,
+      "PLANDOSE": 966,
+      "ACTUALDOSE": 807.52,
+      "RDI": 83.59,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0060",
+      "TRT01A": "Experimental",
+      "TREATDUR": 36,
+      "PLANDOSE": 3024,
+      "ACTUALDOSE": 2125.02,
+      "RDI": 70.27,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0061",
+      "TRT01A": "Control",
+      "TREATDUR": 27,
+      "PLANDOSE": 1134,
+      "ACTUALDOSE": 931.09,
+      "RDI": 82.11,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0062",
+      "TRT01A": "Control",
+      "TREATDUR": 32,
+      "PLANDOSE": 1344,
+      "ACTUALDOSE": 1152.77,
+      "RDI": 85.77,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0063",
+      "TRT01A": "Experimental",
+      "TREATDUR": 42,
+      "PLANDOSE": 3528,
+      "ACTUALDOSE": 2999.9,
+      "RDI": 85.03,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0064",
+      "TRT01A": "Experimental",
+      "TREATDUR": 46,
+      "PLANDOSE": 3864,
+      "ACTUALDOSE": 3787.7,
+      "RDI": 98.03,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0065",
+      "TRT01A": "Experimental",
+      "TREATDUR": 36,
+      "PLANDOSE": 3024,
+      "ACTUALDOSE": 2541.24,
+      "RDI": 84.04,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0066",
+      "TRT01A": "Experimental",
+      "TREATDUR": 68,
+      "PLANDOSE": 5712,
+      "ACTUALDOSE": 4874.01,
+      "RDI": 85.33,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0067",
+      "TRT01A": "Experimental",
+      "TREATDUR": 49,
+      "PLANDOSE": 4116,
+      "ACTUALDOSE": 3908.83,
+      "RDI": 94.97,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0068",
+      "TRT01A": "Control",
+      "TREATDUR": 22,
+      "PLANDOSE": 924,
+      "ACTUALDOSE": 775.64,
+      "RDI": 83.94,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0069",
+      "TRT01A": "Experimental",
+      "TREATDUR": 53,
+      "PLANDOSE": 4452,
+      "ACTUALDOSE": 3812.73,
+      "RDI": 85.64,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0070",
+      "TRT01A": "Control",
+      "TREATDUR": 22,
+      "PLANDOSE": 924,
+      "ACTUALDOSE": 891.61,
+      "RDI": 96.49,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0071",
+      "TRT01A": "Control",
+      "TREATDUR": 12,
+      "PLANDOSE": 504,
+      "ACTUALDOSE": 412.48,
+      "RDI": 81.84,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0072",
+      "TRT01A": "Experimental",
+      "TREATDUR": 63,
+      "PLANDOSE": 5292,
+      "ACTUALDOSE": 4415.68,
+      "RDI": 83.44,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0073",
+      "TRT01A": "Control",
+      "TREATDUR": 23,
+      "PLANDOSE": 966,
+      "ACTUALDOSE": 943,
+      "RDI": 97.62,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0074",
+      "TRT01A": "Control",
+      "TREATDUR": 38,
+      "PLANDOSE": 1596,
+      "ACTUALDOSE": 1415.88,
+      "RDI": 88.71,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0075",
+      "TRT01A": "Experimental",
+      "TREATDUR": 52,
+      "PLANDOSE": 4368,
+      "ACTUALDOSE": 3192.79,
+      "RDI": 73.1,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0076",
+      "TRT01A": "Control",
+      "TREATDUR": 17,
+      "PLANDOSE": 714,
+      "ACTUALDOSE": 579.36,
+      "RDI": 81.14,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0077",
+      "TRT01A": "Control",
+      "TREATDUR": 28,
+      "PLANDOSE": 1176,
+      "ACTUALDOSE": 1148.93,
+      "RDI": 97.7,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0078",
+      "TRT01A": "Control",
+      "TREATDUR": 23,
+      "PLANDOSE": 966,
+      "ACTUALDOSE": 801.37,
+      "RDI": 82.96,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0079",
+      "TRT01A": "Experimental",
+      "TREATDUR": 52,
+      "PLANDOSE": 4368,
+      "ACTUALDOSE": 3152.2,
+      "RDI": 72.17,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0080",
+      "TRT01A": "Control",
+      "TREATDUR": 27,
+      "PLANDOSE": 1134,
+      "ACTUALDOSE": 1061.56,
+      "RDI": 93.61,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0081",
+      "TRT01A": "Experimental",
+      "TREATDUR": 53,
+      "PLANDOSE": 4452,
+      "ACTUALDOSE": 4255.38,
+      "RDI": 95.58,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0082",
+      "TRT01A": "Control",
+      "TREATDUR": 30,
+      "PLANDOSE": 1260,
+      "ACTUALDOSE": 1115.04,
+      "RDI": 88.49,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0083",
+      "TRT01A": "Experimental",
+      "TREATDUR": 41,
+      "PLANDOSE": 3444,
+      "ACTUALDOSE": 2502.84,
+      "RDI": 72.67,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0084",
+      "TRT01A": "Control",
+      "TREATDUR": 26,
+      "PLANDOSE": 1092,
+      "ACTUALDOSE": 926.33,
+      "RDI": 84.83,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0085",
+      "TRT01A": "Control",
+      "TREATDUR": 41,
+      "PLANDOSE": 1722,
+      "ACTUALDOSE": 1501.64,
+      "RDI": 87.2,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0086",
+      "TRT01A": "Control",
+      "TREATDUR": 23,
+      "PLANDOSE": 966,
+      "ACTUALDOSE": 786.16,
+      "RDI": 81.38,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0087",
+      "TRT01A": "Control",
+      "TREATDUR": 24,
+      "PLANDOSE": 1008,
+      "ACTUALDOSE": 879.12,
+      "RDI": 87.21,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0088",
+      "TRT01A": "Experimental",
+      "TREATDUR": 43,
+      "PLANDOSE": 3612,
+      "ACTUALDOSE": 3606.21,
+      "RDI": 99.84,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0089",
+      "TRT01A": "Experimental",
+      "TREATDUR": 45,
+      "PLANDOSE": 3780,
+      "ACTUALDOSE": 3207.2,
+      "RDI": 84.85,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0090",
+      "TRT01A": "Experimental",
+      "TREATDUR": 44,
+      "PLANDOSE": 3696,
+      "ACTUALDOSE": 2723.62,
+      "RDI": 73.69,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0091",
+      "TRT01A": "Experimental",
+      "TREATDUR": 61,
+      "PLANDOSE": 5124,
+      "ACTUALDOSE": 4448.22,
+      "RDI": 86.81,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0092",
+      "TRT01A": "Experimental",
+      "TREATDUR": 48,
+      "PLANDOSE": 4032,
+      "ACTUALDOSE": 3111.85,
+      "RDI": 77.18,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0093",
+      "TRT01A": "Experimental",
+      "TREATDUR": 50,
+      "PLANDOSE": 4200,
+      "ACTUALDOSE": 3853.82,
+      "RDI": 91.76,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0094",
+      "TRT01A": "Experimental",
+      "TREATDUR": 39,
+      "PLANDOSE": 3276,
+      "ACTUALDOSE": 3065.71,
+      "RDI": 93.58,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0095",
+      "TRT01A": "Experimental",
+      "TREATDUR": 41,
+      "PLANDOSE": 3444,
+      "ACTUALDOSE": 2875.51,
+      "RDI": 83.49,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0096",
+      "TRT01A": "Experimental",
+      "TREATDUR": 58,
+      "PLANDOSE": 4872,
+      "ACTUALDOSE": 4096.01,
+      "RDI": 84.07,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0097",
+      "TRT01A": "Experimental",
+      "TREATDUR": 61,
+      "PLANDOSE": 5124,
+      "ACTUALDOSE": 4204.54,
+      "RDI": 82.06,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0098",
+      "TRT01A": "Control",
+      "TREATDUR": 21,
+      "PLANDOSE": 882,
+      "ACTUALDOSE": 788.84,
+      "RDI": 89.44,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0099",
+      "TRT01A": "Experimental",
+      "TREATDUR": 34,
+      "PLANDOSE": 2856,
+      "ACTUALDOSE": 2482.17,
+      "RDI": 86.91,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0100",
+      "TRT01A": "Control",
+      "TREATDUR": 23,
+      "PLANDOSE": 966,
+      "ACTUALDOSE": 944.88,
+      "RDI": 97.81,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0101",
+      "TRT01A": "Control",
+      "TREATDUR": 29,
+      "PLANDOSE": 1218,
+      "ACTUALDOSE": 1025.94,
+      "RDI": 84.23,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0102",
+      "TRT01A": "Experimental",
+      "TREATDUR": 48,
+      "PLANDOSE": 4032,
+      "ACTUALDOSE": 2937.15,
+      "RDI": 72.85,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0103",
+      "TRT01A": "Control",
+      "TREATDUR": 25,
+      "PLANDOSE": 1050,
+      "ACTUALDOSE": 842.97,
+      "RDI": 80.28,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0104",
+      "TRT01A": "Control",
+      "TREATDUR": 31,
+      "PLANDOSE": 1302,
+      "ACTUALDOSE": 1178.78,
+      "RDI": 90.54,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0105",
+      "TRT01A": "Experimental",
+      "TREATDUR": 37,
+      "PLANDOSE": 3108,
+      "ACTUALDOSE": 2189.58,
+      "RDI": 70.45,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0106",
+      "TRT01A": "Experimental",
+      "TREATDUR": 48,
+      "PLANDOSE": 4032,
+      "ACTUALDOSE": 2959.22,
+      "RDI": 73.39,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0107",
+      "TRT01A": "Control",
+      "TREATDUR": 28,
+      "PLANDOSE": 1176,
+      "ACTUALDOSE": 1074.01,
+      "RDI": 91.33,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0108",
+      "TRT01A": "Experimental",
+      "TREATDUR": 50,
+      "PLANDOSE": 4200,
+      "ACTUALDOSE": 3502.99,
+      "RDI": 83.4,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0109",
+      "TRT01A": "Control",
+      "TREATDUR": 28,
+      "PLANDOSE": 1176,
+      "ACTUALDOSE": 1085.66,
+      "RDI": 92.32,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0110",
+      "TRT01A": "Control",
+      "TREATDUR": 25,
+      "PLANDOSE": 1050,
+      "ACTUALDOSE": 850.54,
+      "RDI": 81,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0111",
+      "TRT01A": "Experimental",
+      "TREATDUR": 41,
+      "PLANDOSE": 3444,
+      "ACTUALDOSE": 3096.44,
+      "RDI": 89.91,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0112",
+      "TRT01A": "Control",
+      "TREATDUR": 32,
+      "PLANDOSE": 1344,
+      "ACTUALDOSE": 1162.03,
+      "RDI": 86.46,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0113",
+      "TRT01A": "Control",
+      "TREATDUR": 48,
+      "PLANDOSE": 2016,
+      "ACTUALDOSE": 1676.69,
+      "RDI": 83.17,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0114",
+      "TRT01A": "Control",
+      "TREATDUR": 21,
+      "PLANDOSE": 882,
+      "ACTUALDOSE": 742.97,
+      "RDI": 84.24,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0115",
+      "TRT01A": "Experimental",
+      "TREATDUR": 57,
+      "PLANDOSE": 4788,
+      "ACTUALDOSE": 4498.28,
+      "RDI": 93.95,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0116",
+      "TRT01A": "Control",
+      "TREATDUR": 42,
+      "PLANDOSE": 1764,
+      "ACTUALDOSE": 1648.88,
+      "RDI": 93.47,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0117",
+      "TRT01A": "Experimental",
+      "TREATDUR": 52,
+      "PLANDOSE": 4368,
+      "ACTUALDOSE": 3391.04,
+      "RDI": 77.63,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0118",
+      "TRT01A": "Experimental",
+      "TREATDUR": 29,
+      "PLANDOSE": 2436,
+      "ACTUALDOSE": 2192.82,
+      "RDI": 90.02,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0119",
+      "TRT01A": "Experimental",
+      "TREATDUR": 47,
+      "PLANDOSE": 3948,
+      "ACTUALDOSE": 3878.24,
+      "RDI": 98.23,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0120",
+      "TRT01A": "Control",
+      "TREATDUR": 27,
+      "PLANDOSE": 1134,
+      "ACTUALDOSE": 986.49,
+      "RDI": 86.99,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0121",
+      "TRT01A": "Experimental",
+      "TREATDUR": 56,
+      "PLANDOSE": 4704,
+      "ACTUALDOSE": 3366.6,
+      "RDI": 71.57,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0122",
+      "TRT01A": "Control",
+      "TREATDUR": 32,
+      "PLANDOSE": 1344,
+      "ACTUALDOSE": 1154.06,
+      "RDI": 85.87,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0123",
+      "TRT01A": "Control",
+      "TREATDUR": 12,
+      "PLANDOSE": 504,
+      "ACTUALDOSE": 416.52,
+      "RDI": 82.64,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0124",
+      "TRT01A": "Experimental",
+      "TREATDUR": 49,
+      "PLANDOSE": 4116,
+      "ACTUALDOSE": 3557.73,
+      "RDI": 86.44,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0125",
+      "TRT01A": "Experimental",
+      "TREATDUR": 54,
+      "PLANDOSE": 4536,
+      "ACTUALDOSE": 3589.52,
+      "RDI": 79.13,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0126",
+      "TRT01A": "Experimental",
+      "TREATDUR": 48,
+      "PLANDOSE": 4032,
+      "ACTUALDOSE": 3309.03,
+      "RDI": 82.07,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0127",
+      "TRT01A": "Experimental",
+      "TREATDUR": 50,
+      "PLANDOSE": 4200,
+      "ACTUALDOSE": 2974.77,
+      "RDI": 70.83,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0128",
+      "TRT01A": "Experimental",
+      "TREATDUR": 52,
+      "PLANDOSE": 4368,
+      "ACTUALDOSE": 4170.12,
+      "RDI": 95.47,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0129",
+      "TRT01A": "Experimental",
+      "TREATDUR": 44,
+      "PLANDOSE": 3696,
+      "ACTUALDOSE": 2621.61,
+      "RDI": 70.93,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0130",
+      "TRT01A": "Experimental",
+      "TREATDUR": 61,
+      "PLANDOSE": 5124,
+      "ACTUALDOSE": 4589.5,
+      "RDI": 89.57,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0131",
+      "TRT01A": "Control",
+      "TREATDUR": 24,
+      "PLANDOSE": 1008,
+      "ACTUALDOSE": 999.56,
+      "RDI": 99.16,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0132",
+      "TRT01A": "Experimental",
+      "TREATDUR": 36,
+      "PLANDOSE": 3024,
+      "ACTUALDOSE": 2400.4,
+      "RDI": 79.38,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0133",
+      "TRT01A": "Control",
+      "TREATDUR": 29,
+      "PLANDOSE": 1218,
+      "ACTUALDOSE": 1090.53,
+      "RDI": 89.53,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0134",
+      "TRT01A": "Experimental",
+      "TREATDUR": 60,
+      "PLANDOSE": 5040,
+      "ACTUALDOSE": 4781.34,
+      "RDI": 94.87,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0135",
+      "TRT01A": "Control",
+      "TREATDUR": 25,
+      "PLANDOSE": 1050,
+      "ACTUALDOSE": 902.08,
+      "RDI": 85.91,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0136",
+      "TRT01A": "Experimental",
+      "TREATDUR": 31,
+      "PLANDOSE": 2604,
+      "ACTUALDOSE": 1930.69,
+      "RDI": 74.14,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0137",
+      "TRT01A": "Experimental",
+      "TREATDUR": 42,
+      "PLANDOSE": 3528,
+      "ACTUALDOSE": 3391.39,
+      "RDI": 96.13,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0138",
+      "TRT01A": "Experimental",
+      "TREATDUR": 54,
+      "PLANDOSE": 4536,
+      "ACTUALDOSE": 3960.5,
+      "RDI": 87.31,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0139",
+      "TRT01A": "Control",
+      "TREATDUR": 32,
+      "PLANDOSE": 1344,
+      "ACTUALDOSE": 1159.34,
+      "RDI": 86.26,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0140",
+      "TRT01A": "Experimental",
+      "TREATDUR": 51,
+      "PLANDOSE": 4284,
+      "ACTUALDOSE": 3035.04,
+      "RDI": 70.85,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0141",
+      "TRT01A": "Control",
+      "TREATDUR": 29,
+      "PLANDOSE": 1218,
+      "ACTUALDOSE": 1197.32,
+      "RDI": 98.3,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0142",
+      "TRT01A": "Experimental",
+      "TREATDUR": 40,
+      "PLANDOSE": 3360,
+      "ACTUALDOSE": 3114.82,
+      "RDI": 92.7,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0143",
+      "TRT01A": "Control",
+      "TREATDUR": 23,
+      "PLANDOSE": 966,
+      "ACTUALDOSE": 840.97,
+      "RDI": 87.06,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0144",
+      "TRT01A": "Control",
+      "TREATDUR": 31,
+      "PLANDOSE": 1302,
+      "ACTUALDOSE": 1217.52,
+      "RDI": 93.51,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0145",
+      "TRT01A": "Control",
+      "TREATDUR": 26,
+      "PLANDOSE": 1092,
+      "ACTUALDOSE": 932.33,
+      "RDI": 85.38,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0146",
+      "TRT01A": "Experimental",
+      "TREATDUR": 52,
+      "PLANDOSE": 4368,
+      "ACTUALDOSE": 3696.95,
+      "RDI": 84.64,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0147",
+      "TRT01A": "Experimental",
+      "TREATDUR": 40,
+      "PLANDOSE": 3360,
+      "ACTUALDOSE": 2938.49,
+      "RDI": 87.46,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0148",
+      "TRT01A": "Control",
+      "TREATDUR": 35,
+      "PLANDOSE": 1470,
+      "ACTUALDOSE": 1270.95,
+      "RDI": 86.46,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0149",
+      "TRT01A": "Control",
+      "TREATDUR": 23,
+      "PLANDOSE": 966,
+      "ACTUALDOSE": 894.28,
+      "RDI": 92.58,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0150",
+      "TRT01A": "Experimental",
+      "TREATDUR": 43,
+      "PLANDOSE": 3612,
+      "ACTUALDOSE": 2964.54,
+      "RDI": 82.07,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0151",
+      "TRT01A": "Control",
+      "TREATDUR": 33,
+      "PLANDOSE": 1386,
+      "ACTUALDOSE": 1366.25,
+      "RDI": 98.57,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0152",
+      "TRT01A": "Control",
+      "TREATDUR": 19,
+      "PLANDOSE": 798,
+      "ACTUALDOSE": 733.01,
+      "RDI": 91.86,
+      "DOSERED": 0,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0153",
+      "TRT01A": "Control",
+      "TREATDUR": 28,
+      "PLANDOSE": 1176,
+      "ACTUALDOSE": 1025.69,
+      "RDI": 87.22,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0154",
+      "TRT01A": "Experimental",
+      "TREATDUR": 32,
+      "PLANDOSE": 2688,
+      "ACTUALDOSE": 2550.35,
+      "RDI": 94.88,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0155",
+      "TRT01A": "Experimental",
+      "TREATDUR": 48,
+      "PLANDOSE": 4032,
+      "ACTUALDOSE": 3613.07,
+      "RDI": 89.61,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0156",
+      "TRT01A": "Experimental",
+      "TREATDUR": 56,
+      "PLANDOSE": 4704,
+      "ACTUALDOSE": 4419.66,
+      "RDI": 93.96,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0157",
+      "TRT01A": "Experimental",
+      "TREATDUR": 48,
+      "PLANDOSE": 4032,
+      "ACTUALDOSE": 3047.57,
+      "RDI": 75.58,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0158",
+      "TRT01A": "Control",
+      "TREATDUR": 28,
+      "PLANDOSE": 1176,
+      "ACTUALDOSE": 1144.45,
+      "RDI": 97.32,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0159",
+      "TRT01A": "Control",
+      "TREATDUR": 22,
+      "PLANDOSE": 924,
+      "ACTUALDOSE": 909.68,
+      "RDI": 98.45,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0160",
+      "TRT01A": "Control",
+      "TREATDUR": 26,
+      "PLANDOSE": 1092,
+      "ACTUALDOSE": 997.82,
+      "RDI": 91.38,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0161",
+      "TRT01A": "Control",
+      "TREATDUR": 20,
+      "PLANDOSE": 840,
+      "ACTUALDOSE": 797.43,
+      "RDI": 94.93,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0162",
+      "TRT01A": "Experimental",
+      "TREATDUR": 58,
+      "PLANDOSE": 4872,
+      "ACTUALDOSE": 3494.51,
+      "RDI": 71.73,
+      "DOSERED": 1,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0163",
+      "TRT01A": "Control",
+      "TREATDUR": 18,
+      "PLANDOSE": 756,
+      "ACTUALDOSE": 626.19,
+      "RDI": 82.83,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0164",
+      "TRT01A": "Experimental",
+      "TREATDUR": 48,
+      "PLANDOSE": 4032,
+      "ACTUALDOSE": 2872.68,
+      "RDI": 71.25,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0165",
+      "TRT01A": "Experimental",
+      "TREATDUR": 47,
+      "PLANDOSE": 3948,
+      "ACTUALDOSE": 3525.84,
+      "RDI": 89.31,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0166",
+      "TRT01A": "Control",
+      "TREATDUR": 24,
+      "PLANDOSE": 1008,
+      "ACTUALDOSE": 810.88,
+      "RDI": 80.44,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0167",
+      "TRT01A": "Experimental",
+      "TREATDUR": 38,
+      "PLANDOSE": 3192,
+      "ACTUALDOSE": 2611.15,
+      "RDI": 81.8,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0168",
+      "TRT01A": "Control",
+      "TREATDUR": 26,
+      "PLANDOSE": 1092,
+      "ACTUALDOSE": 925.24,
+      "RDI": 84.73,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0169",
+      "TRT01A": "Experimental",
+      "TREATDUR": 54,
+      "PLANDOSE": 4536,
+      "ACTUALDOSE": 4099.48,
+      "RDI": 90.38,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0170",
+      "TRT01A": "Experimental",
+      "TREATDUR": 44,
+      "PLANDOSE": 3696,
+      "ACTUALDOSE": 3382.82,
+      "RDI": 91.53,
+      "DOSERED": 1,
+      "DOSEINT": 1
+    },
+    {
+      "USUBJID": "SUB0171",
+      "TRT01A": "Experimental",
+      "TREATDUR": 40,
+      "PLANDOSE": 3360,
+      "ACTUALDOSE": 3074.87,
+      "RDI": 91.51,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0172",
+      "TRT01A": "Control",
+      "TREATDUR": 25,
+      "PLANDOSE": 1050,
+      "ACTUALDOSE": 864.27,
+      "RDI": 82.31,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0173",
+      "TRT01A": "Control",
+      "TREATDUR": 38,
+      "PLANDOSE": 1596,
+      "ACTUALDOSE": 1482.22,
+      "RDI": 92.87,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0174",
+      "TRT01A": "Experimental",
+      "TREATDUR": 58,
+      "PLANDOSE": 4872,
+      "ACTUALDOSE": 4245.14,
+      "RDI": 87.13,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0175",
+      "TRT01A": "Experimental",
+      "TREATDUR": 43,
+      "PLANDOSE": 3612,
+      "ACTUALDOSE": 3481.37,
+      "RDI": 96.38,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0176",
+      "TRT01A": "Control",
+      "TREATDUR": 25,
+      "PLANDOSE": 1050,
+      "ACTUALDOSE": 889.51,
+      "RDI": 84.72,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0177",
+      "TRT01A": "Control",
+      "TREATDUR": 31,
+      "PLANDOSE": 1302,
+      "ACTUALDOSE": 1133.61,
+      "RDI": 87.07,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0178",
+      "TRT01A": "Experimental",
+      "TREATDUR": 48,
+      "PLANDOSE": 4032,
+      "ACTUALDOSE": 3247.43,
+      "RDI": 80.54,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0179",
+      "TRT01A": "Experimental",
+      "TREATDUR": 66,
+      "PLANDOSE": 5544,
+      "ACTUALDOSE": 4303.23,
+      "RDI": 77.62,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0180",
+      "TRT01A": "Experimental",
+      "TREATDUR": 40,
+      "PLANDOSE": 3360,
+      "ACTUALDOSE": 3071.82,
+      "RDI": 91.42,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0181",
+      "TRT01A": "Experimental",
+      "TREATDUR": 59,
+      "PLANDOSE": 4956,
+      "ACTUALDOSE": 3794.02,
+      "RDI": 76.55,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0182",
+      "TRT01A": "Experimental",
+      "TREATDUR": 48,
+      "PLANDOSE": 4032,
+      "ACTUALDOSE": 3358.7,
+      "RDI": 83.3,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0183",
+      "TRT01A": "Control",
+      "TREATDUR": 30,
+      "PLANDOSE": 1260,
+      "ACTUALDOSE": 1072.63,
+      "RDI": 85.13,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0184",
+      "TRT01A": "Experimental",
+      "TREATDUR": 47,
+      "PLANDOSE": 3948,
+      "ACTUALDOSE": 3561.3,
+      "RDI": 90.21,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0185",
+      "TRT01A": "Control",
+      "TREATDUR": 14,
+      "PLANDOSE": 588,
+      "ACTUALDOSE": 568.51,
+      "RDI": 96.69,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0186",
+      "TRT01A": "Experimental",
+      "TREATDUR": 44,
+      "PLANDOSE": 3696,
+      "ACTUALDOSE": 3398.56,
+      "RDI": 91.95,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0187",
+      "TRT01A": "Experimental",
+      "TREATDUR": 40,
+      "PLANDOSE": 3360,
+      "ACTUALDOSE": 2681.18,
+      "RDI": 79.8,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0188",
+      "TRT01A": "Control",
+      "TREATDUR": 36,
+      "PLANDOSE": 1512,
+      "ACTUALDOSE": 1442.95,
+      "RDI": 95.43,
+      "DOSERED": 1,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0189",
+      "TRT01A": "Control",
+      "TREATDUR": 25,
+      "PLANDOSE": 1050,
+      "ACTUALDOSE": 877.74,
+      "RDI": 83.59,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0190",
+      "TRT01A": "Control",
+      "TREATDUR": 28,
+      "PLANDOSE": 1176,
+      "ACTUALDOSE": 1174.3,
+      "RDI": 99.86,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0191",
+      "TRT01A": "Experimental",
+      "TREATDUR": 34,
+      "PLANDOSE": 2856,
+      "ACTUALDOSE": 2241.81,
+      "RDI": 78.49,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0192",
+      "TRT01A": "Control",
+      "TREATDUR": 22,
+      "PLANDOSE": 924,
+      "ACTUALDOSE": 834.79,
+      "RDI": 90.35,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0193",
+      "TRT01A": "Experimental",
+      "TREATDUR": 40,
+      "PLANDOSE": 3360,
+      "ACTUALDOSE": 2379.14,
+      "RDI": 70.81,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0194",
+      "TRT01A": "Experimental",
+      "TREATDUR": 43,
+      "PLANDOSE": 3612,
+      "ACTUALDOSE": 3239.56,
+      "RDI": 89.69,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0195",
+      "TRT01A": "Control",
+      "TREATDUR": 25,
+      "PLANDOSE": 1050,
+      "ACTUALDOSE": 847.87,
+      "RDI": 80.75,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0196",
+      "TRT01A": "Control",
+      "TREATDUR": 25,
+      "PLANDOSE": 1050,
+      "ACTUALDOSE": 1040.36,
+      "RDI": 99.08,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0197",
+      "TRT01A": "Control",
+      "TREATDUR": 31,
+      "PLANDOSE": 1302,
+      "ACTUALDOSE": 1044.76,
+      "RDI": 80.24,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0198",
+      "TRT01A": "Experimental",
+      "TREATDUR": 37,
+      "PLANDOSE": 3108,
+      "ACTUALDOSE": 2667.24,
+      "RDI": 85.82,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0199",
+      "TRT01A": "Experimental",
+      "TREATDUR": 54,
+      "PLANDOSE": 4536,
+      "ACTUALDOSE": 3294.64,
+      "RDI": 72.63,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    },
+    {
+      "USUBJID": "SUB0200",
+      "TRT01A": "Control",
+      "TREATDUR": 37,
+      "PLANDOSE": 1554,
+      "ACTUALDOSE": 1301.84,
+      "RDI": 83.77,
+      "DOSERED": 0,
+      "DOSEINT": 0
+    }
+  ]
+}

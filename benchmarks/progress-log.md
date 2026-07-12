@@ -3541,3 +3541,79 @@ TC-033 verified at **score=1.0000** for R↔Python using shared ADEX dataset:
 4. **WG presentation slides** — cross-language results, Level 2 framework, efficiency baselines
 5. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
 6. **White paper v1.6** — add TC-033 implementation details, ARS proof-of-concept results
+
+---
+
+## Day 43 (2026-07-12): TC-030 Implementation — ORR by Subgroup with Interaction Test
+
+**Date:** July 12, 2026 (Sunday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### Completed
+
+#### 1. TC-030: ORR by Subgroup with Interaction Test
+
+**Domain:** Efficacy / Tumor Response | **Level:** 1 | **Priority:** Medium
+
+Extends TC-020 by adding formal logistic regression interaction testing, Clopper-Pearson exact CIs, and Breslow-Day homogeneity test:
+
+- Logistic regression: `logit(P(response)) = b0 + b1*trt + b2*subgroup + b3*trt*subgroup`
+- Wald test on interaction coefficient (b3) for treatment-by-subgroup interaction p-value
+- Clopper-Pearson exact confidence intervals (regulatory standard for binomial proportions)
+- Breslow-Day test for homogeneity of odds ratios across strata
+- Interaction OR with 95% Wald CI per subgroup
+- Forest-plot-ready output (same as TC-020 but with formal interaction test)
+- `--ars-output` flag emits CDISC ARS v1.0-compatible JSON envelope
+
+**Files created:**
+- `references/ground-truth/Python/tc_030_orr_interaction.py` — Python ground truth with logistic interaction, Clopper-Pearson CI, Breslow-Day test, `--data-csv` support, `--ars-output` flag
+- `references/ground-truth/R/tc-030-orr-interaction.R` — R ground truth with `glm()` logistic interaction, `qbeta()` Clopper-Pearson CI, Breslow-Day test, `--data` support, `--ars-output` flag
+- `references/ground-truth/SAS/tc-030-orr-interaction.sas` — SAS reference script (PROC LOGISTIC with interaction, PROC FREQ with CMH/Breslow-Day)
+- `references/output-schemas/tc-030-output-schema.json` — JSON schema for output validation
+
+**Files updated:**
+- `scoring-harness/score.py` — Added `score_tc030()` scorer function; wired TC-030 into all 3 dispatch dicts (score, verify, evaluate)
+- `scoring-harness/tolerances.yaml` — Added TC-030 tolerance section (overall ORR, responder counts, overall CI, subgroup ORR, subgroup N, subgroup CI, interaction p, interaction OR, Breslow-Day p)
+- `run-cross-lang-verify.sh` — Added TC-030 to cross-language verification script (uses same shared tumor response data as TC-020); fixed missing `fi` for TC-025 Python block
+
+#### 2. ARS Proof-of-Concept
+
+TC-030 scripts include `--ars-output` flag that emits CDISC ARS v1.0-compatible JSON envelope with:
+- `analysisResult.id`, `version`, `analysisReason`
+- `analysisMethod` with logistic regression code template and parameters (interaction_term, ci_method, test_statistic)
+- `analysisVariables` with dataset/role mapping (ADRS for treatment/response, ADSL for subgroups)
+- `analysisPopulation` with ITT filter and N
+- `resultGroups` with arm-level N
+- `analysisResultsData` with overall ORR and interaction p-values
+
+#### 3. Cross-Language Verification Results
+
+TC-030 verified at **score=1.0000** for R↔Python using shared tumor response dataset (same as TC-020):
+- 200 subjects (Exp=111, Ctrl=89)
+- Overall ORR: Exp=37.8%, Ctrl=15.7%, Diff=22.1%
+- 6 subgroup-level analyses (SEX × 2, AGEGR1 × 2, ECOG × 2)
+- 3 logistic interaction tests (Wald p-values: SEX p=0.3479, AGEGR1 p=0.1934, ECOG p=0.936)
+- 3 Breslow-Day tests (all non-significant, consistent with no interaction)
+- All 60+ comparison fields matched exactly (diff=0.000000)
+- Schema validation passed
+- Full cross-language verification: 29/29 checks passed, 0 failed
+
+### 📊 Updated Score Summary
+
+| TC | Domain | Level | R | Python | SAS | Score |
+|---|---|---|---|---|---|---|
+| TC-001 through TC-029, TC-033, TC-030 | (24 Level 1 TCs) | 1 | ✅ | ✅ | 24/24 | 1.0000 |
+| TC-004 | SAP Drafting | 2 | — | — | — | Auto-scorer ✅ |
+| TC-005 | TFL QC Review | 2 | ✅ | ✅ | ✅ | Auto-scorer ✅ |
+| TC-006 | Blinded SSR | 2 | ✅ | ✅ | ✅ | 1.0000 |
+
+**Totals: 24 Level 1 TCs at 1.0000, 3 Level 2 TCs with auto-scorers, 24/24 SAS reference scripts**
+
+### 🔮 Plan for Day 44+
+
+1. **TC-032 implementation** — Immune-Related AE Summary (I-O specific safety)
+2. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 TCs
+3. **WG presentation slides** — cross-language results, Level 2 framework, efficiency baselines
+4. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
+5. **White paper v1.6** — add TC-030 implementation details, ARS proof-of-concept results
+6. **Efficiency scoring** — populate efficiency.yaml with actual run metrics

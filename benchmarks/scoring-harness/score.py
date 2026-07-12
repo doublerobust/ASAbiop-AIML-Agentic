@@ -2137,6 +2137,138 @@ def score_tc033(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# TC-030: ORR by Subgroup with Interaction Test (Level 1)
+# --------------------------------------------------------------------
+
+def score_tc030(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-030: ORR by Subgroup with Interaction Test.
+
+    Compares overall ORR, subgroup-level ORR with Clopper-Pearson CIs,
+    logistic regression interaction p-values, interaction ORs, and
+    Breslow-Day test p-values.
+    """
+    tol_spec = tolerances.get("TC-030", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    # Overall ORR
+    ag_ov = agent_output.get("overall", {})
+    gt_ov = ground_truth.get("overall", {})
+
+    for field, tol_key, label in [
+        ("orr_experimental", "overall_orr_exp", "orr_exp"),
+        ("orr_control", "overall_orr_ctrl", "orr_ctrl"),
+        ("orr_difference", "overall_orr_diff", "orr_diff"),
+    ]:
+        tol = tol_spec.get(tol_key, {})
+        r = compare_numeric(ag_ov.get(field), gt_ov.get(field), tol, label)
+        component_scores[f"overall_{label}"] = r
+        weighted_sum += r["score"] * tol.get("weight", 0.08)
+        total_weight += tol.get("weight", 0.08)
+
+    # Responder counts (exact match)
+    res_tol = tol_spec.get("responder_counts", {})
+    for field, label in [("responders_experimental", "resp_exp"), ("responders_control", "resp_ctrl")]:
+        r = compare_count(ag_ov.get(field), gt_ov.get(field))
+        component_scores[f"overall_{label}"] = r
+        weighted_sum += r["score"] * res_tol.get("weight", 0.05)
+        total_weight += res_tol.get("weight", 0.05)
+
+    # Overall CI bounds (Clopper-Pearson)
+    ci_tol = tol_spec.get("overall_ci", {})
+    for field, label in [
+        ("ci_lower_experimental", "ci_lo_exp"),
+        ("ci_upper_experimental", "ci_hi_exp"),
+        ("ci_lower_control", "ci_lo_ctrl"),
+        ("ci_upper_control", "ci_hi_ctrl"),
+    ]:
+        r = compare_numeric(ag_ov.get(field), gt_ov.get(field), ci_tol, label)
+        component_scores[f"overall_{label}"] = r
+        weighted_sum += r["score"] * ci_tol.get("weight", 0.03)
+        total_weight += ci_tol.get("weight", 0.03)
+
+    # Subgroup-level
+    ag_sgs = agent_output.get("subgroups", [])
+    gt_sgs = ground_truth.get("subgroups", [])
+
+    for i in range(min(len(ag_sgs), len(gt_sgs))):
+        ag_s = ag_sgs[i] if i < len(ag_sgs) else {}
+        gt_s = gt_sgs[i] if i < len(gt_sgs) else {}
+
+        for field, tol_key, label in [
+            ("orr_experimental", "subgroup_orr_exp", f"sg_{i}_orr_exp"),
+            ("orr_control", "subgroup_orr_ctrl", f"sg_{i}_orr_ctrl"),
+            ("orr_difference", "subgroup_orr_diff", f"sg_{i}_orr_diff"),
+        ]:
+            tol = tol_spec.get(tol_key, {})
+            r = compare_numeric(ag_s.get(field), gt_s.get(field), tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.05)
+            total_weight += tol.get("weight", 0.05)
+
+        # N per subgroup per arm (exact match)
+        sg_n_tol = tol_spec.get("subgroup_n", {})
+        for field, label in [("n_experimental", f"sg_{i}_n_exp"), ("n_control", f"sg_{i}_n_ctrl")]:
+            r = compare_count(ag_s.get(field), gt_s.get(field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * sg_n_tol.get("weight", 0.03)
+            total_weight += sg_n_tol.get("weight", 0.03)
+
+        # Subgroup CI bounds (Clopper-Pearson)
+        sg_ci_tol = tol_spec.get("subgroup_ci", {})
+        for field, label in [
+            ("ci_lower_experimental", f"sg_{i}_ci_lo_exp"),
+            ("ci_upper_experimental", f"sg_{i}_ci_hi_exp"),
+            ("ci_lower_control", f"sg_{i}_ci_lo_ctrl"),
+            ("ci_upper_control", f"sg_{i}_ci_hi_ctrl"),
+        ]:
+            r = compare_numeric(ag_s.get(field), gt_s.get(field), sg_ci_tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * sg_ci_tol.get("weight", 0.02)
+            total_weight += sg_ci_tol.get("weight", 0.02)
+
+    # Interaction tests (logistic regression)
+    ag_ints = agent_output.get("interaction_tests", [])
+    gt_ints = ground_truth.get("interaction_tests", [])
+
+    for i in range(min(len(ag_ints), len(gt_ints))):
+        ag_i = ag_ints[i] if i < len(ag_ints) else {}
+        gt_i = gt_ints[i] if i < len(gt_ints) else {}
+
+        # Interaction p-value
+        int_tol = tol_spec.get("interaction_p", {})
+        r = compare_numeric(ag_i.get("interaction_p_value"), gt_i.get("interaction_p_value"), int_tol, f"int_p_{i}")
+        component_scores[f"int_p_{i}"] = r
+        weighted_sum += r["score"] * int_tol.get("weight", 0.08)
+        total_weight += int_tol.get("weight", 0.08)
+
+        # Interaction OR
+        or_tol = tol_spec.get("interaction_or", {})
+        r = compare_numeric(ag_i.get("interaction_or"), gt_i.get("interaction_or"), or_tol, f"int_or_{i}")
+        component_scores[f"int_or_{i}"] = r
+        weighted_sum += r["score"] * or_tol.get("weight", 0.05)
+        total_weight += or_tol.get("weight", 0.05)
+
+        # Breslow-Day p-value
+        bd_tol = tol_spec.get("breslow_day_p", {})
+        r = compare_numeric(ag_i.get("breslow_day_p_value"), gt_i.get("breslow_day_p_value"), bd_tol, f"bd_p_{i}")
+        component_scores[f"bd_p_{i}"] = r
+        weighted_sum += r["score"] * bd_tol.get("weight", 0.05)
+        total_weight += bd_tol.get("weight", 0.05)
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+    return {
+        "test_case_id": "TC-030",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
 # TC-006: Blinded Sample Size Re-Estimation at Interim (Level 2)
 # --------------------------------------------------------------------
 
@@ -2584,6 +2716,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-028": score_tc028,
         "TC-029": score_tc029,
         "TC-033": score_tc033,
+        "TC-030": score_tc030,
         "TC-006": score_tc006,
     }
 
@@ -2722,6 +2855,7 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-028": score_tc028,
         "TC-029": score_tc029,
         "TC-033": score_tc033,
+        "TC-030": score_tc030,
         "TC-006": score_tc006,
     }
 
@@ -2938,6 +3072,7 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-028": score_tc028,
         "TC-029": score_tc029,
         "TC-033": score_tc033,
+        "TC-030": score_tc030,
         "TC-006": score_tc006,
     }
     scorer = scorers.get(tc)
