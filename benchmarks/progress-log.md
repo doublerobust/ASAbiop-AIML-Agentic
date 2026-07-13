@@ -3617,3 +3617,79 @@ TC-030 verified at **score=1.0000** for R↔Python using shared tumor response d
 4. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
 5. **White paper v1.6** — add TC-030 implementation details, ARS proof-of-concept results
 6. **Efficiency scoring** — populate efficiency.yaml with actual run metrics
+
+---
+
+## Day 44 (2026-07-13): TC-032 Implementation — Immune-Related AE Summary
+
+**Date:** July 13, 2026 (Monday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### Completed
+
+#### 1. TC-032: Immune-Related Adverse Event (irAE) Summary
+
+**Domain:** Safety / Immuno-oncology | **Level:** 1 | **Priority:** Medium
+
+Implements I-O specific safety summary with immune-related AE filtering by category and severity:
+
+- I-O specific categories: Endocrine, Dermatologic, Hepatic, GI, Pulmonary, Other
+- AEFLAG='IMMUNE' filter for irAE classification
+- CTCAE v5.0 severity grades 1-5 within each category
+- Overall irAE summary: Any irAE, Grade ≥3, discontinuation, corticosteroid use
+- Median time-to-onset by category (days from randomization)
+- Per-category severity breakdown with PT-level detail
+- `--ars-output` flag emits CDISC ARS v1.0-compatible JSON envelope
+
+**Files created:**
+- `references/ground-truth/Python/tc_032_irae_summary.py` — Python ground truth with irAE filtering, 6 categories, severity distribution, onset analysis, `--data-csv` support, `--ars-output` flag
+- `references/ground-truth/R/tc-032-irae-summary.R` — R ground truth with matching logic, `--data` support, `--ars-output` flag
+- `references/ground-truth/SAS/tc-032-irae-summary.sas` — SAS reference script with AEFLAG-based irAE generation
+- `references/ground-truth/R/generate_tc032_adae_irae.R` — Shared ADAE dataset generator with irAE records + non-immune noise for filtering validation
+- `references/output-schemas/tc-032-output-schema.json` — JSON schema for output validation (includes irae_table, onset_summary, severity_summary)
+
+**Files updated:**
+- `scoring-harness/score.py` — Added `score_tc032()` scorer function with `_irae_table_index()` helper; wired TC-032 into all 3 dispatch dicts (score, verify, evaluate)
+- `scoring-harness/tolerances.yaml` — Added TC-032 tolerance section (severity_n/pct, summary_n/pct, irae_table_n/pct, onset_median, n_per_arm)
+- `run-cross-lang-verify.sh` — Added TC-032 to cross-language verification script with shared irAE ADAE dataset
+
+#### 2. ARS Proof-of-Concept
+
+TC-032 scripts include `--ars-output` flag that emits CDISC ARS v1.0-compatible JSON envelope with:
+- `analysisResult.id`, `version`, `analysisReason`
+- `analysisMethod` with irAE filter parameters and category list
+- `analysisVariables` with AEFLAG role (immune_flag)
+- `analysisPopulation` with SAFETY + AEFLAG='IMMUNE' compound filter
+- `resultGroups` with arm-level N
+- `analysisResultsData` with severity statistics and timeToOnset by category
+
+#### 3. Cross-Language Verification Results
+
+TC-032 verified at **score=1.0000** for R↔Python using shared irAE ADAE dataset:
+- 715 total records (631 irAE + 84 non-immune noise)
+- 188 subjects (Exp=99, Ctrl=89) with irAE records
+- 6 I-O categories with 39 unique PTs
+- Any irAE: Exp=99 (100%), Ctrl=84 (94.4%)
+- Grade ≥3: Exp=84, Ctrl=55
+- Schema validation passed
+- All comparison fields matched exactly (diff=0.000000)
+
+### 📊 Updated Score Summary
+
+| TC | Domain | Level | R | Python | SAS | Score |
+|---|---|---|---|---|---|---|
+| TC-001 through TC-029, TC-033, TC-030, TC-032 | (25 Level 1 TCs) | 1 | ✅ | ✅ | 25/25 | 1.0000 |
+| TC-004 | SAP Drafting | 2 | — | — | — | Auto-scorer ✅ |
+| TC-005 | TFL QC Review | 2 | ✅ | ✅ | ✅ | Auto-scorer ✅ |
+| TC-006 | Blinded SSR | 2 | ✅ | ✅ | ✅ | 1.0000 |
+
+**Totals: 25 Level 1 TCs at 1.0000, 3 Level 2 TCs with auto-scorers, 25/25 SAS reference scripts**
+
+### 🔮 Plan for Day 45+
+
+1. **TC-034 implementation** — Sufficient Follow-up Assessment (Level 1)
+2. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 TCs
+3. **WG presentation slides** — cross-language results, Level 2 framework, efficiency baselines
+4. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
+5. **White paper v1.6** — add TC-032 implementation details, ARS proof-of-concept results
+6. **Efficiency scoring** — populate efficiency.yaml with actual run metrics

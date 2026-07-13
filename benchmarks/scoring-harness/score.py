@@ -2269,6 +2269,175 @@ def score_tc030(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# TC-032: Immune-Related Adverse Event Summary (Level 1)
+# --------------------------------------------------------------------
+
+def _irae_table_index(output: dict) -> dict:
+    """Index irAE table rows by (irae_category, pt, severity, category) for aligned comparison.
+
+    Handles rows with category in {category, category_severity, pt, pt_severity}.
+    Summary rows, severity_summary, and onset_summary are handled separately.
+    """
+    idx = {}
+    for row in output.get("irae_table", []) or []:
+        cat_name = row.get("irae_category")
+        pt = row.get("pt")
+        sev = row.get("severity")
+        cat = row.get("category")
+        idx[(cat_name, pt, sev, cat)] = {
+            "n_experimental": row.get("n_experimental"),
+            "pct_experimental": row.get("pct_experimental"),
+            "n_control": row.get("n_control"),
+            "pct_control": row.get("pct_control"),
+        }
+    return idx
+
+
+def score_tc032(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-032 (Immune-Related AE Summary).
+
+    Compares:
+    - Severity summary (grade 1-5 per arm, n and pct)
+    - Overall summary rows (Any irAE, Grade >=3, discontinuation, corticosteroids)
+    - Detailed irAE table (category/PT/severity cells, n and pct)
+    - Onset summary (median time-to-onset per category)
+    - N per arm from population block
+    """
+    tol_spec = tolerances.get("TC-032", {}).get("tolerances", {})
+    component_scores = {}
+    total_weight = 0
+    weighted_sum = 0
+
+    # --- Severity summary (grade 1-5) ---
+    ag_sev = agent_output.get("severity_summary", []) or []
+    gt_sev = ground_truth.get("severity_summary", []) or []
+    gt_sev_idx = {s.get("grade"): s for s in gt_sev}
+    ag_sev_idx = {s.get("grade"): s for s in ag_sev}
+
+    for grade in [1, 2, 3, 4, 5]:
+        gt_row = gt_sev_idx.get(grade, {})
+        ag_row = ag_sev_idx.get(grade, {})
+
+        for arm_field, label in [("n_experimental", f"sev_g{grade}_n_exp"),
+                                 ("n_control", f"sev_g{grade}_n_ctl")]:
+            w = tol_spec.get("severity_n", {}).get("weight", 0.15) / 10
+            r = compare_count(ag_row.get(arm_field), gt_row.get(arm_field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+        for arm_field, label in [("pct_experimental", f"sev_g{grade}_pct_exp"),
+                                 ("pct_control", f"sev_g{grade}_pct_ctl")]:
+            field_tol = {"absolute": tol_spec.get("severity_pct", {}).get("absolute", 0.1)}
+            w = tol_spec.get("severity_pct", {}).get("weight", 0.10) / 10
+            r = compare_numeric(ag_row.get(arm_field), gt_row.get(arm_field),
+                                field_tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # --- Overall summary rows ---
+    ag_summary = agent_output.get("summary", []) or []
+    gt_summary = ground_truth.get("summary", []) or []
+    gt_sum_idx = {s.get("category"): s for s in gt_summary}
+    ag_sum_idx = {s.get("category"): s for s in ag_summary}
+
+    n_summary = max(len(gt_summary), 1)
+    for cat in gt_sum_idx:
+        gt_row = gt_sum_idx[cat]
+        ag_row = ag_sum_idx.get(cat, {})
+
+        for arm_field, label in [("n_experimental", f"sum_{cat[:10]}_n_exp"),
+                                 ("n_control", f"sum_{cat[:10]}_n_ctl")]:
+            w = tol_spec.get("summary_n", {}).get("weight", 0.15) / (n_summary * 2)
+            r = compare_count(ag_row.get(arm_field), gt_row.get(arm_field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+        for arm_field, label in [("pct_experimental", f"sum_{cat[:10]}_pct_exp"),
+                                 ("pct_control", f"sum_{cat[:10]}_pct_ctl")]:
+            field_tol = {"absolute": tol_spec.get("summary_pct", {}).get("absolute", 0.1)}
+            w = tol_spec.get("summary_pct", {}).get("weight", 0.10) / (n_summary * 2)
+            r = compare_numeric(ag_row.get(arm_field), gt_row.get(arm_field),
+                                field_tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # --- Detailed irAE table ---
+    ag_idx = _irae_table_index(agent_output)
+    gt_idx = _irae_table_index(ground_truth)
+
+    n_detail = max(len(gt_idx), 1)
+    for key, gt_row in gt_idx.items():
+        ag_row = ag_idx.get(key, {})
+        cat_label = str(key[0])[:20] if key[0] else "?"
+        pt_label = str(key[1])[:15] if key[1] else "None"
+        sev_label = str(key[2]) if key[2] is not None else "NA"
+        cat_type = str(key[3])[:5] if key[3] else "?"
+        label_base = f"{cat_label}_{pt_label}_g{sev_label}_{cat_type}"
+
+        for arm_field, suffix in [("n_experimental", "n_exp"), ("n_control", "n_ctl")]:
+            w = tol_spec.get("irae_table_n", {}).get("weight", 0.25) / (n_detail * 2)
+            r = compare_count(ag_row.get(arm_field), gt_row.get(arm_field))
+            component_scores[f"{label_base}_{suffix}"] = r
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+        for arm_field, suffix in [("pct_experimental", "pct_exp"), ("pct_control", "pct_ctl")]:
+            field_tol = {"absolute": tol_spec.get("irae_table_pct", {}).get("absolute", 0.1)}
+            w = tol_spec.get("irae_table_pct", {}).get("weight", 0.10) / (n_detail * 2)
+            r = compare_numeric(ag_row.get(arm_field), gt_row.get(arm_field),
+                                field_tol, f"{label_base}_{suffix}")
+            component_scores[f"{label_base}_{suffix}"] = r
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # --- Onset summary ---
+    ag_onset = agent_output.get("onset_summary", []) or []
+    gt_onset = ground_truth.get("onset_summary", []) or []
+    gt_onset_idx = {o.get("irae_category"): o for o in gt_onset}
+    ag_onset_idx = {o.get("irae_category"): o for o in ag_onset}
+
+    n_onset = max(len(gt_onset), 1)
+    for cat_name in gt_onset_idx:
+        gt_o = gt_onset_idx[cat_name]
+        ag_o = ag_onset_idx.get(cat_name, {})
+
+        for field, suffix in [("median_onset_experimental", "onset_exp"),
+                              ("median_onset_control", "onset_ctl")]:
+            field_tol = {"absolute": tol_spec.get("onset_median", {}).get("absolute", 2)}
+            w = tol_spec.get("onset_median", {}).get("weight", 0.10) / n_onset
+            r = compare_numeric(ag_o.get(field), gt_o.get(field),
+                                field_tol, f"{cat_name[:15]}_{suffix}")
+            component_scores[f"{cat_name[:15]}_{suffix}"] = r
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # --- N per arm from population block ---
+    pop = ground_truth.get("population", {})
+    agent_pop = agent_output.get("population", {})
+    for field, label in [("n_experimental", "pop_n_exp"), ("n_control", "pop_n_ctl")]:
+        w = tol_spec.get("n_per_arm", {}).get("weight", 0.05) / 2
+        r = compare_count(agent_pop.get(field), pop.get(field))
+        component_scores[label] = r
+        weighted_sum += r["score"] * w
+        total_weight += w
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-032",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", agent_output.get("metadata", {}).get("language", "unknown")),
+        "ground_truth_language": ground_truth.get("language", ground_truth.get("metadata", {}).get("language", "unknown")),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
 # TC-006: Blinded Sample Size Re-Estimation at Interim (Level 2)
 # --------------------------------------------------------------------
 
@@ -2717,6 +2886,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-029": score_tc029,
         "TC-033": score_tc033,
         "TC-030": score_tc030,
+        "TC-032": score_tc032,
         "TC-006": score_tc006,
     }
 
@@ -2856,6 +3026,7 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-029": score_tc029,
         "TC-033": score_tc033,
         "TC-030": score_tc030,
+        "TC-032": score_tc032,
         "TC-006": score_tc006,
     }
 
@@ -3073,6 +3244,7 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-029": score_tc029,
         "TC-033": score_tc033,
         "TC-030": score_tc030,
+        "TC-032": score_tc032,
         "TC-006": score_tc006,
     }
     scorer = scorers.get(tc)

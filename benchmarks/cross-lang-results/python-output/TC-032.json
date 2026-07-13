@@ -1,0 +1,2841 @@
+{
+  "test_case_id": "TC-032",
+  "title": "Immune-Related Adverse Event Summary",
+  "parameters": {
+    "seed": 42,
+    "n_subjects": 188
+  },
+  "population": {
+    "description": "Safety population (SAFFL = 'Y')",
+    "n_experimental": 99,
+    "n_control": 89
+  },
+  "severity_grades": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "severity_summary": [
+    {
+      "grade": 1,
+      "n_experimental": 80,
+      "pct_experimental": 80.8,
+      "n_control": 41,
+      "pct_control": 46.1
+    },
+    {
+      "grade": 2,
+      "n_experimental": 71,
+      "pct_experimental": 71.7,
+      "n_control": 51,
+      "pct_control": 57.3
+    },
+    {
+      "grade": 3,
+      "n_experimental": 60,
+      "pct_experimental": 60.6,
+      "n_control": 37,
+      "pct_control": 41.6
+    },
+    {
+      "grade": 4,
+      "n_experimental": 34,
+      "pct_experimental": 34.3,
+      "n_control": 20,
+      "pct_control": 22.5
+    },
+    {
+      "grade": 5,
+      "n_experimental": 26,
+      "pct_experimental": 26.3,
+      "n_control": 8,
+      "pct_control": 9.0
+    }
+  ],
+  "summary": [
+    {
+      "category": "Any immune-related AE",
+      "n_experimental": 99,
+      "pct_experimental": 100.0,
+      "n_control": 84,
+      "pct_control": 94.4
+    },
+    {
+      "category": "Grade \u22653 immune-related AE",
+      "n_experimental": 84,
+      "pct_experimental": 84.8,
+      "n_control": 55,
+      "pct_control": 61.8
+    },
+    {
+      "category": "irAE leading to discontinuation",
+      "n_experimental": 28,
+      "pct_experimental": 28.3,
+      "n_control": 19,
+      "pct_control": 21.3
+    },
+    {
+      "category": "irAE requiring corticosteroids",
+      "n_experimental": 62,
+      "pct_experimental": 62.6,
+      "n_control": 37,
+      "pct_control": 41.6
+    }
+  ],
+  "irae_table": [
+    {
+      "category": "category",
+      "irae_category": "Endocrine disorders",
+      "pt": null,
+      "severity": null,
+      "n_experimental": 55,
+      "pct_experimental": 55.6,
+      "n_control": 21,
+      "pct_control": 23.6
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": null,
+      "severity": 1,
+      "n_experimental": 25,
+      "pct_experimental": 25.3,
+      "n_control": 7,
+      "pct_control": 7.9
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": null,
+      "severity": 2,
+      "n_experimental": 18,
+      "pct_experimental": 18.2,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": null,
+      "severity": 3,
+      "n_experimental": 11,
+      "pct_experimental": 11.1,
+      "n_control": 8,
+      "pct_control": 9.0
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": null,
+      "severity": 4,
+      "n_experimental": 13,
+      "pct_experimental": 13.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": null,
+      "severity": 5,
+      "n_experimental": 7,
+      "pct_experimental": 7.1,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hyperthyroidism",
+      "severity": null,
+      "n_experimental": 22,
+      "pct_experimental": 22.2,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hyperthyroidism",
+      "severity": 1,
+      "n_experimental": 11,
+      "pct_experimental": 11.1,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hyperthyroidism",
+      "severity": 2,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hyperthyroidism",
+      "severity": 3,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hyperthyroidism",
+      "severity": 4,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hyperthyroidism",
+      "severity": 5,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Endocrine disorders",
+      "pt": "Type 1 diabetes mellitus",
+      "severity": null,
+      "n_experimental": 17,
+      "pct_experimental": 17.2,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Type 1 diabetes mellitus",
+      "severity": 1,
+      "n_experimental": 9,
+      "pct_experimental": 9.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Type 1 diabetes mellitus",
+      "severity": 2,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Type 1 diabetes mellitus",
+      "severity": 3,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Type 1 diabetes mellitus",
+      "severity": 4,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Type 1 diabetes mellitus",
+      "severity": 5,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Endocrine disorders",
+      "pt": "Autoimmune diabetes",
+      "severity": null,
+      "n_experimental": 12,
+      "pct_experimental": 12.1,
+      "n_control": 6,
+      "pct_control": 6.7
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Autoimmune diabetes",
+      "severity": 1,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Autoimmune diabetes",
+      "severity": 2,
+      "n_experimental": 6,
+      "pct_experimental": 6.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Autoimmune diabetes",
+      "severity": 3,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Autoimmune diabetes",
+      "severity": 4,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Autoimmune diabetes",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypothyroidism",
+      "severity": null,
+      "n_experimental": 9,
+      "pct_experimental": 9.1,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypothyroidism",
+      "severity": 1,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypothyroidism",
+      "severity": 2,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypothyroidism",
+      "severity": 3,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypothyroidism",
+      "severity": 4,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypothyroidism",
+      "severity": 5,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Endocrine disorders",
+      "pt": "Thyroiditis",
+      "severity": null,
+      "n_experimental": 9,
+      "pct_experimental": 9.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Thyroiditis",
+      "severity": 1,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Thyroiditis",
+      "severity": 2,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Thyroiditis",
+      "severity": 3,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Thyroiditis",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Thyroiditis",
+      "severity": 5,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypophysitis",
+      "severity": null,
+      "n_experimental": 7,
+      "pct_experimental": 7.1,
+      "n_control": 9,
+      "pct_control": 10.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypophysitis",
+      "severity": 1,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 3,
+      "pct_control": 3.4
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypophysitis",
+      "severity": 2,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypophysitis",
+      "severity": 3,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypophysitis",
+      "severity": 4,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Hypophysitis",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt",
+      "irae_category": "Endocrine disorders",
+      "pt": "Adrenal insufficiency",
+      "severity": null,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Adrenal insufficiency",
+      "severity": 1,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Adrenal insufficiency",
+      "severity": 2,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Adrenal insufficiency",
+      "severity": 3,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Adrenal insufficiency",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Endocrine disorders",
+      "pt": "Adrenal insufficiency",
+      "severity": 5,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "category",
+      "irae_category": "Dermatologic disorders",
+      "pt": null,
+      "severity": null,
+      "n_experimental": 59,
+      "pct_experimental": 59.6,
+      "n_control": 30,
+      "pct_control": 33.7
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": null,
+      "severity": 1,
+      "n_experimental": 20,
+      "pct_experimental": 20.2,
+      "n_control": 13,
+      "pct_control": 14.6
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": null,
+      "severity": 2,
+      "n_experimental": 27,
+      "pct_experimental": 27.3,
+      "n_control": 7,
+      "pct_control": 7.9
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": null,
+      "severity": 3,
+      "n_experimental": 18,
+      "pct_experimental": 18.2,
+      "n_control": 8,
+      "pct_control": 9.0
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": null,
+      "severity": 4,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 5,
+      "pct_control": 5.6
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": null,
+      "severity": 5,
+      "n_experimental": 7,
+      "pct_experimental": 7.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Pruritus",
+      "severity": null,
+      "n_experimental": 19,
+      "pct_experimental": 19.2,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Pruritus",
+      "severity": 1,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Pruritus",
+      "severity": 2,
+      "n_experimental": 8,
+      "pct_experimental": 8.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Pruritus",
+      "severity": 3,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Pruritus",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Pruritus",
+      "severity": 5,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Vitiligo",
+      "severity": null,
+      "n_experimental": 17,
+      "pct_experimental": 17.2,
+      "n_control": 6,
+      "pct_control": 6.7
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Vitiligo",
+      "severity": 1,
+      "n_experimental": 7,
+      "pct_experimental": 7.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Vitiligo",
+      "severity": 2,
+      "n_experimental": 6,
+      "pct_experimental": 6.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Vitiligo",
+      "severity": 3,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Vitiligo",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Vitiligo",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Alopecia",
+      "severity": null,
+      "n_experimental": 15,
+      "pct_experimental": 15.2,
+      "n_control": 8,
+      "pct_control": 9.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Alopecia",
+      "severity": 1,
+      "n_experimental": 6,
+      "pct_experimental": 6.1,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Alopecia",
+      "severity": 2,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Alopecia",
+      "severity": 3,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Alopecia",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Alopecia",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Psoriasis",
+      "severity": null,
+      "n_experimental": 14,
+      "pct_experimental": 14.1,
+      "n_control": 5,
+      "pct_control": 5.6
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Psoriasis",
+      "severity": 1,
+      "n_experimental": 7,
+      "pct_experimental": 7.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Psoriasis",
+      "severity": 2,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Psoriasis",
+      "severity": 3,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Psoriasis",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Psoriasis",
+      "severity": 5,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Dermatitis bullous",
+      "severity": null,
+      "n_experimental": 11,
+      "pct_experimental": 11.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Dermatitis bullous",
+      "severity": 1,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Dermatitis bullous",
+      "severity": 2,
+      "n_experimental": 8,
+      "pct_experimental": 8.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Dermatitis bullous",
+      "severity": 3,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Dermatitis bullous",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Dermatitis bullous",
+      "severity": 5,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Rash maculo-papular",
+      "severity": null,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 7,
+      "pct_control": 7.9
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Rash maculo-papular",
+      "severity": 1,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Rash maculo-papular",
+      "severity": 2,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Rash maculo-papular",
+      "severity": 3,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Rash maculo-papular",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Rash maculo-papular",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Erythema multiforme",
+      "severity": null,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 7,
+      "pct_control": 7.9
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Erythema multiforme",
+      "severity": 1,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 5,
+      "pct_control": 5.6
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Erythema multiforme",
+      "severity": 2,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Erythema multiforme",
+      "severity": 3,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Erythema multiforme",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Dermatologic disorders",
+      "pt": "Erythema multiforme",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "category",
+      "irae_category": "Hepatic disorders",
+      "pt": null,
+      "severity": null,
+      "n_experimental": 49,
+      "pct_experimental": 49.5,
+      "n_control": 17,
+      "pct_control": 19.1
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": null,
+      "severity": 1,
+      "n_experimental": 24,
+      "pct_experimental": 24.2,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": null,
+      "severity": 2,
+      "n_experimental": 13,
+      "pct_experimental": 13.1,
+      "n_control": 6,
+      "pct_control": 6.7
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": null,
+      "severity": 3,
+      "n_experimental": 15,
+      "pct_experimental": 15.2,
+      "n_control": 6,
+      "pct_control": 6.7
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": null,
+      "severity": 4,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 3,
+      "pct_control": 3.4
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": null,
+      "severity": 5,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt",
+      "irae_category": "Hepatic disorders",
+      "pt": "Blood bilirubin increased",
+      "severity": null,
+      "n_experimental": 27,
+      "pct_experimental": 27.3,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Blood bilirubin increased",
+      "severity": 1,
+      "n_experimental": 10,
+      "pct_experimental": 10.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Blood bilirubin increased",
+      "severity": 2,
+      "n_experimental": 7,
+      "pct_experimental": 7.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Blood bilirubin increased",
+      "severity": 3,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Blood bilirubin increased",
+      "severity": 4,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Blood bilirubin increased",
+      "severity": 5,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatitis",
+      "severity": null,
+      "n_experimental": 17,
+      "pct_experimental": 17.2,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatitis",
+      "severity": 1,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatitis",
+      "severity": 2,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatitis",
+      "severity": 3,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatitis",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatitis",
+      "severity": 5,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt",
+      "irae_category": "Hepatic disorders",
+      "pt": "Liver function test abnormal",
+      "severity": null,
+      "n_experimental": 13,
+      "pct_experimental": 13.1,
+      "n_control": 6,
+      "pct_control": 6.7
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Liver function test abnormal",
+      "severity": 1,
+      "n_experimental": 9,
+      "pct_experimental": 9.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Liver function test abnormal",
+      "severity": 2,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Liver function test abnormal",
+      "severity": 3,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Liver function test abnormal",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Liver function test abnormal",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Hepatic disorders",
+      "pt": "Autoimmune hepatitis",
+      "severity": null,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 6,
+      "pct_control": 6.7
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Autoimmune hepatitis",
+      "severity": 1,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Autoimmune hepatitis",
+      "severity": 2,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Autoimmune hepatitis",
+      "severity": 3,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 3,
+      "pct_control": 3.4
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Autoimmune hepatitis",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Autoimmune hepatitis",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatotoxicity",
+      "severity": null,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 3,
+      "pct_control": 3.4
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatotoxicity",
+      "severity": 1,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatotoxicity",
+      "severity": 2,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatotoxicity",
+      "severity": 3,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatotoxicity",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Hepatic disorders",
+      "pt": "Hepatotoxicity",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "category",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": null,
+      "severity": null,
+      "n_experimental": 44,
+      "pct_experimental": 44.4,
+      "n_control": 31,
+      "pct_control": 34.8
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": null,
+      "severity": 1,
+      "n_experimental": 18,
+      "pct_experimental": 18.2,
+      "n_control": 10,
+      "pct_control": 11.2
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": null,
+      "severity": 2,
+      "n_experimental": 20,
+      "pct_experimental": 20.2,
+      "n_control": 15,
+      "pct_control": 16.9
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": null,
+      "severity": 3,
+      "n_experimental": 9,
+      "pct_experimental": 9.1,
+      "n_control": 6,
+      "pct_control": 6.7
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": null,
+      "severity": 4,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 5,
+      "pct_control": 5.6
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": null,
+      "severity": 5,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Colitis",
+      "severity": null,
+      "n_experimental": 17,
+      "pct_experimental": 17.2,
+      "n_control": 12,
+      "pct_control": 13.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Colitis",
+      "severity": 1,
+      "n_experimental": 7,
+      "pct_experimental": 7.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Colitis",
+      "severity": 2,
+      "n_experimental": 7,
+      "pct_experimental": 7.1,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Colitis",
+      "severity": 3,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Colitis",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Colitis",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Pancreatitis",
+      "severity": null,
+      "n_experimental": 17,
+      "pct_experimental": 17.2,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Pancreatitis",
+      "severity": 1,
+      "n_experimental": 6,
+      "pct_experimental": 6.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Pancreatitis",
+      "severity": 2,
+      "n_experimental": 8,
+      "pct_experimental": 8.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Pancreatitis",
+      "severity": 3,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Pancreatitis",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Pancreatitis",
+      "severity": 5,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Gastritis",
+      "severity": null,
+      "n_experimental": 16,
+      "pct_experimental": 16.2,
+      "n_control": 11,
+      "pct_control": 12.4
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Gastritis",
+      "severity": 1,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Gastritis",
+      "severity": 2,
+      "n_experimental": 7,
+      "pct_experimental": 7.1,
+      "n_control": 5,
+      "pct_control": 5.6
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Gastritis",
+      "severity": 3,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Gastritis",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Gastritis",
+      "severity": 5,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Enterocolitis",
+      "severity": null,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 9,
+      "pct_control": 10.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Enterocolitis",
+      "severity": 1,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 3,
+      "pct_control": 3.4
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Enterocolitis",
+      "severity": 2,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Enterocolitis",
+      "severity": 3,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Enterocolitis",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Enterocolitis",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Diarrhoea",
+      "severity": null,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 7,
+      "pct_control": 7.9
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Diarrhoea",
+      "severity": 1,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Diarrhoea",
+      "severity": 2,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Diarrhoea",
+      "severity": 3,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Diarrhoea",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Gastrointestinal disorders",
+      "pt": "Diarrhoea",
+      "severity": 5,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "category",
+      "irae_category": "Pulmonary disorders",
+      "pt": null,
+      "severity": null,
+      "n_experimental": 47,
+      "pct_experimental": 47.5,
+      "n_control": 19,
+      "pct_control": 21.3
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": null,
+      "severity": 1,
+      "n_experimental": 17,
+      "pct_experimental": 17.2,
+      "n_control": 5,
+      "pct_control": 5.6
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": null,
+      "severity": 2,
+      "n_experimental": 15,
+      "pct_experimental": 15.2,
+      "n_control": 8,
+      "pct_control": 9.0
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": null,
+      "severity": 3,
+      "n_experimental": 14,
+      "pct_experimental": 14.1,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": null,
+      "severity": 4,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": null,
+      "severity": 5,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pneumonitis",
+      "severity": null,
+      "n_experimental": 17,
+      "pct_experimental": 17.2,
+      "n_control": 5,
+      "pct_control": 5.6
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pneumonitis",
+      "severity": 1,
+      "n_experimental": 7,
+      "pct_experimental": 7.1,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pneumonitis",
+      "severity": 2,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pneumonitis",
+      "severity": 3,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pneumonitis",
+      "severity": 4,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pneumonitis",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pleural effusion",
+      "severity": null,
+      "n_experimental": 15,
+      "pct_experimental": 15.2,
+      "n_control": 8,
+      "pct_control": 9.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pleural effusion",
+      "severity": 1,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pleural effusion",
+      "severity": 2,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 3,
+      "pct_control": 3.4
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pleural effusion",
+      "severity": 3,
+      "n_experimental": 6,
+      "pct_experimental": 6.1,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pleural effusion",
+      "severity": 4,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Pleural effusion",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Interstitial lung disease",
+      "severity": null,
+      "n_experimental": 9,
+      "pct_experimental": 9.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Interstitial lung disease",
+      "severity": 1,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Interstitial lung disease",
+      "severity": 2,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Interstitial lung disease",
+      "severity": 3,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Interstitial lung disease",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Interstitial lung disease",
+      "severity": 5,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Cough",
+      "severity": null,
+      "n_experimental": 9,
+      "pct_experimental": 9.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Cough",
+      "severity": 1,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Cough",
+      "severity": 2,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Cough",
+      "severity": 3,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Cough",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Cough",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Dyspnoea",
+      "severity": null,
+      "n_experimental": 9,
+      "pct_experimental": 9.1,
+      "n_control": 8,
+      "pct_control": 9.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Dyspnoea",
+      "severity": 1,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Dyspnoea",
+      "severity": 2,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Dyspnoea",
+      "severity": 3,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Dyspnoea",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Pulmonary disorders",
+      "pt": "Dyspnoea",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "category",
+      "irae_category": "Other immune-related",
+      "pt": null,
+      "severity": null,
+      "n_experimental": 69,
+      "pct_experimental": 69.7,
+      "n_control": 43,
+      "pct_control": 48.3
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Other immune-related",
+      "pt": null,
+      "severity": 1,
+      "n_experimental": 34,
+      "pct_experimental": 34.3,
+      "n_control": 12,
+      "pct_control": 13.5
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Other immune-related",
+      "pt": null,
+      "severity": 2,
+      "n_experimental": 23,
+      "pct_experimental": 23.2,
+      "n_control": 18,
+      "pct_control": 20.2
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Other immune-related",
+      "pt": null,
+      "severity": 3,
+      "n_experimental": 16,
+      "pct_experimental": 16.2,
+      "n_control": 11,
+      "pct_control": 12.4
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Other immune-related",
+      "pt": null,
+      "severity": 4,
+      "n_experimental": 12,
+      "pct_experimental": 12.1,
+      "n_control": 8,
+      "pct_control": 9.0
+    },
+    {
+      "category": "category_severity",
+      "irae_category": "Other immune-related",
+      "pt": null,
+      "severity": 5,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Other immune-related",
+      "pt": "Myositis",
+      "severity": null,
+      "n_experimental": 21,
+      "pct_experimental": 21.2,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Myositis",
+      "severity": 1,
+      "n_experimental": 10,
+      "pct_experimental": 10.1,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Myositis",
+      "severity": 2,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Myositis",
+      "severity": 3,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Myositis",
+      "severity": 4,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Myositis",
+      "severity": 5,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Other immune-related",
+      "pt": "Anaemia",
+      "severity": null,
+      "n_experimental": 16,
+      "pct_experimental": 16.2,
+      "n_control": 14,
+      "pct_control": 15.7
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Anaemia",
+      "severity": 1,
+      "n_experimental": 6,
+      "pct_experimental": 6.1,
+      "n_control": 6,
+      "pct_control": 6.7
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Anaemia",
+      "severity": 2,
+      "n_experimental": 6,
+      "pct_experimental": 6.1,
+      "n_control": 7,
+      "pct_control": 7.9
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Anaemia",
+      "severity": 3,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Anaemia",
+      "severity": 4,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Anaemia",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Other immune-related",
+      "pt": "Neutropenia",
+      "severity": null,
+      "n_experimental": 13,
+      "pct_experimental": 13.1,
+      "n_control": 10,
+      "pct_control": 11.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Neutropenia",
+      "severity": 1,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 3,
+      "pct_control": 3.4
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Neutropenia",
+      "severity": 2,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Neutropenia",
+      "severity": 3,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 3,
+      "pct_control": 3.4
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Neutropenia",
+      "severity": 4,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Neutropenia",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Other immune-related",
+      "pt": "Guillain-Barre syndrome",
+      "severity": null,
+      "n_experimental": 11,
+      "pct_experimental": 11.1,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Guillain-Barre syndrome",
+      "severity": 1,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Guillain-Barre syndrome",
+      "severity": 2,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Guillain-Barre syndrome",
+      "severity": 3,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Guillain-Barre syndrome",
+      "severity": 4,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Guillain-Barre syndrome",
+      "severity": 5,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Other immune-related",
+      "pt": "Myasthenia gravis",
+      "severity": null,
+      "n_experimental": 10,
+      "pct_experimental": 10.1,
+      "n_control": 11,
+      "pct_control": 12.4
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Myasthenia gravis",
+      "severity": 1,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Myasthenia gravis",
+      "severity": 2,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Myasthenia gravis",
+      "severity": 3,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Myasthenia gravis",
+      "severity": 4,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 4,
+      "pct_control": 4.5
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Myasthenia gravis",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Other immune-related",
+      "pt": "Arthritis",
+      "severity": null,
+      "n_experimental": 8,
+      "pct_experimental": 8.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Arthritis",
+      "severity": 1,
+      "n_experimental": 4,
+      "pct_experimental": 4.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Arthritis",
+      "severity": 2,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Arthritis",
+      "severity": 3,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Arthritis",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Arthritis",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Other immune-related",
+      "pt": "Autoimmune nephritis",
+      "severity": null,
+      "n_experimental": 8,
+      "pct_experimental": 8.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Autoimmune nephritis",
+      "severity": 1,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Autoimmune nephritis",
+      "severity": 2,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Autoimmune nephritis",
+      "severity": 3,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Autoimmune nephritis",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Autoimmune nephritis",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Other immune-related",
+      "pt": "Meningitis aseptic",
+      "severity": null,
+      "n_experimental": 8,
+      "pct_experimental": 8.1,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Meningitis aseptic",
+      "severity": 1,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Meningitis aseptic",
+      "severity": 2,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Meningitis aseptic",
+      "severity": 3,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Meningitis aseptic",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Meningitis aseptic",
+      "severity": 5,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Other immune-related",
+      "pt": "Nephritis",
+      "severity": null,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 5,
+      "pct_control": 5.6
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Nephritis",
+      "severity": 1,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Nephritis",
+      "severity": 2,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Nephritis",
+      "severity": 3,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Nephritis",
+      "severity": 4,
+      "n_experimental": 1,
+      "pct_experimental": 1.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Nephritis",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt",
+      "irae_category": "Other immune-related",
+      "pt": "Encephalitis",
+      "severity": null,
+      "n_experimental": 5,
+      "pct_experimental": 5.1,
+      "n_control": 2,
+      "pct_control": 2.2
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Encephalitis",
+      "severity": 1,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Encephalitis",
+      "severity": 2,
+      "n_experimental": 3,
+      "pct_experimental": 3.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Encephalitis",
+      "severity": 3,
+      "n_experimental": 2,
+      "pct_experimental": 2.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Encephalitis",
+      "severity": 4,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 1,
+      "pct_control": 1.1
+    },
+    {
+      "category": "pt_severity",
+      "irae_category": "Other immune-related",
+      "pt": "Encephalitis",
+      "severity": 5,
+      "n_experimental": 0,
+      "pct_experimental": 0.0,
+      "n_control": 0,
+      "pct_control": 0.0
+    }
+  ],
+  "onset_summary": [
+    {
+      "irae_category": "Endocrine disorders",
+      "median_onset_experimental": 81,
+      "median_onset_control": 76,
+      "n_experimental": 81,
+      "n_control": 23
+    },
+    {
+      "irae_category": "Dermatologic disorders",
+      "median_onset_experimental": 94,
+      "median_onset_control": 91.5,
+      "n_experimental": 83,
+      "n_control": 36
+    },
+    {
+      "irae_category": "Hepatic disorders",
+      "median_onset_experimental": 87.0,
+      "median_onset_control": 107,
+      "n_experimental": 60,
+      "n_control": 19
+    },
+    {
+      "irae_category": "Gastrointestinal disorders",
+      "median_onset_experimental": 95.5,
+      "median_onset_control": 91.0,
+      "n_experimental": 56,
+      "n_control": 40
+    },
+    {
+      "irae_category": "Pulmonary disorders",
+      "median_onset_experimental": 92,
+      "median_onset_control": 74,
+      "n_experimental": 59,
+      "n_control": 21
+    },
+    {
+      "irae_category": "Other immune-related",
+      "median_onset_experimental": 103.5,
+      "median_onset_control": 100,
+      "n_experimental": 102,
+      "n_control": 51
+    }
+  ],
+  "metadata": {
+    "language": "Python",
+    "packages": [
+      "json",
+      "random",
+      "collections"
+    ]
+  }
+}

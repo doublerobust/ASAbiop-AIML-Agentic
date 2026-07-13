@@ -603,6 +603,28 @@ else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
+# TC-032: Immune-Related AE Summary (shared ADAE with AEFLAG)
+echo ""
+echo "── TC-032 ──────────────────────────────────────────"
+echo "  Generating shared irAE ADAE dataset..."
+if (cd "$RDIR" && Rscript "generate_tc032_adae_irae.R" --seed $SEED --n $N --output "$SHARED/adae_irae.csv") 2>&1; then
+  echo "  ✓ Shared irAE ADAE generated"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Shared irAE ADAE FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  R:   tc-032-irae-summary.R"
+if (cd "$RDIR" && Rscript "tc-032-irae-summary.R" --seed $SEED --n $N --data "$SHARED/adae_irae.csv" --output "$R_OUT/TC-032.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_032_irae_summary.py"
+if (cd "$PYDIR" && python3 "tc_032_irae_summary.py" --seed $SEED --n $N --data-csv "$SHARED/adae_irae.csv" --output "$PY_OUT/TC-032.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
 # ───────────────────────────────────────────────────────────────────
 # Step 3: Summary
 # ───────────────────────────────────────────────────────────────────

@@ -1,0 +1,716 @@
+"USUBJID","TRT01A","AEBODSYS","AEDECOD","AESEV","AESER","AEACN","AEFLAG","ASTDT"
+"SUBJ-0060","Experimental","Endocrine disorders","Hypothyroidism","5","Y","DRUG WITHDRAWN","IMMUNE",169
+"SUBJ-0037","Experimental","Endocrine disorders","Hypothyroidism","3","N","DRUG INTERRUPTED","IMMUNE",174
+"SUBJ-0056","Experimental","Endocrine disorders","Hypothyroidism","5","Y","DOSE NOT CHANGED","IMMUNE",85
+"SUBJ-0087","Experimental","Endocrine disorders","Hypothyroidism","2","N","DOSE NOT CHANGED","IMMUNE",53
+"SUBJ-0094","Experimental","Endocrine disorders","Hypothyroidism","2","N","DOSE REDUCED","IMMUNE",81
+"SUBJ-0002","Experimental","Endocrine disorders","Hypothyroidism","4","Y","DOSE REDUCED","IMMUNE",77
+"SUBJ-0055","Experimental","Endocrine disorders","Hypothyroidism","1","Y","DOSE NOT CHANGED","IMMUNE",43
+"SUBJ-0029","Experimental","Endocrine disorders","Hypothyroidism","5","Y","DOSE NOT CHANGED","IMMUNE",48
+"SUBJ-0044","Experimental","Endocrine disorders","Hypothyroidism","4","Y","DRUG WITHDRAWN","IMMUNE",98
+"SUBJ-0005","Experimental","Endocrine disorders","Hyperthyroidism","1","N","DOSE NOT CHANGED","IMMUNE",77
+"SUBJ-0034","Experimental","Endocrine disorders","Hyperthyroidism","1","N","DOSE REDUCED","IMMUNE",131
+"SUBJ-0079","Experimental","Endocrine disorders","Hyperthyroidism","2","N","DRUG INTERRUPTED","IMMUNE",170
+"SUBJ-0085","Experimental","Endocrine disorders","Hyperthyroidism","1","N","DOSE NOT CHANGED","IMMUNE",114
+"SUBJ-0026","Experimental","Endocrine disorders","Hyperthyroidism","3","N","DOSE REDUCED","IMMUNE",61
+"SUBJ-0019","Experimental","Endocrine disorders","Hyperthyroidism","3","N","DOSE NOT CHANGED","IMMUNE",74
+"SUBJ-0010","Experimental","Endocrine disorders","Hyperthyroidism","3","N","DOSE REDUCED","IMMUNE",21
+"SUBJ-0058","Experimental","Endocrine disorders","Hyperthyroidism","1","N","DOSE NOT CHANGED","IMMUNE",87
+"SUBJ-0099","Experimental","Endocrine disorders","Hyperthyroidism","1","Y","DOSE REDUCED","IMMUNE",120
+"SUBJ-0067","Experimental","Endocrine disorders","Hyperthyroidism","4","Y","DOSE NOT CHANGED","IMMUNE",77
+"SUBJ-0065","Experimental","Endocrine disorders","Hyperthyroidism","1","N","CORTICOSTEROID THERAPY","IMMUNE",114
+"SUBJ-0038","Experimental","Endocrine disorders","Hyperthyroidism","3","Y","DOSE REDUCED","IMMUNE",131
+"SUBJ-0074","Experimental","Endocrine disorders","Hyperthyroidism","1","N","DRUG WITHDRAWN","IMMUNE",61
+"SUBJ-0046","Experimental","Endocrine disorders","Hyperthyroidism","2","N","DOSE NOT CHANGED","IMMUNE",106
+"SUBJ-0040","Experimental","Endocrine disorders","Hyperthyroidism","3","N","DOSE REDUCED","IMMUNE",144
+"SUBJ-0056","Experimental","Endocrine disorders","Hyperthyroidism","2","N","DRUG INTERRUPTED","IMMUNE",53
+"SUBJ-0094","Experimental","Endocrine disorders","Hyperthyroidism","5","Y","DRUG INTERRUPTED","IMMUNE",29
+"SUBJ-0095","Experimental","Endocrine disorders","Hyperthyroidism","1","N","DOSE NOT CHANGED","IMMUNE",101
+"SUBJ-0016","Experimental","Endocrine disorders","Hyperthyroidism","1","N","DRUG INTERRUPTED","IMMUNE",35
+"SUBJ-0078","Experimental","Endocrine disorders","Hyperthyroidism","1","N","DOSE NOT CHANGED","IMMUNE",17
+"SUBJ-0006","Experimental","Endocrine disorders","Hyperthyroidism","1","N","DOSE NOT CHANGED","IMMUNE",97
+"SUBJ-0083","Experimental","Endocrine disorders","Hyperthyroidism","4","Y","DOSE NOT CHANGED","IMMUNE",120
+"SUBJ-0066","Experimental","Endocrine disorders","Thyroiditis","4","Y","DOSE REDUCED","IMMUNE",142
+"SUBJ-0039","Experimental","Endocrine disorders","Thyroiditis","2","N","DOSE NOT CHANGED","IMMUNE",20
+"SUBJ-0072","Experimental","Endocrine disorders","Thyroiditis","2","N","DOSE NOT CHANGED","IMMUNE",149
+"SUBJ-0082","Experimental","Endocrine disorders","Thyroiditis","2","N","DOSE REDUCED","IMMUNE",62
+"SUBJ-0056","Experimental","Endocrine disorders","Thyroiditis","5","Y","DOSE REDUCED","IMMUNE",164
+"SUBJ-0067","Experimental","Endocrine disorders","Thyroiditis","1","N","CORTICOSTEROID THERAPY","IMMUNE",52
+"SUBJ-0087","Experimental","Endocrine disorders","Thyroiditis","1","N","CORTICOSTEROID THERAPY","IMMUNE",25
+"SUBJ-0096","Experimental","Endocrine disorders","Thyroiditis","1","N","DRUG WITHDRAWN","IMMUNE",14
+"SUBJ-0053","Experimental","Endocrine disorders","Thyroiditis","5","Y","DOSE REDUCED","IMMUNE",106
+"SUBJ-0047","Experimental","Endocrine disorders","Adrenal insufficiency","1","N","DOSE NOT CHANGED","IMMUNE",160
+"SUBJ-0024","Experimental","Endocrine disorders","Adrenal insufficiency","2","N","DOSE NOT CHANGED","IMMUNE",46
+"SUBJ-0054","Experimental","Endocrine disorders","Adrenal insufficiency","5","Y","DRUG INTERRUPTED","IMMUNE",55
+"SUBJ-0035","Experimental","Endocrine disorders","Adrenal insufficiency","4","Y","CORTICOSTEROID THERAPY","IMMUNE",147
+"SUBJ-0038","Experimental","Endocrine disorders","Adrenal insufficiency","2","N","DOSE REDUCED","IMMUNE",50
+"SUBJ-0039","Experimental","Endocrine disorders","Hypophysitis","1","N","DRUG INTERRUPTED","IMMUNE",136
+"SUBJ-0085","Experimental","Endocrine disorders","Hypophysitis","2","N","DOSE NOT CHANGED","IMMUNE",104
+"SUBJ-0050","Experimental","Endocrine disorders","Hypophysitis","3","N","DRUG WITHDRAWN","IMMUNE",39
+"SUBJ-0098","Experimental","Endocrine disorders","Hypophysitis","4","Y","CORTICOSTEROID THERAPY","IMMUNE",108
+"SUBJ-0073","Experimental","Endocrine disorders","Hypophysitis","1","N","DRUG INTERRUPTED","IMMUNE",42
+"SUBJ-0074","Experimental","Endocrine disorders","Hypophysitis","1","N","DRUG WITHDRAWN","IMMUNE",27
+"SUBJ-0015","Experimental","Endocrine disorders","Hypophysitis","4","Y","DOSE REDUCED","IMMUNE",107
+"SUBJ-0034","Experimental","Endocrine disorders","Type 1 diabetes mellitus","1","N","DOSE NOT CHANGED","IMMUNE",86
+"SUBJ-0060","Experimental","Endocrine disorders","Type 1 diabetes mellitus","3","N","DRUG WITHDRAWN","IMMUNE",93
+"SUBJ-0048","Experimental","Endocrine disorders","Type 1 diabetes mellitus","4","Y","DOSE NOT CHANGED","IMMUNE",143
+"SUBJ-0072","Experimental","Endocrine disorders","Type 1 diabetes mellitus","4","Y","CORTICOSTEROID THERAPY","IMMUNE",145
+"SUBJ-0085","Experimental","Endocrine disorders","Type 1 diabetes mellitus","4","Y","DOSE NOT CHANGED","IMMUNE",141
+"SUBJ-0033","Experimental","Endocrine disorders","Type 1 diabetes mellitus","1","N","DRUG INTERRUPTED","IMMUNE",168
+"SUBJ-0057","Experimental","Endocrine disorders","Type 1 diabetes mellitus","1","N","CORTICOSTEROID THERAPY","IMMUNE",162
+"SUBJ-0016","Experimental","Endocrine disorders","Type 1 diabetes mellitus","1","N","DOSE NOT CHANGED","IMMUNE",62
+"SUBJ-0099","Experimental","Endocrine disorders","Type 1 diabetes mellitus","2","Y","DOSE NOT CHANGED","IMMUNE",127
+"SUBJ-0021","Experimental","Endocrine disorders","Type 1 diabetes mellitus","1","N","DRUG WITHDRAWN","IMMUNE",48
+"SUBJ-0094","Experimental","Endocrine disorders","Type 1 diabetes mellitus","2","N","CORTICOSTEROID THERAPY","IMMUNE",48
+"SUBJ-0089","Experimental","Endocrine disorders","Type 1 diabetes mellitus","1","N","DRUG INTERRUPTED","IMMUNE",76
+"SUBJ-0030","Experimental","Endocrine disorders","Type 1 diabetes mellitus","5","Y","DRUG INTERRUPTED","IMMUNE",79
+"SUBJ-0003","Experimental","Endocrine disorders","Type 1 diabetes mellitus","3","N","DRUG WITHDRAWN","IMMUNE",137
+"SUBJ-0015","Experimental","Endocrine disorders","Type 1 diabetes mellitus","1","Y","DOSE NOT CHANGED","IMMUNE",78
+"SUBJ-0053","Experimental","Endocrine disorders","Type 1 diabetes mellitus","1","N","DOSE NOT CHANGED","IMMUNE",133
+"SUBJ-0020","Experimental","Endocrine disorders","Type 1 diabetes mellitus","1","N","DRUG INTERRUPTED","IMMUNE",14
+"SUBJ-0095","Experimental","Endocrine disorders","Autoimmune diabetes","1","Y","CORTICOSTEROID THERAPY","IMMUNE",43
+"SUBJ-0073","Experimental","Endocrine disorders","Autoimmune diabetes","2","N","DRUG INTERRUPTED","IMMUNE",40
+"SUBJ-0003","Experimental","Endocrine disorders","Autoimmune diabetes","2","N","CORTICOSTEROID THERAPY","IMMUNE",34
+"SUBJ-0100","Experimental","Endocrine disorders","Autoimmune diabetes","2","N","DOSE NOT CHANGED","IMMUNE",64
+"SUBJ-0053","Experimental","Endocrine disorders","Autoimmune diabetes","2","N","DOSE NOT CHANGED","IMMUNE",141
+"SUBJ-0033","Experimental","Endocrine disorders","Autoimmune diabetes","1","N","DRUG WITHDRAWN","IMMUNE",122
+"SUBJ-0004","Experimental","Endocrine disorders","Autoimmune diabetes","2","N","CORTICOSTEROID THERAPY","IMMUNE",120
+"SUBJ-0029","Experimental","Endocrine disorders","Autoimmune diabetes","2","N","CORTICOSTEROID THERAPY","IMMUNE",112
+"SUBJ-0089","Experimental","Endocrine disorders","Autoimmune diabetes","4","Y","DOSE REDUCED","IMMUNE",38
+"SUBJ-0020","Experimental","Endocrine disorders","Autoimmune diabetes","4","Y","DOSE NOT CHANGED","IMMUNE",20
+"SUBJ-0011","Experimental","Endocrine disorders","Autoimmune diabetes","3","N","CORTICOSTEROID THERAPY","IMMUNE",24
+"SUBJ-0023","Experimental","Endocrine disorders","Autoimmune diabetes","3","N","CORTICOSTEROID THERAPY","IMMUNE",46
+"SUBJ-0049","Experimental","Skin and subcutaneous tissue disorders","Rash maculo-papular","2","N","DOSE NOT CHANGED","IMMUNE",78
+"SUBJ-0081","Experimental","Skin and subcutaneous tissue disorders","Rash maculo-papular","2","N","CORTICOSTEROID THERAPY","IMMUNE",59
+"SUBJ-0038","Experimental","Skin and subcutaneous tissue disorders","Rash maculo-papular","2","N","DOSE NOT CHANGED","IMMUNE",111
+"SUBJ-0083","Experimental","Skin and subcutaneous tissue disorders","Rash maculo-papular","2","N","DOSE NOT CHANGED","IMMUNE",31
+"SUBJ-0007","Experimental","Skin and subcutaneous tissue disorders","Rash maculo-papular","4","Y","DRUG WITHDRAWN","IMMUNE",154
+"SUBJ-0073","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","1","N","DOSE NOT CHANGED","IMMUNE",174
+"SUBJ-0084","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","1","N","DOSE REDUCED","IMMUNE",110
+"SUBJ-0089","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","1","N","CORTICOSTEROID THERAPY","IMMUNE",130
+"SUBJ-0038","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","4","Y","DOSE NOT CHANGED","IMMUNE",66
+"SUBJ-0032","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","3","N","DOSE NOT CHANGED","IMMUNE",56
+"SUBJ-0060","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","2","N","DOSE NOT CHANGED","IMMUNE",106
+"SUBJ-0082","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","2","N","CORTICOSTEROID THERAPY","IMMUNE",47
+"SUBJ-0044","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","3","N","CORTICOSTEROID THERAPY","IMMUNE",54
+"SUBJ-0035","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","2","N","DOSE NOT CHANGED","IMMUNE",15
+"SUBJ-0079","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","1","N","CORTICOSTEROID THERAPY","IMMUNE",133
+"SUBJ-0046","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","2","Y","CORTICOSTEROID THERAPY","IMMUNE",82
+"SUBJ-0069","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","2","N","CORTICOSTEROID THERAPY","IMMUNE",109
+"SUBJ-0100","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","1","N","DOSE NOT CHANGED","IMMUNE",125
+"SUBJ-0015","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","3","N","DRUG INTERRUPTED","IMMUNE",119
+"SUBJ-0096","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","1","N","DOSE NOT CHANGED","IMMUNE",89
+"SUBJ-0040","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","1","N","CORTICOSTEROID THERAPY","IMMUNE",27
+"SUBJ-0009","Experimental","Skin and subcutaneous tissue disorders","Vitiligo","2","Y","DOSE NOT CHANGED","IMMUNE",83
+"SUBJ-0040","Experimental","Skin and subcutaneous tissue disorders","Pruritus","2","N","DOSE REDUCED","IMMUNE",173
+"SUBJ-0093","Experimental","Skin and subcutaneous tissue disorders","Pruritus","2","N","DRUG INTERRUPTED","IMMUNE",177
+"SUBJ-0089","Experimental","Skin and subcutaneous tissue disorders","Pruritus","5","Y","DOSE REDUCED","IMMUNE",160
+"SUBJ-0099","Experimental","Skin and subcutaneous tissue disorders","Pruritus","5","Y","DOSE NOT CHANGED","IMMUNE",150
+"SUBJ-0031","Experimental","Skin and subcutaneous tissue disorders","Pruritus","5","Y","DOSE NOT CHANGED","IMMUNE",17
+"SUBJ-0086","Experimental","Skin and subcutaneous tissue disorders","Pruritus","3","N","DRUG INTERRUPTED","IMMUNE",35
+"SUBJ-0091","Experimental","Skin and subcutaneous tissue disorders","Pruritus","2","N","DOSE NOT CHANGED","IMMUNE",44
+"SUBJ-0013","Experimental","Skin and subcutaneous tissue disorders","Pruritus","3","N","DOSE NOT CHANGED","IMMUNE",75
+"SUBJ-0075","Experimental","Skin and subcutaneous tissue disorders","Pruritus","3","N","DOSE NOT CHANGED","IMMUNE",47
+"SUBJ-0039","Experimental","Skin and subcutaneous tissue disorders","Pruritus","2","N","DRUG INTERRUPTED","IMMUNE",133
+"SUBJ-0083","Experimental","Skin and subcutaneous tissue disorders","Pruritus","2","N","CORTICOSTEROID THERAPY","IMMUNE",76
+"SUBJ-0068","Experimental","Skin and subcutaneous tissue disorders","Pruritus","1","N","DOSE NOT CHANGED","IMMUNE",62
+"SUBJ-0009","Experimental","Skin and subcutaneous tissue disorders","Pruritus","2","N","DOSE REDUCED","IMMUNE",65
+"SUBJ-0024","Experimental","Skin and subcutaneous tissue disorders","Pruritus","5","Y","DRUG INTERRUPTED","IMMUNE",19
+"SUBJ-0005","Experimental","Skin and subcutaneous tissue disorders","Pruritus","2","N","DOSE NOT CHANGED","IMMUNE",173
+"SUBJ-0030","Experimental","Skin and subcutaneous tissue disorders","Pruritus","3","Y","CORTICOSTEROID THERAPY","IMMUNE",88
+"SUBJ-0061","Experimental","Skin and subcutaneous tissue disorders","Pruritus","3","N","DRUG WITHDRAWN","IMMUNE",174
+"SUBJ-0051","Experimental","Skin and subcutaneous tissue disorders","Pruritus","2","Y","DRUG INTERRUPTED","IMMUNE",147
+"SUBJ-0021","Experimental","Skin and subcutaneous tissue disorders","Pruritus","1","Y","DOSE NOT CHANGED","IMMUNE",177
+"SUBJ-0097","Experimental","Skin and subcutaneous tissue disorders","Alopecia","1","N","DOSE NOT CHANGED","IMMUNE",16
+"SUBJ-0091","Experimental","Skin and subcutaneous tissue disorders","Alopecia","1","N","DOSE NOT CHANGED","IMMUNE",141
+"SUBJ-0065","Experimental","Skin and subcutaneous tissue disorders","Alopecia","3","N","DOSE NOT CHANGED","IMMUNE",94
+"SUBJ-0015","Experimental","Skin and subcutaneous tissue disorders","Alopecia","2","N","DOSE NOT CHANGED","IMMUNE",102
+"SUBJ-0031","Experimental","Skin and subcutaneous tissue disorders","Alopecia","1","N","DOSE NOT CHANGED","IMMUNE",61
+"SUBJ-0023","Experimental","Skin and subcutaneous tissue disorders","Alopecia","1","N","CORTICOSTEROID THERAPY","IMMUNE",37
+"SUBJ-0078","Experimental","Skin and subcutaneous tissue disorders","Alopecia","3","N","DRUG WITHDRAWN","IMMUNE",91
+"SUBJ-0055","Experimental","Skin and subcutaneous tissue disorders","Alopecia","3","N","DRUG INTERRUPTED","IMMUNE",161
+"SUBJ-0021","Experimental","Skin and subcutaneous tissue disorders","Alopecia","2","N","DOSE NOT CHANGED","IMMUNE",46
+"SUBJ-0024","Experimental","Skin and subcutaneous tissue disorders","Alopecia","1","N","DOSE NOT CHANGED","IMMUNE",130
+"SUBJ-0009","Experimental","Skin and subcutaneous tissue disorders","Alopecia","3","N","DOSE REDUCED","IMMUNE",37
+"SUBJ-0080","Experimental","Skin and subcutaneous tissue disorders","Alopecia","1","N","DRUG WITHDRAWN","IMMUNE",50
+"SUBJ-0010","Experimental","Skin and subcutaneous tissue disorders","Alopecia","2","N","DOSE NOT CHANGED","IMMUNE",36
+"SUBJ-0004","Experimental","Skin and subcutaneous tissue disorders","Alopecia","3","N","DOSE NOT CHANGED","IMMUNE",135
+"SUBJ-0087","Experimental","Skin and subcutaneous tissue disorders","Alopecia","4","Y","CORTICOSTEROID THERAPY","IMMUNE",28
+"SUBJ-0081","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","4","Y","DOSE REDUCED","IMMUNE",35
+"SUBJ-0055","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","3","N","DOSE NOT CHANGED","IMMUNE",104
+"SUBJ-0033","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","3","N","DRUG INTERRUPTED","IMMUNE",101
+"SUBJ-0024","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","5","Y","DOSE NOT CHANGED","IMMUNE",114
+"SUBJ-0049","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","5","Y","DRUG INTERRUPTED","IMMUNE",74
+"SUBJ-0099","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","1","N","DRUG INTERRUPTED","IMMUNE",14
+"SUBJ-0069","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","1","N","DOSE REDUCED","IMMUNE",139
+"SUBJ-0070","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","1","Y","DOSE NOT CHANGED","IMMUNE",151
+"SUBJ-0091","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","1","N","DOSE NOT CHANGED","IMMUNE",58
+"SUBJ-0056","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","3","N","DRUG INTERRUPTED","IMMUNE",143
+"SUBJ-0067","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","1","N","DOSE REDUCED","IMMUNE",115
+"SUBJ-0077","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","1","N","CORTICOSTEROID THERAPY","IMMUNE",145
+"SUBJ-0071","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","5","Y","DOSE NOT CHANGED","IMMUNE",109
+"SUBJ-0023","Experimental","Skin and subcutaneous tissue disorders","Psoriasis","1","N","DOSE REDUCED","IMMUNE",109
+"SUBJ-0027","Experimental","Skin and subcutaneous tissue disorders","Dermatitis bullous","2","Y","DRUG WITHDRAWN","IMMUNE",32
+"SUBJ-0089","Experimental","Skin and subcutaneous tissue disorders","Dermatitis bullous","3","N","CORTICOSTEROID THERAPY","IMMUNE",117
+"SUBJ-0019","Experimental","Skin and subcutaneous tissue disorders","Dermatitis bullous","2","N","DOSE NOT CHANGED","IMMUNE",54
+"SUBJ-0009","Experimental","Skin and subcutaneous tissue disorders","Dermatitis bullous","2","Y","DOSE NOT CHANGED","IMMUNE",174
+"SUBJ-0055","Experimental","Skin and subcutaneous tissue disorders","Dermatitis bullous","2","N","CORTICOSTEROID THERAPY","IMMUNE",42
+"SUBJ-0045","Experimental","Skin and subcutaneous tissue disorders","Dermatitis bullous","5","Y","DRUG WITHDRAWN","IMMUNE",161
+"SUBJ-0020","Experimental","Skin and subcutaneous tissue disorders","Dermatitis bullous","2","N","DOSE NOT CHANGED","IMMUNE",69
+"SUBJ-0002","Experimental","Skin and subcutaneous tissue disorders","Dermatitis bullous","3","N","CORTICOSTEROID THERAPY","IMMUNE",64
+"SUBJ-0007","Experimental","Skin and subcutaneous tissue disorders","Dermatitis bullous","2","N","DOSE NOT CHANGED","IMMUNE",158
+"SUBJ-0062","Experimental","Skin and subcutaneous tissue disorders","Dermatitis bullous","2","N","DOSE REDUCED","IMMUNE",141
+"SUBJ-0033","Experimental","Skin and subcutaneous tissue disorders","Dermatitis bullous","2","N","DOSE NOT CHANGED","IMMUNE",16
+"SUBJ-0037","Experimental","Skin and subcutaneous tissue disorders","Erythema multiforme","2","Y","DOSE REDUCED","IMMUNE",164
+"SUBJ-0011","Experimental","Skin and subcutaneous tissue disorders","Erythema multiforme","3","N","DRUG INTERRUPTED","IMMUNE",153
+"SUBJ-0047","Experimental","Hepatobiliary disorders","Hepatitis","1","N","DOSE NOT CHANGED","IMMUNE",110
+"SUBJ-0016","Experimental","Hepatobiliary disorders","Hepatitis","2","N","CORTICOSTEROID THERAPY","IMMUNE",134
+"SUBJ-0099","Experimental","Hepatobiliary disorders","Hepatitis","3","N","DOSE REDUCED","IMMUNE",171
+"SUBJ-0037","Experimental","Hepatobiliary disorders","Hepatitis","1","Y","DOSE NOT CHANGED","IMMUNE",163
+"SUBJ-0039","Experimental","Hepatobiliary disorders","Hepatitis","5","Y","DRUG WITHDRAWN","IMMUNE",115
+"SUBJ-0093","Experimental","Hepatobiliary disorders","Hepatitis","3","N","DRUG INTERRUPTED","IMMUNE",151
+"SUBJ-0071","Experimental","Hepatobiliary disorders","Hepatitis","3","N","DOSE NOT CHANGED","IMMUNE",34
+"SUBJ-0034","Experimental","Hepatobiliary disorders","Hepatitis","2","N","DRUG INTERRUPTED","IMMUNE",151
+"SUBJ-0036","Experimental","Hepatobiliary disorders","Hepatitis","3","N","DOSE NOT CHANGED","IMMUNE",76
+"SUBJ-0089","Experimental","Hepatobiliary disorders","Hepatitis","3","N","DRUG WITHDRAWN","IMMUNE",130
+"SUBJ-0010","Experimental","Hepatobiliary disorders","Hepatitis","2","N","DOSE NOT CHANGED","IMMUNE",104
+"SUBJ-0098","Experimental","Hepatobiliary disorders","Hepatitis","2","Y","DOSE NOT CHANGED","IMMUNE",96
+"SUBJ-0035","Experimental","Hepatobiliary disorders","Hepatitis","4","Y","DOSE REDUCED","IMMUNE",174
+"SUBJ-0046","Experimental","Hepatobiliary disorders","Hepatitis","2","N","CORTICOSTEROID THERAPY","IMMUNE",155
+"SUBJ-0024","Experimental","Hepatobiliary disorders","Hepatitis","1","N","DOSE REDUCED","IMMUNE",30
+"SUBJ-0100","Experimental","Hepatobiliary disorders","Hepatitis","1","N","CORTICOSTEROID THERAPY","IMMUNE",82
+"SUBJ-0077","Experimental","Hepatobiliary disorders","Hepatitis","1","N","CORTICOSTEROID THERAPY","IMMUNE",25
+"SUBJ-0026","Experimental","Hepatobiliary disorders","Autoimmune hepatitis","2","N","DOSE NOT CHANGED","IMMUNE",49
+"SUBJ-0094","Experimental","Hepatobiliary disorders","Hepatotoxicity","3","N","DRUG INTERRUPTED","IMMUNE",58
+"SUBJ-0050","Experimental","Hepatobiliary disorders","Hepatotoxicity","3","N","DRUG INTERRUPTED","IMMUNE",92
+"SUBJ-0010","Experimental","Hepatobiliary disorders","Blood bilirubin increased","3","N","CORTICOSTEROID THERAPY","IMMUNE",16
+"SUBJ-0042","Experimental","Hepatobiliary disorders","Blood bilirubin increased","1","N","DOSE NOT CHANGED","IMMUNE",29
+"SUBJ-0037","Experimental","Hepatobiliary disorders","Blood bilirubin increased","2","Y","CORTICOSTEROID THERAPY","IMMUNE",155
+"SUBJ-0004","Experimental","Hepatobiliary disorders","Blood bilirubin increased","5","Y","DOSE NOT CHANGED","IMMUNE",34
+"SUBJ-0070","Experimental","Hepatobiliary disorders","Blood bilirubin increased","1","N","CORTICOSTEROID THERAPY","IMMUNE",121
+"SUBJ-0065","Experimental","Hepatobiliary disorders","Blood bilirubin increased","3","N","CORTICOSTEROID THERAPY","IMMUNE",53
+"SUBJ-0095","Experimental","Hepatobiliary disorders","Blood bilirubin increased","1","N","DOSE NOT CHANGED","IMMUNE",35
+"SUBJ-0078","Experimental","Hepatobiliary disorders","Blood bilirubin increased","2","N","DOSE NOT CHANGED","IMMUNE",22
+"SUBJ-0077","Experimental","Hepatobiliary disorders","Blood bilirubin increased","2","N","DRUG INTERRUPTED","IMMUNE",102
+"SUBJ-0022","Experimental","Hepatobiliary disorders","Blood bilirubin increased","5","Y","DOSE NOT CHANGED","IMMUNE",83
+"SUBJ-0089","Experimental","Hepatobiliary disorders","Blood bilirubin increased","4","Y","DRUG INTERRUPTED","IMMUNE",101
+"SUBJ-0100","Experimental","Hepatobiliary disorders","Blood bilirubin increased","3","N","CORTICOSTEROID THERAPY","IMMUNE",88
+"SUBJ-0090","Experimental","Hepatobiliary disorders","Blood bilirubin increased","1","N","DOSE NOT CHANGED","IMMUNE",28
+"SUBJ-0008","Experimental","Hepatobiliary disorders","Blood bilirubin increased","4","Y","DRUG INTERRUPTED","IMMUNE",153
+"SUBJ-0052","Experimental","Hepatobiliary disorders","Blood bilirubin increased","5","Y","DOSE REDUCED","IMMUNE",170
+"SUBJ-0013","Experimental","Hepatobiliary disorders","Blood bilirubin increased","2","N","DOSE NOT CHANGED","IMMUNE",173
+"SUBJ-0029","Experimental","Hepatobiliary disorders","Blood bilirubin increased","1","N","CORTICOSTEROID THERAPY","IMMUNE",161
+"SUBJ-0034","Experimental","Hepatobiliary disorders","Blood bilirubin increased","2","N","CORTICOSTEROID THERAPY","IMMUNE",152
+"SUBJ-0073","Experimental","Hepatobiliary disorders","Blood bilirubin increased","3","Y","DRUG INTERRUPTED","IMMUNE",85
+"SUBJ-0048","Experimental","Hepatobiliary disorders","Blood bilirubin increased","2","N","DOSE NOT CHANGED","IMMUNE",96
+"SUBJ-0049","Experimental","Hepatobiliary disorders","Blood bilirubin increased","1","N","DOSE NOT CHANGED","IMMUNE",14
+"SUBJ-0071","Experimental","Hepatobiliary disorders","Blood bilirubin increased","1","N","DOSE REDUCED","IMMUNE",54
+"SUBJ-0039","Experimental","Hepatobiliary disorders","Blood bilirubin increased","3","N","CORTICOSTEROID THERAPY","IMMUNE",111
+"SUBJ-0076","Experimental","Hepatobiliary disorders","Blood bilirubin increased","1","N","DOSE REDUCED","IMMUNE",95
+"SUBJ-0038","Experimental","Hepatobiliary disorders","Blood bilirubin increased","2","Y","DOSE NOT CHANGED","IMMUNE",123
+"SUBJ-0045","Experimental","Hepatobiliary disorders","Blood bilirubin increased","1","N","CORTICOSTEROID THERAPY","IMMUNE",85
+"SUBJ-0062","Experimental","Hepatobiliary disorders","Blood bilirubin increased","1","Y","DOSE NOT CHANGED","IMMUNE",69
+"SUBJ-0007","Experimental","Hepatobiliary disorders","Liver function test abnormal","1","N","CORTICOSTEROID THERAPY","IMMUNE",20
+"SUBJ-0060","Experimental","Hepatobiliary disorders","Liver function test abnormal","1","N","DOSE NOT CHANGED","IMMUNE",22
+"SUBJ-0067","Experimental","Hepatobiliary disorders","Liver function test abnormal","1","N","DOSE NOT CHANGED","IMMUNE",81
+"SUBJ-0042","Experimental","Hepatobiliary disorders","Liver function test abnormal","3","N","DRUG INTERRUPTED","IMMUNE",56
+"SUBJ-0021","Experimental","Hepatobiliary disorders","Liver function test abnormal","3","N","DOSE REDUCED","IMMUNE",86
+"SUBJ-0058","Experimental","Hepatobiliary disorders","Liver function test abnormal","2","N","DRUG INTERRUPTED","IMMUNE",99
+"SUBJ-0048","Experimental","Hepatobiliary disorders","Liver function test abnormal","1","N","DOSE REDUCED","IMMUNE",47
+"SUBJ-0012","Experimental","Hepatobiliary disorders","Liver function test abnormal","1","N","DOSE NOT CHANGED","IMMUNE",112
+"SUBJ-0065","Experimental","Hepatobiliary disorders","Liver function test abnormal","1","N","DOSE REDUCED","IMMUNE",62
+"SUBJ-0041","Experimental","Hepatobiliary disorders","Liver function test abnormal","1","N","DOSE NOT CHANGED","IMMUNE",95
+"SUBJ-0074","Experimental","Hepatobiliary disorders","Liver function test abnormal","3","N","CORTICOSTEROID THERAPY","IMMUNE",61
+"SUBJ-0086","Experimental","Hepatobiliary disorders","Liver function test abnormal","1","N","CORTICOSTEROID THERAPY","IMMUNE",69
+"SUBJ-0072","Experimental","Hepatobiliary disorders","Liver function test abnormal","1","N","DOSE NOT CHANGED","IMMUNE",43
+"SUBJ-0021","Experimental","Gastrointestinal disorders","Colitis","2","N","DRUG INTERRUPTED","IMMUNE",138
+"SUBJ-0066","Experimental","Gastrointestinal disorders","Colitis","2","Y","CORTICOSTEROID THERAPY","IMMUNE",46
+"SUBJ-0036","Experimental","Gastrointestinal disorders","Colitis","1","N","DOSE NOT CHANGED","IMMUNE",64
+"SUBJ-0024","Experimental","Gastrointestinal disorders","Colitis","1","N","DOSE NOT CHANGED","IMMUNE",140
+"SUBJ-0086","Experimental","Gastrointestinal disorders","Colitis","3","N","DRUG INTERRUPTED","IMMUNE",153
+"SUBJ-0018","Experimental","Gastrointestinal disorders","Colitis","1","N","DRUG INTERRUPTED","IMMUNE",174
+"SUBJ-0064","Experimental","Gastrointestinal disorders","Colitis","1","N","DOSE NOT CHANGED","IMMUNE",39
+"SUBJ-0076","Experimental","Gastrointestinal disorders","Colitis","2","N","DOSE NOT CHANGED","IMMUNE",120
+"SUBJ-0078","Experimental","Gastrointestinal disorders","Colitis","3","N","DRUG WITHDRAWN","IMMUNE",62
+"SUBJ-0039","Experimental","Gastrointestinal disorders","Colitis","2","N","DOSE NOT CHANGED","IMMUNE",140
+"SUBJ-0093","Experimental","Gastrointestinal disorders","Colitis","1","N","DOSE NOT CHANGED","IMMUNE",111
+"SUBJ-0028","Experimental","Gastrointestinal disorders","Colitis","1","N","DOSE NOT CHANGED","IMMUNE",104
+"SUBJ-0056","Experimental","Gastrointestinal disorders","Colitis","1","N","CORTICOSTEROID THERAPY","IMMUNE",109
+"SUBJ-0023","Experimental","Gastrointestinal disorders","Colitis","4","Y","CORTICOSTEROID THERAPY","IMMUNE",161
+"SUBJ-0087","Experimental","Gastrointestinal disorders","Colitis","2","N","DOSE NOT CHANGED","IMMUNE",170
+"SUBJ-0032","Experimental","Gastrointestinal disorders","Colitis","2","N","DOSE NOT CHANGED","IMMUNE",173
+"SUBJ-0097","Experimental","Gastrointestinal disorders","Colitis","2","N","DOSE NOT CHANGED","IMMUNE",142
+"SUBJ-0054","Experimental","Gastrointestinal disorders","Diarrhoea","4","Y","CORTICOSTEROID THERAPY","IMMUNE",53
+"SUBJ-0023","Experimental","Gastrointestinal disorders","Diarrhoea","5","Y","DOSE NOT CHANGED","IMMUNE",25
+"SUBJ-0087","Experimental","Gastrointestinal disorders","Enterocolitis","2","N","DOSE NOT CHANGED","IMMUNE",139
+"SUBJ-0081","Experimental","Gastrointestinal disorders","Enterocolitis","1","N","DOSE REDUCED","IMMUNE",48
+"SUBJ-0061","Experimental","Gastrointestinal disorders","Enterocolitis","4","Y","DRUG WITHDRAWN","IMMUNE",130
+"SUBJ-0069","Experimental","Gastrointestinal disorders","Enterocolitis","3","N","DRUG WITHDRAWN","IMMUNE",69
+"SUBJ-0052","Experimental","Gastrointestinal disorders","Gastritis","2","N","DOSE NOT CHANGED","IMMUNE",82
+"SUBJ-0090","Experimental","Gastrointestinal disorders","Gastritis","1","N","DRUG WITHDRAWN","IMMUNE",78
+"SUBJ-0099","Experimental","Gastrointestinal disorders","Gastritis","3","N","CORTICOSTEROID THERAPY","IMMUNE",124
+"SUBJ-0086","Experimental","Gastrointestinal disorders","Gastritis","1","N","DOSE NOT CHANGED","IMMUNE",80
+"SUBJ-0031","Experimental","Gastrointestinal disorders","Gastritis","2","N","DOSE NOT CHANGED","IMMUNE",131
+"SUBJ-0028","Experimental","Gastrointestinal disorders","Gastritis","3","N","DOSE NOT CHANGED","IMMUNE",17
+"SUBJ-0084","Experimental","Gastrointestinal disorders","Gastritis","1","N","DOSE NOT CHANGED","IMMUNE",162
+"SUBJ-0016","Experimental","Gastrointestinal disorders","Gastritis","3","N","DOSE REDUCED","IMMUNE",15
+"SUBJ-0008","Experimental","Gastrointestinal disorders","Gastritis","2","N","DOSE NOT CHANGED","IMMUNE",22
+"SUBJ-0021","Experimental","Gastrointestinal disorders","Gastritis","3","N","DRUG WITHDRAWN","IMMUNE",53
+"SUBJ-0100","Experimental","Gastrointestinal disorders","Gastritis","2","N","DOSE NOT CHANGED","IMMUNE",92
+"SUBJ-0097","Experimental","Gastrointestinal disorders","Gastritis","1","N","CORTICOSTEROID THERAPY","IMMUNE",68
+"SUBJ-0055","Experimental","Gastrointestinal disorders","Gastritis","2","N","DOSE NOT CHANGED","IMMUNE",79
+"SUBJ-0043","Experimental","Gastrointestinal disorders","Gastritis","2","N","DOSE NOT CHANGED","IMMUNE",54
+"SUBJ-0056","Experimental","Gastrointestinal disorders","Gastritis","5","Y","CORTICOSTEROID THERAPY","IMMUNE",150
+"SUBJ-0049","Experimental","Gastrointestinal disorders","Gastritis","2","N","CORTICOSTEROID THERAPY","IMMUNE",71
+"SUBJ-0082","Experimental","Gastrointestinal disorders","Pancreatitis","5","Y","DRUG WITHDRAWN","IMMUNE",161
+"SUBJ-0087","Experimental","Gastrointestinal disorders","Pancreatitis","2","N","CORTICOSTEROID THERAPY","IMMUNE",48
+"SUBJ-0015","Experimental","Gastrointestinal disorders","Pancreatitis","2","Y","CORTICOSTEROID THERAPY","IMMUNE",34
+"SUBJ-0076","Experimental","Gastrointestinal disorders","Pancreatitis","2","N","DRUG INTERRUPTED","IMMUNE",99
+"SUBJ-0029","Experimental","Gastrointestinal disorders","Pancreatitis","2","N","DOSE NOT CHANGED","IMMUNE",159
+"SUBJ-0094","Experimental","Gastrointestinal disorders","Pancreatitis","2","N","DOSE NOT CHANGED","IMMUNE",155
+"SUBJ-0038","Experimental","Gastrointestinal disorders","Pancreatitis","3","N","CORTICOSTEROID THERAPY","IMMUNE",167
+"SUBJ-0003","Experimental","Gastrointestinal disorders","Pancreatitis","2","N","DOSE REDUCED","IMMUNE",157
+"SUBJ-0065","Experimental","Gastrointestinal disorders","Pancreatitis","1","N","CORTICOSTEROID THERAPY","IMMUNE",88
+"SUBJ-0068","Experimental","Gastrointestinal disorders","Pancreatitis","1","N","DOSE NOT CHANGED","IMMUNE",55
+"SUBJ-0051","Experimental","Gastrointestinal disorders","Pancreatitis","2","N","DOSE NOT CHANGED","IMMUNE",91
+"SUBJ-0052","Experimental","Gastrointestinal disorders","Pancreatitis","1","N","DOSE NOT CHANGED","IMMUNE",70
+"SUBJ-0034","Experimental","Gastrointestinal disorders","Pancreatitis","3","N","CORTICOSTEROID THERAPY","IMMUNE",122
+"SUBJ-0084","Experimental","Gastrointestinal disorders","Pancreatitis","2","Y","DOSE REDUCED","IMMUNE",127
+"SUBJ-0073","Experimental","Gastrointestinal disorders","Pancreatitis","1","N","DOSE NOT CHANGED","IMMUNE",139
+"SUBJ-0049","Experimental","Gastrointestinal disorders","Pancreatitis","1","N","DOSE NOT CHANGED","IMMUNE",47
+"SUBJ-0020","Experimental","Gastrointestinal disorders","Pancreatitis","1","N","DOSE NOT CHANGED","IMMUNE",25
+"SUBJ-0071","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","2","N","DOSE REDUCED","IMMUNE",138
+"SUBJ-0063","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","4","Y","CORTICOSTEROID THERAPY","IMMUNE",51
+"SUBJ-0026","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","1","N","DOSE REDUCED","IMMUNE",86
+"SUBJ-0073","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","2","Y","CORTICOSTEROID THERAPY","IMMUNE",52
+"SUBJ-0037","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","1","N","DOSE NOT CHANGED","IMMUNE",55
+"SUBJ-0085","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","1","N","DOSE NOT CHANGED","IMMUNE",130
+"SUBJ-0016","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","3","N","DRUG INTERRUPTED","IMMUNE",19
+"SUBJ-0012","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","3","N","DOSE REDUCED","IMMUNE",92
+"SUBJ-0056","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","4","Y","DOSE NOT CHANGED","IMMUNE",109
+"SUBJ-0028","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","2","N","DOSE NOT CHANGED","IMMUNE",180
+"SUBJ-0022","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","2","N","DRUG WITHDRAWN","IMMUNE",162
+"SUBJ-0051","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","3","N","DOSE REDUCED","IMMUNE",148
+"SUBJ-0072","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","1","Y","CORTICOSTEROID THERAPY","IMMUNE",100
+"SUBJ-0002","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","1","N","DOSE NOT CHANGED","IMMUNE",44
+"SUBJ-0030","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","3","N","DOSE NOT CHANGED","IMMUNE",128
+"SUBJ-0068","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","1","N","DOSE NOT CHANGED","IMMUNE",77
+"SUBJ-0058","Experimental","Respiratory, thoracic and mediastinal disorders","Pneumonitis","1","N","DRUG INTERRUPTED","IMMUNE",177
+"SUBJ-0065","Experimental","Respiratory, thoracic and mediastinal disorders","Interstitial lung disease","5","Y","DOSE NOT CHANGED","IMMUNE",98
+"SUBJ-0093","Experimental","Respiratory, thoracic and mediastinal disorders","Interstitial lung disease","5","Y","DOSE NOT CHANGED","IMMUNE",117
+"SUBJ-0030","Experimental","Respiratory, thoracic and mediastinal disorders","Interstitial lung disease","3","N","DOSE NOT CHANGED","IMMUNE",90
+"SUBJ-0011","Experimental","Respiratory, thoracic and mediastinal disorders","Interstitial lung disease","2","N","DOSE NOT CHANGED","IMMUNE",177
+"SUBJ-0075","Experimental","Respiratory, thoracic and mediastinal disorders","Interstitial lung disease","1","N","DOSE NOT CHANGED","IMMUNE",108
+"SUBJ-0066","Experimental","Respiratory, thoracic and mediastinal disorders","Interstitial lung disease","5","Y","CORTICOSTEROID THERAPY","IMMUNE",89
+"SUBJ-0014","Experimental","Respiratory, thoracic and mediastinal disorders","Interstitial lung disease","1","N","CORTICOSTEROID THERAPY","IMMUNE",94
+"SUBJ-0060","Experimental","Respiratory, thoracic and mediastinal disorders","Interstitial lung disease","3","N","DOSE REDUCED","IMMUNE",109
+"SUBJ-0091","Experimental","Respiratory, thoracic and mediastinal disorders","Interstitial lung disease","4","Y","CORTICOSTEROID THERAPY","IMMUNE",42
+"SUBJ-0035","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","1","N","CORTICOSTEROID THERAPY","IMMUNE",180
+"SUBJ-0067","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","3","N","DRUG WITHDRAWN","IMMUNE",126
+"SUBJ-0012","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","3","N","CORTICOSTEROID THERAPY","IMMUNE",75
+"SUBJ-0093","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","3","N","DOSE NOT CHANGED","IMMUNE",31
+"SUBJ-0031","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","3","N","DRUG INTERRUPTED","IMMUNE",121
+"SUBJ-0026","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","2","N","DRUG INTERRUPTED","IMMUNE",20
+"SUBJ-0088","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","4","Y","DRUG WITHDRAWN","IMMUNE",162
+"SUBJ-0076","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","3","N","DOSE REDUCED","IMMUNE",85
+"SUBJ-0008","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","2","N","DRUG INTERRUPTED","IMMUNE",78
+"SUBJ-0055","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","2","N","DOSE NOT CHANGED","IMMUNE",85
+"SUBJ-0085","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","3","N","DRUG INTERRUPTED","IMMUNE",179
+"SUBJ-0099","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","2","N","DOSE NOT CHANGED","IMMUNE",88
+"SUBJ-0098","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","4","Y","DRUG INTERRUPTED","IMMUNE",88
+"SUBJ-0064","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","1","N","DOSE NOT CHANGED","IMMUNE",122
+"SUBJ-0084","Experimental","Respiratory, thoracic and mediastinal disorders","Pleural effusion","2","N","CORTICOSTEROID THERAPY","IMMUNE",38
+"SUBJ-0053","Experimental","Respiratory, thoracic and mediastinal disorders","Cough","2","N","DRUG WITHDRAWN","IMMUNE",145
+"SUBJ-0096","Experimental","Respiratory, thoracic and mediastinal disorders","Cough","3","N","DRUG INTERRUPTED","IMMUNE",177
+"SUBJ-0011","Experimental","Respiratory, thoracic and mediastinal disorders","Cough","2","N","DOSE NOT CHANGED","IMMUNE",54
+"SUBJ-0030","Experimental","Respiratory, thoracic and mediastinal disorders","Cough","3","N","DRUG INTERRUPTED","IMMUNE",57
+"SUBJ-0093","Experimental","Respiratory, thoracic and mediastinal disorders","Cough","1","Y","DOSE NOT CHANGED","IMMUNE",74
+"SUBJ-0072","Experimental","Respiratory, thoracic and mediastinal disorders","Cough","3","N","DRUG WITHDRAWN","IMMUNE",143
+"SUBJ-0035","Experimental","Respiratory, thoracic and mediastinal disorders","Cough","1","N","DRUG WITHDRAWN","IMMUNE",60
+"SUBJ-0032","Experimental","Respiratory, thoracic and mediastinal disorders","Cough","1","N","DOSE NOT CHANGED","IMMUNE",105
+"SUBJ-0065","Experimental","Respiratory, thoracic and mediastinal disorders","Cough","2","N","DOSE NOT CHANGED","IMMUNE",78
+"SUBJ-0010","Experimental","Respiratory, thoracic and mediastinal disorders","Dyspnoea","2","N","DOSE NOT CHANGED","IMMUNE",162
+"SUBJ-0029","Experimental","Respiratory, thoracic and mediastinal disorders","Dyspnoea","3","N","CORTICOSTEROID THERAPY","IMMUNE",45
+"SUBJ-0078","Experimental","Respiratory, thoracic and mediastinal disorders","Dyspnoea","1","N","DOSE NOT CHANGED","IMMUNE",23
+"SUBJ-0020","Experimental","Respiratory, thoracic and mediastinal disorders","Dyspnoea","3","N","CORTICOSTEROID THERAPY","IMMUNE",21
+"SUBJ-0076","Experimental","Respiratory, thoracic and mediastinal disorders","Dyspnoea","2","N","CORTICOSTEROID THERAPY","IMMUNE",40
+"SUBJ-0018","Experimental","Respiratory, thoracic and mediastinal disorders","Dyspnoea","1","N","CORTICOSTEROID THERAPY","IMMUNE",130
+"SUBJ-0005","Experimental","Respiratory, thoracic and mediastinal disorders","Dyspnoea","1","N","CORTICOSTEROID THERAPY","IMMUNE",167
+"SUBJ-0070","Experimental","Respiratory, thoracic and mediastinal disorders","Dyspnoea","1","N","DOSE NOT CHANGED","IMMUNE",77
+"SUBJ-0044","Experimental","Respiratory, thoracic and mediastinal disorders","Dyspnoea","2","N","DOSE NOT CHANGED","IMMUNE",143
+"SUBJ-0013","Experimental","Musculoskeletal and connective tissue disorders","Arthritis","2","N","CORTICOSTEROID THERAPY","IMMUNE",113
+"SUBJ-0089","Experimental","Musculoskeletal and connective tissue disorders","Arthritis","1","N","DOSE NOT CHANGED","IMMUNE",177
+"SUBJ-0011","Experimental","Musculoskeletal and connective tissue disorders","Arthritis","1","N","DOSE NOT CHANGED","IMMUNE",152
+"SUBJ-0019","Experimental","Musculoskeletal and connective tissue disorders","Arthritis","4","Y","CORTICOSTEROID THERAPY","IMMUNE",97
+"SUBJ-0080","Experimental","Musculoskeletal and connective tissue disorders","Arthritis","1","N","DOSE NOT CHANGED","IMMUNE",120
+"SUBJ-0097","Experimental","Musculoskeletal and connective tissue disorders","Arthritis","3","N","DRUG WITHDRAWN","IMMUNE",99
+"SUBJ-0077","Experimental","Musculoskeletal and connective tissue disorders","Arthritis","1","N","DOSE NOT CHANGED","IMMUNE",52
+"SUBJ-0052","Experimental","Musculoskeletal and connective tissue disorders","Arthritis","2","N","DRUG INTERRUPTED","IMMUNE",159
+"SUBJ-0014","Experimental","Musculoskeletal and connective tissue disorders","Myositis","2","N","DOSE NOT CHANGED","IMMUNE",74
+"SUBJ-0065","Experimental","Musculoskeletal and connective tissue disorders","Myositis","3","N","DRUG INTERRUPTED","IMMUNE",59
+"SUBJ-0045","Experimental","Musculoskeletal and connective tissue disorders","Myositis","2","N","CORTICOSTEROID THERAPY","IMMUNE",130
+"SUBJ-0050","Experimental","Musculoskeletal and connective tissue disorders","Myositis","1","N","DOSE NOT CHANGED","IMMUNE",78
+"SUBJ-0004","Experimental","Musculoskeletal and connective tissue disorders","Myositis","5","Y","DOSE NOT CHANGED","IMMUNE",138
+"SUBJ-0047","Experimental","Musculoskeletal and connective tissue disorders","Myositis","5","Y","DOSE NOT CHANGED","IMMUNE",165
+"SUBJ-0096","Experimental","Musculoskeletal and connective tissue disorders","Myositis","3","N","DOSE REDUCED","IMMUNE",102
+"SUBJ-0099","Experimental","Musculoskeletal and connective tissue disorders","Myositis","1","N","DOSE NOT CHANGED","IMMUNE",65
+"SUBJ-0076","Experimental","Musculoskeletal and connective tissue disorders","Myositis","4","Y","CORTICOSTEROID THERAPY","IMMUNE",26
+"SUBJ-0011","Experimental","Musculoskeletal and connective tissue disorders","Myositis","1","N","DOSE NOT CHANGED","IMMUNE",149
+"SUBJ-0097","Experimental","Musculoskeletal and connective tissue disorders","Myositis","4","Y","DRUG WITHDRAWN","IMMUNE",68
+"SUBJ-0005","Experimental","Musculoskeletal and connective tissue disorders","Myositis","1","N","DOSE NOT CHANGED","IMMUNE",146
+"SUBJ-0006","Experimental","Musculoskeletal and connective tissue disorders","Myositis","4","Y","DOSE NOT CHANGED","IMMUNE",173
+"SUBJ-0024","Experimental","Musculoskeletal and connective tissue disorders","Myositis","1","N","DOSE NOT CHANGED","IMMUNE",36
+"SUBJ-0018","Experimental","Musculoskeletal and connective tissue disorders","Myositis","1","N","DOSE NOT CHANGED","IMMUNE",40
+"SUBJ-0017","Experimental","Musculoskeletal and connective tissue disorders","Myositis","1","N","DOSE NOT CHANGED","IMMUNE",162
+"SUBJ-0090","Experimental","Musculoskeletal and connective tissue disorders","Myositis","2","N","DRUG INTERRUPTED","IMMUNE",135
+"SUBJ-0016","Experimental","Musculoskeletal and connective tissue disorders","Myositis","1","N","DOSE NOT CHANGED","IMMUNE",130
+"SUBJ-0066","Experimental","Musculoskeletal and connective tissue disorders","Myositis","2","N","DOSE NOT CHANGED","IMMUNE",127
+"SUBJ-0008","Experimental","Musculoskeletal and connective tissue disorders","Myositis","1","N","DOSE NOT CHANGED","IMMUNE",63
+"SUBJ-0042","Experimental","Musculoskeletal and connective tissue disorders","Myositis","1","N","DOSE NOT CHANGED","IMMUNE",81
+"SUBJ-0039","Experimental","Musculoskeletal and connective tissue disorders","Nephritis","4","Y","DRUG INTERRUPTED","IMMUNE",90
+"SUBJ-0015","Experimental","Musculoskeletal and connective tissue disorders","Nephritis","1","N","DRUG INTERRUPTED","IMMUNE",117
+"SUBJ-0067","Experimental","Musculoskeletal and connective tissue disorders","Autoimmune nephritis","1","N","DOSE NOT CHANGED","IMMUNE",92
+"SUBJ-0080","Experimental","Musculoskeletal and connective tissue disorders","Autoimmune nephritis","3","N","DRUG WITHDRAWN","IMMUNE",176
+"SUBJ-0090","Experimental","Musculoskeletal and connective tissue disorders","Autoimmune nephritis","1","N","DOSE NOT CHANGED","IMMUNE",34
+"SUBJ-0015","Experimental","Musculoskeletal and connective tissue disorders","Autoimmune nephritis","1","N","CORTICOSTEROID THERAPY","IMMUNE",49
+"SUBJ-0037","Experimental","Musculoskeletal and connective tissue disorders","Autoimmune nephritis","1","N","CORTICOSTEROID THERAPY","IMMUNE",96
+"SUBJ-0094","Experimental","Musculoskeletal and connective tissue disorders","Autoimmune nephritis","1","N","DOSE NOT CHANGED","IMMUNE",124
+"SUBJ-0058","Experimental","Musculoskeletal and connective tissue disorders","Autoimmune nephritis","3","N","CORTICOSTEROID THERAPY","IMMUNE",137
+"SUBJ-0062","Experimental","Musculoskeletal and connective tissue disorders","Autoimmune nephritis","2","N","DOSE NOT CHANGED","IMMUNE",100
+"SUBJ-0028","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","4","Y","DOSE NOT CHANGED","IMMUNE",16
+"SUBJ-0083","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","1","Y","DOSE NOT CHANGED","IMMUNE",102
+"SUBJ-0086","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","1","N","DOSE NOT CHANGED","IMMUNE",50
+"SUBJ-0093","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","1","N","DOSE NOT CHANGED","IMMUNE",134
+"SUBJ-0038","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","2","N","DOSE NOT CHANGED","IMMUNE",165
+"SUBJ-0056","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","1","N","DOSE NOT CHANGED","IMMUNE",162
+"SUBJ-0001","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","1","N","DOSE REDUCED","IMMUNE",142
+"SUBJ-0084","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","2","Y","DOSE NOT CHANGED","IMMUNE",91
+"SUBJ-0015","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","4","Y","CORTICOSTEROID THERAPY","IMMUNE",143
+"SUBJ-0003","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","2","N","DOSE NOT CHANGED","IMMUNE",104
+"SUBJ-0040","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","2","N","DOSE NOT CHANGED","IMMUNE",160
+"SUBJ-0057","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","4","Y","CORTICOSTEROID THERAPY","IMMUNE",168
+"SUBJ-0012","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","3","N","CORTICOSTEROID THERAPY","IMMUNE",50
+"SUBJ-0091","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","2","Y","DOSE NOT CHANGED","IMMUNE",15
+"SUBJ-0067","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","1","N","DOSE NOT CHANGED","IMMUNE",175
+"SUBJ-0027","Experimental","Musculoskeletal and connective tissue disorders","Anaemia","2","N","DOSE NOT CHANGED","IMMUNE",171
+"SUBJ-0052","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","1","N","DRUG INTERRUPTED","IMMUNE",156
+"SUBJ-0072","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","4","Y","DRUG WITHDRAWN","IMMUNE",25
+"SUBJ-0004","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","1","N","DOSE NOT CHANGED","IMMUNE",29
+"SUBJ-0057","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","4","Y","DRUG INTERRUPTED","IMMUNE",125
+"SUBJ-0056","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","3","N","DOSE NOT CHANGED","IMMUNE",22
+"SUBJ-0098","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","2","N","CORTICOSTEROID THERAPY","IMMUNE",116
+"SUBJ-0074","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","3","N","DRUG INTERRUPTED","IMMUNE",179
+"SUBJ-0058","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","3","N","DOSE REDUCED","IMMUNE",22
+"SUBJ-0016","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","1","N","DOSE NOT CHANGED","IMMUNE",171
+"SUBJ-0027","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","2","N","DOSE NOT CHANGED","IMMUNE",180
+"SUBJ-0097","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","2","N","DOSE NOT CHANGED","IMMUNE",92
+"SUBJ-0036","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","1","N","DOSE NOT CHANGED","IMMUNE",108
+"SUBJ-0012","Experimental","Musculoskeletal and connective tissue disorders","Neutropenia","1","N","DOSE NOT CHANGED","IMMUNE",60
+"SUBJ-0007","Experimental","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","3","N","DRUG WITHDRAWN","IMMUNE",86
+"SUBJ-0035","Experimental","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","1","Y","DOSE REDUCED","IMMUNE",103
+"SUBJ-0043","Experimental","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","4","Y","DOSE NOT CHANGED","IMMUNE",76
+"SUBJ-0046","Experimental","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","2","N","CORTICOSTEROID THERAPY","IMMUNE",34
+"SUBJ-0085","Experimental","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","3","Y","DRUG INTERRUPTED","IMMUNE",150
+"SUBJ-0057","Experimental","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","4","Y","DRUG WITHDRAWN","IMMUNE",140
+"SUBJ-0070","Experimental","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","3","N","DRUG INTERRUPTED","IMMUNE",40
+"SUBJ-0074","Experimental","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","5","Y","CORTICOSTEROID THERAPY","IMMUNE",159
+"SUBJ-0010","Experimental","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","1","N","CORTICOSTEROID THERAPY","IMMUNE",127
+"SUBJ-0092","Experimental","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","2","N","DOSE REDUCED","IMMUNE",49
+"SUBJ-0072","Experimental","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","4","Y","DRUG INTERRUPTED","IMMUNE",173
+"SUBJ-0028","Experimental","Musculoskeletal and connective tissue disorders","Myasthenia gravis","1","N","CORTICOSTEROID THERAPY","IMMUNE",68
+"SUBJ-0011","Experimental","Musculoskeletal and connective tissue disorders","Myasthenia gravis","1","N","CORTICOSTEROID THERAPY","IMMUNE",117
+"SUBJ-0017","Experimental","Musculoskeletal and connective tissue disorders","Myasthenia gravis","3","N","DRUG INTERRUPTED","IMMUNE",43
+"SUBJ-0048","Experimental","Musculoskeletal and connective tissue disorders","Myasthenia gravis","4","Y","CORTICOSTEROID THERAPY","IMMUNE",99
+"SUBJ-0088","Experimental","Musculoskeletal and connective tissue disorders","Myasthenia gravis","1","N","DOSE NOT CHANGED","IMMUNE",154
+"SUBJ-0064","Experimental","Musculoskeletal and connective tissue disorders","Myasthenia gravis","1","N","DOSE NOT CHANGED","IMMUNE",73
+"SUBJ-0039","Experimental","Musculoskeletal and connective tissue disorders","Myasthenia gravis","1","N","DOSE NOT CHANGED","IMMUNE",140
+"SUBJ-0012","Experimental","Musculoskeletal and connective tissue disorders","Myasthenia gravis","2","N","DOSE NOT CHANGED","IMMUNE",157
+"SUBJ-0078","Experimental","Musculoskeletal and connective tissue disorders","Myasthenia gravis","2","Y","CORTICOSTEROID THERAPY","IMMUNE",21
+"SUBJ-0092","Experimental","Musculoskeletal and connective tissue disorders","Myasthenia gravis","4","Y","DOSE REDUCED","IMMUNE",167
+"SUBJ-0025","Experimental","Musculoskeletal and connective tissue disorders","Encephalitis","3","N","DRUG INTERRUPTED","IMMUNE",26
+"SUBJ-0040","Experimental","Musculoskeletal and connective tissue disorders","Encephalitis","3","N","CORTICOSTEROID THERAPY","IMMUNE",106
+"SUBJ-0020","Experimental","Musculoskeletal and connective tissue disorders","Encephalitis","2","N","CORTICOSTEROID THERAPY","IMMUNE",57
+"SUBJ-0065","Experimental","Musculoskeletal and connective tissue disorders","Encephalitis","2","N","DRUG INTERRUPTED","IMMUNE",88
+"SUBJ-0026","Experimental","Musculoskeletal and connective tissue disorders","Encephalitis","2","N","DOSE REDUCED","IMMUNE",53
+"SUBJ-0036","Experimental","Musculoskeletal and connective tissue disorders","Meningitis aseptic","2","N","DOSE REDUCED","IMMUNE",14
+"SUBJ-0034","Experimental","Musculoskeletal and connective tissue disorders","Meningitis aseptic","3","N","CORTICOSTEROID THERAPY","IMMUNE",119
+"SUBJ-0085","Experimental","Musculoskeletal and connective tissue disorders","Meningitis aseptic","3","N","DRUG WITHDRAWN","IMMUNE",139
+"SUBJ-0037","Experimental","Musculoskeletal and connective tissue disorders","Meningitis aseptic","1","N","DOSE NOT CHANGED","IMMUNE",87
+"SUBJ-0028","Experimental","Musculoskeletal and connective tissue disorders","Meningitis aseptic","3","N","DOSE REDUCED","IMMUNE",62
+"SUBJ-0029","Experimental","Musculoskeletal and connective tissue disorders","Meningitis aseptic","5","Y","CORTICOSTEROID THERAPY","IMMUNE",124
+"SUBJ-0043","Experimental","Musculoskeletal and connective tissue disorders","Meningitis aseptic","1","N","DOSE REDUCED","IMMUNE",28
+"SUBJ-0088","Experimental","Musculoskeletal and connective tissue disorders","Meningitis aseptic","5","Y","DOSE NOT CHANGED","IMMUNE",151
+"SUBJ-0159","Control","Endocrine disorders","Hypothyroidism","1","N","DOSE REDUCED","IMMUNE",96
+"SUBJ-0142","Control","Endocrine disorders","Hypothyroidism","3","N","DRUG WITHDRAWN","IMMUNE",35
+"SUBJ-0196","Control","Endocrine disorders","Hypothyroidism","4","Y","DOSE REDUCED","IMMUNE",19
+"SUBJ-0114","Control","Endocrine disorders","Hypothyroidism","1","Y","CORTICOSTEROID THERAPY","IMMUNE",80
+"SUBJ-0118","Control","Endocrine disorders","Hyperthyroidism","1","N","DOSE NOT CHANGED","IMMUNE",16
+"SUBJ-0140","Control","Endocrine disorders","Hyperthyroidism","3","N","CORTICOSTEROID THERAPY","IMMUNE",25
+"SUBJ-0193","Control","Endocrine disorders","Thyroiditis","2","N","CORTICOSTEROID THERAPY","IMMUNE",84
+"SUBJ-0166","Control","Endocrine disorders","Thyroiditis","1","N","DOSE NOT CHANGED","IMMUNE",179
+"SUBJ-0116","Control","Endocrine disorders","Hypophysitis","3","Y","DOSE NOT CHANGED","IMMUNE",99
+"SUBJ-0174","Control","Endocrine disorders","Hypophysitis","1","Y","DOSE NOT CHANGED","IMMUNE",99
+"SUBJ-0146","Control","Endocrine disorders","Hypophysitis","2","N","DOSE REDUCED","IMMUNE",62
+"SUBJ-0104","Control","Endocrine disorders","Hypophysitis","2","Y","DOSE REDUCED","IMMUNE",56
+"SUBJ-0145","Control","Endocrine disorders","Hypophysitis","3","N","DRUG INTERRUPTED","IMMUNE",108
+"SUBJ-0133","Control","Endocrine disorders","Hypophysitis","1","N","DOSE REDUCED","IMMUNE",76
+"SUBJ-0111","Control","Endocrine disorders","Hypophysitis","5","Y","DRUG WITHDRAWN","IMMUNE",102
+"SUBJ-0185","Control","Endocrine disorders","Hypophysitis","1","Y","DOSE NOT CHANGED","IMMUNE",151
+"SUBJ-0160","Control","Endocrine disorders","Hypophysitis","4","Y","DOSE NOT CHANGED","IMMUNE",59
+"SUBJ-0104","Control","Endocrine disorders","Autoimmune diabetes","2","N","DRUG WITHDRAWN","IMMUNE",119
+"SUBJ-0184","Control","Endocrine disorders","Autoimmune diabetes","3","N","DOSE NOT CHANGED","IMMUNE",60
+"SUBJ-0173","Control","Endocrine disorders","Autoimmune diabetes","2","N","DRUG INTERRUPTED","IMMUNE",50
+"SUBJ-0185","Control","Endocrine disorders","Autoimmune diabetes","3","N","CORTICOSTEROID THERAPY","IMMUNE",130
+"SUBJ-0178","Control","Endocrine disorders","Autoimmune diabetes","3","N","DRUG WITHDRAWN","IMMUNE",40
+"SUBJ-0131","Control","Endocrine disorders","Autoimmune diabetes","3","N","DRUG WITHDRAWN","IMMUNE",35
+"SUBJ-0117","Control","Skin and subcutaneous tissue disorders","Rash maculo-papular","5","Y","DRUG INTERRUPTED","IMMUNE",152
+"SUBJ-0195","Control","Skin and subcutaneous tissue disorders","Rash maculo-papular","4","Y","DOSE REDUCED","IMMUNE",43
+"SUBJ-0188","Control","Skin and subcutaneous tissue disorders","Rash maculo-papular","4","Y","DOSE NOT CHANGED","IMMUNE",58
+"SUBJ-0159","Control","Skin and subcutaneous tissue disorders","Rash maculo-papular","5","Y","CORTICOSTEROID THERAPY","IMMUNE",118
+"SUBJ-0189","Control","Skin and subcutaneous tissue disorders","Rash maculo-papular","3","Y","CORTICOSTEROID THERAPY","IMMUNE",175
+"SUBJ-0157","Control","Skin and subcutaneous tissue disorders","Rash maculo-papular","2","N","DOSE REDUCED","IMMUNE",96
+"SUBJ-0135","Control","Skin and subcutaneous tissue disorders","Rash maculo-papular","3","N","CORTICOSTEROID THERAPY","IMMUNE",15
+"SUBJ-0138","Control","Skin and subcutaneous tissue disorders","Vitiligo","1","Y","CORTICOSTEROID THERAPY","IMMUNE",88
+"SUBJ-0186","Control","Skin and subcutaneous tissue disorders","Vitiligo","3","N","DOSE NOT CHANGED","IMMUNE",112
+"SUBJ-0193","Control","Skin and subcutaneous tissue disorders","Vitiligo","1","N","DOSE NOT CHANGED","IMMUNE",69
+"SUBJ-0157","Control","Skin and subcutaneous tissue disorders","Vitiligo","2","N","DOSE NOT CHANGED","IMMUNE",124
+"SUBJ-0159","Control","Skin and subcutaneous tissue disorders","Vitiligo","4","Y","DOSE NOT CHANGED","IMMUNE",100
+"SUBJ-0108","Control","Skin and subcutaneous tissue disorders","Vitiligo","2","N","CORTICOSTEROID THERAPY","IMMUNE",147
+"SUBJ-0194","Control","Skin and subcutaneous tissue disorders","Pruritus","3","N","DRUG WITHDRAWN","IMMUNE",23
+"SUBJ-0200","Control","Skin and subcutaneous tissue disorders","Alopecia","3","N","CORTICOSTEROID THERAPY","IMMUNE",47
+"SUBJ-0119","Control","Skin and subcutaneous tissue disorders","Alopecia","1","N","DOSE NOT CHANGED","IMMUNE",48
+"SUBJ-0196","Control","Skin and subcutaneous tissue disorders","Alopecia","4","Y","DOSE NOT CHANGED","IMMUNE",16
+"SUBJ-0188","Control","Skin and subcutaneous tissue disorders","Alopecia","1","N","CORTICOSTEROID THERAPY","IMMUNE",28
+"SUBJ-0149","Control","Skin and subcutaneous tissue disorders","Alopecia","2","N","DOSE NOT CHANGED","IMMUNE",55
+"SUBJ-0102","Control","Skin and subcutaneous tissue disorders","Alopecia","1","N","DOSE NOT CHANGED","IMMUNE",72
+"SUBJ-0157","Control","Skin and subcutaneous tissue disorders","Alopecia","1","N","DOSE NOT CHANGED","IMMUNE",26
+"SUBJ-0107","Control","Skin and subcutaneous tissue disorders","Alopecia","3","N","DRUG WITHDRAWN","IMMUNE",172
+"SUBJ-0129","Control","Skin and subcutaneous tissue disorders","Psoriasis","4","Y","DOSE REDUCED","IMMUNE",52
+"SUBJ-0197","Control","Skin and subcutaneous tissue disorders","Psoriasis","3","N","DRUG INTERRUPTED","IMMUNE",126
+"SUBJ-0115","Control","Skin and subcutaneous tissue disorders","Psoriasis","1","Y","DRUG INTERRUPTED","IMMUNE",95
+"SUBJ-0162","Control","Skin and subcutaneous tissue disorders","Psoriasis","1","N","CORTICOSTEROID THERAPY","IMMUNE",111
+"SUBJ-0101","Control","Skin and subcutaneous tissue disorders","Psoriasis","2","N","DRUG INTERRUPTED","IMMUNE",37
+"SUBJ-0111","Control","Skin and subcutaneous tissue disorders","Dermatitis bullous","2","N","DOSE NOT CHANGED","IMMUNE",43
+"SUBJ-0162","Control","Skin and subcutaneous tissue disorders","Dermatitis bullous","2","N","CORTICOSTEROID THERAPY","IMMUNE",120
+"SUBJ-0140","Control","Skin and subcutaneous tissue disorders","Erythema multiforme","1","N","DOSE NOT CHANGED","IMMUNE",107
+"SUBJ-0159","Control","Skin and subcutaneous tissue disorders","Erythema multiforme","1","N","DOSE REDUCED","IMMUNE",100
+"SUBJ-0176","Control","Skin and subcutaneous tissue disorders","Erythema multiforme","2","N","DOSE NOT CHANGED","IMMUNE",151
+"SUBJ-0143","Control","Skin and subcutaneous tissue disorders","Erythema multiforme","3","N","DOSE NOT CHANGED","IMMUNE",150
+"SUBJ-0141","Control","Skin and subcutaneous tissue disorders","Erythema multiforme","1","N","DOSE NOT CHANGED","IMMUNE",76
+"SUBJ-0169","Control","Skin and subcutaneous tissue disorders","Erythema multiforme","1","N","DOSE NOT CHANGED","IMMUNE",177
+"SUBJ-0166","Control","Skin and subcutaneous tissue disorders","Erythema multiforme","1","N","DOSE NOT CHANGED","IMMUNE",64
+"SUBJ-0135","Control","Hepatobiliary disorders","Hepatitis","5","Y","CORTICOSTEROID THERAPY","IMMUNE",159
+"SUBJ-0124","Control","Hepatobiliary disorders","Hepatitis","3","N","DOSE NOT CHANGED","IMMUNE",178
+"SUBJ-0174","Control","Hepatobiliary disorders","Hepatitis","2","N","DOSE NOT CHANGED","IMMUNE",144
+"SUBJ-0156","Control","Hepatobiliary disorders","Hepatitis","5","Y","DRUG INTERRUPTED","IMMUNE",175
+"SUBJ-0182","Control","Hepatobiliary disorders","Autoimmune hepatitis","3","N","DOSE NOT CHANGED","IMMUNE",53
+"SUBJ-0149","Control","Hepatobiliary disorders","Autoimmune hepatitis","1","N","DRUG INTERRUPTED","IMMUNE",117
+"SUBJ-0119","Control","Hepatobiliary disorders","Autoimmune hepatitis","3","N","DRUG WITHDRAWN","IMMUNE",132
+"SUBJ-0178","Control","Hepatobiliary disorders","Autoimmune hepatitis","2","N","DOSE NOT CHANGED","IMMUNE",64
+"SUBJ-0156","Control","Hepatobiliary disorders","Autoimmune hepatitis","2","N","DOSE NOT CHANGED","IMMUNE",90
+"SUBJ-0162","Control","Hepatobiliary disorders","Autoimmune hepatitis","3","N","CORTICOSTEROID THERAPY","IMMUNE",36
+"SUBJ-0191","Control","Hepatobiliary disorders","Hepatotoxicity","4","Y","DRUG INTERRUPTED","IMMUNE",67
+"SUBJ-0179","Control","Hepatobiliary disorders","Hepatotoxicity","1","N","DOSE NOT CHANGED","IMMUNE",172
+"SUBJ-0197","Control","Hepatobiliary disorders","Hepatotoxicity","2","N","DOSE NOT CHANGED","IMMUNE",48
+"SUBJ-0108","Control","Hepatobiliary disorders","Liver function test abnormal","3","N","DRUG INTERRUPTED","IMMUNE",94
+"SUBJ-0174","Control","Hepatobiliary disorders","Liver function test abnormal","3","N","DRUG INTERRUPTED","IMMUNE",24
+"SUBJ-0199","Control","Hepatobiliary disorders","Liver function test abnormal","2","N","DRUG WITHDRAWN","IMMUNE",107
+"SUBJ-0165","Control","Hepatobiliary disorders","Liver function test abnormal","2","N","DRUG INTERRUPTED","IMMUNE",65
+"SUBJ-0163","Control","Hepatobiliary disorders","Liver function test abnormal","4","Y","CORTICOSTEROID THERAPY","IMMUNE",108
+"SUBJ-0166","Control","Hepatobiliary disorders","Liver function test abnormal","4","Y","DRUG INTERRUPTED","IMMUNE",122
+"SUBJ-0120","Control","Gastrointestinal disorders","Colitis","3","N","DRUG WITHDRAWN","IMMUNE",71
+"SUBJ-0122","Control","Gastrointestinal disorders","Colitis","4","Y","DRUG INTERRUPTED","IMMUNE",108
+"SUBJ-0112","Control","Gastrointestinal disorders","Colitis","1","Y","DOSE NOT CHANGED","IMMUNE",91
+"SUBJ-0186","Control","Gastrointestinal disorders","Colitis","4","Y","DRUG WITHDRAWN","IMMUNE",122
+"SUBJ-0175","Control","Gastrointestinal disorders","Colitis","4","Y","DOSE NOT CHANGED","IMMUNE",25
+"SUBJ-0135","Control","Gastrointestinal disorders","Colitis","3","N","DOSE REDUCED","IMMUNE",60
+"SUBJ-0115","Control","Gastrointestinal disorders","Colitis","2","N","DOSE NOT CHANGED","IMMUNE",91
+"SUBJ-0126","Control","Gastrointestinal disorders","Colitis","4","Y","DOSE NOT CHANGED","IMMUNE",82
+"SUBJ-0143","Control","Gastrointestinal disorders","Colitis","2","N","DOSE REDUCED","IMMUNE",53
+"SUBJ-0140","Control","Gastrointestinal disorders","Colitis","1","N","DRUG INTERRUPTED","IMMUNE",164
+"SUBJ-0178","Control","Gastrointestinal disorders","Colitis","2","N","DRUG INTERRUPTED","IMMUNE",15
+"SUBJ-0160","Control","Gastrointestinal disorders","Colitis","2","N","DOSE NOT CHANGED","IMMUNE",153
+"SUBJ-0175","Control","Gastrointestinal disorders","Diarrhoea","1","N","DOSE NOT CHANGED","IMMUNE",175
+"SUBJ-0104","Control","Gastrointestinal disorders","Diarrhoea","1","N","CORTICOSTEROID THERAPY","IMMUNE",67
+"SUBJ-0113","Control","Gastrointestinal disorders","Diarrhoea","2","N","CORTICOSTEROID THERAPY","IMMUNE",110
+"SUBJ-0131","Control","Gastrointestinal disorders","Diarrhoea","3","N","CORTICOSTEROID THERAPY","IMMUNE",64
+"SUBJ-0191","Control","Gastrointestinal disorders","Diarrhoea","2","N","DOSE NOT CHANGED","IMMUNE",155
+"SUBJ-0146","Control","Gastrointestinal disorders","Diarrhoea","1","N","DOSE NOT CHANGED","IMMUNE",35
+"SUBJ-0109","Control","Gastrointestinal disorders","Diarrhoea","1","N","DRUG INTERRUPTED","IMMUNE",147
+"SUBJ-0112","Control","Gastrointestinal disorders","Enterocolitis","1","N","DOSE NOT CHANGED","IMMUNE",167
+"SUBJ-0178","Control","Gastrointestinal disorders","Enterocolitis","3","Y","CORTICOSTEROID THERAPY","IMMUNE",101
+"SUBJ-0131","Control","Gastrointestinal disorders","Enterocolitis","3","N","DRUG INTERRUPTED","IMMUNE",149
+"SUBJ-0116","Control","Gastrointestinal disorders","Enterocolitis","2","N","DRUG INTERRUPTED","IMMUNE",40
+"SUBJ-0102","Control","Gastrointestinal disorders","Enterocolitis","1","N","CORTICOSTEROID THERAPY","IMMUNE",48
+"SUBJ-0120","Control","Gastrointestinal disorders","Enterocolitis","1","N","DOSE NOT CHANGED","IMMUNE",80
+"SUBJ-0163","Control","Gastrointestinal disorders","Enterocolitis","2","N","DOSE NOT CHANGED","IMMUNE",76
+"SUBJ-0135","Control","Gastrointestinal disorders","Enterocolitis","2","N","CORTICOSTEROID THERAPY","IMMUNE",170
+"SUBJ-0167","Control","Gastrointestinal disorders","Enterocolitis","2","N","DRUG WITHDRAWN","IMMUNE",177
+"SUBJ-0129","Control","Gastrointestinal disorders","Gastritis","5","Y","DRUG INTERRUPTED","IMMUNE",157
+"SUBJ-0159","Control","Gastrointestinal disorders","Gastritis","2","N","DOSE NOT CHANGED","IMMUNE",141
+"SUBJ-0110","Control","Gastrointestinal disorders","Gastritis","2","N","CORTICOSTEROID THERAPY","IMMUNE",99
+"SUBJ-0169","Control","Gastrointestinal disorders","Gastritis","1","N","DOSE NOT CHANGED","IMMUNE",166
+"SUBJ-0156","Control","Gastrointestinal disorders","Gastritis","1","N","CORTICOSTEROID THERAPY","IMMUNE",160
+"SUBJ-0126","Control","Gastrointestinal disorders","Gastritis","3","N","DOSE NOT CHANGED","IMMUNE",32
+"SUBJ-0163","Control","Gastrointestinal disorders","Gastritis","4","Y","DRUG WITHDRAWN","IMMUNE",39
+"SUBJ-0145","Control","Gastrointestinal disorders","Gastritis","5","Y","DRUG INTERRUPTED","IMMUNE",156
+"SUBJ-0192","Control","Gastrointestinal disorders","Gastritis","2","N","DOSE NOT CHANGED","IMMUNE",50
+"SUBJ-0170","Control","Gastrointestinal disorders","Gastritis","2","N","DOSE NOT CHANGED","IMMUNE",53
+"SUBJ-0141","Control","Gastrointestinal disorders","Gastritis","2","N","DOSE NOT CHANGED","IMMUNE",74
+"SUBJ-0112","Control","Gastrointestinal disorders","Pancreatitis","3","N","DOSE NOT CHANGED","IMMUNE",58
+"SUBJ-0184","Control","Respiratory, thoracic and mediastinal disorders","Pneumonitis","2","N","DOSE NOT CHANGED","IMMUNE",146
+"SUBJ-0179","Control","Respiratory, thoracic and mediastinal disorders","Pneumonitis","3","N","DRUG WITHDRAWN","IMMUNE",113
+"SUBJ-0111","Control","Respiratory, thoracic and mediastinal disorders","Pneumonitis","2","N","CORTICOSTEROID THERAPY","IMMUNE",114
+"SUBJ-0192","Control","Respiratory, thoracic and mediastinal disorders","Pneumonitis","1","Y","CORTICOSTEROID THERAPY","IMMUNE",29
+"SUBJ-0164","Control","Respiratory, thoracic and mediastinal disorders","Pneumonitis","3","N","DRUG WITHDRAWN","IMMUNE",22
+"SUBJ-0130","Control","Respiratory, thoracic and mediastinal disorders","Pleural effusion","2","N","DOSE REDUCED","IMMUNE",28
+"SUBJ-0142","Control","Respiratory, thoracic and mediastinal disorders","Pleural effusion","5","Y","CORTICOSTEROID THERAPY","IMMUNE",53
+"SUBJ-0165","Control","Respiratory, thoracic and mediastinal disorders","Pleural effusion","1","N","CORTICOSTEROID THERAPY","IMMUNE",65
+"SUBJ-0184","Control","Respiratory, thoracic and mediastinal disorders","Pleural effusion","1","N","CORTICOSTEROID THERAPY","IMMUNE",87
+"SUBJ-0200","Control","Respiratory, thoracic and mediastinal disorders","Pleural effusion","2","N","DOSE REDUCED","IMMUNE",38
+"SUBJ-0197","Control","Respiratory, thoracic and mediastinal disorders","Pleural effusion","3","N","DRUG INTERRUPTED","IMMUNE",170
+"SUBJ-0104","Control","Respiratory, thoracic and mediastinal disorders","Pleural effusion","2","N","DOSE NOT CHANGED","IMMUNE",28
+"SUBJ-0143","Control","Respiratory, thoracic and mediastinal disorders","Pleural effusion","4","Y","CORTICOSTEROID THERAPY","IMMUNE",73
+"SUBJ-0118","Control","Respiratory, thoracic and mediastinal disorders","Dyspnoea","2","N","DOSE NOT CHANGED","IMMUNE",179
+"SUBJ-0180","Control","Respiratory, thoracic and mediastinal disorders","Dyspnoea","2","N","DOSE NOT CHANGED","IMMUNE",74
+"SUBJ-0127","Control","Respiratory, thoracic and mediastinal disorders","Dyspnoea","1","N","CORTICOSTEROID THERAPY","IMMUNE",104
+"SUBJ-0172","Control","Respiratory, thoracic and mediastinal disorders","Dyspnoea","3","N","CORTICOSTEROID THERAPY","IMMUNE",93
+"SUBJ-0182","Control","Respiratory, thoracic and mediastinal disorders","Dyspnoea","1","N","CORTICOSTEROID THERAPY","IMMUNE",150
+"SUBJ-0183","Control","Respiratory, thoracic and mediastinal disorders","Dyspnoea","4","Y","DRUG INTERRUPTED","IMMUNE",51
+"SUBJ-0111","Control","Respiratory, thoracic and mediastinal disorders","Dyspnoea","2","N","DOSE NOT CHANGED","IMMUNE",125
+"SUBJ-0136","Control","Respiratory, thoracic and mediastinal disorders","Dyspnoea","2","N","DRUG INTERRUPTED","IMMUNE",40
+"SUBJ-0173","Control","Musculoskeletal and connective tissue disorders","Arthritis","3","N","CORTICOSTEROID THERAPY","IMMUNE",31
+"SUBJ-0193","Control","Musculoskeletal and connective tissue disorders","Arthritis","3","N","DOSE REDUCED","IMMUNE",95
+"SUBJ-0167","Control","Musculoskeletal and connective tissue disorders","Myositis","1","N","DOSE NOT CHANGED","IMMUNE",87
+"SUBJ-0155","Control","Musculoskeletal and connective tissue disorders","Nephritis","2","N","DOSE REDUCED","IMMUNE",153
+"SUBJ-0168","Control","Musculoskeletal and connective tissue disorders","Nephritis","4","Y","CORTICOSTEROID THERAPY","IMMUNE",140
+"SUBJ-0148","Control","Musculoskeletal and connective tissue disorders","Nephritis","3","N","DRUG WITHDRAWN","IMMUNE",109
+"SUBJ-0101","Control","Musculoskeletal and connective tissue disorders","Nephritis","3","N","DRUG INTERRUPTED","IMMUNE",93
+"SUBJ-0111","Control","Musculoskeletal and connective tissue disorders","Nephritis","1","N","DOSE NOT CHANGED","IMMUNE",97
+"SUBJ-0181","Control","Musculoskeletal and connective tissue disorders","Autoimmune nephritis","2","N","DOSE NOT CHANGED","IMMUNE",149
+"SUBJ-0163","Control","Musculoskeletal and connective tissue disorders","Autoimmune nephritis","4","Y","DRUG WITHDRAWN","IMMUNE",148
+"SUBJ-0195","Control","Musculoskeletal and connective tissue disorders","Anaemia","2","Y","DRUG WITHDRAWN","IMMUNE",15
+"SUBJ-0174","Control","Musculoskeletal and connective tissue disorders","Anaemia","1","N","DOSE NOT CHANGED","IMMUNE",166
+"SUBJ-0176","Control","Musculoskeletal and connective tissue disorders","Anaemia","2","Y","DOSE NOT CHANGED","IMMUNE",94
+"SUBJ-0165","Control","Musculoskeletal and connective tissue disorders","Anaemia","2","N","CORTICOSTEROID THERAPY","IMMUNE",64
+"SUBJ-0152","Control","Musculoskeletal and connective tissue disorders","Anaemia","2","N","DRUG INTERRUPTED","IMMUNE",65
+"SUBJ-0129","Control","Musculoskeletal and connective tissue disorders","Anaemia","3","N","DOSE REDUCED","IMMUNE",29
+"SUBJ-0107","Control","Musculoskeletal and connective tissue disorders","Anaemia","1","N","DRUG INTERRUPTED","IMMUNE",89
+"SUBJ-0144","Control","Musculoskeletal and connective tissue disorders","Anaemia","1","N","DOSE NOT CHANGED","IMMUNE",96
+"SUBJ-0153","Control","Musculoskeletal and connective tissue disorders","Anaemia","1","N","CORTICOSTEROID THERAPY","IMMUNE",131
+"SUBJ-0114","Control","Musculoskeletal and connective tissue disorders","Anaemia","1","N","DOSE NOT CHANGED","IMMUNE",159
+"SUBJ-0169","Control","Musculoskeletal and connective tissue disorders","Anaemia","2","N","DOSE NOT CHANGED","IMMUNE",109
+"SUBJ-0138","Control","Musculoskeletal and connective tissue disorders","Anaemia","2","N","CORTICOSTEROID THERAPY","IMMUNE",104
+"SUBJ-0167","Control","Musculoskeletal and connective tissue disorders","Anaemia","1","N","DOSE REDUCED","IMMUNE",94
+"SUBJ-0183","Control","Musculoskeletal and connective tissue disorders","Anaemia","2","N","DOSE NOT CHANGED","IMMUNE",177
+"SUBJ-0165","Control","Musculoskeletal and connective tissue disorders","Neutropenia","1","N","CORTICOSTEROID THERAPY","IMMUNE",159
+"SUBJ-0162","Control","Musculoskeletal and connective tissue disorders","Neutropenia","2","N","DOSE NOT CHANGED","IMMUNE",135
+"SUBJ-0184","Control","Musculoskeletal and connective tissue disorders","Neutropenia","2","N","CORTICOSTEROID THERAPY","IMMUNE",71
+"SUBJ-0181","Control","Musculoskeletal and connective tissue disorders","Neutropenia","1","N","DOSE NOT CHANGED","IMMUNE",145
+"SUBJ-0196","Control","Musculoskeletal and connective tissue disorders","Neutropenia","2","N","CORTICOSTEROID THERAPY","IMMUNE",174
+"SUBJ-0150","Control","Musculoskeletal and connective tissue disorders","Neutropenia","3","N","CORTICOSTEROID THERAPY","IMMUNE",38
+"SUBJ-0105","Control","Musculoskeletal and connective tissue disorders","Neutropenia","3","N","DRUG INTERRUPTED","IMMUNE",137
+"SUBJ-0199","Control","Musculoskeletal and connective tissue disorders","Neutropenia","3","N","DRUG WITHDRAWN","IMMUNE",108
+"SUBJ-0132","Control","Musculoskeletal and connective tissue disorders","Neutropenia","2","N","DRUG INTERRUPTED","IMMUNE",134
+"SUBJ-0160","Control","Musculoskeletal and connective tissue disorders","Neutropenia","1","N","DOSE NOT CHANGED","IMMUNE",39
+"SUBJ-0148","Control","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","1","N","CORTICOSTEROID THERAPY","IMMUNE",30
+"SUBJ-0182","Control","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","4","Y","DRUG INTERRUPTED","IMMUNE",130
+"SUBJ-0113","Control","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","3","N","CORTICOSTEROID THERAPY","IMMUNE",162
+"SUBJ-0112","Control","Musculoskeletal and connective tissue disorders","Guillain-Barre syndrome","2","N","DOSE REDUCED","IMMUNE",81
+"SUBJ-0175","Control","Musculoskeletal and connective tissue disorders","Myasthenia gravis","4","Y","CORTICOSTEROID THERAPY","IMMUNE",170
+"SUBJ-0187","Control","Musculoskeletal and connective tissue disorders","Myasthenia gravis","2","N","CORTICOSTEROID THERAPY","IMMUNE",70
+"SUBJ-0164","Control","Musculoskeletal and connective tissue disorders","Myasthenia gravis","2","N","DOSE REDUCED","IMMUNE",122
+"SUBJ-0188","Control","Musculoskeletal and connective tissue disorders","Myasthenia gravis","4","Y","DRUG INTERRUPTED","IMMUNE",57
+"SUBJ-0103","Control","Musculoskeletal and connective tissue disorders","Myasthenia gravis","2","N","DRUG WITHDRAWN","IMMUNE",20
+"SUBJ-0143","Control","Musculoskeletal and connective tissue disorders","Myasthenia gravis","3","N","DOSE NOT CHANGED","IMMUNE",62
+"SUBJ-0132","Control","Musculoskeletal and connective tissue disorders","Myasthenia gravis","1","N","DOSE NOT CHANGED","IMMUNE",24
+"SUBJ-0114","Control","Musculoskeletal and connective tissue disorders","Myasthenia gravis","1","N","CORTICOSTEROID THERAPY","IMMUNE",50
+"SUBJ-0133","Control","Musculoskeletal and connective tissue disorders","Myasthenia gravis","4","Y","DRUG WITHDRAWN","IMMUNE",128
+"SUBJ-0148","Control","Musculoskeletal and connective tissue disorders","Myasthenia gravis","2","Y","CORTICOSTEROID THERAPY","IMMUNE",100
+"SUBJ-0147","Control","Musculoskeletal and connective tissue disorders","Myasthenia gravis","4","Y","DOSE NOT CHANGED","IMMUNE",117
+"SUBJ-0172","Control","Musculoskeletal and connective tissue disorders","Encephalitis","3","N","DOSE NOT CHANGED","IMMUNE",56
+"SUBJ-0144","Control","Musculoskeletal and connective tissue disorders","Encephalitis","4","Y","DOSE REDUCED","IMMUNE",126
+"SUBJ-0079","Experimental","Various","Headache","3","N","DOSE NOT CHANGED","NON-IMMUNE",221
+"SUBJ-0055","Experimental","Various","Headache","2","N","DOSE NOT CHANGED","NON-IMMUNE",166
+"SUBJ-0012","Experimental","Various","Headache","1","N","DOSE NOT CHANGED","NON-IMMUNE",350
+"SUBJ-0003","Experimental","Various","Headache","2","N","DOSE NOT CHANGED","NON-IMMUNE",151
+"SUBJ-0096","Experimental","Various","Headache","1","N","DOSE NOT CHANGED","NON-IMMUNE",162
+"SUBJ-0086","Experimental","Various","Back pain","1","N","DOSE NOT CHANGED","NON-IMMUNE",178
+"SUBJ-0005","Experimental","Various","Back pain","1","N","DOSE NOT CHANGED","NON-IMMUNE",34
+"SUBJ-0064","Experimental","Various","Back pain","1","N","DOSE NOT CHANGED","NON-IMMUNE",267
+"SUBJ-0008","Experimental","Various","Back pain","3","N","DOSE NOT CHANGED","NON-IMMUNE",298
+"SUBJ-0013","Experimental","Various","Back pain","2","N","DOSE NOT CHANGED","NON-IMMUNE",149
+"SUBJ-0011","Experimental","Various","Back pain","3","N","DOSE NOT CHANGED","NON-IMMUNE",97
+"SUBJ-0018","Experimental","Various","Back pain","3","N","DOSE NOT CHANGED","NON-IMMUNE",213
+"SUBJ-0082","Experimental","Various","Back pain","1","N","DOSE NOT CHANGED","NON-IMMUNE",298
+"SUBJ-0049","Experimental","Various","Back pain","1","N","DOSE NOT CHANGED","NON-IMMUNE",196
+"SUBJ-0091","Experimental","Various","Back pain","1","N","DOSE NOT CHANGED","NON-IMMUNE",287
+"SUBJ-0066","Experimental","Various","Back pain","4","Y","DOSE NOT CHANGED","NON-IMMUNE",142
+"SUBJ-0064","Experimental","Various","Insomnia","1","N","DOSE NOT CHANGED","NON-IMMUNE",362
+"SUBJ-0084","Experimental","Various","Mouth ulceration","1","N","DOSE NOT CHANGED","NON-IMMUNE",205
+"SUBJ-0071","Experimental","Various","Mouth ulceration","3","N","DOSE NOT CHANGED","NON-IMMUNE",240
+"SUBJ-0051","Experimental","Various","Mouth ulceration","1","N","DOSE NOT CHANGED","NON-IMMUNE",248
+"SUBJ-0006","Experimental","Various","Mouth ulceration","2","N","DOSE NOT CHANGED","NON-IMMUNE",48
+"SUBJ-0090","Experimental","Various","Mouth ulceration","2","N","DOSE NOT CHANGED","NON-IMMUNE",283
+"SUBJ-0049","Experimental","Various","Mouth ulceration","1","N","DOSE NOT CHANGED","NON-IMMUNE",163
+"SUBJ-0034","Experimental","Various","Mouth ulceration","3","N","DOSE NOT CHANGED","NON-IMMUNE",323
+"SUBJ-0072","Experimental","Various","Mouth ulceration","2","N","DOSE NOT CHANGED","NON-IMMUNE",286
+"SUBJ-0065","Experimental","Various","Mouth ulceration","2","N","DOSE NOT CHANGED","NON-IMMUNE",250
+"SUBJ-0040","Experimental","Various","Peripheral neuropathy","2","N","DOSE NOT CHANGED","NON-IMMUNE",116
+"SUBJ-0052","Experimental","Various","Peripheral neuropathy","1","N","DOSE NOT CHANGED","NON-IMMUNE",110
+"SUBJ-0066","Experimental","Various","Peripheral neuropathy","2","N","DOSE NOT CHANGED","NON-IMMUNE",259
+"SUBJ-0036","Experimental","Various","Tinnitus","1","N","DOSE NOT CHANGED","NON-IMMUNE",250
+"SUBJ-0089","Experimental","Various","Tinnitus","2","N","DOSE NOT CHANGED","NON-IMMUNE",207
+"SUBJ-0072","Experimental","Various","Tinnitus","1","N","DOSE NOT CHANGED","NON-IMMUNE",158
+"SUBJ-0003","Experimental","Various","Tinnitus","1","N","DOSE NOT CHANGED","NON-IMMUNE",7
+"SUBJ-0022","Experimental","Various","Tinnitus","1","N","DOSE NOT CHANGED","NON-IMMUNE",314
+"SUBJ-0006","Experimental","Various","Tinnitus","2","N","DOSE NOT CHANGED","NON-IMMUNE",286
+"SUBJ-0024","Experimental","Various","Tinnitus","1","N","DOSE NOT CHANGED","NON-IMMUNE",262
+"SUBJ-0005","Experimental","Various","Tinnitus","2","N","DOSE NOT CHANGED","NON-IMMUNE",126
+"SUBJ-0093","Experimental","Various","Tinnitus","1","N","DOSE NOT CHANGED","NON-IMMUNE",16
+"SUBJ-0013","Experimental","Various","Tinnitus","2","N","DOSE NOT CHANGED","NON-IMMUNE",40
+"SUBJ-0030","Experimental","Various","Dry eye","1","N","DOSE NOT CHANGED","NON-IMMUNE",260
+"SUBJ-0054","Experimental","Various","Dry eye","2","N","DOSE NOT CHANGED","NON-IMMUNE",342
+"SUBJ-0088","Experimental","Various","Dry eye","3","N","DOSE NOT CHANGED","NON-IMMUNE",304
+"SUBJ-0061","Experimental","Various","Dry eye","1","N","DOSE NOT CHANGED","NON-IMMUNE",102
+"SUBJ-0070","Experimental","Various","Dry eye","1","N","DOSE NOT CHANGED","NON-IMMUNE",43
+"SUBJ-0094","Experimental","Various","Dry eye","3","N","DOSE NOT CHANGED","NON-IMMUNE",155
+"SUBJ-0137","Control","Various","Headache","3","N","DOSE NOT CHANGED","NON-IMMUNE",138
+"SUBJ-0171","Control","Various","Headache","1","N","DOSE NOT CHANGED","NON-IMMUNE",11
+"SUBJ-0180","Control","Various","Headache","2","N","DOSE NOT CHANGED","NON-IMMUNE",102
+"SUBJ-0136","Control","Various","Headache","1","N","DOSE NOT CHANGED","NON-IMMUNE",335
+"SUBJ-0141","Control","Various","Headache","2","N","DOSE NOT CHANGED","NON-IMMUNE",214
+"SUBJ-0175","Control","Various","Headache","1","N","DOSE NOT CHANGED","NON-IMMUNE",90
+"SUBJ-0107","Control","Various","Headache","1","N","DOSE NOT CHANGED","NON-IMMUNE",342
+"SUBJ-0145","Control","Various","Headache","2","N","DOSE NOT CHANGED","NON-IMMUNE",181
+"SUBJ-0140","Control","Various","Back pain","1","N","DOSE NOT CHANGED","NON-IMMUNE",331
+"SUBJ-0187","Control","Various","Back pain","1","N","DOSE NOT CHANGED","NON-IMMUNE",169
+"SUBJ-0164","Control","Various","Back pain","3","N","DOSE NOT CHANGED","NON-IMMUNE",314
+"SUBJ-0158","Control","Various","Back pain","2","N","DOSE NOT CHANGED","NON-IMMUNE",103
+"SUBJ-0192","Control","Various","Back pain","3","N","DOSE NOT CHANGED","NON-IMMUNE",357
+"SUBJ-0168","Control","Various","Back pain","2","N","DOSE NOT CHANGED","NON-IMMUNE",32
+"SUBJ-0158","Control","Various","Mouth ulceration","1","N","DOSE NOT CHANGED","NON-IMMUNE",44
+"SUBJ-0188","Control","Various","Mouth ulceration","1","N","DOSE NOT CHANGED","NON-IMMUNE",329
+"SUBJ-0189","Control","Various","Mouth ulceration","1","N","DOSE NOT CHANGED","NON-IMMUNE",180
+"SUBJ-0126","Control","Various","Mouth ulceration","2","N","DOSE NOT CHANGED","NON-IMMUNE",10
+"SUBJ-0117","Control","Various","Mouth ulceration","4","Y","DOSE NOT CHANGED","NON-IMMUNE",124
+"SUBJ-0133","Control","Various","Mouth ulceration","3","N","DOSE NOT CHANGED","NON-IMMUNE",327
+"SUBJ-0182","Control","Various","Peripheral neuropathy","2","N","DOSE NOT CHANGED","NON-IMMUNE",23
+"SUBJ-0104","Control","Various","Peripheral neuropathy","3","N","DOSE NOT CHANGED","NON-IMMUNE",7
+"SUBJ-0173","Control","Various","Peripheral neuropathy","3","N","DOSE NOT CHANGED","NON-IMMUNE",339
+"SUBJ-0144","Control","Various","Peripheral neuropathy","1","N","DOSE NOT CHANGED","NON-IMMUNE",224
+"SUBJ-0122","Control","Various","Peripheral neuropathy","3","N","DOSE NOT CHANGED","NON-IMMUNE",59
+"SUBJ-0161","Control","Various","Peripheral neuropathy","4","Y","DOSE NOT CHANGED","NON-IMMUNE",350
+"SUBJ-0131","Control","Various","Peripheral neuropathy","1","N","DOSE NOT CHANGED","NON-IMMUNE",317
+"SUBJ-0120","Control","Various","Peripheral neuropathy","1","N","DOSE NOT CHANGED","NON-IMMUNE",156
+"SUBJ-0133","Control","Various","Peripheral neuropathy","2","N","DOSE NOT CHANGED","NON-IMMUNE",47
+"SUBJ-0161","Control","Various","Tinnitus","1","N","DOSE NOT CHANGED","NON-IMMUNE",5
+"SUBJ-0162","Control","Various","Tinnitus","2","N","DOSE NOT CHANGED","NON-IMMUNE",344
+"SUBJ-0113","Control","Various","Tinnitus","1","N","DOSE NOT CHANGED","NON-IMMUNE",217
+"SUBJ-0183","Control","Various","Tinnitus","3","N","DOSE NOT CHANGED","NON-IMMUNE",189
+"SUBJ-0131","Control","Various","Tinnitus","3","N","DOSE NOT CHANGED","NON-IMMUNE",111
+"SUBJ-0172","Control","Various","Dry eye","1","N","DOSE NOT CHANGED","NON-IMMUNE",300
+"SUBJ-0133","Control","Various","Dry eye","1","N","DOSE NOT CHANGED","NON-IMMUNE",143
+"SUBJ-0154","Control","Various","Dry eye","1","N","DOSE NOT CHANGED","NON-IMMUNE",9
+"SUBJ-0111","Control","Various","Dry eye","2","N","DOSE NOT CHANGED","NON-IMMUNE",242
+"SUBJ-0185","Control","Various","Dry eye","4","Y","DOSE NOT CHANGED","NON-IMMUNE",160

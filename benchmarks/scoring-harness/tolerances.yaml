@@ -915,3 +915,36 @@ TC-030:
       absolute: 0.01
       relative: 0.05
       weight: 0.05
+
+TC-032:
+  description: "Immune-Related Adverse Event Summary"
+  tolerances:
+    # Severity summary (grade 1-5 counts and pcts)
+    severity_n:
+      absolute: 0
+      weight: 0.15
+    severity_pct:
+      absolute: 0.1
+      weight: 0.10
+    # Overall summary rows (any irAE, Grade >=3, discontinuation, corticosteroids)
+    summary_n:
+      absolute: 0
+      weight: 0.15
+    summary_pct:
+      absolute: 0.1
+      weight: 0.10
+    # Detailed irAE table (category/PT/severity cells)
+    irae_table_n:
+      absolute: 0
+      weight: 0.25
+    irae_table_pct:
+      absolute: 0.1
+      weight: 0.10
+    # Median time-to-onset by category
+    onset_median:
+      absolute: 2
+      weight: 0.10
+    # N per arm
+    n_per_arm:
+      absolute: 0
+      weight: 0.05
