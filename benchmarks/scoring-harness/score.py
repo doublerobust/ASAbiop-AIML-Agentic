@@ -2438,6 +2438,137 @@ def score_tc032(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# TC-034: Sufficient Follow-up Assessment (Level 1)
+# --------------------------------------------------------------------
+
+def score_tc034(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-034 (Sufficient Follow-up Assessment).
+
+    Compares:
+    - Adequate follow-up N and pct by arm
+    - Status distribution (ongoing, completed, discontinued, died) by arm
+    - Reverse KM median follow-up by arm
+    - Follow-up post-dose summary (mean, sd, median, min, max) by arm
+    - Follow-up from randomization summary by arm
+    - N per arm from metadata
+    """
+    tol_spec = tolerances.get("TC-034", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    # --- Adequate follow-up N and pct ---
+    for arm in ["experimental", "control"]:
+        for metric in ["n", "pct"]:
+            tol_key = f"adequate_fu_{arm}_{metric}"
+            sub_tol = tol_spec.get(tol_key, {})
+            if metric == "n":
+                r = compare_count(
+                    agent_output.get("adequate_followup", {}).get(arm, {}).get(metric),
+                    ground_truth.get("adequate_followup", {}).get(arm, {}).get(metric),
+                )
+            else:
+                field_tol = {"absolute": sub_tol.get("absolute", 0.1)}
+                r = compare_numeric(
+                    agent_output.get("adequate_followup", {}).get(arm, {}).get(metric),
+                    ground_truth.get("adequate_followup", {}).get(arm, {}).get(metric),
+                    field_tol, f"adequate_fu.{arm}.{metric}",
+                )
+            component_scores[f"adequate_fu.{arm}.{metric}"] = r
+            w = sub_tol.get("weight", 0.10)
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # --- Status distribution ---
+    for arm in ["experimental", "control"]:
+        for status_label in ["ongoing", "completed", "discontinued", "died"]:
+            tol_key = f"status_{arm}"
+            sub_tol = tol_spec.get(tol_key, {})
+            r = compare_count(
+                agent_output.get("status_distribution", {}).get(arm, {}).get(status_label),
+                ground_truth.get("status_distribution", {}).get(arm, {}).get(status_label),
+            )
+            component_scores[f"status.{arm}.{status_label}"] = r
+            w = sub_tol.get("weight", 0.05) / 4
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # --- Reverse KM median follow-up ---
+    for arm in ["experimental", "control"]:
+        sub_tol = tol_spec.get(f"reverse_km_{arm}", tol_spec.get("reverse_km", {}))
+        agent_km = agent_output.get("reverse_km_followup", {}).get(arm, {})
+        truth_km = ground_truth.get("reverse_km_followup", {}).get(arm, {})
+        for field in ["median", "ci_lower", "ci_upper"]:
+            field_tol = {"absolute": sub_tol.get("absolute", 5)}
+            r = compare_numeric(
+                agent_km.get(field),
+                truth_km.get(field),
+                field_tol,
+                f"reverse_km.{arm}.{field}",
+            )
+            component_scores[f"reverse_km.{arm}.{field}"] = r
+            w = sub_tol.get("weight", 0.10) / 3
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # --- Follow-up post-dose summary ---
+    for arm in ["experimental", "control"]:
+        arm_tol = tol_spec.get(f"fu_post_dose_{arm}", tol_spec.get("fu_post_dose", {}))
+        for field in ["mean", "sd", "median", "min", "max", "q1", "q3"]:
+            field_tol = {"absolute": arm_tol.get("absolute", 0.5)}
+            r = compare_numeric(
+                agent_output.get("fu_post_dose", {}).get(arm, {}).get(field),
+                ground_truth.get("fu_post_dose", {}).get(arm, {}).get(field),
+                field_tol,
+                f"fu_post_dose.{arm}.{field}",
+            )
+            component_scores[f"fu_post_dose.{arm}.{field}"] = r
+            w = arm_tol.get("weight", 0.05) / 7
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # --- Follow-up from randomization summary ---
+    for arm in ["experimental", "control"]:
+        arm_tol = tol_spec.get(f"fu_rand_{arm}", tol_spec.get("fu_from_rand", {}))
+        for field in ["mean", "sd", "median", "min", "max", "q1", "q3"]:
+            field_tol = {"absolute": arm_tol.get("absolute", 0.5)}
+            r = compare_numeric(
+                agent_output.get("fu_from_randomization", {}).get(arm, {}).get(field),
+                ground_truth.get("fu_from_randomization", {}).get(arm, {}).get(field),
+                field_tol,
+                f"fu_rand.{arm}.{field}",
+            )
+            component_scores[f"fu_rand.{arm}.{field}"] = r
+            w = arm_tol.get("weight", 0.05) / 7
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # --- N per arm from metadata ---
+    for arm_key, arm_label in [("n_total", "total"), ("n_experimental", "exp"), ("n_control", "ctl")]:
+        tol_key = f"n_{arm_label}"
+        sub_tol = tol_spec.get(tol_key, {})
+        r = compare_count(
+            agent_output.get("metadata", {}).get(arm_key),
+            ground_truth.get("metadata", {}).get(arm_key),
+        )
+        component_scores[f"metadata.{arm_key}"] = r
+        w = sub_tol.get("weight", 0.02)
+        weighted_sum += r["score"] * w
+        total_weight += w
+
+    overall = weighted_sum / total_weight if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-034",
+        "score": round(overall, 4),
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", agent_output.get("metadata", {}).get("language", "unknown")),
+        "ground_truth_language": ground_truth.get("language", ground_truth.get("metadata", {}).get("language", "unknown")),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
 # TC-006: Blinded Sample Size Re-Estimation at Interim (Level 2)
 # --------------------------------------------------------------------
 
@@ -2887,6 +3018,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-033": score_tc033,
         "TC-030": score_tc030,
         "TC-032": score_tc032,
+        "TC-034": score_tc034,
         "TC-006": score_tc006,
     }
 
@@ -3027,6 +3159,7 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-033": score_tc033,
         "TC-030": score_tc030,
         "TC-032": score_tc032,
+        "TC-034": score_tc034,
         "TC-006": score_tc006,
     }
 
@@ -3245,6 +3378,7 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-033": score_tc033,
         "TC-030": score_tc030,
         "TC-032": score_tc032,
+        "TC-034": score_tc034,
         "TC-006": score_tc006,
     }
     scorer = scorers.get(tc)

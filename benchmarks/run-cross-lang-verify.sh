@@ -625,6 +625,28 @@ else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
+# TC-034: Sufficient Follow-up Assessment (shared ADSL follow-up)
+echo ""
+echo "── TC-034 ──────────────────────────────────────────"
+echo "  Generating shared ADSL follow-up dataset..."
+if (cd "$RDIR" && Rscript "generate_tc034_adsl_fu.R" --seed $SEED --n $N --output "$SHARED/adsl_fu.csv") 2>&1; then
+  echo "  ✓ Shared ADSL follow-up generated"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Shared ADSL follow-up FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  R:   tc-034-sufficient-followup.R"
+if (cd "$RDIR" && Rscript "tc-034-sufficient-followup.R" --seed $SEED --n $N --data "$SHARED/adsl_fu.csv" --output "$R_OUT/TC-034.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_034_sufficient_followup.py"
+if (cd "$PYDIR" && python3 "tc_034_sufficient_followup.py" --seed $SEED --n $N --data-csv "$SHARED/adsl_fu.csv" --output "$PY_OUT/TC-034.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
 # ───────────────────────────────────────────────────────────────────
 # Step 3: Summary
 # ───────────────────────────────────────────────────────────────────

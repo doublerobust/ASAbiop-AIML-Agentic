@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-034: Sufficient Follow-up Assessment Output Schema",
+  "description": "Validation schema for TC-034 sufficient follow-up output",
+  "type": "object",
+  "required": [
+    "tc_id",
+    "tc_name",
+    "metadata",
+    "adequate_followup",
+    "status_distribution",
+    "reverse_km_followup",
+    "fu_post_dose",
+    "fu_from_randomization",
+    "per_subject"
+  ],
+  "properties": {
+    "tc_id": {
+      "type": "string",
+      "const": "TC-034"
+    },
+    "tc_name": {
+      "type": "string",
+      "const": "Sufficient Follow-up Assessment"
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "n_total",
+        "n_experimental",
+        "n_control",
+        "population",
+        "followup_threshold_days",
+        "date_unit"
+      ],
+      "properties": {
+        "n_total": { "type": "integer", "minimum": 1 },
+        "n_experimental": { "type": "integer", "minimum": 0 },
+        "n_control": { "type": "integer", "minimum": 0 },
+        "population": { "type": "string", "const": "SAFETY" },
+        "followup_threshold_days": { "type": "integer", "const": 90 },
+        "date_unit": { "type": "string", "const": "days" }
+      }
+    },
+    "adequate_followup": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/count_pct" },
+        "control": { "$ref": "#/$defs/count_pct" }
+      }
+    },
+    "status_distribution": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/status_counts" },
+        "control": { "$ref": "#/$defs/status_counts" }
+      }
+    },
+    "reverse_km_followup": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/km_result" },
+        "control": { "$ref": "#/$defs/km_result" }
+      }
+    },
+    "fu_post_dose": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/cont_summary" },
+        "control": { "$ref": "#/$defs/cont_summary" }
+      }
+    },
+    "fu_from_randomization": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/cont_summary" },
+        "control": { "$ref": "#/$defs/cont_summary" }
+      }
+    },
+    "per_subject": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["USUBJID", "TRT01A", "RANDDT", "LASTDOSEDT", "LASTFUDT", "TREATDUR_W", "FU_POST_DOSE", "FU_FROM_RAND", "ADEQUATE_FU", "STATUS", "STATUS_LABEL"],
+        "properties": {
+          "USUBJID": { "type": "string" },
+          "TRT01A": { "type": "string" },
+          "RANDDT": { "type": "string" },
+          "LASTDOSEDT": { "type": "string" },
+          "LASTFUDT": { "type": "string" },
+          "TREATDUR_W": { "type": "integer" },
+          "FU_POST_DOSE": { "type": "integer" },
+          "FU_FROM_RAND": { "type": "integer" },
+          "ADEQUATE_FU": { "type": "integer" },
+          "STATUS": { "type": "integer" },
+          "STATUS_LABEL": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "cont_summary": {
+      "type": "object",
+      "required": ["n", "mean", "sd", "median", "min", "max", "q1", "q3"],
+      "properties": {
+        "n": { "type": "integer" },
+        "mean": { "type": "number" },
+        "sd": { "type": "number" },
+        "median": { "type": "number" },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "q1": { "type": "number" },
+        "q3": { "type": "number" }
+      }
+    },
+    "count_pct": {
+      "type": "object",
+      "required": ["n", "pct"],
+      "properties": {
+        "n": { "type": "integer" },
+        "pct": { "type": "number" }
+      }
+    },
+    "status_counts": {
+      "type": "object",
+      "required": ["ongoing", "completed", "discontinued", "died"],
+      "properties": {
+        "ongoing": { "type": "integer" },
+        "completed": { "type": "integer" },
+        "discontinued": { "type": "integer" },
+        "died": { "type": "integer" }
+      }
+    },
+    "km_result": {
+      "type": "object",
+      "required": ["median", "ci_lower", "ci_upper"],
+      "properties": {
+        "median": { "type": ["number", "null"] },
+        "ci_lower": { "type": ["number", "null"] },
+        "ci_upper": { "type": ["number", "null"] }
+      }
+    }
+  }
+}

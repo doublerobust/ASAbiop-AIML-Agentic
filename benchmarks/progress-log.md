@@ -3693,3 +3693,81 @@ TC-032 verified at **score=1.0000** for R↔Python using shared irAE ADAE datase
 4. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
 5. **White paper v1.6** — add TC-032 implementation details, ARS proof-of-concept results
 6. **Efficiency scoring** — populate efficiency.yaml with actual run metrics
+
+---
+
+## Day 45 (2026-07-14): TC-034 Implementation — Sufficient Follow-up Assessment
+
+**Date:** July 14, 2026 (Tuesday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### Completed
+
+#### 1. TC-034: Sufficient Follow-up Assessment
+
+**Domain:** Safety / Study Conduct | **Level:** 1 | **Priority:** Low (commonly requested by FDA reviewers)
+
+Assesses whether subjects have sufficient safety follow-up per protocol (90 days post-last-dose):
+
+- Adequate follow-up definition: ≥ threshold days post-last-dose AND not died
+- Reverse Kaplan-Meier median follow-up duration (Brookmeyer-Crowley CI)
+- Subject status distribution: Ongoing, Completed, Discontinued, Died
+- Follow-up post-dose summary (N, mean, SD, median, range, Q1, Q3)
+- Follow-up from randomization summary
+- Per-subject follow-up details with dates
+- `--ars-output` flag emits CDISC ARS v1.0-compatible JSON envelope
+
+**Files created:**
+- `references/ground-truth/Python/tc_034_sufficient_followup.py` — Python ground truth with reverse KM (lifelines), status distribution, adequate follow-up assessment, `--data-csv` support, `--ars-output` flag
+- `references/ground-truth/R/tc-034-sufficient-followup.R` — R ground truth with `survfit()` reverse KM, status distribution, `--data` support, `--ars-output` flag
+- `references/ground-truth/SAS/tc-034-sufficient-followup.sas` — SAS reference script with PROC LIFETEST for reverse KM, PROC FREQ for status distribution
+- `references/ground-truth/R/generate_tc034_adsl_fu.R` — Shared ADSL follow-up dataset generator with randomization dates, last dose dates, follow-up dates, and status
+- `references/output-schemas/tc-034-output-schema.json` — JSON schema for output validation
+
+**Files updated:**
+- `scoring-harness/score.py` — Added `score_tc034()` scorer function with adequate follow-up, status distribution, reverse KM, and follow-up summary scoring; wired TC-034 into all 3 dispatch dicts (score, verify, evaluate)
+- `scoring-harness/tolerances.yaml` — Added TC-034 tolerance section (adequate_fu, status, reverse_km, fu_post_dose, fu_from_rand, n_per_arm)
+- `run-cross-lang-verify.sh` — Added TC-034 to cross-language verification script with shared ADSL follow-up dataset
+
+#### 2. ARS Proof-of-Concept
+
+TC-034 scripts include `--ars-output` flag that emits CDISC ARS v1.0-compatible JSON envelope with:
+- `analysisResult.id`, `version`, `analysisReason`
+- `analysisMethod` with adequate follow-up filter parameters (followup_threshold, fu_post_dose, status)
+- `analysisVariables` with FU_POST_DOSE (result), ADEQUATE_FU (flag), STATUS_LABEL (status)
+- `analysisPopulation` with SAFETY filter and N
+- `resultGroups` with arm-level N
+- `analysisResultsData` with pct_adequate_fu and median_followup metrics
+
+#### 3. Cross-Language Verification Results
+
+TC-034 verified at **score=1.0000** for R↔Python using shared ADSL follow-up dataset:
+- 200 subjects (Exp=100, Ctl=100)
+- Adequate follow-up: Exp=60 (60%), Ctl=55 (55%)
+- Status distribution Exp: Ongoing=20, Completed=59, Discontinued=9, Died=12
+- Status distribution Ctl: Ongoing=15, Completed=65, Discontinued=12, Died=8
+- Reverse KM median follow-up: Exp=427 days (CI: 412–459), Ctl=259 days (CI: 254–282)
+- All comparison fields matched within tolerance (diff=0.000000)
+- Schema validation passed
+- Full cross-language verification: 35/35 checks passed, 0 failed
+
+### 📊 Updated Score Summary
+
+| TC | Domain | Level | R | Python | SAS | Score |
+|---|---|---|---|---|---|---|
+| TC-001 through TC-029, TC-033, TC-030, TC-032, TC-034 | (26 Level 1 TCs) | 1 | ✅ | ✅ | 26/26 | 1.0000 |
+| TC-004 | SAP Drafting | 2 | — | — | — | Auto-scorer ✅ |
+| TC-005 | TFL QC Review | 2 | ✅ | ✅ | ✅ | Auto-scorer ✅ |
+| TC-006 | Blinded SSR | 2 | ✅ | ✅ | ✅ | 1.0000 |
+
+**Totals: 26 Level 1 TCs at 1.0000, 3 Level 2 TCs with auto-scorers, 26/26 SAS reference scripts**
+
+### 🔮 Plan for Day 46+
+
+1. **TC-031 implementation** — Time-to-First-Treatment (Level 1, low priority)
+2. **TC-035 implementation** — ORR/DCR/DOR Composite (Level 2 multi-TC integration)
+3. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 TCs
+4. **WG presentation slides** — cross-language results, Level 2 framework, efficiency baselines
+5. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
+6. **White paper v1.6** — add TC-034 implementation details, ARS proof-of-concept results
+7. **Efficiency scoring** — populate efficiency.yaml with actual run metrics

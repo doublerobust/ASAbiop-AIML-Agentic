@@ -948,3 +948,58 @@ TC-032:
     n_per_arm:
       absolute: 0
       weight: 0.05
+
+TC-034:
+  description: "Sufficient Follow-up Assessment"
+  tolerances:
+    # Adequate follow-up N and pct
+    adequate_fu_experimental_n:
+      absolute: 0
+      weight: 0.10
+    adequate_fu_experimental_pct:
+      absolute: 0.1
+      weight: 0.08
+    adequate_fu_control_n:
+      absolute: 0
+      weight: 0.10
+    adequate_fu_control_pct:
+      absolute: 0.1
+      weight: 0.08
+    # Status distribution per arm
+    status_experimental:
+      absolute: 0
+      weight: 0.08
+    status_control:
+      absolute: 0
+      weight: 0.08
+    # Reverse KM median follow-up
+    reverse_km_experimental:
+      absolute: 5
+      weight: 0.06
+    reverse_km_control:
+      absolute: 5
+      weight: 0.06
+    # Follow-up post-dose summary
+    fu_post_dose_experimental:
+      absolute: 0.5
+      weight: 0.05
+    fu_post_dose_control:
+      absolute: 0.5
+      weight: 0.05
+    # Follow-up from randomization
+    fu_rand_experimental:
+      absolute: 0.5
+      weight: 0.05
+    fu_rand_control:
+      absolute: 0.5
+      weight: 0.05
+    # N per arm
+    n_total:
+      absolute: 0
+      weight: 0.02
+    n_exp:
+      absolute: 0
+      weight: 0.02
+    n_ctl:
+      absolute: 0
+      weight: 0.02
