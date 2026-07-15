@@ -1003,3 +1003,46 @@ TC-034:
     n_ctl:
       absolute: 0
       weight: 0.02
+
+TC-031:
+  description: "Time-to-First-Treatment"
+  tolerances:
+    # KM median TTT per arm
+    km_experimental:
+      absolute: 2
+      weight: 0.10
+    km_control:
+      absolute: 2
+      weight: 0.10
+    # Log-rank test
+    logrank:
+      absolute: 0.01
+      weight: 0.06
+    # Cox HR
+    cox_hr:
+      absolute: 0.05
+      weight: 0.08
+    # TTT summary statistics
+    ttt_summary_experimental:
+      absolute: 0.5
+      weight: 0.05
+    ttt_summary_control:
+      absolute: 0.5
+      weight: 0.05
+    # Received treatment counts
+    received_experimental:
+      absolute: 0.1
+      weight: 0.04
+    received_control:
+      absolute: 0.1
+      weight: 0.04
+    # N per arm
+    n_total:
+      absolute: 0
+      weight: 0.02
+    n_exp:
+      absolute: 0
+      weight: 0.02
+    n_ctl:
+      absolute: 0
+      weight: 0.02

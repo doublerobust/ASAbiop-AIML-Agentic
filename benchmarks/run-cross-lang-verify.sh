@@ -647,6 +647,28 @@ else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
+# TC-031: Time-to-First-Treatment (shared ADSL TTT dataset)
+echo ""
+echo "── TC-031 ──────────────────────────────────────────"
+echo "  Generating shared ADSL TTT dataset..."
+if (cd "$RDIR" && Rscript "generate_tc031_adsl_ttt.R" --seed $SEED --n $N --output "$SHARED/adsl_ttt.csv") 2>&1; then
+  echo "  ✓ Shared ADSL TTT generated"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Shared ADSL TTT FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  R:   tc-031-time-to-first-treatment.R"
+if (cd "$RDIR" && Rscript "tc-031-time-to-first-treatment.R" --seed $SEED --n $N --data "$SHARED/adsl_ttt.csv" --output "$R_OUT/TC-031.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_031_time_to_first_treatment.py"
+if (cd "$PYDIR" && python3 "tc_031_time_to_first_treatment.py" --seed $SEED --n $N --data-csv "$SHARED/adsl_ttt.csv" --output "$PY_OUT/TC-031.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
 # ───────────────────────────────────────────────────────────────────
 # Step 3: Summary
 # ───────────────────────────────────────────────────────────────────

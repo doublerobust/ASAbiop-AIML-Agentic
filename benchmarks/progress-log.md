@@ -3771,3 +3771,81 @@ TC-034 verified at **score=1.0000** for R↔Python using shared ADSL follow-up d
 5. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
 6. **White paper v1.6** — add TC-034 implementation details, ARS proof-of-concept results
 7. **Efficiency scoring** — populate efficiency.yaml with actual run metrics
+
+---
+
+## Day 46 (2026-07-15): TC-031 Implementation — Time-to-First-Treatment
+
+**Date:** July 15, 2026 (Wednesday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### Completed
+
+#### 1. TC-031: Time-to-First-Treatment
+
+**Domain:** Oncology / Time-to-Event | **Level:** 1 | **Priority:** Low (niche endpoint, tests date handling)
+
+Time from randomization to first dose of study treatment. Subjects who never receive treatment (~5%) are censored at their follow-up time. This TC tests date computation and censoring rules — a common source of programming errors in oncology trials.
+
+- KM median time-to-first-treatment by arm with 95% CI (Brookmeyer-Crowley log-log)
+- Log-rank test for treatment arm comparison
+- Cox proportional hazards HR with 95% CI
+- TTT summary statistics by arm (N, mean, SD, median, min, max, Q1, Q3)
+- Received treatment counts: N received, N censored, pct received
+- Per-subject TTT details with dates
+- `--ars-output` flag emits CDISC ARS v1.0-compatible JSON envelope
+
+**Files created:**
+- `references/ground-truth/Python/tc_031_time_to_first_treatment.py` — Python ground truth with KM median, log-rank, Cox HR, summary stats, `--data-csv` support, `--ars-output` flag
+- `references/ground-truth/R/tc-031-time-to-first-treatment.R` — R ground truth with matching logic, `--data` support, `--ars-output` flag
+- `references/ground-truth/SAS/tc-031-time-to-first-treatment.sas` — SAS reference script with PROC LIFETEST, PROC PHREG, log-rank test
+- `references/ground-truth/R/generate_tc031_adsl_ttt.R` — Shared ADSL dataset generator with randomization dates, first dose dates, TTT, censoring
+- `references/output-schemas/tc-031-output-schema.json` — JSON schema for output validation
+
+**Files updated:**
+- `scoring-harness/score.py` — Added `score_tc031()` scorer function; wired TC-031 into all 3 dispatch dicts (score, verify, evaluate)
+- `scoring-harness/tolerances.yaml` — Added TC-031 tolerance section (km median/CI, logrank, cox HR, ttt_summary, received counts, n_per_arm)
+- `run-cross-lang-verify.sh` — Added TC-031 to cross-language verification script with shared ADSL TTT dataset
+
+#### 2. ARS Proof-of-Concept
+
+TC-031 scripts include `--ars-output` flag that emits CDISC ARS v1.0-compatible JSON envelope with:
+- `analysisResult.id`, `version`, `analysisReason`
+- `analysisMethod` with KM estimator code template and parameters (conf_type, tie_method, censoring_rule)
+- `analysisVariables` with TTT_DAYS (analysis time), CNSR_TTT (censoring), RECEIVED_TX (event flag), TRT01A (treatment)
+- `analysisPopulation` with ITT filter and N
+- `resultGroups` with arm-level N
+- `analysisResultsData` with median TTT, n_received, logrank p, Cox HR
+
+#### 3. Cross-Language Verification Results
+
+TC-031 verified at **score=1.0000** for R↔Python using shared ADSL TTT dataset:
+- 200 subjects (ITT: 190; Exp=96, Ctl=94)
+- 10 subjects (5%) never received treatment (censored)
+- KM median TTT: Exp=3.5 days, Ctl=5 days
+- Log-rank test: chisq=11.0604, p=0.0009
+- Cox HR: 1.6925 (95% CI: 1.2531, 2.2858), p=0.0006
+- Received treatment: Exp=92 (95.83%), Ctl=88 (93.62%)
+- All 40+ comparison fields matched within tolerance (max diff=0.5 days for KM median, within ±2 day tolerance)
+- Schema validation passed for both R and Python outputs
+- ARS output validated
+
+### 📊 Updated Score Summary
+
+| TC | Domain | Level | R | Python | SAS | Score |
+|---|---|---|---|---|---|---|
+| TC-001 through TC-029, TC-033, TC-030, TC-032, TC-034, TC-031 | (27 Level 1 TCs) | 1 | ✅ | ✅ | 27/27 | 1.0000 |
+| TC-004 | SAP Drafting | 2 | — | — | — | Auto-scorer ✅ |
+| TC-005 | TFL QC Review | 2 | ✅ | ✅ | ✅ | Auto-scorer ✅ |
+| TC-006 | Blinded SSR | 2 | ✅ | ✅ | ✅ | 1.0000 |
+
+**Totals: 27 Level 1 TCs at 1.0000, 3 Level 2 TCs with auto-scorers, 27/27 SAS reference scripts**
+
+### 🔮 Plan for Day 47+
+
+1. **TC-035 implementation** — ORR/DCR/DOR Composite (Level 2 multi-TC integration)
+2. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 TCs
+3. **WG presentation slides** — cross-language results, Level 2 framework, efficiency baselines
+4. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
+5. **White paper v1.6** — add TC-031/TC-034 implementation details, ARS proof-of-concept results
+6. **Efficiency scoring** — populate efficiency.yaml with actual run metrics

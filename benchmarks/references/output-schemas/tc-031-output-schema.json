@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-031: Time-to-First-Treatment Output Schema",
+  "description": "Validation schema for TC-031 time-to-first-treatment output",
+  "type": "object",
+  "required": [
+    "tc_id",
+    "tc_name",
+    "metadata",
+    "km_median_ttt",
+    "logrank_test",
+    "cox_hr",
+    "ttt_summary",
+    "received_treatment",
+    "per_subject"
+  ],
+  "properties": {
+    "tc_id": {
+      "type": "string",
+      "const": "TC-031"
+    },
+    "tc_name": {
+      "type": "string",
+      "const": "Time-to-First-Treatment"
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "n_total",
+        "n_experimental",
+        "n_control",
+        "population",
+        "time_unit",
+        "censoring_rule"
+      ],
+      "properties": {
+        "n_total": { "type": "integer", "minimum": 1 },
+        "n_experimental": { "type": "integer", "minimum": 0 },
+        "n_control": { "type": "integer", "minimum": 0 },
+        "population": { "type": "string", "const": "ITT" },
+        "time_unit": { "type": "string", "const": "days" },
+        "censoring_rule": { "type": "string" }
+      }
+    },
+    "km_median_ttt": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/km_result" },
+        "control": { "$ref": "#/$defs/km_result" }
+      }
+    },
+    "logrank_test": {
+      "type": "object",
+      "required": ["chisq", "df", "p_value"],
+      "properties": {
+        "chisq": { "type": ["number", "null"] },
+        "df": { "type": ["integer", "null"] },
+        "p_value": { "type": ["number", "null"] }
+      }
+    },
+    "cox_hr": {
+      "type": "object",
+      "required": ["hr", "hr_lower", "hr_upper", "p_value", "n"],
+      "properties": {
+        "hr": { "type": ["number", "null"] },
+        "hr_lower": { "type": ["number", "null"] },
+        "hr_upper": { "type": ["number", "null"] },
+        "p_value": { "type": ["number", "null"] },
+        "n": { "type": ["integer", "null"] }
+      }
+    },
+    "ttt_summary": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/cont_summary" },
+        "control": { "$ref": "#/$defs/cont_summary" }
+      }
+    },
+    "received_treatment": {
+      "type": "object",
+      "required": ["experimental", "control"],
+      "properties": {
+        "experimental": { "$ref": "#/$defs/rx_counts" },
+        "control": { "$ref": "#/$defs/rx_counts" }
+      }
+    },
+    "per_subject": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["USUBJID", "TRT01A", "TTT_DAYS", "RECEIVED_TX", "CNSR_TTT"],
+        "properties": {
+          "USUBJID": { "type": "string" },
+          "TRT01A": { "type": "string" },
+          "RANDDT": { "type": ["string", "null"] },
+          "FIRSTDOSEDT": { "type": ["string", "null"] },
+          "TTT_DAYS": { "type": "integer" },
+          "TTT_MONTHS": { "type": "number" },
+          "RECEIVED_TX": { "type": "integer" },
+          "CNSR_TTT": { "type": "integer" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "km_result": {
+      "type": "object",
+      "required": ["median", "ci_lower", "ci_upper", "n_events", "n_total", "estimable"],
+      "properties": {
+        "median": { "type": ["number", "null"] },
+        "ci_lower": { "type": ["number", "null"] },
+        "ci_upper": { "type": ["number", "null"] },
+        "n_events": { "type": "integer" },
+        "n_total": { "type": "integer" },
+        "estimable": { "type": "boolean" }
+      }
+    },
+    "cont_summary": {
+      "type": "object",
+      "required": ["n", "mean", "sd", "median", "min", "max", "q1", "q3"],
+      "properties": {
+        "n": { "type": "integer" },
+        "mean": { "type": "number" },
+        "sd": { "type": "number" },
+        "median": { "type": "number" },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "q1": { "type": "number" },
+        "q3": { "type": "number" }
+      }
+    },
+    "rx_counts": {
+      "type": "object",
+      "required": ["n_received", "n_censored", "pct_received"],
+      "properties": {
+        "n_received": { "type": "integer" },
+        "n_censored": { "type": "integer" },
+        "pct_received": { "type": "number" }
+      }
+    }
+  }
+}

@@ -2569,6 +2569,146 @@ def score_tc034(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# TC-031: Time-to-First-Treatment (Level 1)
+# --------------------------------------------------------------------
+
+def score_tc031(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-031 (Time-to-First-Treatment).
+
+    Compares:
+    - KM median TTT by arm (median, CI, n_events, n_total)
+    - Log-rank test (chisq, p_value)
+    - Cox HR (hr, hr_lower, hr_upper, p_value)
+    - TTT summary statistics by arm (mean, sd, median, min, max, q1, q3)
+    - Received treatment counts by arm (n_received, n_censored, pct_received)
+    - N per arm from metadata
+    """
+    tol_spec = tolerances.get("TC-031", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    # --- KM median TTT per arm ---
+    for arm in ["experimental", "control"]:
+        km_tol = tol_spec.get(f"km_{arm}", tol_spec.get("km", {}))
+        agent_km = agent_output.get("km_median_ttt", {}).get(arm, {})
+        truth_km = ground_truth.get("km_median_ttt", {}).get(arm, {})
+
+        # Median and CI
+        for field in ["median", "ci_lower", "ci_upper"]:
+            field_tol = {"absolute": km_tol.get("absolute", 2)}
+            r = compare_numeric(
+                agent_km.get(field), truth_km.get(field),
+                field_tol, f"km_median_ttt.{arm}.{field}",
+            )
+            component_scores[f"km_median_ttt.{arm}.{field}"] = r
+            w = km_tol.get("weight", 0.10) / 3
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+        # n_events and n_total
+        for field in ["n_events", "n_total"]:
+            r = compare_count(agent_km.get(field), truth_km.get(field))
+            component_scores[f"km_median_ttt.{arm}.{field}"] = r
+            w = km_tol.get("weight", 0.10) / 5
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # --- Log-rank test ---
+    lr_tol = tol_spec.get("logrank", {})
+    agent_lr = agent_output.get("logrank_test", {})
+    truth_lr = ground_truth.get("logrank_test", {})
+    for field in ["chisq", "p_value"]:
+        field_tol = {"absolute": lr_tol.get("absolute", 0.01)}
+        r = compare_numeric(
+            agent_lr.get(field), truth_lr.get(field),
+            field_tol, f"logrank.{field}",
+        )
+        component_scores[f"logrank.{field}"] = r
+        w = lr_tol.get("weight", 0.06) / 2
+        weighted_sum += r["score"] * w
+        total_weight += w
+
+    # --- Cox HR ---
+    cox_tol = tol_spec.get("cox_hr", {})
+    agent_cox = agent_output.get("cox_hr", {})
+    truth_cox = ground_truth.get("cox_hr", {})
+    for field in ["hr", "hr_lower", "hr_upper", "p_value"]:
+        field_tol = {"absolute": cox_tol.get("absolute", 0.05)}
+        r = compare_numeric(
+            agent_cox.get(field), truth_cox.get(field),
+            field_tol, f"cox_hr.{field}",
+        )
+        component_scores[f"cox_hr.{field}"] = r
+        w = cox_tol.get("weight", 0.08) / 4
+        weighted_sum += r["score"] * w
+        total_weight += w
+
+    # --- TTT summary statistics ---
+    for arm in ["experimental", "control"]:
+        arm_tol = tol_spec.get(f"ttt_summary_{arm}", tol_spec.get("ttt_summary", {}))
+        for field in ["mean", "sd", "median", "min", "max", "q1", "q3"]:
+            field_tol = {"absolute": arm_tol.get("absolute", 0.5)}
+            r = compare_numeric(
+                agent_output.get("ttt_summary", {}).get(arm, {}).get(field),
+                ground_truth.get("ttt_summary", {}).get(arm, {}).get(field),
+                field_tol, f"ttt_summary.{arm}.{field}",
+            )
+            component_scores[f"ttt_summary.{arm}.{field}"] = r
+            w = arm_tol.get("weight", 0.05) / 7
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+    # --- Received treatment counts ---
+    for arm in ["experimental", "control"]:
+        rx_tol = tol_spec.get(f"received_{arm}", tol_spec.get("received", {}))
+        agent_rx = agent_output.get("received_treatment", {}).get(arm, {})
+        truth_rx = ground_truth.get("received_treatment", {}).get(arm, {})
+
+        for field in ["n_received", "n_censored"]:
+            r = compare_count(agent_rx.get(field), truth_rx.get(field))
+            component_scores[f"received_treatment.{arm}.{field}"] = r
+            w = rx_tol.get("weight", 0.04) / 2
+            weighted_sum += r["score"] * w
+            total_weight += w
+
+        # pct_received
+        field_tol = {"absolute": rx_tol.get("absolute", 0.1)}
+        r = compare_numeric(
+            agent_rx.get("pct_received"), truth_rx.get("pct_received"),
+            field_tol, f"received_treatment.{arm}.pct_received",
+        )
+        component_scores[f"received_treatment.{arm}.pct_received"] = r
+        w = rx_tol.get("weight", 0.04) / 3
+        weighted_sum += r["score"] * w
+        total_weight += w
+
+    # --- N per arm from metadata ---
+    for arm_key, arm_label in [("n_total", "total"), ("n_experimental", "exp"), ("n_control", "ctl")]:
+        tol_key = f"n_{arm_label}"
+        sub_tol = tol_spec.get(tol_key, {})
+        r = compare_count(
+            agent_output.get("metadata", {}).get(arm_key),
+            ground_truth.get("metadata", {}).get(arm_key),
+        )
+        component_scores[f"metadata.{arm_key}"] = r
+        w = sub_tol.get("weight", 0.02)
+        weighted_sum += r["score"] * w
+        total_weight += w
+
+    overall = weighted_sum / total_weight if total_weight > 0 else 0.0
+
+    return {
+        "test_case_id": "TC-031",
+        "score": round(overall, 4),
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", agent_output.get("metadata", {}).get("language", "unknown")),
+        "ground_truth_language": ground_truth.get("language", ground_truth.get("metadata", {}).get("language", "unknown")),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
 # TC-006: Blinded Sample Size Re-Estimation at Interim (Level 2)
 # --------------------------------------------------------------------
 
@@ -3019,6 +3159,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-030": score_tc030,
         "TC-032": score_tc032,
         "TC-034": score_tc034,
+        "TC-031": score_tc031,
         "TC-006": score_tc006,
     }
 
@@ -3160,6 +3301,7 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-030": score_tc030,
         "TC-032": score_tc032,
         "TC-034": score_tc034,
+        "TC-031": score_tc031,
         "TC-006": score_tc006,
     }
 
@@ -3379,6 +3521,7 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-030": score_tc030,
         "TC-032": score_tc032,
         "TC-034": score_tc034,
+        "TC-031": score_tc031,
         "TC-006": score_tc006,
     }
     scorer = scorers.get(tc)
