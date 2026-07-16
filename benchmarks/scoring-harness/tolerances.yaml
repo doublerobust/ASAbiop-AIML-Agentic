@@ -1046,3 +1046,74 @@ TC-031:
     n_ctl:
       absolute: 0
       weight: 0.02
+
+# ─────────────────────────────────────────────────────
+# TC-035: Composite Efficacy Table (ORR/DCR/DOR) — Level 2
+# ─────────────────────────────────────────────────────
+TC-035:
+  description: "Level 2 composite efficacy: ORR + DCR + DOR integration with cross-TFL consistency"
+  tolerances:
+    # ORR rates and CIs
+    orr_experimental:
+      absolute: 0.1
+      weight: 0.05
+    orr_control:
+      absolute: 0.1
+      weight: 0.05
+    orr_ci_experimental:
+      absolute: 0.1
+      weight: 0.04
+    orr_ci_control:
+      absolute: 0.1
+      weight: 0.04
+    orr_counts:
+      absolute: 0
+      weight: 0.03
+
+    # DCR rates and CIs
+    dcr_experimental:
+      absolute: 0.1
+      weight: 0.05
+    dcr_control:
+      absolute: 0.1
+      weight: 0.05
+    dcr_ci_experimental:
+      absolute: 0.1
+      weight: 0.04
+    dcr_ci_control:
+      absolute: 0.1
+      weight: 0.04
+    dcr_counts:
+      absolute: 0
+      weight: 0.03
+
+    # DOR median and CIs
+    dor_median_experimental:
+      absolute: 0.5
+      relative: 0.01
+      weight: 0.06
+    dor_median_control:
+      absolute: 0.5
+      relative: 0.01
+      weight: 0.06
+    dor_ci_experimental:
+      absolute: 0.5
+      weight: 0.04
+      allow_null: true
+    dor_ci_control:
+      absolute: 0.5
+      weight: 0.04
+      allow_null: true
+    dor_counts:
+      absolute: 0
+      weight: 0.03
+
+    # BOR distribution counts
+    bor_counts:
+      absolute: 0
+      weight: 0.02
+
+    # Cross-TFL consistency checks (gating)
+    consistency:
+      exact: true
+      weight: 0.02

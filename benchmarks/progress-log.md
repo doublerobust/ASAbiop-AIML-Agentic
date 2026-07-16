@@ -3849,3 +3849,75 @@ TC-031 verified at **score=1.0000** for R↔Python using shared ADSL TTT dataset
 4. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API
 5. **White paper v1.6** — add TC-031/TC-034 implementation details, ARS proof-of-concept results
 6. **Efficiency scoring** — populate efficiency.yaml with actual run metrics
+
+---
+
+## Day 47 (2026-07-16): TC-035 Implementation — Composite Efficacy Table (Level 2)
+
+**Date:** July 16, 2026 (Thursday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### Completed
+
+#### 1. TC-035: ORR/DCR/DOR Composite Efficacy Table (Level 2)
+
+**Domain:** Efficacy / Tumor Response | **Level:** 2 | **Priority:** Medium (multi-TC integration)
+
+Level 2 composite efficacy table integrating three endpoints into a single unified output:
+- **ORR** (from BOR): CR+PR rate, Clopper-Pearson exact CI, by arm
+- **DCR** (from BOR): CR+PR+SD rate, Wilson score CI, by arm
+- **DOR** (from responders' time-to-event): KM median, Brookmeyer-Crowley CI, by arm
+
+**Cross-TFL consistency checks** (built-in gating):
+1. DCR ≥ ORR (every responder also has disease control)
+2. DOR responders ≤ ORR responders (DOR is a subset of ORR population)
+3. BOR distribution sums to N per arm
+4. CR+PR counts match ORR responders
+
+**Key design decisions:**
+- Shared dataset generator ensures R/Python use identical input data (R RNG via `set.seed`, Python via `np.random.default_rng`)
+- DOR uses left-truncated survival data (entry time = time to first response)
+- Cross-TFL consistency check uses `≤` for ORR↔DOR (some responders may not have valid DOR if event occurs before response is documented)
+- ARS-compatible output envelope includes all three component statistics
+
+**Files created:**
+- `references/ground-truth/R/generate_tc035_composite.R` — Shared composite dataset generator (ADSL+ADRS+ADTTE merged)
+- `references/ground-truth/R/tc-035-composite-efficacy.R` — R ground truth with ORR, DCR, DOR, BOR distribution, cross-TFL checks, `--ars-output` flag
+- `references/ground-truth/Python/tc_035_composite_efficacy.py` — Python ground truth with matching logic, `--data` support, `--ars-output` flag
+- `references/ground-truth/SAS/tc-035-composite-efficacy.sas` — SAS reference script with PROC FREQ (binomial), PROC LIFETEST (KM), PROC SQL (consistency)
+- `references/output-schemas/tc-035-output-schema.json` — JSON schema for output validation
+
+**Files updated:**
+- `scoring-harness/score.py` — Added `score_tc035()` scorer function; wired TC-035 into all 3 dispatch dicts (score, verify, evaluate)
+- `scoring-harness/tolerances.yaml` — Added TC-035 tolerance section (ORR/DCR rates+CI, DOR median+CI, counts, BOR, consistency gating)
+- `run-cross-lang-verify.sh` — Added TC-035 generation, R/Python execution, and cross-language verification
+
+### Cross-Language Verification Results
+
+| Seed | N | R vs Python Score | Status |
+|------|---|-------------------|--------|
+| 42   | 200 | 1.0000 | ✅ PASS |
+| 123  | 300 | 1.0000 | ✅ PASS |
+
+**Schema validation:** ✅ Both R and Python outputs pass JSON schema validation
+
+**Cross-TFL consistency:** All 8 checks pass (DCR≥ORR, DOR≤ORR, BOR sums, CR+PR=ORR responders)
+
+### Test Case Coverage Summary
+
+| Level | TCs | Status |
+|-------|-----|--------|
+| Level 1 | TC-001–003, TC-011–018, TC-019–028, TC-029–034 | 24 TCs verified |
+| Level 2 | TC-035 (new), TC-006 | 2 TCs (TC-035 verified, TC-006 ready) |
+| Level 3 | TC-007–010 | 4 TCs (pending) |
+| **Total** | **30 TCs** | **25 verified at 1.0000** |
+
+### 🔮 Plan for Day 48+
+
+1. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 TCs (including TC-035)
+2. **WG presentation slides** — cross-language results, Level 2 framework, efficiency baselines
+3. **TC-004 LLM-judge API integration** — wire scorer to actual LLM API for SAP drafting
+4. **TC-005 TFL QC review** — implement Level 2 TFL QC review test case
+5. **White paper v1.7** — add TC-035 (Level 2 composite) implementation details
+6. **Efficiency scoring** — populate efficiency.yaml with actual run metrics
+7. **CDISC ARS proof-of-concept** — end-to-end ARS workflow demo with TC-035

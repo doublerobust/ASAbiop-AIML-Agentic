@@ -685,3 +685,37 @@ echo "Python outputs:"
 ls -1 "$PY_OUT/" 2>/dev/null | sed 's/^/  /' || echo "  (none)"
 echo ""
 echo "Done."
+
+# TC-035: Composite Efficacy Table (ORR/DCR/DOR) — Level 2 (shared composite dataset)
+echo ""
+echo "── TC-035 ──────────────────────────────────────────"
+echo "  Generating shared composite efficacy dataset..."
+if (cd "$RDIR" && Rscript "generate_tc035_composite.R" $SEED $N "$SHARED/tc035_composite.csv") 2>&1; then
+  echo "  ✓ Shared composite dataset generated"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Shared composite dataset FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  R:   tc-035-composite-efficacy.R"
+if (cd "$RDIR" && Rscript "tc-035-composite-efficacy.R" --seed $SEED --n $N --data "$SHARED/tc035_composite.csv" --output "$R_OUT/TC-035.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_035_composite_efficacy.py"
+if (cd "$PYDIR" && python3 "tc_035_composite_efficacy.py" --seed $SEED --n $N --data "$SHARED/tc035_composite.csv" --output "$PY_OUT/TC-035.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# Verify TC-035 cross-language
+echo ""
+echo "── TC-035 Cross-Language Verification ─────────────"
+if python3 "$BENCH/scoring-harness/score.py" verify --tc TC-035 \
+  --r "$R_OUT/TC-035.json" \
+  --python "$PY_OUT/TC-035.json" \
+  --output "$WORK/TC-035-verify.json" 2>&1; then
+  echo "  ✓ TC-035 verification completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ TC-035 verification FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi

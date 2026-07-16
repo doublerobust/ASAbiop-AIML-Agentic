@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "TC-035: Composite Efficacy Table (ORR/DCR/DOR) Output Schema",
+  "description": "Structured output from Level 2 composite efficacy benchmark test case",
+  "type": "object",
+  "required": [
+    "test_case_id", "variant_id", "language", "level",
+    "endpoint", "population",
+    "orr", "dcr", "dor",
+    "bor_distribution", "cross_tfl_consistency", "seed"
+  ],
+  "properties": {
+    "test_case_id": {
+      "type": "string",
+      "const": "TC-035",
+      "description": "Test case identifier"
+    },
+    "variant_id": {
+      "type": ["string", "null"],
+      "description": "Variant identifier based on seed"
+    },
+    "language": {
+      "type": "string",
+      "enum": ["R", "Python", "SAS"],
+      "description": "Implementation language"
+    },
+    "level": {
+      "type": "integer",
+      "const": 2,
+      "description": "Test case level (2 = multi-TC integration)"
+    },
+    "endpoint": {
+      "type": "string",
+      "const": "Composite Efficacy (ORR/DCR/DOR)"
+    },
+    "population": {
+      "type": "string",
+      "const": "ITT"
+    },
+    "orr": {
+      "type": "object",
+      "required": ["experimental", "control", "definition", "ci_method"],
+      "properties": {
+        "definition": {"type": "string", "const": "CR + PR"},
+        "ci_method": {"type": "string", "const": "Clopper-Pearson"},
+        "experimental": {
+          "type": "object",
+          "required": ["n", "responders", "orr", "ci_lower", "ci_upper", "ci_method"],
+          "properties": {
+            "n": {"type": "integer", "minimum": 0},
+            "responders": {"type": "integer", "minimum": 0},
+            "orr": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_lower": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_upper": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_method": {"type": "string"}
+          }
+        },
+        "control": {
+          "type": "object",
+          "required": ["n", "responders", "orr", "ci_lower", "ci_upper", "ci_method"],
+          "properties": {
+            "n": {"type": "integer", "minimum": 0},
+            "responders": {"type": "integer", "minimum": 0},
+            "orr": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_lower": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_upper": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_method": {"type": "string"}
+          }
+        }
+      }
+    },
+    "dcr": {
+      "type": "object",
+      "required": ["experimental", "control", "definition", "ci_method"],
+      "properties": {
+        "definition": {"type": "string", "const": "CR + PR + SD"},
+        "ci_method": {"type": "string", "const": "Wilson"},
+        "experimental": {
+          "type": "object",
+          "required": ["n", "disease_controlled", "dcr", "ci_lower", "ci_upper", "ci_method"],
+          "properties": {
+            "n": {"type": "integer", "minimum": 0},
+            "disease_controlled": {"type": "integer", "minimum": 0},
+            "dcr": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_lower": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_upper": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_method": {"type": "string"}
+          }
+        },
+        "control": {
+          "type": "object",
+          "required": ["n", "disease_controlled", "dcr", "ci_lower", "ci_upper", "ci_method"],
+          "properties": {
+            "n": {"type": "integer", "minimum": 0},
+            "disease_controlled": {"type": "integer", "minimum": 0},
+            "dcr": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_lower": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_upper": {"type": "number", "minimum": 0, "maximum": 100},
+            "ci_method": {"type": "string"}
+          }
+        }
+      }
+    },
+    "dor": {
+      "type": "object",
+      "required": ["experimental", "control", "definition", "ci_method"],
+      "properties": {
+        "definition": {"type": "string"},
+        "ci_method": {"type": "string"},
+        "experimental": {
+          "type": "object",
+          "required": ["n_responders", "n_events", "n_total", "median_dor", "ci_lower", "ci_upper", "estimable", "ci_method"],
+          "properties": {
+            "n_responders": {"type": "integer", "minimum": 0},
+            "n_events": {"type": "integer", "minimum": 0},
+            "n_total": {"type": "integer", "minimum": 0},
+            "median_dor": {"type": ["number", "null"], "minimum": 0},
+            "ci_lower": {"type": ["number", "null"], "minimum": 0},
+            "ci_upper": {"type": ["number", "null"], "minimum": 0},
+            "estimable": {"type": "boolean"},
+            "ci_method": {"type": "string"}
+          }
+        },
+        "control": {
+          "type": "object",
+          "required": ["n_responders", "n_events", "n_total", "median_dor", "ci_lower", "ci_upper", "estimable", "ci_method"],
+          "properties": {
+            "n_responders": {"type": "integer", "minimum": 0},
+            "n_events": {"type": "integer", "minimum": 0},
+            "n_total": {"type": "integer", "minimum": 0},
+            "median_dor": {"type": ["number", "null"], "minimum": 0},
+            "ci_lower": {"type": ["number", "null"], "minimum": 0},
+            "ci_upper": {"type": ["number", "null"], "minimum": 0},
+            "estimable": {"type": "boolean"},
+            "ci_method": {"type": "string"}
+          }
+        }
+      }
+    },
+    "bor_distribution": {
+      "type": "array",
+      "description": "Best overall response distribution by arm",
+      "items": {
+        "type": "object",
+        "required": ["arm", "bor", "n", "pct"],
+        "properties": {
+          "arm": {"type": "string", "enum": ["Experimental", "Control"]},
+          "bor": {"type": "string", "enum": ["CR", "PR", "SD", "PD"]},
+          "n": {"type": "integer", "minimum": 0},
+          "pct": {"type": "number", "minimum": 0, "maximum": 100}
+        }
+      }
+    },
+    "cross_tfl_consistency": {
+      "type": "object",
+      "description": "Cross-TFL consistency check results (all should be true)",
+      "properties": {
+        "dcr_ge_orr_exp": {"type": "boolean"},
+        "dcr_ge_orr_ctrl": {"type": "boolean"},
+        "orr_responders_match_dor_exp": {"type": "boolean", "description": "DOR responders <= ORR responders (DOR is subset)"},
+        "orr_responders_match_dor_ctrl": {"type": "boolean", "description": "DOR responders <= ORR responders (DOR is subset)"},
+        "bor_sums_to_n_exp": {"type": "boolean"},
+        "bor_sums_to_n_ctrl": {"type": "boolean"},
+        "cr_pr_matches_orr_exp": {"type": "boolean"},
+        "cr_pr_matches_orr_ctrl": {"type": "boolean"}
+      }
+    },
+    "seed": {
+      "type": ["integer", "null"]
+    }
+  }
+}

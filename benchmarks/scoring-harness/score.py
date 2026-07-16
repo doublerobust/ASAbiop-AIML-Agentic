@@ -2709,6 +2709,144 @@ def score_tc031(agent_output: dict, ground_truth: dict, tolerances: dict) -> dic
 
 
 # --------------------------------------------------------------------
+# TC-035: Composite Efficacy Table (ORR/DCR/DOR) — Level 2
+# --------------------------------------------------------------------
+
+def score_tc035(agent_output: dict, ground_truth: dict, tolerances: dict) -> dict:
+    """Score TC-035 (Composite Efficacy: ORR + DCR + DOR) agent output.
+
+    Level 2 multi-TC integration. Compares:
+      - ORR: rate, CI, responders per arm
+      - DCR: rate, CI, controlled per arm
+      - DOR: median, CI, responders, events per arm
+      - BOR distribution counts
+      - Cross-TFL consistency checks (gating)
+    """
+    tol_spec = tolerances.get("TC-035", {}).get("tolerances", {})
+    component_scores = {}
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    # --- ORR component ---
+    for arm_key in ["experimental", "control"]:
+        ag_o = agent_output.get("orr", {}).get(arm_key, {})
+        gt_o = ground_truth.get("orr", {}).get(arm_key, {})
+
+        for field, tol_key, label in [
+            ("orr", f"orr_{arm_key}", f"orr_{arm_key}_rate"),
+            ("ci_lower", f"orr_ci_{arm_key}", f"orr_{arm_key}_ci_lo"),
+            ("ci_upper", f"orr_ci_{arm_key}", f"orr_{arm_key}_ci_hi"),
+        ]:
+            tol = tol_spec.get(tol_key, {})
+            r = compare_numeric(ag_o.get(field), gt_o.get(field), tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.05)
+            total_weight += tol.get("weight", 0.05)
+
+        # Counts (exact)
+        for field, label in [("responders", f"orr_{arm_key}_responders"), ("n", f"orr_{arm_key}_n")]:
+            r = compare_count(ag_o.get(field), gt_o.get(field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol_spec.get("orr_counts", {}).get("weight", 0.03)
+            total_weight += tol_spec.get("orr_counts", {}).get("weight", 0.03)
+
+    # --- DCR component ---
+    for arm_key in ["experimental", "control"]:
+        ag_d = agent_output.get("dcr", {}).get(arm_key, {})
+        gt_d = ground_truth.get("dcr", {}).get(arm_key, {})
+
+        for field, tol_key, label in [
+            ("dcr", f"dcr_{arm_key}", f"dcr_{arm_key}_rate"),
+            ("ci_lower", f"dcr_ci_{arm_key}", f"dcr_{arm_key}_ci_lo"),
+            ("ci_upper", f"dcr_ci_{arm_key}", f"dcr_{arm_key}_ci_hi"),
+        ]:
+            tol = tol_spec.get(tol_key, {})
+            r = compare_numeric(ag_d.get(field), gt_d.get(field), tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.05)
+            total_weight += tol.get("weight", 0.05)
+
+        # Counts (exact)
+        for field, label in [("disease_controlled", f"dcr_{arm_key}_controlled"), ("n", f"dcr_{arm_key}_n")]:
+            r = compare_count(ag_d.get(field), gt_d.get(field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol_spec.get("dcr_counts", {}).get("weight", 0.03)
+            total_weight += tol_spec.get("dcr_counts", {}).get("weight", 0.03)
+
+    # --- DOR component ---
+    for arm_key in ["experimental", "control"]:
+        ag_dr = agent_output.get("dor", {}).get(arm_key, {})
+        gt_dr = ground_truth.get("dor", {}).get(arm_key, {})
+
+        for field, tol_key, label in [
+            ("median_dor", f"dor_median_{arm_key}", f"dor_{arm_key}_median"),
+            ("ci_lower", f"dor_ci_{arm_key}", f"dor_{arm_key}_ci_lo"),
+            ("ci_upper", f"dor_ci_{arm_key}", f"dor_{arm_key}_ci_hi"),
+        ]:
+            tol = tol_spec.get(tol_key, {})
+            r = compare_numeric(ag_dr.get(field), gt_dr.get(field), tol, label)
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol.get("weight", 0.06)
+            total_weight += tol.get("weight", 0.06)
+
+        # Counts (exact)
+        for field, label in [
+            ("n_responders", f"dor_{arm_key}_responders"),
+            ("n_events", f"dor_{arm_key}_events"),
+            ("n_total", f"dor_{arm_key}_total"),
+        ]:
+            r = compare_count(ag_dr.get(field), gt_dr.get(field))
+            component_scores[label] = r
+            weighted_sum += r["score"] * tol_spec.get("dor_counts", {}).get("weight", 0.03)
+            total_weight += tol_spec.get("dor_counts", {}).get("weight", 0.03)
+
+    # --- BOR distribution ---
+    ag_bor = agent_output.get("bor_distribution", [])
+    gt_bor = ground_truth.get("bor_distribution", [])
+    bor_tol = tol_spec.get("bor_counts", {})
+    for i in range(min(len(ag_bor), len(gt_bor))):
+        r = compare_count(ag_bor[i].get("n"), gt_bor[i].get("n"))
+        component_scores[f"bor_{i}"] = r
+        weighted_sum += r["score"] * bor_tol.get("weight", 0.02)
+        total_weight += bor_tol.get("weight", 0.02)
+
+    # --- Cross-TFL consistency (gating) ---
+    ag_cons = agent_output.get("cross_tfl_consistency", {})
+    gt_cons = ground_truth.get("cross_tfl_consistency", {})
+    cons_tol = tol_spec.get("consistency", {})
+    all_consistent = True
+    for key in gt_cons:
+        ag_val = ag_cons.get(key)
+        gt_val = gt_cons.get(key)
+        match = ag_val == gt_val and gt_val is True
+        component_scores[f"consistency_{key}"] = {
+            "score": 1.0 if match else 0.0,
+            "pass": match,
+            "diff": 0 if match else 1,
+            "note": f"{key}: agent={ag_val}, truth={gt_val}",
+        }
+        weighted_sum += (1.0 if match else 0.0) * cons_tol.get("weight", 0.02)
+        total_weight += cons_tol.get("weight", 0.02)
+        if not match:
+            all_consistent = False
+
+    final_score = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+
+    # Consistency gate: if any cross-TFL check fails, cap at 0.9
+    if not all_consistent:
+        final_score = min(final_score, 0.9)
+
+    return {
+        "test_case_id": "TC-035",
+        "score": final_score,
+        "component_scores": component_scores,
+        "agent_language": agent_output.get("language", "unknown"),
+        "ground_truth_language": ground_truth.get("language", "unknown"),
+        "variant_id": agent_output.get("variant_id"),
+    }
+
+
+# --------------------------------------------------------------------
 # TC-006: Blinded Sample Size Re-Estimation at Interim (Level 2)
 # --------------------------------------------------------------------
 
@@ -3160,6 +3298,7 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
         "TC-032": score_tc032,
         "TC-034": score_tc034,
         "TC-031": score_tc031,
+        "TC-035": score_tc035,
         "TC-006": score_tc006,
     }
 
@@ -3302,6 +3441,7 @@ def verify(tc, r_path, python_path, sas_path, output):
         "TC-032": score_tc032,
         "TC-034": score_tc034,
         "TC-031": score_tc031,
+        "TC-035": score_tc035,
         "TC-006": score_tc006,
     }
 
@@ -3522,6 +3662,7 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         "TC-032": score_tc032,
         "TC-034": score_tc034,
         "TC-031": score_tc031,
+        "TC-035": score_tc035,
         "TC-006": score_tc006,
     }
     scorer = scorers.get(tc)
