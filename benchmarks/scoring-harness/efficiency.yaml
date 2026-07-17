@@ -3,8 +3,8 @@
 # Reference: benchmarks/operational-efficiency.md
 
 meta:
-  version: "0.3"
-  updated: "2026-07-07"
+  version: "0.4"
+  updated: "2026-07-17"
 
 # ────────────────────────────────────────────────────────────
 # Model pricing reference — May 2026
@@ -284,6 +284,48 @@ cost_transparency_defaults:
       R: 5.0
       SAS: 4.0
       Python: 6.0
+  tc_029:
+    human_from_scratch_min: 25
+    human_verify_agent_min:
+      R: 6.0
+      SAS: 5.0
+      Python: 7.0
+  tc_030:
+    human_from_scratch_min: 35
+    human_verify_agent_min:
+      R: 8.0
+      SAS: 7.0
+      Python: 9.0
+  tc_031:
+    human_from_scratch_min: 20
+    human_verify_agent_min:
+      R: 5.0
+      SAS: 4.0
+      Python: 6.0
+  tc_032:
+    human_from_scratch_min: 30
+    human_verify_agent_min:
+      R: 7.0
+      SAS: 6.0
+      Python: 8.0
+  tc_033:
+    human_from_scratch_min: 25
+    human_verify_agent_min:
+      R: 6.0
+      SAS: 5.0
+      Python: 7.0
+  tc_034:
+    human_from_scratch_min: 20
+    human_verify_agent_min:
+      R: 5.0
+      SAS: 4.0
+      Python: 6.0
+  tc_035:
+    human_from_scratch_min: 60
+    human_verify_agent_min:
+      R: 12.0
+      SAS: 10.0
+      Python: 14.0
   tc_006:
     human_from_scratch_min: 45
     human_verify_agent_min:
@@ -445,6 +487,48 @@ reference_baselines:
       median_cost_usd: 0.005
       success_rate: 1.0
       notes: "Tumor size by cycle — longitudinal"
+    tc_029:
+      median_time_sec: 30
+      median_tokens_in: 3200
+      median_tokens_out: 1700
+      median_cost_usd: 0.005
+      success_rate: 1.0
+      notes: "AE by severity — grouped frequency"
+    tc_030:
+      median_time_sec: 40
+      median_tokens_in: 3800
+      median_tokens_out: 2200
+      median_cost_usd: 0.007
+      success_rate: 1.0
+      notes: "ORR + interaction test — logistic regression"
+    tc_031:
+      median_time_sec: 25
+      median_tokens_in: 2800
+      median_tokens_out: 1400
+      median_cost_usd: 0.004
+      success_rate: 1.0
+      notes: "Time-to-first-treatment — KM + Cox PH"
+    tc_032:
+      median_time_sec: 35
+      median_tokens_in: 3500
+      median_tokens_out: 1900
+      median_cost_usd: 0.006
+      success_rate: 1.0
+      notes: "Immune-related AE summary — irAE detection"
+    tc_033:
+      median_time_sec: 30
+      median_tokens_in: 3200
+      median_tokens_out: 1600
+      median_cost_usd: 0.005
+      success_rate: 1.0
+      notes: "Dose intensity — RDI computation"
+    tc_034:
+      median_time_sec: 25
+      median_tokens_in: 2800
+      median_tokens_out: 1300
+      median_cost_usd: 0.004
+      success_rate: 1.0
+      notes: "Sufficient follow-up — reverse KM"
 
   # Level 2 baselines (estimated — will be refined with actual agent runs)
   level_2:
@@ -469,6 +553,13 @@ reference_baselines:
       median_cost_usd: 0.060
       success_rate: null
       notes: "Sample size re-estimation — statistical computation + report"
+    tc_035:
+      median_time_sec: 200
+      median_tokens_in: 7000
+      median_tokens_out: 4000
+      median_cost_usd: 0.070
+      success_rate: null
+      notes: "Composite efficacy table — multi-TC integration (ORR+DCR+DOR)"
 
   # Level 3 baselines (estimated — requires expert human review)
   level_3:

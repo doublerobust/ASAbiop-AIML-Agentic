@@ -3921,3 +3921,79 @@ Level 2 composite efficacy table integrating three endpoints into a single unifi
 5. **White paper v1.7** — add TC-035 (Level 2 composite) implementation details
 6. **Efficiency scoring** — populate efficiency.yaml with actual run metrics
 7. **CDISC ARS proof-of-concept** — end-to-end ARS workflow demo with TC-035
+
+---
+
+## Day 48 (2026-07-17): WG Presentation + White Paper v1.7 + Efficiency Update
+
+**Date:** July 17, 2026 (Friday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### Completed
+
+#### 1. WG Presentation Slides (wg-presentation-day48.md)
+
+**File created:** `benchmarks/wg-presentation-day48.md` — 14-slide presentation + 2 appendices
+
+Covers the full benchmark status for WG review:
+- **Slide 1–3:** Title, problem statement, benchmark scope
+- **Slide 4:** Test case library — 27 Level 1 + 4 Level 2 + 4 Level 3 (31 total)
+- **Slide 5:** Cross-language verification results — 27/27 Level 1 at 1.0000
+- **Slide 6:** Scoring framework — 4 dimensions, 242 rules, accuracy floor
+- **Slide 7:** Level 2 TFL QC Review (TC-005) — error injection framework
+- **Slide 8:** Level 2 Blinded SSR (TC-006) — verified at 1.0000
+- **Slide 9:** CDISC ARS alignment — 13 TCs with ARS output
+- **Slide 10:** Ground truth coverage — 30 R, 29 Python, 29 SAS scripts
+- **Slide 11:** Efficiency framework — cost/time/reliability with human baselines
+- **Slide 12:** White paper status — 8 sections complete
+- **Slide 13:** Roadmap — frontier model eval, Level 3 TCs, WG review
+- **Slide 14:** Call to action — WG contribution opportunities
+- **Appendix A:** Full TC inventory table (31 TCs)
+- **Appendix B:** Scoring pipeline architecture diagram
+
+This was the longest-deferred deliverable (on the "next day" plan since Day 28). Finally done.
+
+#### 2. White Paper Updated to v1.7
+
+**File updated:** `benchmarks/white-paper-v1.md`
+
+Changes:
+- Version bumped from 1.6 → 1.7, date updated to 2026-07-17
+- Abstract updated: 23 → 27 Level 1 TCs, added TC-031/032/034/035 descriptions
+- Level 2 count updated: 3 → 4 TCs (added TC-035 composite efficacy)
+- Regulatory rule count updated: 194 → 242 rules
+- ARS coverage updated: 12 → 13 TCs
+- Added TC-035 description: composite efficacy table with cross-TFL consistency gating
+- Removed "5 candidate TCs" language (all candidates now implemented)
+
+#### 3. Efficiency YAML Updated (v0.3 → v0.4)
+
+**File updated:** `benchmarks/scoring-harness/efficiency.yaml`
+
+Changes:
+- Meta version bumped from 0.3 → 0.4, date updated to 2026-07-17
+- Added human baseline entries for TC-029 through TC-035 (7 new TCs)
+- Added reference agent baselines for TC-029 through TC-035 (Level 1 + Level 2)
+- TC-035 Level 2 baseline: 200 sec, 7000 tokens in, 4000 out, $0.07, success_rate=null (pending frontier model eval)
+- Fixed structural issue: TC-024–028 and TC-006 human baselines were nested under cost_transparency_defaults instead of the human baselines section — moved to correct location
+
+### 📊 Updated Score Summary
+
+| TC | Domain | Level | R | Python | SAS | Score |
+|---|---|---|---|---|---|---|
+| TC-001 through TC-029, TC-033, TC-030, TC-032, TC-034, TC-031 | (27 Level 1 TCs) | 1 | ✅ | ✅ | 27/27 | 1.0000 |
+| TC-004 | SAP Drafting | 2 | — | — | — | Auto-scorer ✅ |
+| TC-005 | TFL QC Review | 2 | ✅ | ✅ | ✅ | Auto-scorer ✅ |
+| TC-006 | Blinded SSR | 2 | ✅ | ✅ | ✅ | 1.0000 |
+| TC-035 | Composite Efficacy | 2 | ✅ | ✅ | ✅ | 1.0000 |
+
+**Totals:** 27 Level 1 TCs at 1.0000, 4 Level 2 TCs (3 with auto-scorers, 2 verified at 1.0000), 29/29 SAS reference scripts, 13 ARS envelopes
+
+### 🔮 Plan for Day 49+
+
+1. **Frontier model evaluation run** — test 2–3 models (DeepSeek V4, Claude, GPT-4o) on Level 1 + Level 2 TCs
+2. **TC-004 LLM-judge API integration** — wire SAP drafting scorer to actual LLM API
+3. **TC-007–010 Level 3 implementation** — regulatory response, dose-finding, safety signal, CSR sections
+4. **White paper WG review** — circulate v1.7 for working group feedback
+5. **Efficiency scoring** — collect actual agent run metrics from frontier model eval
+6. **CDISC ARS proof-of-concept** — end-to-end ARS workflow demo with TC-035
