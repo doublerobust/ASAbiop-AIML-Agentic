@@ -275,7 +275,59 @@ July 17, 2026
 
 ---
 
-## Slide 13: What's Next
+## Slide 13: Complementary Benchmarks — TrialDesignBench + Our Framework
+
+### Two Benchmarks, One Pipeline
+
+**The clinical trial AI lifecycle has two high-value agent tasks:**
+
+```
+┌──────────────────────┐     ┌──────────────────────┐     ┌──────────────────────┐
+│   DESIGN AGENT       │     │   EXECUTION AGENT    │     │   REVIEW AGENT       │
+│   (upstream)         │────▶│   (middle)           │────▶│   (downstream)       │
+│                      │     │                      │     │                      │
+│  SAP drafting        │     │  ADaM programming    │     │  TFL verification    │
+│  Protocol generation │     │  TFL generation      │     │  Regulatory QC       │
+│  Sample size calcs   │     │  Data mapping        │     │  Safety checks       │
+│  Design selection    │     │  Define-XML          │     │  Cross-TFL coherence │
+└──────────┬───────────┘     └──────────────────────┘     └──────────┬───────────┘
+           │                                                         │
+           ▼                                                         ▼
+   TrialDesignBench                                          Our Benchmark
+   (BBSW-org / Eric Zhang)                                   (ASA Biopharm WG)
+```
+
+### Head-to-Head
+
+| Dimension | TrialDesignBench | Our Benchmark |
+|-----------|-----------------|---------------|
+| **Agent role** | Design *generator* | Design *reviewer/verifier* |
+| **Input** | SAP PDF or clinical requirements | ADaM datasets + TFL outputs |
+| **Output** | R code reproducing the design | Correctness/compliance/safety scores |
+| **Evaluation** | Reproduction fidelity (pass/fail) | 5-dimensional composite (242 rules) |
+| **Languages** | R | R + Python + SAS |
+| **Ground truth** | Human-written SAPs/protocols | Cross-language verified scripts |
+| **Regulatory scope** | Design-level (ICH E6/E9) | Output-level (ADaM IG, ICH E3, TCG) |
+| **Maturity** | Early CLI, PyPI package | Day 48, 31 TCs, white paper v1.7 |
+| **Lead** | Eric Zhang (BBSW-org) | Yue Shentu (ASA Biopharm WG) |
+
+### Why Both Matter
+
+- **TrialDesignBench** answers: *"Can the agent design a statistically sound trial?"*
+- **Our benchmark** answers: *"Can the agent verify that the trial was executed correctly?"*
+- **Together** they cover the two highest-ROI automation points in biostatistics
+- **Gap between them** — the "execution agent" (ADaM programming, TLF generation) — is future scope for both efforts
+
+### Potential Synergies
+
+1. **Shared error taxonomy** — our regulatory rules could validate TrialDesignBench-generated designs
+2. **Pipeline integration** — a design agent passes TrialDesignBench → outputs feed our review benchmark
+3. **Joint WG paper** — position as the community standard for clinical trial AI evaluation
+4. **Shared synthetic data** — our 27 dataset generators could supply TrialDesignBench's reproduction tasks
+
+---
+
+## Slide 14: What's Next
 
 ### Roadmap for Days 49–60
 
@@ -288,7 +340,7 @@ July 17, 2026
 
 ---
 
-## Slide 14: Call to Action
+## Slide 15: Call to Action
 
 ### How WG Members Can Contribute
 
