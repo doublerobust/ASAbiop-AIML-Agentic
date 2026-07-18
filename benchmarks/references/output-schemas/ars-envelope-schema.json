@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CDISC ARS v1.0 Envelope — Benchmark Output",
+  "description": "JSON Schema for ARS-compatible output envelope wrapping benchmark test case results. Based on CDISC Analysis Results Standard v1.0.",
+  "type": "object",
+  "required": ["ars_version", "analysisResult"],
+  "additionalProperties": false,
+  "properties": {
+    "ars_version": {
+      "type": "string",
+      "enum": ["1.0"],
+      "description": "ARS version identifier"
+    },
+    "analysisResult": {
+      "type": "object",
+      "required": ["id", "version", "analysisMethod", "analysisVariables", "analysisPopulation", "analysisResultsData"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the analysis result (typically TC ID)"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of this analysis result"
+        },
+        "analysisReason": {
+          "type": "string",
+          "description": "Why the analysis was performed"
+        },
+        "analysisMethod": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string" },
+            "codeTemplate": { "type": "string" },
+            "parameters": { "type": "object" }
+          }
+        },
+        "analysisVariables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "role"],
+            "properties": {
+              "name": { "type": "string" },
+              "dataset": { "type": "string" },
+              "role": { "type": "string" }
+            }
+          }
+        },
+        "analysisPopulation": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string" },
+            "filter": { "type": "string" }
+          }
+        },
+        "analysisDataset": { "type": "string" },
+        "resultGroups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+              "id": { "type": "string" },
+              "n": { "type": ["number", "integer"] }
+            }
+          }
+        },
+        "documentation": { "type": "string" },
+        "analysisResultsData": {
+          "type": "object",
+          "required": ["statistics"],
+          "properties": {
+            "statistics": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "value"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "value": { "type": ["number", "integer", "string", "boolean", "null"] },
+                  "unit": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "test_case_id": "TC-035",
+  "variant_id": "v42",
+  "language": "Python",
+  "level": 2,
+  "endpoint": "Composite Efficacy (ORR/DCR/DOR)",
+  "population": "ITT",
+  "orr": {
+    "experimental": {
+      "n": 102,
+      "responders": 38,
+      "orr": 37.3,
+      "ci_lower": 27.9,
+      "ci_upper": 47.4,
+      "ci_method": "Clopper-Pearson"
+    },
+    "control": {
+      "n": 86,
+      "responders": 14,
+      "orr": 16.3,
+      "ci_lower": 9.2,
+      "ci_upper": 25.8,
+      "ci_method": "Clopper-Pearson"
+    },
+    "definition": "CR + PR",
+    "ci_method": "Clopper-Pearson"
+  },
+  "dcr": {
+    "experimental": {
+      "n": 102,
+      "disease_controlled": 69,
+      "dcr": 67.6,
+      "ci_lower": 58.1,
+      "ci_upper": 75.9,
+      "ci_method": "Wilson"
+    },
+    "control": {
+      "n": 86,
+      "disease_controlled": 31,
+      "dcr": 36.0,
+      "ci_lower": 26.7,
+      "ci_upper": 46.6,
+      "ci_method": "Wilson"
+    },
+    "definition": "CR + PR + SD",
+    "ci_method": "Wilson"
+  },
+  "dor": {
+    "experimental": {
+      "n_responders": 32,
+      "n_events": 21,
+      "n_total": 102,
+      "median_dor": 7.77,
+      "ci_lower": 2.17,
+      "ci_upper": 13.8,
+      "estimable": true,
+      "ci_method": "log-log"
+    },
+    "control": {
+      "n_responders": 9,
+      "n_events": 8,
+      "n_total": 86,
+      "median_dor": 3.86,
+      "ci_lower": 0.98,
+      "ci_upper": 10.98,
+      "estimable": true,
+      "ci_method": "log-log"
+    },
+    "definition": "Time from first response to progression/death among responders",
+    "ci_method": "Brookmeyer-Crowley (log-log)"
+  },
+  "bor_distribution": [
+    {
+      "arm": "Experimental",
+      "bor": "CR",
+      "n": 14,
+      "pct": 13.7
+    },
+    {
+      "arm": "Experimental",
+      "bor": "PR",
+      "n": 24,
+      "pct": 23.5
+    },
+    {
+      "arm": "Experimental",
+      "bor": "SD",
+      "n": 31,
+      "pct": 30.4
+    },
+    {
+      "arm": "Experimental",
+      "bor": "PD",
+      "n": 33,
+      "pct": 32.4
+    },
+    {
+      "arm": "Control",
+      "bor": "CR",
+      "n": 2,
+      "pct": 2.3
+    },
+    {
+      "arm": "Control",
+      "bor": "PR",
+      "n": 12,
+      "pct": 14.0
+    },
+    {
+      "arm": "Control",
+      "bor": "SD",
+      "n": 17,
+      "pct": 19.8
+    },
+    {
+      "arm": "Control",
+      "bor": "PD",
+      "n": 55,
+      "pct": 64.0
+    }
+  ],
+  "cross_tfl_consistency": {
+    "dcr_ge_orr_exp": true,
+    "dcr_ge_orr_ctrl": true,
+    "orr_responders_match_dor_exp": true,
+    "orr_responders_match_dor_ctrl": true,
+    "bor_sums_to_n_exp": true,
+    "bor_sums_to_n_ctrl": true,
+    "cr_pr_matches_orr_exp": true,
+    "cr_pr_matches_orr_ctrl": true
+  },
+  "seed": 42
+}

@@ -1,0 +1,129 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-035",
+    "version": "1.0",
+    "analysisReason": "Level 2 composite efficacy integration: ORR + DCR + DOR",
+    "analysisMethod": {
+      "name": "Composite binomial proportion + KM survival",
+      "codeTemplate": "ORR=sum(BOR in ['CR','PR'])/n; DCR=sum(BOR in ['CR','PR','SD'])/n; DOR=KM_median(AVAL_DOR, 1-CNSR_DOR)",
+      "parameters": {
+        "orr_definition": "CR + PR",
+        "dcr_definition": "CR + PR + SD",
+        "dor_definition": "Time from first response to progression/death",
+        "orr_ci": "Clopper-Pearson",
+        "dcr_ci": "Wilson score",
+        "dor_ci": "Brookmeyer-Crowley log-log",
+        "alpha": 0.05,
+        "population": "ITT"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "BOR",
+        "dataset": "ADRS",
+        "role": "best overall response"
+      },
+      {
+        "name": "AVAL_DOR",
+        "dataset": "ADTTE",
+        "role": "DOR analysis time"
+      },
+      {
+        "name": "CNSR_DOR",
+        "dataset": "ADTTE",
+        "role": "DOR censoring"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "ITTFL",
+        "dataset": "ADSL",
+        "role": "population flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADRS + ADTTE (merged)",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 141,
+        "orr_responders": 57,
+        "dcr_controlled": 86,
+        "dor_responders": 49
+      },
+      {
+        "id": "Control",
+        "n": 149,
+        "orr_responders": 34,
+        "dcr_controlled": 89,
+        "dor_responders": 24
+      }
+    ],
+    "documentation": "Level 2 composite: ORR (Clopper-Pearson CI), DCR (Wilson CI), DOR (KM median, Brookmeyer-Crowley CI). Cross-TFL consistency enforced.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "orr_experimental",
+          "value": 40.4,
+          "unit": "percent"
+        },
+        {
+          "name": "orr_control",
+          "value": 22.8,
+          "unit": "percent"
+        },
+        {
+          "name": "dcr_experimental",
+          "value": 61.0,
+          "unit": "percent"
+        },
+        {
+          "name": "dcr_control",
+          "value": 59.7,
+          "unit": "percent"
+        },
+        {
+          "name": "median_dor_experimental",
+          "value": 4.79,
+          "unit": "months"
+        },
+        {
+          "name": "median_dor_control",
+          "value": 2.8,
+          "unit": "months"
+        },
+        {
+          "name": "n_orr_responders_exp",
+          "value": 57
+        },
+        {
+          "name": "n_orr_responders_ctrl",
+          "value": 34
+        },
+        {
+          "name": "n_dcr_controlled_exp",
+          "value": 86
+        },
+        {
+          "name": "n_dcr_controlled_ctrl",
+          "value": 89
+        },
+        {
+          "name": "n_dor_responders_exp",
+          "value": 49
+        },
+        {
+          "name": "n_dor_responders_ctrl",
+          "value": 24
+        }
+      ]
+    }
+  }
+}

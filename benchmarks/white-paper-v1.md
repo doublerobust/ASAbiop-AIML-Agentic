@@ -1,9 +1,9 @@
 # A Standardized Benchmark for Evaluating Agentic AI in Clinical Trial Statistical Analysis and Reporting
 
 **Working Paper — ASA Biopharmaceutical Section AI/ML Working Group**
-**Version:** 1.7 (Day 48, WG Presentation + TC-035 Composite Efficacy)
+**Version:** 1.8 (Day 49 — ARS Proof-of-Concept Complete)
 **Status:** Draft for WG Review
-**Date:** 2026-07-17
+**Date:** 2026-07-18
 
 ---
 
@@ -177,7 +177,7 @@ Output schemas are aligned with CDISC Analysis Results Standard (ARS) v1.0. Each
 - **ResultGroups:** Treatment groups with subject counts
 - **AnalysisResultsData (ARD):** Machine-readable statistical results
 
-**Current ARS coverage (10 TCs):** TC-001, TC-002, TC-003, TC-012, TC-021, TC-022, TC-023, TC-024, TC-025, TC-027.
+**Current ARS coverage (13 TCs):** TC-001, TC-002, TC-003, TC-012, TC-021, TC-022, TC-023, TC-024, TC-025, TC-026, TC-027, TC-035, TC-033. ARS envelope schema validation is implemented via `ars_validator.py`, and an end-to-end proof-of-concept demo (`scripts/ars-poc-demo.sh`) demonstrates the full pipeline: shared data → R/Python ground truth → benchmark JSON + ARS envelope → schema validation → cross-language ARS consistency check. The scoring harness (`score.py`) includes an `unwrap_ars()` function to accept ARS-enveloped JSON inputs.
 
 ### 2.8 CI/CD Integration
 
@@ -319,7 +319,7 @@ All verified across 155+ parametric variants. SAS reference scripts written for 
 | Safety rules (N-count, denominator, cross-TFL, edge-case) | Per-TC configuration | ✅ Encoded in YAML |
 | Cross-TFL agreement pairs | 18 | ✅ Encoded |
 | Edge case expectation scenarios | 23 | ✅ Documented |
-| ARS-compatible TCs | 9 | ✅ PoC complete |
+| ARS-compatible TCs | 13 | ✅ POC validated (schema + cross-lang) |
 | Error injection validation | 1 TC | ✅ Confirmed sensitive |
 | CI pipeline | Full suite | ✅ Automated |
 
@@ -335,7 +335,7 @@ The efficiency framework defines model pricing references for 8 models, language
 
 2. **Scoring harness detects a clinically significant error:** Single-case error injection (TC-012, HR +0.3 → score drops to 0.7227) confirms the tolerance system can distinguish correct from incorrect outputs.
 
-3. **ARS alignment is backward-compatible:** The `--ars-output` flag adds CDISC ARS metadata without breaking existing pipelines.
+3. **ARS alignment is backward-compatible:** The `--ars-output` flag adds CDISC ARS metadata without breaking existing pipelines. ARS envelopes pass schema validation and cross-language consistency checks.
 
 4. **CI automation ensures long-term reproducibility:** The GitHub Actions workflow prevents silent regressions.
 
@@ -363,7 +363,7 @@ The regulatory dimension is particularly timely. The FDA-EMA Good AI Practice gu
 
 **Finding 2: The scoring harness detects clinically significant errors.** Error injection testing on TC-012 (HR +0.3 bias → score 0.7227) confirms the framework is neither too lenient (allowing clinically significant errors) nor too strict (penalizing floating-point noise). However, this is a single-case validation; systematic error injection across all TCs with varying effect sizes is needed.
 
-**Finding 3: ARS alignment is feasible without breaking backward compatibility.** The `--ars-output` flag wraps existing numerical results in CDISC ARS v1.0 metadata without modifying underlying computations.
+**Finding 3: ARS alignment is feasible without breaking backward compatibility.** The `--ars-output` flag wraps existing numerical results in CDISC ARS v1.0 metadata without modifying underlying computations. An end-to-end proof-of-concept (Day 49) demonstrates schema-valid ARS output, cross-language ARS consistency, and scoring harness integration via `unwrap_ars()`.
 
 **Finding 4: Compliance rules are extensible.** The YAML-based rule configuration allows organizations to add therapeutic-area-specific or sponsor-specific rules without modifying the scoring harness code.
 
@@ -405,7 +405,7 @@ Our benchmark is unique in combining statistical correctness, regulatory complia
 
 **Phase 2 (Days 33–45):** Implement Level 2 test cases. TC-005 error injection framework is complete with end-to-end pipeline tests passing. TC-006 (sample size re-estimation) specification complete with 10 variants. Begin human baseline collection from WG volunteers. Run 2–3 frontier models across all Level 1 TCs for initial efficiency measurement. Populate efficiency baselines from actual agent runs.
 
-**Phase 3 (Days 41–50):** Extend ARS compliance to all Level 1 TCs. Implement Level 3 test cases. Begin vendor evaluation pilot with 3–5 vendors (Saama, JDIX/Taimei, Certara, others).
+**Phase 3 (Days 41–50):** Extend ARS compliance to all Level 1 TCs. Implement Level 3 test cases. Begin vendor evaluation pilot with 3–5 vendors (Saama, JDIX/Taimei, Certara, others). **Status:** ARS POC complete (Day 49), Level 3 pending.
 
 **Phase 4 (Days 51–60):** Compile agent evaluation results for publication. Submit to JSM 2027 or ASA Biopharmaceutical Section Workshop.
 
@@ -419,7 +419,7 @@ Our benchmark is unique in combining statistical correctness, regulatory complia
 
 This benchmark establishes the first standardized, multilingual evaluation framework for agentic AI in clinical trial TFL programming. Across 20 Level 1 test cases spanning efficacy (KM median PFS, overall survival, duration of response, time to progression, disease control rate, best overall response, ORR by subgroup, PFS2, forest plot, waterfall, KM curve), safety (AE summary, exposure, lab shifts, protocol deviation listing, concomitant medications), and general statistics (demographics, stratified log-rank, change from baseline), the benchmark demonstrates that cross-language ground truth can be established with perfect agreement (score = 1.0000) between R and Python implementations on shared data. Sixteen SAS reference scripts provide a foundation for pending trilingual verification.
 
-The scoring framework evaluates four dimensions — statistical correctness (tolerance-based numerical comparison), regulatory compliance (194 TCG/CSR rules), safety and robustness (N-count consistency, denominator validation, cross-TFL agreement, edge case handling), and operational efficiency (cost, time, reliability) — providing a composite score reflecting the real-world demands of clinical trial statistical programming. CDISC ARS alignment has been demonstrated for 9 test cases, establishing a path toward metadata-driven TFL generation.
+The scoring framework evaluates four dimensions — statistical correctness (tolerance-based numerical comparison), regulatory compliance (242 TCG/CSR rules), safety and robustness (N-count consistency, denominator validation, cross-TFL agreement, edge case handling), and operational efficiency (cost, time, reliability) — providing a composite score reflecting the real-world demands of clinical trial statistical programming. CDISC ARS alignment has been demonstrated for 13 test cases, with schema validation and cross-language consistency checks validated in the proof-of-concept, establishing a path toward metadata-driven TFL generation.
 
 ### 6.2 Implications for the Industry
 

@@ -3997,3 +3997,85 @@ Changes:
 4. **White paper WG review** — circulate v1.7 for working group feedback
 5. **Efficiency scoring** — collect actual agent run metrics from frontier model eval
 6. **CDISC ARS proof-of-concept** — end-to-end ARS workflow demo with TC-035
+
+---
+
+## Day 49 (2026-07-18): CDISC ARS Proof-of-Concept Complete
+
+**Date:** July 18, 2026 (Saturday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### Completed
+
+#### 1. ARS End-to-End Proof-of-Concept (TC-035 Composite Efficacy)
+
+**Goal:** Demonstrate the full ARS pipeline from data generation through schema-validated, cross-language-verified ARS envelope output.
+
+**Pipeline:**
+1. Generate shared composite efficacy dataset (R → CSV, 200 subjects, seed=42)
+2. Run R ground truth → benchmark JSON + ARS envelope (`--ars-output` flag)
+3. Run Python ground truth → benchmark JSON + ARS envelope (`--ars-output` flag)
+4. Cross-language numerical verification: **score=1.0000** ✅
+5. ARS envelope schema validation: **12/12 files valid** ✅
+6. ARS cross-language consistency: **12 statistics compared, consistent** ✅
+
+**Files created:**
+- `benchmarks/scripts/ars-poc-demo.sh` — End-to-end ARS POC demo script (6-step pipeline)
+- `benchmarks/scoring-harness/ars_validator.py` — ARS envelope validator with schema validation + cross-language consistency check
+- `benchmarks/references/output-schemas/ars-envelope-schema.json` — JSON Schema for ARS v1.0 envelope (CDISC-aligned)
+
+**Files updated:**
+- `benchmarks/scoring-harness/score.py` — Added `unwrap_ars()` function; integrated ARS envelope unwrapping into `score`, `verify`, and `evaluate` commands
+- `benchmarks/cdisc-ars-alignment.md` — Updated to v0.2, implementation plan phases 4/6/7 marked complete
+- `benchmarks/white-paper-v1.md` — Updated to v1.8, ARS coverage updated to 13 TCs, added POC results
+
+#### 2. ARS Schema Validation Results
+
+Validated all existing ARS outputs in `cross-lang-results/ars-output/`:
+
+| TC | R File | Py File | Schema | Cross-Lang |
+|---|---|---|---|---|
+| TC-003 | ✅ | ✅ | ✅ | ✅ Consistent |
+| TC-012 | ✅ | ✅ | ✅ | ✅ Consistent |
+| TC-021 | ✅ | ✅ | ✅ | ⚠ CI mismatch (old data, not shared CSV) |
+| TC-022 | ✅ | ✅ | ✅ | ✅ Consistent |
+| TC-035 | ✅ | ✅ | ✅ | ✅ Consistent |
+| TC-035 (s123) | ✅ | ✅ | ✅ | ✅ Consistent |
+
+**Total:** 12 ARS envelope files, all schema-valid.
+
+#### 3. Scoring Harness ARS Integration
+
+The `unwrap_ars()` function in `score.py`:
+- Detects ARS envelopes by checking for `ars_version` and `analysisResult` keys
+- Extracts statistics from `analysisResultsData.statistics[]` into a flat `results` dict
+- Maps `resultGroups[]` to `n_<group_id>` entries
+- Returns the original data unchanged if not an ARS envelope
+- Applied in `score`, `verify`, and `evaluate` commands — backward compatible
+
+#### 4. Cross-Language Verification (TC-035)
+
+| Seed | N | R vs Python Score | ARS Cross-Check |
+|------|---|-------------------|-----------------|
+| 42   | 200 | 1.0000 ✅ | Consistent ✅ |
+| 123  | 300 | 1.0000 ✅ | Consistent ✅ |
+
+### 📊 Updated Score Summary
+
+| Component | Status |
+|---|---|
+| Level 1 TCs (27) | All verified at 1.0000 |
+| Level 2 TCs (4) | TC-004 (auto-scorer), TC-005 (error injection), TC-006 (1.0000), TC-035 (1.0000) |
+| ARS envelopes | 13 TCs with `--ars-output` |
+| ARS schema validation | ✅ 12/12 files valid |
+| ARS POC demo | ✅ End-to-end pipeline validated |
+| Scoring harness ARS unwrap | ✅ Integrated |
+
+### 🔮 Plan for Day 50+
+
+1. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 TCs
+2. **TC-004 LLM-judge API integration** — wire SAP drafting scorer to actual LLM API
+3. **TC-007–010 Level 3 implementation** — regulatory response, dose-finding, safety signal, CSR sections
+4. **White paper WG review** — circulate v1.8 for working group feedback
+5. **Efficiency scoring** — collect actual agent run metrics from frontier model eval
+6. **ARS envelope for remaining TCs** — extend `--ars-output` to TC-004/005/006/011–018/028–034

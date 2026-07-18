@@ -1,8 +1,8 @@
 # CDISC ARS Alignment — Mapping Benchmark Output Schemas to Analysis Results Standard
 
-**Version:** 0.1 (Day 26)
-**Date:** 2026-06-26
-**Status:** 🟡 Draft for WG Review
+**Version:** 0.2 (Day 49 — ARS Proof-of-Concept Complete)
+**Date:** 2026-07-18
+**Status:** ✅ Proof-of-Concept Validated
 **Depends on:** CDISC ARS v1.0 (April 2024), `cards` R package
 
 ---
@@ -255,9 +255,10 @@ structure is already compatible with ARS's statistical-summary model. A future
 | **Phase 1** (current) | Document mapping (this file) | ✅ Done |
 | **Phase 2** | Add `--ars-output` to TC-001 as proof-of-concept | ✅ Done (Day 27) |
 | **Phase 3** | Extend ARS envelope to TC-002, TC-003, TC-012, TC-021, TC-022, TC-023, TC-024, TC-025, TC-026, TC-027 | ✅ Done (TC-002 Day 29, TC-003 + TC-012 Day 30, TC-021 Day 30, TC-022 Day 31, TC-023 Day 32, TC-024 + TC-025 Day 33, TC-026 Day 34, TC-027 Day 35) |
-| **Phase 4** | Scoring harness: unwrap ARS envelope in `score.py` | Day 32 |
-| **Phase 5** | Full ARS compliance for all 11 Level 1 TCs | Day 33-35 |
-| **Phase 6** | CDISC ARS JSON Schema validation in CI | Day 36+ |
+| **Phase 4** | Scoring harness: unwrap ARS envelope in `score.py` | ✅ Done (Day 49) |
+| **Phase 5** | Full ARS compliance for all 11 Level 1 TCs | ✅ Done (Day 27–35) |
+| **Phase 6** | CDISC ARS JSON Schema validation in CI | ✅ Done (Day 49 — `ars-envelope-schema.json` + `ars_validator.py`) |
+| **Phase 7** | End-to-end ARS POC demo (TC-035 Level 2) | ✅ Done (Day 49 — `scripts/ars-poc-demo.sh`) |
 
 ---
 

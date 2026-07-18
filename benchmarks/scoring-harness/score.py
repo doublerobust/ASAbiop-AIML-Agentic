@@ -103,6 +103,49 @@ def load_schema(tc_id: str) -> dict:
     return None
 
 
+def unwrap_ars(data: dict) -> dict:
+    """Unwrap ARS envelope if present, returning the inner benchmark output.
+
+    ARS envelopes have an `ars_version` key and an `analysisResult` wrapper.
+    This function extracts the statistics from analysisResultsData and
+    reconstructs a benchmark-format dict for scoring.
+
+    If the input is not an ARS envelope, it is returned unchanged.
+    """
+    if not isinstance(data, dict):
+        return data
+    if "ars_version" not in data or "analysisResult" not in data:
+        return data
+
+    ar = data.get("analysisResult", {})
+    stats = ar.get("analysisResultsData", {}).get("statistics", [])
+    groups = ar.get("resultGroups", [])
+
+    # Reconstruct a flat results dict from ARS statistics
+    result = {
+        "metadata": {
+            "tc_id": ar.get("id", ""),
+            "population": ar.get("analysisPopulation", {}).get("name", ""),
+            "method": ar.get("analysisMethod", {}).get("name", ""),
+        },
+        "results": {},
+        "language": "unknown",
+    }
+
+    for stat in stats:
+        name = stat.get("name", "")
+        value = stat.get("value")
+        if name and value is not None:
+            result["results"][name] = value
+
+    # Map result groups
+    for i, g in enumerate(groups):
+        gid = g.get("id", f"group_{i}")
+        result["results"][f"n_{gid}"] = g.get("n")
+
+    return result
+
+
 # --------------------------------------------------------------------
 # Comparison Logic
 # --------------------------------------------------------------------
@@ -3269,6 +3312,10 @@ def score(tc, agent, truth, output, compliance, tcg_check, csr_format,
     with open(truth) as f:
         truth_out = json.load(f)
 
+    # Unwrap ARS envelopes if present (CDISC ARS v1.0 compatibility)
+    agent_out = unwrap_ars(agent_out)
+    truth_out = unwrap_ars(truth_out)
+
     tolerances = load_tolerances()
     scorers = {
         "TC-001": score_tc001,
@@ -3411,6 +3458,12 @@ def verify(tc, r_path, python_path, sas_path, output):
     if sas_path:
         with open(sas_path) as f:
             sas_out = json.load(f)
+
+    # Unwrap ARS envelopes if present (CDISC ARS v1.0 compatibility)
+    r_out = unwrap_ars(r_out)
+    py_out = unwrap_ars(py_out)
+    if sas_out is not None:
+        sas_out = unwrap_ars(sas_out)
 
     tolerances = load_tolerances()
     scorers = {
@@ -3630,6 +3683,10 @@ def evaluate(tc, agent, truth, output, skip_schema, compliance, safety):
         agent_out = json.load(f)
     with open(truth) as f:
         truth_out = json.load(f)
+
+    # Unwrap ARS envelopes if present (CDISC ARS v1.0 compatibility)
+    agent_out = unwrap_ars(agent_out)
+    truth_out = unwrap_ars(truth_out)
 
     # 1. Numerical scoring
     console.print("[bold]Step 1: Numerical Scoring[/bold]")
