@@ -1,0 +1,79 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-011",
+    "version": "1.0",
+    "analysisReason": "Safety summary: adverse events by SOC and preferred term",
+    "analysisMethod": {
+      "name": "Frequency tabulation",
+      "codeTemplate": "aggregate(AEDECOD ~ TRT01A, data=ADAE, FUN=length)",
+      "parameters": {
+        "sort": "descending frequency",
+        "hierarchy": "SOC \u2192 PT",
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AESOC",
+        "dataset": "ADAE",
+        "role": "System Organ Class"
+      },
+      {
+        "name": "AEDECOD",
+        "dataset": "ADAE",
+        "role": "Preferred Term"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SAFFL",
+        "dataset": "ADSL",
+        "role": "safety flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "Safety",
+      "filter": "SAFFL = 'Y'"
+    },
+    "analysisDataset": "ADAE",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 100
+      },
+      {
+        "id": "Control",
+        "n": 100
+      }
+    ],
+    "documentation": "AE summary table with 41 rows (SOC/PT hierarchy), sorted by frequency",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_experimental",
+          "value": 100
+        },
+        {
+          "name": "n_control",
+          "value": 100
+        },
+        {
+          "name": "n_any_ae_experimental",
+          "value": 100
+        },
+        {
+          "name": "n_any_ae_control",
+          "value": 100
+        },
+        {
+          "name": "n_table_rows",
+          "value": 41
+        }
+      ]
+    }
+  }
+}

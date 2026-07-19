@@ -1,0 +1,87 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-015",
+    "version": "1.0",
+    "analysisReason": "Primary efficacy: KM survival curve with risk table and log-rank test",
+    "analysisMethod": {
+      "name": "Kaplan-Meier + log-rank",
+      "codeTemplate": "survfit(Surv(AVAL, 1-CNSR) ~ TRT01A); survdiff(...)",
+      "parameters": {
+        "conf_type": "log-log",
+        "time_unit": "months",
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "analysis time"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADTTE",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 111
+      },
+      {
+        "id": "Control",
+        "n": 89
+      }
+    ],
+    "documentation": "KM curve with at-risk table at time points, log-rank test for treatment comparison",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "median_overall",
+          "value": 8.21,
+          "unit": "months"
+        },
+        {
+          "name": "ci_lower",
+          "value": 6.9
+        },
+        {
+          "name": "ci_upper",
+          "value": 11.01
+        },
+        {
+          "name": "logrank_chisq",
+          "value": 3.726062
+        },
+        {
+          "name": "logrank_p_value",
+          "value": 0.05357
+        },
+        {
+          "name": "n_total",
+          "value": 200
+        },
+        {
+          "name": "events_experimental",
+          "value": 67
+        },
+        {
+          "name": "events_control",
+          "value": 62
+        }
+      ]
+    }
+  }
+}

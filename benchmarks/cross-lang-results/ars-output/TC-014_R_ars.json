@@ -1,0 +1,74 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-014",
+    "version": "1.0",
+    "analysisReason": "Data integrity: listing of key protocol deviations",
+    "analysisMethod": {
+      "name": "Descriptive listing",
+      "codeTemplate": "subset(ADSL, PPFL != 'Y')",
+      "parameters": {
+        "sort": "TRT01A, USUBJID, PDDY",
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "USUBJID",
+        "dataset": "ADSL",
+        "role": "subject identifier"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "PPDECOD",
+        "dataset": "ADSL",
+        "role": "protocol deviation term"
+      },
+      {
+        "name": "PPDY",
+        "dataset": "ADSL",
+        "role": "deviation day"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "All Randomized",
+      "filter": "RANDFL = 'Y'"
+    },
+    "analysisDataset": "ADSL",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 100
+      },
+      {
+        "id": "Control",
+        "n": 100
+      }
+    ],
+    "documentation": "Listing of protocol deviations sorted by treatment, subject, and deviation day",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_experimental",
+          "value": 100
+        },
+        {
+          "name": "n_control",
+          "value": 100
+        },
+        {
+          "name": "n_subjects_with_pd",
+          "value": 60
+        },
+        {
+          "name": "n_total_deviations",
+          "value": 93
+        }
+      ]
+    }
+  }
+}

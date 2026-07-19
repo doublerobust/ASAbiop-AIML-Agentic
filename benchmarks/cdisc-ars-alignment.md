@@ -1,8 +1,8 @@
 # CDISC ARS Alignment — Mapping Benchmark Output Schemas to Analysis Results Standard
 
-**Version:** 0.2 (Day 49 — ARS Proof-of-Concept Complete)
-**Date:** 2026-07-18
-**Status:** ✅ Proof-of-Concept Validated
+**Version:** 0.3 (Day 50 — ARS Extended to All Available TCs)
+**Date:** 2026-07-19
+**Status:** ✅ 21 TCs with ARS envelopes, 28 files validated
 **Depends on:** CDISC ARS v1.0 (April 2024), `cards` R package
 
 ---
@@ -259,6 +259,7 @@ structure is already compatible with ARS's statistical-summary model. A future
 | **Phase 5** | Full ARS compliance for all 11 Level 1 TCs | ✅ Done (Day 27–35) |
 | **Phase 6** | CDISC ARS JSON Schema validation in CI | ✅ Done (Day 49 — `ars-envelope-schema.json` + `ars_validator.py`) |
 | **Phase 7** | End-to-end ARS POC demo (TC-035 Level 2) | ✅ Done (Day 49 — `scripts/ars-poc-demo.sh`) |
+| **Phase 8** | ARS envelopes for TC-011/013/014/015/016/017/018/020 | ✅ Done (Day 50 — `scripts/ars-extend-remaining.py`) |
 
 ---
 

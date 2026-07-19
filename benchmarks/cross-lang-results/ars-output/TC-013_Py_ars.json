@@ -1,0 +1,106 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-013",
+    "version": "1.0",
+    "analysisReason": "Efficacy: waterfall plot of best percentage change in tumor size (RECIST 1.1)",
+    "analysisMethod": {
+      "name": "Descriptive statistics + RECIST response categorization",
+      "codeTemplate": "pct_change = (best - baseline) / baseline * 100",
+      "parameters": {
+        "response_criteria": "RECIST 1.1",
+        "thresholds": {
+          "CR": -100,
+          "PR": -30,
+          "PD": 20
+        },
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "BESTPCHG",
+        "dataset": "ADRS",
+        "role": "best percent change"
+      },
+      {
+        "name": "BOR",
+        "dataset": "ADRS",
+        "role": "best overall response"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADRS",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 100
+      },
+      {
+        "id": "Control",
+        "n": 100
+      }
+    ],
+    "documentation": "Waterfall plot showing best % change from baseline in tumor size per subject",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_all",
+          "value": 200
+        },
+        {
+          "name": "orr_pct_all",
+          "value": 33.0
+        },
+        {
+          "name": "dcr_pct_all",
+          "value": 64.5
+        },
+        {
+          "name": "n_cr_all",
+          "value": 18
+        },
+        {
+          "name": "n_pr_all",
+          "value": 48
+        },
+        {
+          "name": "n_sd_all",
+          "value": 63
+        },
+        {
+          "name": "n_pd_all",
+          "value": 71
+        },
+        {
+          "name": "median_best_pct_change_all",
+          "value": -5.2
+        },
+        {
+          "name": "orr_pct_experimental",
+          "value": 50.0
+        },
+        {
+          "name": "orr_pct_control",
+          "value": 16.0
+        },
+        {
+          "name": "dcr_pct_experimental",
+          "value": 76.0
+        },
+        {
+          "name": "dcr_pct_control",
+          "value": 53.0
+        }
+      ]
+    }
+  }
+}

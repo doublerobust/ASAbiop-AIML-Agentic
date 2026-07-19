@@ -1,0 +1,102 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-016",
+    "version": "1.0",
+    "analysisReason": "Safety: treatment exposure summary (duration, cumulative dose, dose intensity, reductions)",
+    "analysisMethod": {
+      "name": "Descriptive statistics",
+      "codeTemplate": "summary(EXDUR ~ TRT01A); summary(CUMDOSE ~ TRT01A)",
+      "parameters": {
+        "duration_unit": "weeks",
+        "dose_unit": "mg",
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "EXDUR",
+        "dataset": "ADEX",
+        "role": "treatment duration"
+      },
+      {
+        "name": "CUMDOSE",
+        "dataset": "ADEX",
+        "role": "cumulative dose"
+      },
+      {
+        "name": "DOSINT",
+        "dataset": "ADEX",
+        "role": "dose intensity (%)"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SAFFL",
+        "dataset": "ADSL",
+        "role": "safety flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "Safety",
+      "filter": "SAFFL = 'Y'"
+    },
+    "analysisDataset": "ADEX",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 100
+      },
+      {
+        "id": "Control",
+        "n": 100
+      }
+    ],
+    "documentation": "Exposure summary: treatment duration, cumulative dose, relative dose intensity, dose reduction",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "mean_duration_experimental",
+          "value": 47.81,
+          "unit": "weeks"
+        },
+        {
+          "name": "median_duration_experimental",
+          "value": 47.0,
+          "unit": "weeks"
+        },
+        {
+          "name": "mean_duration_control",
+          "value": 28.11,
+          "unit": "weeks"
+        },
+        {
+          "name": "median_duration_control",
+          "value": 29.0,
+          "unit": "weeks"
+        },
+        {
+          "name": "mean_dose_intensity_experimental",
+          "value": 87.7598,
+          "unit": "%"
+        },
+        {
+          "name": "mean_dose_intensity_control",
+          "value": 87.4918,
+          "unit": "%"
+        },
+        {
+          "name": "n_dose_reduction_experimental",
+          "value": 13
+        },
+        {
+          "name": "n_dose_reduction_control",
+          "value": 8
+        }
+      ]
+    }
+  }
+}

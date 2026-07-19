@@ -1,0 +1,85 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-017",
+    "version": "1.0",
+    "analysisReason": "Safety: laboratory shift table (baseline \u2192 post-baseline categories)",
+    "analysisMethod": {
+      "name": "Shift tabulation",
+      "codeTemplate": "table(BASECAT, ENDCAT, TRT01A)",
+      "parameters": {
+        "lab_test": "Hemoglobin",
+        "lab_unit": "g/L",
+        "categories": [
+          "LOW",
+          "NORMAL",
+          "HIGH"
+        ],
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "LBSTRESN",
+        "dataset": "ADLB",
+        "role": "lab result"
+      },
+      {
+        "name": "BASECAT",
+        "dataset": "ADLB",
+        "role": "baseline category"
+      },
+      {
+        "name": "ENDCAT",
+        "dataset": "ADLB",
+        "role": "post-baseline category"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SAFFL",
+        "dataset": "ADSL",
+        "role": "safety flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "Safety",
+      "filter": "SAFFL = 'Y'"
+    },
+    "analysisDataset": "ADLB",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 100
+      },
+      {
+        "id": "Control",
+        "n": 100
+      }
+    ],
+    "documentation": "Lab shift table for Hemoglobin: baseline \u2192 post-baseline category transitions",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_total",
+          "value": 200
+        },
+        {
+          "name": "n_low_to_high",
+          "value": 1
+        },
+        {
+          "name": "n_high_to_low",
+          "value": 1
+        },
+        {
+          "name": "n_stable_category",
+          "value": 139
+        }
+      ]
+    }
+  }
+}

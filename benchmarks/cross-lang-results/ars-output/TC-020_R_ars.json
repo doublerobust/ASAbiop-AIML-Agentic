@@ -1,0 +1,123 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-020",
+    "version": "1.0",
+    "analysisReason": "Efficacy: ORR by subgroup with Cochran-Mantel-Haenszel interaction testing",
+    "analysisMethod": {
+      "name": "Binomial proportion + CMH test",
+      "codeTemplate": "prop.test(x, n); mantelhaen.test(matrix)",
+      "parameters": {
+        "subgroups": [
+          "SEX",
+          "AGEGR1",
+          "ECOG"
+        ],
+        "response_definition": "CR + PR",
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "BOR",
+        "dataset": "ADRS",
+        "role": "best overall response"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SEX",
+        "dataset": "ADSL",
+        "role": "subgroup: sex"
+      },
+      {
+        "name": "AGEGR1",
+        "dataset": "ADSL",
+        "role": "subgroup: age group"
+      },
+      {
+        "name": "ECOG",
+        "dataset": "ADSL",
+        "role": "subgroup: ECOG"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADRS",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 111
+      },
+      {
+        "id": "Control",
+        "n": 89
+      }
+    ],
+    "documentation": "ORR by subgroup (SEX, AGEGR1, ECOG) with CMH interaction p-values",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "orr_experimental",
+          "value": 37.8,
+          "unit": "%"
+        },
+        {
+          "name": "orr_control",
+          "value": 15.7,
+          "unit": "%"
+        },
+        {
+          "name": "orr_difference",
+          "value": 22.1,
+          "unit": "%"
+        },
+        {
+          "name": "responders_experimental",
+          "value": 42
+        },
+        {
+          "name": "responders_control",
+          "value": 14
+        },
+        {
+          "name": "n_experimental",
+          "value": 111
+        },
+        {
+          "name": "n_control",
+          "value": 89
+        },
+        {
+          "name": "cmh_pvalue_SEX",
+          "value": 0.0015
+        },
+        {
+          "name": "cmh_pvalue_AGEGR1",
+          "value": 0.0014
+        },
+        {
+          "name": "cmh_pvalue_ECOG",
+          "value": 0.0008
+        },
+        {
+          "name": "cmh_common_or_SEX",
+          "value": 3.1465
+        },
+        {
+          "name": "cmh_common_or_AGEGR1",
+          "value": 3.1356
+        },
+        {
+          "name": "cmh_common_or_ECOG",
+          "value": 3.3848
+        }
+      ]
+    }
+  }
+}

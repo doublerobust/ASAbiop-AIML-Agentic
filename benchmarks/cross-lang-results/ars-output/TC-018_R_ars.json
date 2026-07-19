@@ -1,0 +1,95 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-018",
+    "version": "1.0",
+    "analysisReason": "Efficacy: change from baseline in tumor size by visit",
+    "analysisMethod": {
+      "name": "Descriptive statistics (mean, SD, median, SE, CI)",
+      "codeTemplate": "t.test(CHG ~ TRT01A, data=subset(ADRS, AVISIT='WEEK_12'))",
+      "parameters": {
+        "endpoint": "Tumor Size",
+        "endpoint_unit": "mm",
+        "visits": [
+          "BASELINE",
+          "WEEK_6",
+          "WEEK_12",
+          "WEEK_18",
+          "WEEK_24"
+        ],
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADRS",
+        "role": "analysis value"
+      },
+      {
+        "name": "BASE",
+        "dataset": "ADRS",
+        "role": "baseline value"
+      },
+      {
+        "name": "CHG",
+        "dataset": "ADRS",
+        "role": "change from baseline"
+      },
+      {
+        "name": "AVISIT",
+        "dataset": "ADRS",
+        "role": "analysis visit"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADRS",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 100
+      },
+      {
+        "id": "Control",
+        "n": 100
+      }
+    ],
+    "documentation": "Change from baseline summary by visit: mean, SD, median, SE, 95% CI per treatment arm",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "mean_chg_week12_experimental",
+          "value": -9.5318,
+          "unit": "mm"
+        },
+        {
+          "name": "mean_chg_week12_control",
+          "value": -0.7814,
+          "unit": "mm"
+        },
+        {
+          "name": "median_chg_week12_experimental",
+          "value": -8.84,
+          "unit": "mm"
+        },
+        {
+          "name": "median_chg_week12_control",
+          "value": 0.075,
+          "unit": "mm"
+        },
+        {
+          "name": "n_visits",
+          "value": 5
+        }
+      ]
+    }
+  }
+}
