@@ -4156,3 +4156,84 @@ Cross-language ARS consistency checks pass for TCs using shared data (TC-003, TC
 4. **White paper WG review** — circulate v1.9 for working group feedback
 5. **Efficiency scoring** — collect actual agent run metrics from frontier model eval
 6. **ARS envelope for TC-004/005/006** — extend `--ars-output` to Level 2 TCs
+
+---
+
+## Day 51 (2026-07-20): TC-007 Level 3 Implementation — Regulatory Response ITT/PP Discrepancy
+
+**Date:** July 20, 2026 (Monday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### Completed
+
+#### 1. TC-007: Regulatory Response to ITT vs. PP Discrepancy (Level 3)
+
+**Goal:** Implement the first Level 3 test case — a regulatory response scenario where the ITT analysis shows a significant treatment effect but the PP analysis does not, requiring the agent to analyze the discrepancy, perform tipping point analysis, propose sensitivity analyses, and draft a formal regulatory response memo.
+
+**Design:**
+- **Scenario:** Phase III oncology trial, 500 subjects randomized 1:1, PFS primary endpoint
+- **ITT result:** HR=0.77, p=0.017 (significant)
+- **PP result:** HR=0.83, p=0.111 (not significant, same direction)
+- **Exclusion pattern:** 87 subjects excluded from PP (44 Active, 43 Placebo)
+  - Active exclusions: prefer censored subjects (doing well) — removes good outcomes
+  - Placebo exclusions: prefer event subjects (doing poorly) — removes bad outcomes
+  - This differential exclusion creates the ITT/PP discrepancy
+- **Tipping point:** 8 censored→event reclassifications in Active excluded subjects needed to negate ITT significance
+- **Sensitivity analyses:** Worst-case (HR=0.84, p=0.118), Best-case (HR=0.86, p=0.136), PP (HR=0.83, p=0.111)
+
+**Files created:**
+- `references/ground-truth/R/generate_tc007_itt_pp.R` — Data generator with biased PP exclusion (70/30 split by censoring status)
+- `references/ground-truth/R/tc-007-regulatory-response.R` — R ground truth: ITT/PP Cox analysis, exclusion pattern, tipping point, sensitivity
+- `references/ground-truth/Python/tc_007_regulatory_response.py` — Python ground truth (mirrors R)
+- `references/ground-truth/reference-memos/tc-007-reference-memo.md` — Reference regulatory response memo with all required sections
+- `references/output-schemas/tc-007-output-schema.json` — JSON schema for output validation
+- `scoring-harness/tc007_scorer.py` — Expert rubric scorer with:
+  - 8 numerical auto-scorable criteria (30% weight)
+  - 7 structural section checks (20% weight)
+  - 7 concept/keyword checks (20% weight)
+  - LLM-as-judge prompt template (30% weight, for manual/LLM scoring)
+
+**Cross-Language Verification:**
+
+| Metric | R | Python | Match |
+|---|---|---|---|
+| ITT HR | 0.7717 | 0.7717 | ✅ |
+| ITT p-value | 0.0170 | 0.0170 | ✅ |
+| PP HR | 0.8312 | 0.8312 | ✅ |
+| PP p-value | 0.1111 | 0.1111 | ✅ |
+| Tipping N | 8 | 8 | ✅ |
+| Tipping HR | 0.8106 | 0.8106 | ✅ |
+| Tipping p | 0.0501 | 0.0501 | ✅ |
+| Worst-case HR | 0.8408 | 0.8408 | ✅ |
+| Best-case HR | 0.8590 | 0.8590 | ✅ |
+| Excl events Active | 13 | 13 | ✅ |
+| Excl events Placebo | 30 | 30 | ✅ |
+
+**Schema validation:** ✅ Both R and Python outputs pass JSON schema validation
+
+**Scorer test:** Auto-scored portion = 30/30 numerical + partial structural/concept (expected when comparing JSON, not memo text). Full 100% scoring requires agent-generated regulatory memo.
+
+#### 2. White Paper Updated to v1.10
+
+- Version bumped 1.9 → 1.10, date updated to 2026-07-20
+- Abstract: Level 3 status updated from "designed but not yet implemented" to "TC-007 implemented with R+Python ground truth, expert rubric scorer, reference memo"
+- Roadmap Phase 3: TC-007 Level 3 marked complete
+
+### 📊 Updated Score Summary
+
+| Component | Status |
+|---|---|
+| Level 1 TCs (27) | All verified at 1.0000 |
+| Level 2 TCs (4) | TC-004 (auto-scorer), TC-005 (error injection), TC-006 (1.0000), TC-035 (1.0000) |
+| Level 3 TCs (1/4) | TC-007 ✅ (R+Python ground truth, scorer, reference memo) |
+| ARS envelopes | 21 TCs covered (28 files) |
+| Total TCs | 32 (27 L1 + 4 L2 + 1 L3) |
+
+### 🔮 Plan for Day 52+
+
+1. **TC-008 Level 3 implementation** — Dose-finding study design with simulation OCs
+2. **TC-004 LLM-judge API integration** — wire SAP drafting scorer to actual LLM API
+3. **TC-009–010 Level 3 implementation** — Safety signal evaluation, CSR sections
+4. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 + TC-007
+5. **White paper WG review** — circulate v1.10 for working group feedback
+6. **Efficiency scoring** — collect actual agent run metrics from frontier model eval

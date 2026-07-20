@@ -1,0 +1,78 @@
+{
+  "tc_id": "TC-007",
+  "tc_title": "Regulatory Response to ITT vs. PP Discrepancy",
+  "level": 3,
+  "analysis": {
+    "itt": {
+      "n": 500,
+      "hr": 0.7717,
+      "hr_ci_lower": 0.6238,
+      "hr_ci_upper": 0.9547,
+      "logrank_p": 0.016654,
+      "wald_p": 0.016979,
+      "median_pfs_active": 7.47,
+      "median_pfs_placebo": 5.86
+    },
+    "pp": {
+      "n": 413,
+      "hr": 0.8312,
+      "hr_ci_lower": 0.6621,
+      "hr_ci_upper": 1.0435,
+      "logrank_p": 0.110286,
+      "wald_p": 0.111086,
+      "median_pfs_active": 6.65,
+      "median_pfs_placebo": 5.86
+    },
+    "discrepancy": {
+      "itt_hr": 0.7717,
+      "pp_hr": 0.8312,
+      "hr_difference": -0.0595,
+      "itt_significant": true,
+      "pp_significant": false
+    },
+    "exclusion_pattern": {
+      "n_total": 500,
+      "n_itt": 500,
+      "n_pp": 413,
+      "n_excluded": 87,
+      "excluded_active": 44,
+      "excluded_placebo": 43,
+      "exclusion_rate_active": 0.176,
+      "exclusion_rate_placebo": 0.172,
+      "event_rate_excluded": 0.4943,
+      "event_rate_included": 0.724,
+      "fisher_arm_imbalance_p": 1.0,
+      "excl_events_active": 13,
+      "excl_events_placebo": 30,
+      "event_imbalance_fisher_p": 0.000244,
+      "reasons": {
+        "Early discontinuation before first post-baseline assessment": 35,
+        "Major protocol violation": 28,
+        "Prohibited medication use": 24
+      }
+    },
+    "tipping_point": {
+      "n_shifted": 8,
+      "hr_at_tipping": 0.8106,
+      "p_at_tipping": 0.050143,
+      "interpretation": "Reclassifying 8 event(s) among excluded Active subjects to censored would make the ITT result non-significant (p >= 0.05)."
+    },
+    "sensitivity_analyses": {
+      "worst_case": {
+        "description": "All excluded Active subjects censored at time ~0",
+        "hr": 0.8408,
+        "p_value": 0.118366
+      },
+      "best_case": {
+        "description": "All excluded subjects have events",
+        "hr": 0.859,
+        "p_value": 0.136337
+      },
+      "per_protocol": {
+        "description": "PP analysis (excludes protocol deviations)",
+        "hr": 0.8312,
+        "p_value": 0.111086
+      }
+    }
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "tc_id": "TC-007",
+  "scoring": {
+    "numerical": {
+      "scores": {
+        "itt_hr_correct": {
+          "score": 0.05,
+          "max": 0.05,
+          "detail": "exp=0.7717, act=0.7717, rel_err=0.0000"
+        },
+        "pp_hr_correct": {
+          "score": 0.05,
+          "max": 0.05,
+          "detail": "exp=0.8312, act=0.8312, rel_err=0.0000"
+        },
+        "itt_significance_correct": {
+          "score": 0.03,
+          "max": 0.03,
+          "detail": "exp=True, act=True"
+        },
+        "pp_significance_correct": {
+          "score": 0.03,
+          "max": 0.03,
+          "detail": "exp=False, act=False"
+        },
+        "tipping_point_n_correct": {
+          "score": 0.05,
+          "max": 0.05,
+          "detail": "exp=8, act=8, diff=0"
+        },
+        "exclusion_n_correct": {
+          "score": 0.03,
+          "max": 0.03,
+          "detail": "exp=87, act=87, diff=0"
+        },
+        "exclusion_arm_split_correct": {
+          "score": 0.03,
+          "max": 0.03,
+          "detail": "exp_active=44, act_active=44, diff=0"
+        },
+        "event_rate_disparity_correct": {
+          "score": 0.03,
+          "max": 0.03,
+          "detail": "exp_diff=0.2297, act_diff=0.2297"
+        }
+      },
+      "subtotal": 0.3,
+      "max": 0.3
+    },
+    "structural": {
+      "scores": {
+        "reviewer_comment": {
+          "score": 0,
+          "max": 0.028571428571428574,
+          "detail": "found=False, patterns=['reviewer comment', 'reviewer query', 'regulatory question']"
+        },
+        "background": {
+          "score": 0,
+          "max": 0.028571428571428574,
+          "detail": "found=False, patterns=['background', 'study description', 'study overview']"
+        },
+        "discrepancy_analysis": {
+          "score": 0.028571428571428574,
+          "max": 0.028571428571428574,
+          "detail": "found=True, patterns=['discrepancy', 'analysis of discrepancy', 'itt vs pp', 'itt/pp']"
+        },
+        "tipping_point": {
+          "score": 0,
+          "max": 0.028571428571428574,
+          "detail": "found=False, patterns=['tipping point', 'tipping-point', 'how many events']"
+        },
+        "sensitivity_analyses": {
+          "score": 0.028571428571428574,
+          "max": 0.028571428571428574,
+          "detail": "found=True, patterns=['sensitivity analysis', 'sensitivity analyses', 'sensitivity']"
+        },
+        "conclusion": {
+          "score": 0,
+          "max": 0.028571428571428574,
+          "detail": "found=False, patterns=['conclusion', 'overall conclusion', 'summary and conclusion']"
+        },
+        "response_memo_format": {
+          "score": 0.028571428571428574,
+          "max": 0.028571428571428574,
+          "detail": "found=True, patterns=['dear', 'response to', 're:', 'regarding']"
+        }
+      },
+      "subtotal": 0.0857,
+      "max": 0.2
+    },
+    "concepts": {
+      "scores": {
+        "ich_e9_r1_estimand": {
+          "score": 0,
+          "max": 0.04,
+          "detail": "no matches: ['estimand', 'ich e9', 'e9(r1)', 'intercurrent', 'treatment effect']"
+        },
+        "itt_principle": {
+          "score": 0.015,
+          "max": 0.03,
+          "detail": "partial: matches=1/5"
+        },
+        "pp_definition": {
+          "score": 0.015,
+          "max": 0.03,
+          "detail": "partial: matches=1/5"
+        },
+        "tipping_point_concept": {
+          "score": 0.03,
+          "max": 0.03,
+          "detail": "matches=2/6"
+        },
+        "sensitivity_methods": {
+          "score": 0,
+          "max": 0.03,
+          "detail": "no matches: ['multiple imputation', 'pattern mixture', 'worst case', 'best case', 'tipping point', 'jump to reference']"
+        },
+        "imbalance_assessment": {
+          "score": 0.02,
+          "max": 0.02,
+          "detail": "matches=2/5"
+        },
+        "regulatory_language": {
+          "score": 0,
+          "max": 0.02,
+          "detail": "no matches: ['robust', 'consistent with', 'support', 'conclusion is maintained', 'primary conclusion']"
+        }
+      },
+      "subtotal": 0.08,
+      "max": 0.2
+    },
+    "llm_judge": {
+      "weight": 0.3,
+      "status": "pending",
+      "prompt": "You are an expert biostatistician reviewing a regulatory response memo\naddressing an ITT vs. per-protocol (PP) discrepancy in a Phase III oncology trial.\n\nScore the following memo on a 0-5 scale for each criterion:\n\n1. **Statistical Rigor (10 pts)**: Is the analysis of the ITT/PP discrepancy\n   statistically sound? Is the tipping point analysis correctly performed and\n   interpreted? Are sensitivity analyses appropriate?\n\n2. **Regulatory Appropriateness (6 pts)**: Is the response structured per\n   regulatory expectations? Is the language appropriate for an FDA/EMA submission?\n\n3. **Communication Clarity (6 pts)**: Is the explanation clear and accessible\n   to a non-statistician reviewer? Are tables/figures used effectively?\n\n4. **Judgment (5 pts)**: Is the conclusion appropriate given the evidence?\n   Does the memo correctly assess whether the primary conclusion is robust?\n\n5. **Completeness (3 pts)**: Are all required elements present (reviewer comment,\n   background, discrepancy analysis, tipping point, sensitivity, conclusion)?\n\nGround truth analysis results:\n{\n  \"tc_id\": \"TC-007\",\n  \"tc_title\": \"Regulatory Response to ITT vs. PP Discrepancy\",\n  \"level\": 3,\n  \"analysis\": {\n    \"itt\": {\n      \"n\": 500,\n      \"hr\": 0.7717,\n      \"hr_ci_lower\": 0.6238,\n      \"hr_ci_upper\": 0.9547,\n      \"logrank_p\": 0.0167,\n      \"wald_p\": 0.017,\n      \"median_pfs_active\": 7.47,\n      \"median_pfs_placebo\": 5.86\n    },\n    \"pp\": {\n      \"n\": 413,\n      \"hr\": 0.8312,\n      \"hr_ci_lower\": 0.6621,\n      \"hr_ci_upper\": 1.0435,\n      \"logrank_p\": 0.1103,\n      \"wald_p\": 0.1111,\n      \"median_pfs_active\": 6.65,\n      \"median_pfs_placebo\": 5.86\n    },\n    \"discrepancy\": {\n      \"itt_hr\": 0.7717,\n      \"pp_hr\": 0.8312,\n      \"hr_difference\": -0.0595,\n      \"itt_significant\": true,\n      \"pp_significant\": false\n    },\n    \"exclusion_pattern\": {\n      \"n_total\": 500,\n      \"n_itt\": 500,\n      \"n_pp\": 413,\n      \"n_excluded\": 87,\n      \"excluded_active\": 44,\n      \"excluded_placebo\": 43,\n      \"exclusion_rate_active\": 0.176,\n      \"exclusion_rate_placebo\": 0.172,\n      \"event_rate_excluded\": 0.4943,\n      \"event_rate_included\": 0.724,\n      \"fisher_arm_imbalance_p\": 1,\n      \"excl_events_active\": 13,\n      \"excl_events_placebo\": 30,\n      \"event_imbalance_fisher_p\": 0.0002,\n      \"reasons\": {\n        \"PPDECOD\": [\n          \"Early discontinuation before first post-baseline assessment\",\n          \"Major protocol violation\",\n          \"Prohibited medication use\"\n        ],\n        \"n\": [\n          35,\n          28,\n          24\n        ]\n      }\n    },\n    \"tipping_point\": {\n      \"n_shifted\": 8,\n      \"hr_at_tipping\": 0.8106,\n      \"p_at_tipping\": 0.0501,\n      \"interpretation\": \"Reclassifying 8 event(s) among excluded Active subjects to censored would make the ITT result non-significant (p \\u2265 0.05).\"\n    },\n    \"sensitivity_analyses\": {\n      \"worst_case\": {\n        \"description\": \"All excluded Active subjects censored at time ~0\",\n        \"hr\": 0.8408,\n        \"p_value\": 0.1184\n      },\n      \"best_case\": {\n        \"description\": \"All excluded subjects have events\",\n        \"hr\": 0.859,\n        \"p_value\": 0.1363\n      },\n      \"per_protocol\": {\n        \"description\": \"PP analysis (excludes protocol deviations)\",\n        \"hr\": 0.8312,\n        \"p_value\": 0.1111\n      }\n    }\n  }\n}\n\nAgent response memo:\n{\n  \"tc_id\": \"TC-007\",\n  \"tc_title\": \"Regulatory Response to ITT vs. PP Discrepancy\",\n  \"level\": 3,\n  \"analysis\": {\n    \"itt\": {\n      \"n\": 500,\n      \"hr\": 0.7717,\n      \"hr_ci_lower\": 0.6238,\n      \"hr_ci_upper\": 0.9547,\n      \"logrank_p\": 0.016654,\n      \"wald_p\": 0.016979,\n      \"median_pfs_active\": 7.47,\n      \"median_pfs_placebo\": 5.86\n    },\n    \"pp\": {\n      \"n\": 413,\n      \"hr\": 0.8312,\n      \"hr_ci_lower\": 0.6621,\n      \"hr_ci_upper\": 1.0435,\n      \"logrank_p\": 0.110286,\n      \"wald_p\": 0.111086,\n      \"median_pfs_active\": 6.65,\n      \"median_pfs_placebo\": 5.86\n    },\n    \"discrepancy\": {\n      \"itt_hr\": 0.7717,\n      \"pp_hr\": 0.8312,\n      \"hr_difference\": -0.0595,\n      \"itt_significant\": true,\n      \"pp_significant\": false\n    },\n    \"exclusion_pattern\": {\n      \"n_total\": 500,\n      \"n_itt\": 500,\n      \"n_pp\": 413,\n      \"n_excluded\": 87,\n      \"excluded_active\": 44,\n      \"excluded_placebo\": 43,\n      \"exclusion_rate_active\": 0.176,\n      \"exclusion_rate_placebo\": 0.172,\n      \"event_rate_excluded\": 0.4943,\n      \"event_rate_included\": 0.724,\n      \"fisher_arm_imbalance_p\": 1.0,\n      \"excl_events_active\": 13,\n      \"excl_events_placebo\": 30,\n      \"event_imbalance_fisher_p\": 0.000244,\n      \"reasons\": {\n        \"Early discontinuation before first post-baseline assessment\": 35,\n        \"Major protocol violation\": 28,\n        \"Prohibited medication use\": 24\n      }\n    },\n    \"tipping_point\": {\n      \"n_shifted\": 8,\n      \"hr_at_tipping\": 0.8106,\n      \"p_at_tipping\": 0.050143,\n      \"interpretation\": \"Reclassifying 8 event(s) among excluded Active subjects to censored would make the ITT result non-significant (p >= 0.05).\"\n    },\n    \"sensitivity_analyses\": {\n      \"worst_case\": {\n        \"description\": \"All excluded Active subjects censored at time ~0\",\n        \"hr\": 0.8408,\n        \"p_value\": 0.118366\n      },\n      \"best_case\": {\n        \"description\": \"All excluded subjects have events\",\n        \"hr\": 0.859,\n        \"p_value\": 0.136337\n      },\n      \"per_protocol\": {\n        \"description\": \"PP analysis (excludes protocol deviations)\",\n        \"hr\": 0.8312,\n        \"p_value\": 0.111086\n      }\n    }\n  }\n}\n\nFor each criterion, provide:\n- Score (0-5)\n- Rationale (1-2 sentences)\n\nOutput as JSON:\n{\n  \"statistical_rigor\": {\"score\": 0-5, \"rationale\": \"...\"},\n  \"regulatory_appropriateness\": {\"score\": 0-5, \"rationale\": \"...\"},\n  \"communication_clarity\": {\"score\": 0-5, \"rationale\": \"...\"},\n  \"judgment\": {\"score\": 0-5, \"rationale\": \"...\"},\n  \"completeness\": {\"score\": 0-5, \"rationale\": \"...\"}\n}\n",
+      "note": "Run LLM-as-judge with the prompt above, then fill in qualitative scores."
+    },
+    "auto_scored_total": 0.4657,
+    "auto_scored_max": 0.7,
+    "auto_scored_pct": 0.6653
+  },
+  "total_score_note": "Auto-scored: 0.4657/0.7000 (66.53%). LLM-judge portion (30%) pending. Total = auto_scored + llm_judge_score."
+}

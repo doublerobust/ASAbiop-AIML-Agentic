@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-007 Regulatory Response Output Schema",
+  "description": "Schema for validating TC-007 ground truth analysis output",
+  "type": "object",
+  "required": ["tc_id", "tc_title", "level", "analysis"],
+  "properties": {
+    "tc_id": {
+      "type": "string",
+      "const": "TC-007"
+    },
+    "tc_title": {
+      "type": "string"
+    },
+    "level": {
+      "type": "integer",
+      "const": 3
+    },
+    "analysis": {
+      "type": "object",
+      "required": ["itt", "pp", "discrepancy", "exclusion_pattern", "tipping_point", "sensitivity_analyses"],
+      "properties": {
+        "itt": {
+          "type": "object",
+          "required": ["n", "hr", "hr_ci_lower", "hr_ci_upper", "logrank_p", "wald_p"],
+          "properties": {
+            "n": {"type": "integer"},
+            "hr": {"type": "number"},
+            "hr_ci_lower": {"type": "number"},
+            "hr_ci_upper": {"type": "number"},
+            "logrank_p": {"type": "number"},
+            "wald_p": {"type": "number"},
+            "median_pfs_active": {"type": ["number", "null"]},
+            "median_pfs_placebo": {"type": ["number", "null"]}
+          }
+        },
+        "pp": {
+          "type": "object",
+          "required": ["n", "hr", "hr_ci_lower", "hr_ci_upper", "logrank_p", "wald_p"],
+          "properties": {
+            "n": {"type": "integer"},
+            "hr": {"type": "number"},
+            "hr_ci_lower": {"type": "number"},
+            "hr_ci_upper": {"type": "number"},
+            "logrank_p": {"type": "number"},
+            "wald_p": {"type": "number"},
+            "median_pfs_active": {"type": ["number", "null"]},
+            "median_pfs_placebo": {"type": ["number", "null"]}
+          }
+        },
+        "discrepancy": {
+          "type": "object",
+          "required": ["itt_hr", "pp_hr", "hr_difference", "itt_significant", "pp_significant"],
+          "properties": {
+            "itt_hr": {"type": "number"},
+            "pp_hr": {"type": "number"},
+            "hr_difference": {"type": "number"},
+            "itt_significant": {"type": "boolean"},
+            "pp_significant": {"type": "boolean"}
+          }
+        },
+        "exclusion_pattern": {
+          "type": "object",
+          "required": ["n_total", "n_itt", "n_pp", "n_excluded", "excluded_active", "excluded_placebo"],
+          "properties": {
+            "n_total": {"type": "integer"},
+            "n_itt": {"type": "integer"},
+            "n_pp": {"type": "integer"},
+            "n_excluded": {"type": "integer"},
+            "excluded_active": {"type": "integer"},
+            "excluded_placebo": {"type": "integer"},
+            "exclusion_rate_active": {"type": "number"},
+            "exclusion_rate_placebo": {"type": "number"},
+            "event_rate_excluded": {"type": "number"},
+            "event_rate_included": {"type": "number"},
+            "fisher_arm_imbalance_p": {"type": "number"},
+            "excl_events_active": {"type": "integer"},
+            "excl_events_placebo": {"type": "integer"},
+            "event_imbalance_fisher_p": {"type": "number"},
+            "reasons": {"type": ["object", "array"]}
+          }
+        },
+        "tipping_point": {
+          "type": "object",
+          "required": ["n_shifted", "interpretation"],
+          "properties": {
+            "n_shifted": {"type": ["integer", "null"]},
+            "hr_at_tipping": {"type": ["number", "null"]},
+            "p_at_tipping": {"type": ["number", "null"]},
+            "interpretation": {"type": "string"}
+          }
+        },
+        "sensitivity_analyses": {
+          "type": "object",
+          "required": ["worst_case", "best_case", "per_protocol"],
+          "properties": {
+            "worst_case": {
+              "type": "object",
+              "required": ["description", "hr", "p_value"],
+              "properties": {
+                "description": {"type": "string"},
+                "hr": {"type": "number"},
+                "p_value": {"type": "number"}
+              }
+            },
+            "best_case": {
+              "type": "object",
+              "required": ["description", "hr", "p_value"],
+              "properties": {
+                "description": {"type": "string"},
+                "hr": {"type": "number"},
+                "p_value": {"type": "number"}
+              }
+            },
+            "per_protocol": {
+              "type": "object",
+              "required": ["description", "hr", "p_value"],
+              "properties": {
+                "description": {"type": "string"},
+                "hr": {"type": "number"},
+                "p_value": {"type": "number"}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
