@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-008 Dose-Finding Study Design Output Schema",
+  "description": "Schema for validating TC-008 ground truth analysis output",
+  "type": "object",
+  "required": ["tc_id", "tc_title", "level", "design", "simulation", "expansion_cohort", "stopping_rules"],
+  "properties": {
+    "tc_id": {
+      "type": "string",
+      "const": "TC-008"
+    },
+    "tc_title": {
+      "type": "string"
+    },
+    "level": {
+      "type": "integer",
+      "const": 3
+    },
+    "design": {
+      "type": "object",
+      "required": ["method", "target_dlt_rate", "n_doses", "dose_levels", "true_dlt_rates", "cohort_size", "max_n", "starting_dose", "escalation_boundary", "deescalation_boundary", "expansion_cohort_size"],
+      "properties": {
+        "method": {"type": "string"},
+        "method_full": {"type": "string"},
+        "target_dlt_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "n_doses": {"type": "integer", "minimum": 2, "maximum": 10},
+        "dose_levels": {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 10},
+        "true_dlt_rates": {"type": "array", "items": {"type": "number", "minimum": 0, "maximum": 1}, "minItems": 2, "maxItems": 10},
+        "cohort_size": {"type": "integer", "minimum": 1, "maximum": 10},
+        "max_n": {"type": "integer", "minimum": 6, "maximum": 100},
+        "starting_dose": {"type": "integer", "minimum": 1},
+        "escalation_boundary": {"type": "number", "minimum": 0, "maximum": 1},
+        "deescalation_boundary": {"type": "number", "minimum": 0, "maximum": 1},
+        "expansion_cohort_size": {"type": "integer", "minimum": 0, "maximum": 50}
+      }
+    },
+    "simulation": {
+      "type": "object",
+      "required": ["n_sim", "seed", "operating_characteristics"],
+      "properties": {
+        "n_sim": {"type": "integer", "minimum": 100},
+        "seed": {"type": "integer"},
+        "operating_characteristics": {
+          "type": "object",
+          "required": ["prob_select_rpd", "prob_no_safe_dose", "expected_n_dlts", "expected_sample_size", "prob_early_stop"],
+          "properties": {
+            "prob_select_rpd": {
+              "type": "array",
+              "items": {"type": "number", "minimum": 0, "maximum": 1}
+            },
+            "prob_no_safe_dose": {"type": "number", "minimum": 0, "maximum": 1},
+            "expected_n_dlts": {"type": "number", "minimum": 0},
+            "expected_sample_size": {"type": "number", "minimum": 0},
+            "prob_early_stop": {"type": "number", "minimum": 0, "maximum": 1}
+          }
+        }
+      }
+    },
+    "expansion_cohort": {
+      "type": "object",
+      "required": ["rpd", "rpd_dose", "n_expansion", "expected_dlt_rate_at_rpd", "purpose"],
+      "properties": {
+        "rpd": {"type": "integer", "minimum": 0},
+        "rpd_dose": {"type": "number"},
+        "n_expansion": {"type": "integer", "minimum": 0},
+        "expected_dlt_rate_at_rpd": {"type": "number", "minimum": 0, "maximum": 1},
+        "purpose": {"type": "string"}
+      }
+    },
+    "stopping_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "description"],
+        "properties": {
+          "id": {"type": "string"},
+          "description": {"type": "string"}
+        }
+      }
+    }
+  }
+}

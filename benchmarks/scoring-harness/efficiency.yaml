@@ -3,8 +3,8 @@
 # Reference: benchmarks/operational-efficiency.md
 
 meta:
-  version: "0.4"
-  updated: "2026-07-17"
+  version: "0.5"
+  updated: "2026-07-21"
 
 # ────────────────────────────────────────────────────────────
 # Model pricing reference — May 2026
@@ -333,6 +333,21 @@ cost_transparency_defaults:
       SAS: 8.0
       Python: 12.0
 
+  # Level 3 human baselines (expert review required)
+  level_3:
+    tc_007:
+      human_from_scratch_min: 180
+      human_verify_agent_min:
+        R: 30.0
+        SAS: 25.0
+        Python: 35.0
+    tc_008:
+      human_from_scratch_min: 240
+      human_verify_agent_min:
+        R: 40.0
+        SAS: 35.0
+        Python: 45.0
+
 # ────────────────────────────────────────────────────────────
 # Reference agent run baselines
 # Collected from actual agent runs; used to establish efficiency benchmarks
@@ -576,7 +591,7 @@ reference_baselines:
       median_tokens_out: 10000
       median_cost_usd: 0.800
       success_rate: null
-      notes: "Dose-finding design — multi-step synthesis"
+      notes: "Dose-finding design — BOIN implementation + simulation OCs, expert review"
     tc_009:
       median_time_sec: 750
       median_tokens_in: 18000

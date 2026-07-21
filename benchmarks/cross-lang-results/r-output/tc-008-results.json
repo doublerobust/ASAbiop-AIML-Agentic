@@ -1,0 +1,57 @@
+{
+  "tc_id": "TC-008",
+  "tc_title": "End-to-End Dose-Finding Study Design with Expansion Cohort",
+  "level": 3,
+  "design": {
+    "method": "BOIN",
+    "method_full": "Bayesian Optimal Interval",
+    "target_dlt_rate": 0.3,
+    "n_doses": 5,
+    "dose_levels": [10, 20, 40, 80, 120],
+    "true_dlt_rates": [0.05, 0.12, 0.25, 0.35, 0.45],
+    "cohort_size": 3,
+    "max_n": 30,
+    "starting_dose": 1,
+    "escalation_boundary": 0.2308,
+    "deescalation_boundary": 0.4286,
+    "expansion_cohort_size": 6
+  },
+  "simulation": {
+    "n_sim": 2000,
+    "seed": 42,
+    "operating_characteristics": {
+      "prob_select_rpd": [
+        0.043,
+        0.167,
+        0.403,
+        0.288,
+        0.089
+      ],
+      "prob_no_safe_dose": 0.01,
+      "expected_n_dlts": 7.0425,
+      "expected_sample_size": 29.7375,
+      "prob_early_stop": 0.01
+    }
+  },
+  "expansion_cohort": {
+    "rpd": 3,
+    "rpd_dose": 40,
+    "n_expansion": 6,
+    "expected_dlt_rate_at_rpd": 0.25,
+    "purpose": "Preliminary efficacy and safety assessment at recommended Phase 2 dose"
+  },
+  "stopping_rules": [
+    {
+      "id": "SR-1",
+      "description": "Stop if dose 1 observed DLT rate exceeds de-escalation boundary (all doses too toxic)"
+    },
+    {
+      "id": "SR-2",
+      "description": "Stop if total sample size reaches max_n"
+    },
+    {
+      "id": "SR-3",
+      "description": "Select MTD/RP2D as dose with observed DLT rate closest to target"
+    }
+  ]
+}

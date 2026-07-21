@@ -4237,3 +4237,99 @@ Cross-language ARS consistency checks pass for TCs using shared data (TC-003, TC
 4. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 + TC-007
 5. **White paper WG review** — circulate v1.10 for working group feedback
 6. **Efficiency scoring** — collect actual agent run metrics from frontier model eval
+
+---
+
+## Day 52 (2026-07-21): TC-008 Level 3 Implementation — Dose-Finding Study Design with BOIN
+
+**Date:** July 21, 2026 (Tuesday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### Completed
+
+#### 1. TC-008: End-to-End Dose-Finding Study Design with Expansion Cohort (Level 3)
+
+**Goal:** Implement the second Level 3 test case — a Phase I dose-finding study design task where the agent must select a dose-escalation method, define dose levels with DLT rate assumptions, specify stopping rules, design an expansion cohort at RP2D, and simulate operating characteristics (OCs) over 2,000 trials.
+
+**Design:**
+- **Method:** BOIN (Bayesian Optimal Interval) — Yuan & Lin (2016)
+- **Target DLT rate:** 0.30 (30%)
+- **Dose levels:** 5 levels (10, 20, 40, 80, 120 mg)
+- **True DLT rates:** [0.05, 0.12, 0.25, 0.35, 0.45] — Dose 3 (40mg) is the true MTD
+- **Cohort size:** 3 patients
+- **Max sample size:** 30 patients
+- **Starting dose:** Level 1 (10 mg)
+- **BOIN boundaries:** λ_e = 0.230769 (escalation), λ_d = 0.428571 (de-escalation)
+- **Expansion cohort:** 6 patients at RP2D
+- **Simulations:** 2,000 trials with shared random draws for exact R↔Python verification
+
+**Files created:**
+- `references/ground-truth/R/generate_tc008_dose_finding.R` — R data/parameter generator (writes design params JSON + shared simulation draws CSV)
+- `references/ground-truth/R/tc-008-dose-finding.R` — R ground truth: BOIN algorithm, simulation OCs, expansion cohort design
+- `references/ground-truth/Python/tc_008_dose_finding.py` — Python ground truth (mirrors R implementation)
+- `references/ground-truth/reference-memos/tc-008-reference-design.md` — Reference Phase I protocol design document with actual simulation numbers
+- `references/output-schemas/tc-008-output-schema.json` — JSON schema for output validation
+- `scoring-harness/tc008_scorer.py` — Expert rubric scorer with:
+  - 8 numerical auto-scorable criteria (30% weight): BOIN boundaries, n_doses, target rate, P(select MTD), E[DLTs], E[N]
+  - 8 structural section checks (20% weight): protocol synopsis, dose-escalation method, dose levels, stopping rules, simulation OCs, expansion cohort, statistical considerations, references
+  - 7 concept/keyword checks (20% weight): BOIN, DLT definition, MTD, simulation OCs, cohort design, safety monitoring, regulatory standards
+  - LLM-as-judge prompt template (30% weight, for manual/LLM scoring)
+
+**Cross-Language Verification:**
+
+| Metric | R | Python | Match |
+|---|---|---|---|
+| P(select dose 1) | 0.043 | 0.043 | ✅ |
+| P(select dose 2) | 0.167 | 0.167 | ✅ |
+| P(select dose 3, true MTD) | 0.403 | 0.403 | ✅ |
+| P(select dose 4) | 0.288 | 0.288 | ✅ |
+| P(select dose 5) | 0.089 | 0.089 | ✅ |
+| Prob no safe dose | 0.010 | 0.010 | ✅ |
+| Expected DLTs | 7.0425 | 7.0425 | ✅ |
+| Expected sample size | 29.7375 | 29.7375 | ✅ |
+| Prob early stop | 0.010 | 0.010 | ✅ |
+| RP2D (modal) | 3 (40 mg) | 3 (40 mg) | ✅ |
+
+**Cross-language score: 1.0000** ✅ (exact match using shared random draws)
+
+**Schema validation:** ✅ Both R and Python outputs pass JSON schema validation
+
+**Scorer test:** Auto-scored portion = 30/30 numerical + 20/20 structural + 20/20 concepts = **70/70 (100%)**. LLM-judge portion (30%) pending agent-generated design document.
+
+**Key simulation findings:**
+- BOIN correctly identifies Dose 3 (40 mg) as RP2D with 40.3% probability (highest)
+- Dose 4 (80 mg, DLT rate 0.35) is selected 28.8% of the time (slightly above target)
+- Expected sample size is 29.74 (near the max of 30, indicating efficient dose exploration)
+- Probability of early stopping for toxicity is only 1.0% (lowest dose is very safe at 0.05 DLT rate)
+
+#### 2. White Paper Updated to v1.11
+
+- Version bumped 1.10 → 1.11, date updated to 2026-07-21
+- Abstract: Level 3 status updated to include TC-008 implementation
+- Level 3 description: Both TC-007 and TC-008 now listed as implemented
+- Roadmap Phase 3: TC-008 Level 3 marked complete
+
+#### 3. Efficiency YAML Updated (v0.4 → v0.5)
+
+- Added Level 3 human baselines for TC-007 (180 min from scratch) and TC-008 (240 min from scratch)
+- Updated TC-008 reference agent baseline notes to reflect BOIN implementation
+- Meta version bumped to 0.5, date updated to 2026-07-21
+
+### 📊 Updated Score Summary
+
+| Component | Status |
+|---|---|
+| Level 1 TCs (27) | All verified at 1.0000 |
+| Level 2 TCs (4) | TC-004 (auto-scorer), TC-005 (error injection), TC-006 (1.0000), TC-035 (1.0000) |
+| Level 3 TCs (2/4) | TC-007 ✅, TC-008 ✅ (both with R+Python ground truth, scorers, reference docs) |
+| ARS envelopes | 21 TCs covered (28 files) |
+| Total TCs | 33 (27 L1 + 4 L2 + 2 L3) |
+
+### 🔮 Plan for Day 53+
+
+1. **TC-009 Level 3 implementation** — Safety signal evaluation / DMC report
+2. **TC-010 Level 3 implementation** — CSR statistical sections
+3. **TC-004 LLM-judge API integration** — wire SAP drafting scorer to actual LLM API
+4. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 + TC-007 + TC-008
+5. **White paper WG review** — circulate v1.11 for working group feedback
+6. **Efficiency scoring** — collect actual agent run metrics from frontier model eval

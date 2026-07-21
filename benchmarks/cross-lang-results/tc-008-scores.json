@@ -1,0 +1,148 @@
+{
+  "tc_id": "TC-008",
+  "scoring": {
+    "numerical": {
+      "scores": {
+        "escalation_boundary_correct": {
+          "score": 0.04,
+          "max": 0.04,
+          "detail": "exp=0.2308, act=0.2308, diff=0.000000"
+        },
+        "deescalation_boundary_correct": {
+          "score": 0.04,
+          "max": 0.04,
+          "detail": "exp=0.4286, act=0.4286, diff=0.000000"
+        },
+        "n_doses_correct": {
+          "score": 0.02,
+          "max": 0.02,
+          "detail": "exp=5, act=5, diff=0"
+        },
+        "target_dlt_rate_correct": {
+          "score": 0.03,
+          "max": 0.03,
+          "detail": "exp=0.3, act=0.3, diff=0.0000"
+        },
+        "prob_select_mtd_directional": {
+          "score": 0.05,
+          "max": 0.05,
+          "detail": "MTD_idx=2, P=0.403, max=0.403"
+        },
+        "prob_select_mtd_value": {
+          "score": 0.04,
+          "max": 0.04,
+          "detail": "exp=0.403, act=0.403, diff=0.0000"
+        },
+        "expected_dlts_correct": {
+          "score": 0.04,
+          "max": 0.04,
+          "detail": "exp=7.0425, act=7.0425, diff=0.0000"
+        },
+        "expected_sample_size_correct": {
+          "score": 0.04,
+          "max": 0.04,
+          "detail": "exp=29.7375, act=29.7375, diff=0.0000"
+        }
+      },
+      "subtotal": 0.3,
+      "max": 0.3
+    },
+    "structural": {
+      "scores": {
+        "protocol_synopsis": {
+          "score": 0.025,
+          "max": 0.025,
+          "detail": "found=True, patterns=['protocol synopsis', 'study title', 'study design']"
+        },
+        "dose_escalation_method": {
+          "score": 0.025,
+          "max": 0.025,
+          "detail": "found=True, patterns=['dose escalation method', 'boin', 'crm', 'ewoc', 'escalation method']"
+        },
+        "dose_levels": {
+          "score": 0.025,
+          "max": 0.025,
+          "detail": "found=True, patterns=['dose level', 'dose levels', 'dose escalation table']"
+        },
+        "stopping_rules": {
+          "score": 0.025,
+          "max": 0.025,
+          "detail": "found=True, patterns=['stopping rule', 'stopping rules', 'stopping criteria', 'stop if']"
+        },
+        "simulation_operating_characteristics": {
+          "score": 0.025,
+          "max": 0.025,
+          "detail": "found=True, patterns=['operating characteristic', 'simulation', 'oc', 'probability of selecting']"
+        },
+        "expansion_cohort": {
+          "score": 0.025,
+          "max": 0.025,
+          "detail": "found=True, patterns=['expansion cohort', 'expansion', 'rpd', 'rp2d', 'recommended phase 2']"
+        },
+        "statistical_considerations": {
+          "score": 0.025,
+          "max": 0.025,
+          "detail": "found=True, patterns=['statistical consideration', 'dlt definition', 'sample size justification']"
+        },
+        "references": {
+          "score": 0.025,
+          "max": 0.025,
+          "detail": "found=True, patterns=['reference', 'references', 'bibliography']"
+        }
+      },
+      "subtotal": 0.2,
+      "max": 0.2
+    },
+    "concepts": {
+      "scores": {
+        "boin_method": {
+          "score": 0.04,
+          "max": 0.04,
+          "detail": "matches=3/3"
+        },
+        "dlt_definition": {
+          "score": 0.03,
+          "max": 0.03,
+          "detail": "matches=3/6"
+        },
+        "mtd_concept": {
+          "score": 0.03,
+          "max": 0.03,
+          "detail": "matches=5/5"
+        },
+        "simulation_oc_concepts": {
+          "score": 0.03,
+          "max": 0.03,
+          "detail": "matches=5/5"
+        },
+        "cohort_design": {
+          "score": 0.03,
+          "max": 0.03,
+          "detail": "matches=5/5"
+        },
+        "safety_monitoring": {
+          "score": 0.02,
+          "max": 0.02,
+          "detail": "matches=6/6"
+        },
+        "regulatory_standards": {
+          "score": 0.02,
+          "max": 0.02,
+          "detail": "matches=4/5"
+        }
+      },
+      "subtotal": 0.2,
+      "max": 0.2
+    },
+    "llm_judge": {
+      "weight": 0.3,
+      "status": "pending",
+      "prompt": "You are an expert biostatistician specializing in early-phase oncology trial design.\nReview the following Phase I dose-finding study design for [Investigational Agent].\n\nScore the following design document on a 0-5 scale for each criterion:\n\n1. **Statistical Design Rigor (10 pts)**: Is the BOIN (or alternative) dose-escalation\n   method correctly specified and justified? Are the dose levels, DLT rates, and\n   escalation/de-escalation boundaries appropriate? Are the stopping rules sound?\n\n2. **Simulation Quality (8 pts)**: Are the operating characteristics from the simulation\n   (P(select MTD), E[DLTs], E[N], P(early stop)) correctly computed and reported?\n   Is the simulation methodology sound (adequate number of trials, proper seed)?\n\n3. **Expansion Cohort Design (5 pts)**: Is the expansion cohort at the RP2D well-designed?\n   Is the RP2D correctly identified from the simulation? Is the expansion cohort size\n   and monitoring plan appropriate?\n\n4. **Regulatory & Clinical Appropriateness (4 pts)**: Does the design adhere to ICH\n   guidelines and FDA expectations for first-in-human oncology trials? Is the DLT\n   definition clinically appropriate? Is the sample size justified?\n\n5. **Communication Clarity (3 pts)**: Is the design document clearly written, well-\n   organized, and accessible to clinical and regulatory reviewers?\n\nGround truth design and simulation results:\n{\n  \"tc_id\": \"TC-008\",\n  \"tc_title\": \"End-to-End Dose-Finding Study Design with Expansion Cohort\",\n  \"level\": 3,\n  \"design\": {\n    \"method\": \"BOIN\",\n    \"method_full\": \"Bayesian Optimal Interval\",\n    \"target_dlt_rate\": 0.3,\n    \"n_doses\": 5,\n    \"dose_levels\": [\n      10,\n      20,\n      40,\n      80,\n      120\n    ],\n    \"true_dlt_rates\": [\n      0.05,\n      0.12,\n      0.25,\n      0.35,\n      0.45\n    ],\n    \"cohort_size\": 3,\n    \"max_n\": 30,\n    \"starting_dose\": 1,\n    \"escalation_boundary\": 0.2308,\n    \"deescalation_boundary\": 0.4286,\n    \"expansion_cohort_size\": 6\n  },\n  \"simulation\": {\n    \"n_sim\": 2000,\n    \"seed\": 42,\n    \"operating_characteristics\": {\n      \"prob_select_rpd\": [\n        0.043,\n        0.167,\n        0.403,\n        0.288,\n        0.089\n      ],\n      \"prob_no_safe_dose\": 0.01,\n      \"expected_n_dlts\": 7.0425,\n      \"expected_sample_size\": 29.7375,\n      \"prob_early_stop\": 0.01\n    }\n  },\n  \"expansion_cohort\": {\n    \"rpd\": 3,\n    \"rpd_dose\": 40,\n    \"n_expansion\": 6,\n    \"expected_dlt_rate_at_rpd\": 0.25,\n    \"purpose\": \"Preliminary efficacy and safety assessment at recommended Phase 2 dose\"\n  },\n  \"stopping_rules\": [\n    {\n      \"id\": \"SR-1\",\n      \"description\": \"Stop if dose 1 observed DLT rate exceeds de-escalation boundary (all doses too toxic)\"\n    },\n    {\n      \"id\": \"SR-2\",\n      \"description\": \"Stop if total sample size reaches max_n\"\n    },\n    {\n      \"id\": \"SR-3\",\n      \"description\": \"Select MTD/RP2D as dose with observed DLT rate closest to target\"\n    }\n  ]\n}\n\nAgent design document:\n# Phase I Dose-Finding Study Design with Expansion Cohort\n\n## Protocol Synopsis\n\n**Study Title:** A Phase I, Open-Label, Dose-Escalation Study to Evaluate the Safety, Tolerability, and Pharmacokinetics of [Investigational Agent] in Patients with Advanced Solid Tumors, Followed by an Expansion Cohort at the Recommended Phase 2 Dose (RP2D)\n\n**Indication:** Advanced or metastatic solid tumors, refractory to standard therapy\n\n**Primary Objective:** To determine the maximum tolerated dose (MTD) and recommended Phase 2 dose (RP2D) of [Investigational Agent] when administered as a single agent\n\n**Secondary Objectives:** To characterize the safety profile, pharmacokinetics, and preliminary anti-tumor activity at the RP2D\n\n---\n\n## 1. Dose-Escalation Method: BOIN (Bayesian Optimal Interval)\n\n### 1.1 Method Justification\n\nThe Bayesian Optimal Interval (BOIN) design (Yuan & Lin, 2016) is selected for this study based on the following considerations:\n\n1. **Statistical efficiency:** BOIN minimizes the probability of incorrect dose-assignment decisions under the Bayesian decision-theoretic framework, achieving near-optimal operating characteristics.\n\n2. **Implementation simplicity:** Unlike the Continual Reassessment Method (CRM), BOIN does not require specifying a skeleton of prior dose-toxicity probabilities. The design is entirely determined by the target DLT rate, making it transparent and easy to implement.\n\n3. **Safety properties:** BOIN has favorable overdose control properties. Under the default settings, the probability of exposing patients to excessively toxic doses is controlled at a pre-specified level.\n\n4. **Regulatory acceptance:** BOIN has been used in multiple oncology trials with FDA and EMA submissions and is well-described in the statistical literature with established operating characteristics.\n\n### 1.2 Design Parameters\n\n| Parameter | Value |\n|---|---|\n| Target DLT rate (\u03c6) | 0.30 (30%) |\n| Number of dose levels | 5 |\n| Cohort size | 3 patients |\n| Maximum sample size (escalation) | 30 patients |\n| Starting dose level | Level 1 (lowest, 10 mg) |\n| Escalation boundary (\u03bb_e) | 0.230769 |\n| De-escalation boundary (\u03bb_d) | 0.428571 |\n\n### 1.3 Dose Levels and DLT Rate Assumptions\n\n| Dose Level | Dose (mg) | True DLT Rate (simulation) | Interpretation |\n|---|---|---|---|\n| 1 | 10 | 0.05 (5%) | Very safe, likely sub-therapeutic |\n| 2 | 20 | 0.12 (12%) | Safe, potentially active |\n| 3 | 40 | 0.25 (25%) | Near target, likely MTD |\n| 4 | 80 | 0.35 (35%) | Slightly above target |\n| 5 | 120 | 0.45 (45%) | Above target, likely toxic |\n\n**True MTD:** Dose Level 3 (40 mg) \u2014 the dose with true DLT rate closest to the target (0.25 vs. 0.30) from below.\n\n### 1.4 Escalation/De-escalation Rules\n\nAt each decision point, compute the observed DLT rate at the current dose (p\u0302 = number of DLTs / number of patients treated at current dose):\n\n- **Escalate** to next higher dose if p\u0302 < \u03bb_e (0.2308)\n- **De-escalate** to next lower dose if p\u0302 > \u03bb_d (0.4286)\n- **Stay** at current dose if \u03bb_e \u2264 p\u0302 \u2264 \u03bb_d\n\n### 1.5 Stopping Rules\n\n1. **Toxicity stop:** If the observed DLT rate at Dose Level 1 exceeds the de-escalation boundary (\u03bb_d), stop the trial and declare no safe dose (all doses too toxic).\n2. **Sample size stop:** Stop when the total sample size reaches the maximum of 30 patients.\n3. **MTD selection:** At the end of the trial, select the MTD/RP2D as the dose with the observed DLT rate closest to the target rate \u03c6 (among all doses with patient data).\n\n---\n\n## 2. Simulation Operating Characteristics\n\n### 2.1 Simulation Setup\n\n| Parameter | Value |\n|---|---|\n| Number of simulated trials | 2,000 |\n| Random seed | 42 |\n| Cross-language verification | R \u2194 Python (shared random draws) |\n\n### 2.2 Operating Characteristics Results\n\n**Probability of Selecting Each Dose as RP2D:**\n\n| Dose Level | Dose (mg) | True DLT Rate | P(Select as RP2D) |\n|---|---|---|---|\n| 1 | 10 | 0.05 | [prob_select_1] |\n| 2 | 20 | 0.12 | [prob_select_2] |\n| 3 | 40 | 0.25 | [prob_select_3] |\n| 4 | 80 | 0.35 | [prob_select_4] |\n| 5 | 120 | 0.45 | [prob_select_5] |\n\n**No safe dose:** [prob_no_safe] (probability of stopping for toxicity at all doses)\n\n**Expected number of DLTs:** [expected_dlts]\n\n**Expected total sample size:** [expected_n]\n\n**Probability of early stopping (toxicity):** [prob_early_stop]\n\n### 2.3 Interpretation\n\nThe BOIN design correctly identifies Dose Level 3 (40 mg) as the RP2D with the highest probability, consistent with the true MTD being at Dose Level 3 (true DLT rate = 0.25, closest to the target of 0.30). The design demonstrates:\n\n1. **Correct selection:** The modal RP2D matches the true MTD\n2. **Reasonable sample size:** The expected sample size is close to the maximum, indicating efficient dose exploration\n3. **Low overdosing:** The probability of selecting an overly toxic dose (Level 5, DLT rate 0.45) is low\n4. **Safety:** The probability of early stopping for toxicity is low, reflecting the safety of the lowest dose levels\n\n---\n\n## 3. Expansion Cohort Design\n\n### 3.1 Design\n\n| Parameter | Value |\n|---|---|\n| RP2D (modal selection) | Dose Level [rpd_modal] ([rpd_dose] mg) |\n| Expansion cohort size | 6 patients |\n| Expected DLT rate at RP2D | [rpd_rate] |\n| Expansion purpose | Preliminary efficacy and safety assessment |\n\n### 3.2 Expansion Cohort Objectives\n\nThe expansion cohort at the RP2D will enroll 6 additional patients to:\n\n1. **Refine the safety estimate** at the RP2D with additional patient exposure\n2. **Assess preliminary anti-tumor activity** (objective response rate, disease control rate) using RECIST 1.1 criteria\n3. **Characterize pharmacokinetics** at the recommended dose\n4. **Inform Phase 2 dose selection** with integrated safety and efficacy data\n\n### 3.3 Expansion Cohort Monitoring\n\n- Patients in the expansion cohort will be monitored using the same DLT assessment criteria as the escalation phase\n- If \u2265 2/6 expansion cohort patients experience DLTs, the RP2D will be re-evaluated and potentially de-escalated\n- The expansion cohort may be expanded to 12 patients if preliminary activity is observed (e.g., \u2265 1 objective response)\n\n---\n\n## 4. Statistical Considerations\n\n### 4.1 DLT Definition\n\nA Dose-Limiting Toxicity (DLT) is defined as any of the following occurring during the DLT observation period (Cycle 1, 28 days):\n\n- Grade \u2265 3 non-hematologic toxicity (excluding nausea/vomiting/diarrhea responsive to treatment)\n- Grade \u2265 4 hematologic toxicity lasting \u2265 7 days\n- Any toxicity requiring treatment delay of > 14 days\n- Death attributable to study treatment\n\n### 4.2 Informed Consent and Ethics\n\n- All patients must provide written informed consent prior to any study-specific procedures\n- The study will be conducted in accordance with the Declaration of Helsinki, ICH GCP E6(R2), and applicable local regulations\n- An independent Data Safety Monitoring Board (DSMB) will review safety data after each cohort\n\n### 4.3 Sample Size Justification\n\nThe maximum sample size of 30 patients for the dose-escalation phase is determined by the BOIN design specifications. The expansion cohort of 6 patients provides additional safety and preliminary efficacy data at the RP2D. The total maximum sample size is 36 patients.\n\n---\n\n## 5. Cross-Language Verification\n\nThe BOIN simulation is implemented in both R and Python. For exact cross-language verification, pre-generated uniform random draws are shared between the two implementations via a CSV file, ensuring identical simulation outcomes.\n\n**Verification results:**\n- Design parameters (boundaries, dose levels): Exact match \u2705\n- Simulation operating characteristics (using shared draws): Exact match \u2705\n- Cross-language score: 1.0000 \u2705\n\n---\n\n## References\n\n1. Yuan, Y., & Lin, K. (2016). Bayesian Optimal Interval Design for Phase I Oncology Clinical Trials. *Statistical Methods in Medical Research*, 27(3), 1-16.\n2. Liu, S., & Yuan, Y. (2015). Bayesian Optimal Interval Designs for Phase I Clinical Trials. *Journal of the Royal Statistical Society: Series C*, 64(3), 507-521.\n3. ICH E9(R1). (2019). Statistical Principles for Clinical Trials \u2014 Addendum: Estimands and Sensitivity Analysis.\n4. FDA Guidance for Industry: Estimating the Maximum Safe Starting Dose in Initial Clinical Trials for Therapeutics in Adult Healthy Volunteers (2005).\n\n---\n\n*This design document has been prepared in accordance with ICH E6(R2) GCP, ICH E9(R1) estimand framework, and FDA guidance for first-in-human clinical trials.*\n\n\nFor each criterion, provide:\n- Score (0-5)\n- Rationale (1-2 sentences)\n\nOutput as JSON:\n{\n  \"statistical_design_rigor\": {\"score\": 0-5, \"rationale\": \"...\"},\n  \"simulation_quality\": {\"score\": 0-5, \"rationale\": \"...\"},\n  \"expansion_cohort_design\": {\"score\": 0-5, \"rationale\": \"...\"},\n  \"regulatory_appropriateness\": {\"score\": 0-5, \"rationale\": \"...\"},\n  \"communication_clarity\": {\"score\": 0-5, \"rationale\": \"...\"}\n}\n",
+      "note": "Run LLM-as-judge with the prompt above, then fill in qualitative scores."
+    },
+    "auto_scored_total": 0.7,
+    "auto_scored_max": 0.7,
+    "auto_scored_pct": 1.0
+  },
+  "total_score_note": "Auto-scored: 0.7000/0.7000 (100.00%). LLM-judge portion (30%) pending. Total = auto_scored + llm_judge_score."
+}
