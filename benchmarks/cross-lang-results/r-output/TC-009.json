@@ -1,0 +1,1107 @@
+{
+  "tc_id": "TC-009",
+  "tc_title": "Safety Signal Evaluation and DMC Report",
+  "level": 3,
+  "study_design": {
+    "n_subjects": 400,
+    "n_per_arm": {
+      "Active": 200,
+      "Placebo": 200
+    },
+    "total_patient_years": {
+      "Active": 207.5569,
+      "Placebo": 215.5697
+    },
+    "arms": ["Active", "Placebo"]
+  },
+  "ae_overview": {
+    "by_arm": {
+      "Active": {
+        "n": 200,
+        "n_any_ae": 200,
+        "pct_any_ae": 100,
+        "n_sae": 98,
+        "pct_sae": 49,
+        "n_disc": 55,
+        "pct_disc": 27.5,
+        "n_died": 17,
+        "pct_died": 8.5,
+        "total_ae_reports": 1037
+      },
+      "Placebo": {
+        "n": 200,
+        "n_any_ae": 194,
+        "pct_any_ae": 97,
+        "n_sae": 74,
+        "pct_sae": 37,
+        "n_disc": 44,
+        "pct_disc": 22,
+        "n_died": 21,
+        "pct_died": 10.5,
+        "total_ae_reports": 609
+      }
+    },
+    "risk_difference": {
+      "any_ae": {
+        "rd": 0.03,
+        "ci_lower": 0.0064,
+        "ci_upper": 0.0536,
+        "fisher_p": 0.0301
+      },
+      "sae": {
+        "rd": 0.12,
+        "ci_lower": 0.0237,
+        "ci_upper": 0.2163,
+        "fisher_p": 0.0201
+      },
+      "discontinuation": {
+        "rd": 0.055,
+        "ci_lower": -0.0294,
+        "ci_upper": 0.1394,
+        "fisher_p": 0.2465
+      },
+      "death": {
+        "rd": -0.02,
+        "ci_lower": -0.0774,
+        "ci_upper": 0.0374,
+        "fisher_p": 0.6095
+      }
+    }
+  },
+  "exposure_adjusted": {
+    "total_patient_years": {
+      "Active": 207.5569,
+      "Placebo": 215.5697
+    },
+    "ae_per_100py": {
+      "Active": 499.62,
+      "Placebo": 282.51
+    },
+    "sae_per_100py": {
+      "Active": 65.52,
+      "Placebo": 39.89
+    },
+    "common_pts": {
+      "Acute kidney injury": {
+        "pt": "Acute kidney injury",
+        "n_active": 12,
+        "n_placebo": 6,
+        "rate_per_100py_active": 5.78,
+        "rate_per_100py_placebo": 2.78,
+        "rd_per_100py": 3,
+        "rd_pct_ci_lower": -0.0105,
+        "rd_pct_ci_upper": 0.0705
+      },
+      "Alanine aminotransferase increased": {
+        "pt": "Alanine aminotransferase increased",
+        "n_active": 49,
+        "n_placebo": 24,
+        "rate_per_100py_active": 23.61,
+        "rate_per_100py_placebo": 11.13,
+        "rd_per_100py": 12.48,
+        "rd_pct_ci_lower": 0.0503,
+        "rd_pct_ci_upper": 0.1997
+      },
+      "Anaemia": {
+        "pt": "Anaemia",
+        "n_active": 51,
+        "n_placebo": 29,
+        "rate_per_100py_active": 24.57,
+        "rate_per_100py_placebo": 13.45,
+        "rd_per_100py": 11.12,
+        "rd_pct_ci_lower": 0.0323,
+        "rd_pct_ci_upper": 0.1877
+      },
+      "Aspartate aminotransferase increased": {
+        "pt": "Aspartate aminotransferase increased",
+        "n_active": 46,
+        "n_placebo": 23,
+        "rate_per_100py_active": 22.16,
+        "rate_per_100py_placebo": 10.67,
+        "rd_per_100py": 11.49,
+        "rd_pct_ci_lower": 0.0418,
+        "rd_pct_ci_upper": 0.1882
+      },
+      "Atrial fibrillation": {
+        "pt": "Atrial fibrillation",
+        "n_active": 10,
+        "n_placebo": 8,
+        "rate_per_100py_active": 4.82,
+        "rate_per_100py_placebo": 3.71,
+        "rd_per_100py": 1.11,
+        "rd_pct_ci_lower": -0.0306,
+        "rd_pct_ci_upper": 0.0506
+      },
+      "Blood bilirubin increased": {
+        "pt": "Blood bilirubin increased",
+        "n_active": 25,
+        "n_placebo": 14,
+        "rate_per_100py_active": 12.04,
+        "rate_per_100py_placebo": 6.49,
+        "rd_per_100py": 5.55,
+        "rd_pct_ci_lower": -0.0029,
+        "rd_pct_ci_upper": 0.1129
+      },
+      "Cough": {
+        "pt": "Cough",
+        "n_active": 34,
+        "n_placebo": 27,
+        "rate_per_100py_active": 16.38,
+        "rate_per_100py_placebo": 12.52,
+        "rd_per_100py": 3.86,
+        "rd_pct_ci_lower": -0.0354,
+        "rd_pct_ci_upper": 0.1054
+      },
+      "Death": {
+        "pt": "Death",
+        "n_active": 16,
+        "n_placebo": 21,
+        "rate_per_100py_active": 7.71,
+        "rate_per_100py_placebo": 9.74,
+        "rd_per_100py": -2.03,
+        "rd_pct_ci_lower": -0.0817,
+        "rd_pct_ci_upper": 0.0317
+      },
+      "Decreased appetite": {
+        "pt": "Decreased appetite",
+        "n_active": 56,
+        "n_placebo": 45,
+        "rate_per_100py_active": 26.98,
+        "rate_per_100py_placebo": 20.87,
+        "rd_per_100py": 6.11,
+        "rd_pct_ci_lower": -0.03,
+        "rd_pct_ci_upper": 0.14
+      },
+      "Diarrhoea": {
+        "pt": "Diarrhoea",
+        "n_active": 81,
+        "n_placebo": 44,
+        "rate_per_100py_active": 39.03,
+        "rate_per_100py_placebo": 20.41,
+        "rd_per_100py": 18.62,
+        "rd_pct_ci_lower": 0.096,
+        "rd_pct_ci_upper": 0.274
+      },
+      "Drug-induced liver injury": {
+        "pt": "Drug-induced liver injury",
+        "n_active": 12,
+        "n_placebo": 3,
+        "rate_per_100py_active": 5.78,
+        "rate_per_100py_placebo": 1.39,
+        "rd_per_100py": 4.39,
+        "rd_pct_ci_lower": 0.008,
+        "rd_pct_ci_upper": 0.082
+      },
+      "Fatigue": {
+        "pt": "Fatigue",
+        "n_active": 104,
+        "n_placebo": 62,
+        "rate_per_100py_active": 50.11,
+        "rate_per_100py_placebo": 28.76,
+        "rd_per_100py": 21.35,
+        "rd_pct_ci_lower": 0.1156,
+        "rd_pct_ci_upper": 0.3044
+      },
+      "Headache": {
+        "pt": "Headache",
+        "n_active": 42,
+        "n_placebo": 44,
+        "rate_per_100py_active": 20.24,
+        "rate_per_100py_placebo": 20.41,
+        "rd_per_100py": -0.17,
+        "rd_pct_ci_lower": -0.0905,
+        "rd_pct_ci_upper": 0.0705
+      },
+      "Hypothyroidism": {
+        "pt": "Hypothyroidism",
+        "n_active": 27,
+        "n_placebo": 13,
+        "rate_per_100py_active": 13.01,
+        "rate_per_100py_placebo": 6.03,
+        "rd_per_100py": 6.98,
+        "rd_pct_ci_lower": 0.0116,
+        "rd_pct_ci_upper": 0.1284
+      },
+      "Nausea": {
+        "pt": "Nausea",
+        "n_active": 102,
+        "n_placebo": 64,
+        "rate_per_100py_active": 49.14,
+        "rate_per_100py_placebo": 29.69,
+        "rd_per_100py": 19.45,
+        "rd_pct_ci_lower": 0.0952,
+        "rd_pct_ci_upper": 0.2848
+      },
+      "Neutropenia": {
+        "pt": "Neutropenia",
+        "n_active": 51,
+        "n_placebo": 25,
+        "rate_per_100py_active": 24.57,
+        "rate_per_100py_placebo": 11.6,
+        "rd_per_100py": 12.97,
+        "rd_pct_ci_lower": 0.0542,
+        "rd_pct_ci_upper": 0.2058
+      },
+      "Peripheral neuropathy": {
+        "pt": "Peripheral neuropathy",
+        "n_active": 31,
+        "n_placebo": 13,
+        "rate_per_100py_active": 14.94,
+        "rate_per_100py_placebo": 6.03,
+        "rd_per_100py": 8.91,
+        "rd_pct_ci_lower": 0.0293,
+        "rd_pct_ci_upper": 0.1507
+      },
+      "Pruritus": {
+        "pt": "Pruritus",
+        "n_active": 61,
+        "n_placebo": 21,
+        "rate_per_100py_active": 29.39,
+        "rate_per_100py_placebo": 9.74,
+        "rd_per_100py": 19.65,
+        "rd_pct_ci_lower": 0.1233,
+        "rd_pct_ci_upper": 0.2767
+      },
+      "Pyrexia": {
+        "pt": "Pyrexia",
+        "n_active": 40,
+        "n_placebo": 32,
+        "rate_per_100py_active": 19.27,
+        "rate_per_100py_placebo": 14.84,
+        "rd_per_100py": 4.43,
+        "rd_pct_ci_lower": -0.0352,
+        "rd_pct_ci_upper": 0.1152
+      },
+      "QT prolongation": {
+        "pt": "QT prolongation",
+        "n_active": 15,
+        "n_placebo": 3,
+        "rate_per_100py_active": 7.23,
+        "rate_per_100py_placebo": 1.39,
+        "rd_per_100py": 5.84,
+        "rd_pct_ci_lower": 0.0198,
+        "rd_pct_ci_upper": 0.1002
+      },
+      "Rash": {
+        "pt": "Rash",
+        "n_active": 81,
+        "n_placebo": 32,
+        "rate_per_100py_active": 39.03,
+        "rate_per_100py_placebo": 14.84,
+        "rd_per_100py": 24.19,
+        "rd_pct_ci_lower": 0.1601,
+        "rd_pct_ci_upper": 0.3299
+      },
+      "Thrombocytopenia": {
+        "pt": "Thrombocytopenia",
+        "n_active": 38,
+        "n_placebo": 25,
+        "rate_per_100py_active": 18.31,
+        "rate_per_100py_placebo": 11.6,
+        "rd_per_100py": 6.71,
+        "rd_pct_ci_lower": -0.0061,
+        "rd_pct_ci_upper": 0.1361
+      },
+      "Vomiting": {
+        "pt": "Vomiting",
+        "n_active": 53,
+        "n_placebo": 31,
+        "rate_per_100py_active": 25.54,
+        "rate_per_100py_placebo": 14.38,
+        "rd_per_100py": 11.16,
+        "rd_pct_ci_lower": 0.0309,
+        "rd_pct_ci_upper": 0.1891
+      }
+    }
+  },
+  "grade3_plus": {
+    "by_arm": {
+      "Active": {
+        "n": 138,
+        "pct": 69
+      },
+      "Placebo": {
+        "n": 97,
+        "pct": 48.5
+      }
+    },
+    "risk_difference": 0.205,
+    "rd_ci": {
+      "lower": 0.1106,
+      "upper": 0.2994
+    },
+    "fisher_p": 0,
+    "top_pts": {
+      "Acute kidney injury": {
+        "pt": "Acute kidney injury",
+        "n_active": 8,
+        "n_placebo": 3,
+        "rd": 0.025,
+        "ci_lower": -0.007,
+        "ci_upper": 0.057
+      },
+      "Alanine aminotransferase increased": {
+        "pt": "Alanine aminotransferase increased",
+        "n_active": 6,
+        "n_placebo": 5,
+        "rd": 0.005,
+        "ci_lower": -0.027,
+        "ci_upper": 0.037
+      },
+      "Anaemia": {
+        "pt": "Anaemia",
+        "n_active": 21,
+        "n_placebo": 6,
+        "rd": 0.075,
+        "ci_lower": 0.0264,
+        "ci_upper": 0.1236
+      },
+      "Aspartate aminotransferase increased": {
+        "pt": "Aspartate aminotransferase increased",
+        "n_active": 8,
+        "n_placebo": 5,
+        "rd": 0.015,
+        "ci_lower": -0.0197,
+        "ci_upper": 0.0497
+      },
+      "Atrial fibrillation": {
+        "pt": "Atrial fibrillation",
+        "n_active": 2,
+        "n_placebo": 5,
+        "rd": -0.015,
+        "ci_lower": -0.0407,
+        "ci_upper": 0.0107
+      },
+      "Blood bilirubin increased": {
+        "pt": "Blood bilirubin increased",
+        "n_active": 5,
+        "n_placebo": 1,
+        "rd": 0.02,
+        "ci_lower": -0.0037,
+        "ci_upper": 0.0437
+      },
+      "Cough": {
+        "pt": "Cough",
+        "n_active": 5,
+        "n_placebo": 5,
+        "rd": 0,
+        "ci_lower": -0.0306,
+        "ci_upper": 0.0306
+      },
+      "Death": {
+        "pt": "Death",
+        "n_active": 16,
+        "n_placebo": 21,
+        "rd": -0.025,
+        "ci_lower": -0.0817,
+        "ci_upper": 0.0317
+      },
+      "Decreased appetite": {
+        "pt": "Decreased appetite",
+        "n_active": 11,
+        "n_placebo": 9,
+        "rd": 0.01,
+        "ci_lower": -0.0327,
+        "ci_upper": 0.0527
+      },
+      "Diarrhoea": {
+        "pt": "Diarrhoea",
+        "n_active": 16,
+        "n_placebo": 5,
+        "rd": 0.055,
+        "ci_lower": 0.0116,
+        "ci_upper": 0.0984
+      },
+      "Drug-induced liver injury": {
+        "pt": "Drug-induced liver injury",
+        "n_active": 12,
+        "n_placebo": 3,
+        "rd": 0.045,
+        "ci_lower": 0.008,
+        "ci_upper": 0.082
+      },
+      "Fatigue": {
+        "pt": "Fatigue",
+        "n_active": 12,
+        "n_placebo": 7,
+        "rd": 0.025,
+        "ci_lower": -0.0166,
+        "ci_upper": 0.0666
+      },
+      "Headache": {
+        "pt": "Headache",
+        "n_active": 4,
+        "n_placebo": 7,
+        "rd": -0.015,
+        "ci_lower": -0.047,
+        "ci_upper": 0.017
+      },
+      "Hypothyroidism": {
+        "pt": "Hypothyroidism",
+        "n_active": 4,
+        "n_placebo": 2,
+        "rd": 0.01,
+        "ci_lower": -0.0138,
+        "ci_upper": 0.0338
+      },
+      "Nausea": {
+        "pt": "Nausea",
+        "n_active": 14,
+        "n_placebo": 11,
+        "rd": 0.015,
+        "ci_lower": -0.0324,
+        "ci_upper": 0.0624
+      },
+      "Neutropenia": {
+        "pt": "Neutropenia",
+        "n_active": 24,
+        "n_placebo": 8,
+        "rd": 0.08,
+        "ci_lower": 0.0274,
+        "ci_upper": 0.1326
+      },
+      "Peripheral neuropathy": {
+        "pt": "Peripheral neuropathy",
+        "n_active": 6,
+        "n_placebo": 1,
+        "rd": 0.025,
+        "ci_lower": -0.0006,
+        "ci_upper": 0.0506
+      },
+      "Pruritus": {
+        "pt": "Pruritus",
+        "n_active": 11,
+        "n_placebo": 5,
+        "rd": 0.03,
+        "ci_lower": -0.0083,
+        "ci_upper": 0.0683
+      },
+      "Pyrexia": {
+        "pt": "Pyrexia",
+        "n_active": 7,
+        "n_placebo": 6,
+        "rd": 0.005,
+        "ci_lower": -0.0298,
+        "ci_upper": 0.0398
+      },
+      "QT prolongation": {
+        "pt": "QT prolongation",
+        "n_active": 4,
+        "n_placebo": 2,
+        "rd": 0.01,
+        "ci_lower": -0.0138,
+        "ci_upper": 0.0338
+      },
+      "Rash": {
+        "pt": "Rash",
+        "n_active": 16,
+        "n_placebo": 5,
+        "rd": 0.055,
+        "ci_lower": 0.0116,
+        "ci_upper": 0.0984
+      },
+      "Thrombocytopenia": {
+        "pt": "Thrombocytopenia",
+        "n_active": 13,
+        "n_placebo": 13,
+        "rd": 0,
+        "ci_lower": -0.0483,
+        "ci_upper": 0.0483
+      },
+      "Vomiting": {
+        "pt": "Vomiting",
+        "n_active": 6,
+        "n_placebo": 3,
+        "rd": 0.015,
+        "ci_lower": -0.014,
+        "ci_upper": 0.044
+      }
+    }
+  },
+  "lab_abnormalities": {
+    "hys_law": {
+      "n_active": 10,
+      "n_placebo": 2,
+      "pct_active": 5,
+      "pct_placebo": 1,
+      "risk_difference": 0.04,
+      "rd_ci": {
+        "lower": 0.0068,
+        "upper": 0.0732
+      },
+      "fisher_p": 0.0358,
+      "interpretation": "Hy's Law: ALT or AST >3xULN AND bilirubin >2xULN. Indicates high risk of severe drug-induced liver injury (DILI)."
+    },
+    "qtc_prolongation": {
+      "n_active": 9,
+      "n_placebo": 5,
+      "pct_active": 4.5,
+      "pct_placebo": 2.5,
+      "risk_difference": 0.02,
+      "rd_ci": {
+        "lower": -0.016,
+        "upper": 0.056
+      },
+      "fisher_p": 0.4155,
+      "definition": "QTc > 480ms or increase > 60ms from baseline"
+    },
+    "alt_elevation_3xuln": {
+      "n_active": 18,
+      "n_placebo": 2
+    },
+    "ast_elevation_3xuln": {
+      "n_active": 10,
+      "n_placebo": 2
+    },
+    "bili_elevation_2xuln": {
+      "n_active": 10,
+      "n_placebo": 2
+    }
+  },
+  "time_to_grade3": {
+    "n_with_g3": 235,
+    "median_active": {
+      "median": 202,
+      "ci_lower": 180,
+      "ci_upper": 296
+    },
+    "median_placebo": {
+      "median": 426,
+      "ci_lower": 372,
+      "ci_upper": null
+    },
+    "logrank_p": 0,
+    "cox_hr": 1.7711,
+    "cox_ci": {
+      "lower": 1.3647,
+      "upper": 2.2985
+    },
+    "cox_p": 0,
+    "n_active_events": 138,
+    "n_placebo_events": 97
+  },
+  "ae_special_interest": {
+    "irae": {
+      "n_active": 156,
+      "n_placebo": 38,
+      "pct_active": 78,
+      "pct_placebo": 19,
+      "risk_difference": 0.59,
+      "rd_ci": {
+        "lower": 0.5109,
+        "upper": 0.6691
+      },
+      "fisher_p": 0,
+      "median_onset_active": 116.5,
+      "median_onset_placebo": 184.5
+    }
+  },
+  "signal_detection": {
+    "mgps": {
+      "method": "Empirical Bayes (MGPS-style, add-one-half shrinkage)",
+      "threshold": "EBGM >= 2.0 AND observed >= 3",
+      "results": {
+        "Acute kidney injury": {
+          "pt": "Acute kidney injury",
+          "o_active": 12,
+          "o_placebo": 6,
+          "e_active": 9,
+          "e_placebo": 9,
+          "ebgm_active": 1.3158,
+          "ebgm_placebo": 0.6842,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Alanine aminotransferase increased": {
+          "pt": "Alanine aminotransferase increased",
+          "o_active": 49,
+          "o_placebo": 24,
+          "e_active": 36.5,
+          "e_placebo": 36.5,
+          "ebgm_active": 1.3378,
+          "ebgm_placebo": 0.6622,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Anaemia": {
+          "pt": "Anaemia",
+          "o_active": 51,
+          "o_placebo": 29,
+          "e_active": 40,
+          "e_placebo": 40,
+          "ebgm_active": 1.2716,
+          "ebgm_placebo": 0.7284,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Aspartate aminotransferase increased": {
+          "pt": "Aspartate aminotransferase increased",
+          "o_active": 46,
+          "o_placebo": 23,
+          "e_active": 34.5,
+          "e_placebo": 34.5,
+          "ebgm_active": 1.3286,
+          "ebgm_placebo": 0.6714,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Atrial fibrillation": {
+          "pt": "Atrial fibrillation",
+          "o_active": 10,
+          "o_placebo": 8,
+          "e_active": 9,
+          "e_placebo": 9,
+          "ebgm_active": 1.1053,
+          "ebgm_placebo": 0.8947,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Blood bilirubin increased": {
+          "pt": "Blood bilirubin increased",
+          "o_active": 25,
+          "o_placebo": 14,
+          "e_active": 19.5,
+          "e_placebo": 19.5,
+          "ebgm_active": 1.275,
+          "ebgm_placebo": 0.725,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Cough": {
+          "pt": "Cough",
+          "o_active": 34,
+          "o_placebo": 27,
+          "e_active": 30.5,
+          "e_placebo": 30.5,
+          "ebgm_active": 1.1129,
+          "ebgm_placebo": 0.8871,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Death": {
+          "pt": "Death",
+          "o_active": 16,
+          "o_placebo": 21,
+          "e_active": 18.5,
+          "e_placebo": 18.5,
+          "ebgm_active": 0.8684,
+          "ebgm_placebo": 1.1316,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Decreased appetite": {
+          "pt": "Decreased appetite",
+          "o_active": 56,
+          "o_placebo": 45,
+          "e_active": 50.5,
+          "e_placebo": 50.5,
+          "ebgm_active": 1.1078,
+          "ebgm_placebo": 0.8922,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Diarrhoea": {
+          "pt": "Diarrhoea",
+          "o_active": 81,
+          "o_placebo": 44,
+          "e_active": 62.5,
+          "e_placebo": 62.5,
+          "ebgm_active": 1.2937,
+          "ebgm_placebo": 0.7063,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Drug-induced liver injury": {
+          "pt": "Drug-induced liver injury",
+          "o_active": 12,
+          "o_placebo": 3,
+          "e_active": 7.5,
+          "e_placebo": 7.5,
+          "ebgm_active": 1.5625,
+          "ebgm_placebo": 0.4375,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Fatigue": {
+          "pt": "Fatigue",
+          "o_active": 104,
+          "o_placebo": 62,
+          "e_active": 83,
+          "e_placebo": 83,
+          "ebgm_active": 1.2515,
+          "ebgm_placebo": 0.7485,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Headache": {
+          "pt": "Headache",
+          "o_active": 42,
+          "o_placebo": 44,
+          "e_active": 43,
+          "e_placebo": 43,
+          "ebgm_active": 0.977,
+          "ebgm_placebo": 1.023,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Hypothyroidism": {
+          "pt": "Hypothyroidism",
+          "o_active": 27,
+          "o_placebo": 13,
+          "e_active": 20,
+          "e_placebo": 20,
+          "ebgm_active": 1.3415,
+          "ebgm_placebo": 0.6585,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Nausea": {
+          "pt": "Nausea",
+          "o_active": 102,
+          "o_placebo": 64,
+          "e_active": 83,
+          "e_placebo": 83,
+          "ebgm_active": 1.2275,
+          "ebgm_placebo": 0.7725,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Neutropenia": {
+          "pt": "Neutropenia",
+          "o_active": 51,
+          "o_placebo": 25,
+          "e_active": 38,
+          "e_placebo": 38,
+          "ebgm_active": 1.3377,
+          "ebgm_placebo": 0.6623,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Peripheral neuropathy": {
+          "pt": "Peripheral neuropathy",
+          "o_active": 31,
+          "o_placebo": 13,
+          "e_active": 22,
+          "e_placebo": 22,
+          "ebgm_active": 1.4,
+          "ebgm_placebo": 0.6,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Pruritus": {
+          "pt": "Pruritus",
+          "o_active": 61,
+          "o_placebo": 21,
+          "e_active": 41,
+          "e_placebo": 41,
+          "ebgm_active": 1.4819,
+          "ebgm_placebo": 0.5181,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Pyrexia": {
+          "pt": "Pyrexia",
+          "o_active": 40,
+          "o_placebo": 32,
+          "e_active": 36,
+          "e_placebo": 36,
+          "ebgm_active": 1.1096,
+          "ebgm_placebo": 0.8904,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "QT prolongation": {
+          "pt": "QT prolongation",
+          "o_active": 15,
+          "o_placebo": 3,
+          "e_active": 9,
+          "e_placebo": 9,
+          "ebgm_active": 1.6316,
+          "ebgm_placebo": 0.3684,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Rash": {
+          "pt": "Rash",
+          "o_active": 81,
+          "o_placebo": 32,
+          "e_active": 56.5,
+          "e_placebo": 56.5,
+          "ebgm_active": 1.4298,
+          "ebgm_placebo": 0.5702,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Thrombocytopenia": {
+          "pt": "Thrombocytopenia",
+          "o_active": 38,
+          "o_placebo": 25,
+          "e_active": 31.5,
+          "e_placebo": 31.5,
+          "ebgm_active": 1.2031,
+          "ebgm_placebo": 0.7969,
+          "signal_active": false,
+          "signal_placebo": false
+        },
+        "Vomiting": {
+          "pt": "Vomiting",
+          "o_active": 53,
+          "o_placebo": 31,
+          "e_active": 42,
+          "e_placebo": 42,
+          "ebgm_active": 1.2588,
+          "ebgm_placebo": 0.7412,
+          "signal_active": false,
+          "signal_placebo": false
+        }
+      }
+    },
+    "risk_difference_signals": {
+      "Acute kidney injury": {
+        "pt": "Acute kidney injury",
+        "n_active": 12,
+        "n_placebo": 6,
+        "rd": 0.03,
+        "ci_lower": -0.0105,
+        "ci_upper": 0.0705,
+        "fisher_p": 0.2271,
+        "signal_active_higher": false
+      },
+      "Alanine aminotransferase increased": {
+        "pt": "Alanine aminotransferase increased",
+        "n_active": 49,
+        "n_placebo": 24,
+        "rd": 0.125,
+        "ci_lower": 0.0503,
+        "ci_upper": 0.1997,
+        "fisher_p": 0.0018,
+        "signal_active_higher": true
+      },
+      "Anaemia": {
+        "pt": "Anaemia",
+        "n_active": 51,
+        "n_placebo": 29,
+        "rd": 0.11,
+        "ci_lower": 0.0323,
+        "ci_upper": 0.1877,
+        "fisher_p": 0.0084,
+        "signal_active_higher": true
+      },
+      "Aspartate aminotransferase increased": {
+        "pt": "Aspartate aminotransferase increased",
+        "n_active": 46,
+        "n_placebo": 23,
+        "rd": 0.115,
+        "ci_lower": 0.0418,
+        "ci_upper": 0.1882,
+        "fisher_p": 0.0034,
+        "signal_active_higher": true
+      },
+      "Atrial fibrillation": {
+        "pt": "Atrial fibrillation",
+        "n_active": 10,
+        "n_placebo": 8,
+        "rd": 0.01,
+        "ci_lower": -0.0306,
+        "ci_upper": 0.0506,
+        "fisher_p": 0.8102,
+        "signal_active_higher": false
+      },
+      "Blood bilirubin increased": {
+        "pt": "Blood bilirubin increased",
+        "n_active": 25,
+        "n_placebo": 14,
+        "rd": 0.055,
+        "ci_lower": -0.0029,
+        "ci_upper": 0.1129,
+        "fisher_p": 0.0908,
+        "signal_active_higher": false
+      },
+      "Cough": {
+        "pt": "Cough",
+        "n_active": 34,
+        "n_placebo": 27,
+        "rd": 0.035,
+        "ci_lower": -0.0354,
+        "ci_upper": 0.1054,
+        "fisher_p": 0.4042,
+        "signal_active_higher": false
+      },
+      "Death": {
+        "pt": "Death",
+        "n_active": 16,
+        "n_placebo": 21,
+        "rd": -0.025,
+        "ci_lower": -0.0817,
+        "ci_upper": 0.0317,
+        "fisher_p": 0.4905,
+        "signal_active_higher": false
+      },
+      "Decreased appetite": {
+        "pt": "Decreased appetite",
+        "n_active": 56,
+        "n_placebo": 45,
+        "rd": 0.055,
+        "ci_lower": -0.03,
+        "ci_upper": 0.14,
+        "fisher_p": 0.2497,
+        "signal_active_higher": false
+      },
+      "Diarrhoea": {
+        "pt": "Diarrhoea",
+        "n_active": 81,
+        "n_placebo": 44,
+        "rd": 0.185,
+        "ci_lower": 0.096,
+        "ci_upper": 0.274,
+        "fisher_p": 0.0001,
+        "signal_active_higher": true
+      },
+      "Drug-induced liver injury": {
+        "pt": "Drug-induced liver injury",
+        "n_active": 12,
+        "n_placebo": 3,
+        "rd": 0.045,
+        "ci_lower": 0.008,
+        "ci_upper": 0.082,
+        "fisher_p": 0.0319,
+        "signal_active_higher": true
+      },
+      "Fatigue": {
+        "pt": "Fatigue",
+        "n_active": 104,
+        "n_placebo": 62,
+        "rd": 0.21,
+        "ci_lower": 0.1156,
+        "ci_upper": 0.3044,
+        "fisher_p": 0,
+        "signal_active_higher": true
+      },
+      "Headache": {
+        "pt": "Headache",
+        "n_active": 42,
+        "n_placebo": 44,
+        "rd": -0.01,
+        "ci_lower": -0.0905,
+        "ci_upper": 0.0705,
+        "fisher_p": 0.9032,
+        "signal_active_higher": false
+      },
+      "Hypothyroidism": {
+        "pt": "Hypothyroidism",
+        "n_active": 27,
+        "n_placebo": 13,
+        "rd": 0.07,
+        "ci_lower": 0.0116,
+        "ci_upper": 0.1284,
+        "fisher_p": 0.0292,
+        "signal_active_higher": true
+      },
+      "Nausea": {
+        "pt": "Nausea",
+        "n_active": 102,
+        "n_placebo": 64,
+        "rd": 0.19,
+        "ci_lower": 0.0952,
+        "ci_upper": 0.2848,
+        "fisher_p": 0.0002,
+        "signal_active_higher": true
+      },
+      "Neutropenia": {
+        "pt": "Neutropenia",
+        "n_active": 51,
+        "n_placebo": 25,
+        "rd": 0.13,
+        "ci_lower": 0.0542,
+        "ci_upper": 0.2058,
+        "fisher_p": 0.0013,
+        "signal_active_higher": true
+      },
+      "Peripheral neuropathy": {
+        "pt": "Peripheral neuropathy",
+        "n_active": 31,
+        "n_placebo": 13,
+        "rd": 0.09,
+        "ci_lower": 0.0293,
+        "ci_upper": 0.1507,
+        "fisher_p": 0.0061,
+        "signal_active_higher": true
+      },
+      "Pruritus": {
+        "pt": "Pruritus",
+        "n_active": 61,
+        "n_placebo": 21,
+        "rd": 0.2,
+        "ci_lower": 0.1233,
+        "ci_upper": 0.2767,
+        "fisher_p": 1e-06,
+        "signal_active_higher": true
+      },
+      "Pyrexia": {
+        "pt": "Pyrexia",
+        "n_active": 40,
+        "n_placebo": 32,
+        "rd": 0.04,
+        "ci_lower": -0.0352,
+        "ci_upper": 0.1152,
+        "fisher_p": 0.3624,
+        "signal_active_higher": false
+      },
+      "QT prolongation": {
+        "pt": "QT prolongation",
+        "n_active": 15,
+        "n_placebo": 3,
+        "rd": 0.06,
+        "ci_lower": 0.0198,
+        "ci_upper": 0.1002,
+        "fisher_p": 0.0063,
+        "signal_active_higher": true
+      },
+      "Rash": {
+        "pt": "Rash",
+        "n_active": 81,
+        "n_placebo": 32,
+        "rd": 0.245,
+        "ci_lower": 0.1601,
+        "ci_upper": 0.3299,
+        "fisher_p": 0,
+        "signal_active_higher": true
+      },
+      "Thrombocytopenia": {
+        "pt": "Thrombocytopenia",
+        "n_active": 38,
+        "n_placebo": 25,
+        "rd": 0.065,
+        "ci_lower": -0.0061,
+        "ci_upper": 0.1361,
+        "fisher_p": 0.099,
+        "signal_active_higher": false
+      },
+      "Vomiting": {
+        "pt": "Vomiting",
+        "n_active": 53,
+        "n_placebo": 31,
+        "rd": 0.11,
+        "ci_lower": 0.0309,
+        "ci_upper": 0.1891,
+        "fisher_p": 0.0097,
+        "signal_active_higher": true
+      }
+    }
+  },
+  "recommendation": {
+    "overall": "Modify",
+    "rationale": "Significant safety signal(s) detected (Hy's Law hepatotoxicity and/or combined QTc+irAE signals). Recommend continuing with enhanced monitoring, protocol amendment for hepatotoxicity/cardiac monitoring, and tighter stopping rules.",
+    "key_findings": ["Hy's Law cases significantly higher in Active arm (10 vs 2, Fisher p=0.0358) — high DILI risk", "Immune-related AEs significantly higher in Active arm (156 vs 38, Fisher p=0.0000)", "Grade 3+ AE rate higher in Active (RD=20.50%, 95% CI [11.06, 29.94])"],
+    "conditions": ["Implement enhanced hepatotoxicity monitoring (weekly LFTs for first 8 weeks)", "Protocol amendment for Hy's Law case management algorithm", "Consider independent hepatic safety review board", "Implement irAE management guidelines per ASCO/NCCN", "Mandatory corticosteroid availability for Grade 2+ irAE management", "Continue routine DMC safety reviews at planned intervals"],
+    "signals_summary": {
+      "hys_law": true,
+      "qtc": false,
+      "irae": true,
+      "grade3_plus": true,
+      "discontinuation": false,
+      "death": false,
+      "n_signals": 3
+    }
+  }
+}

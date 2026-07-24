@@ -3,8 +3,8 @@
 # Reference: benchmarks/operational-efficiency.md
 
 meta:
-  version: "0.5"
-  updated: "2026-07-21"
+  version: "0.6"
+  updated: "2026-07-24"
 
 # ────────────────────────────────────────────────────────────
 # Model pricing reference — May 2026
@@ -347,6 +347,12 @@ cost_transparency_defaults:
         R: 40.0
         SAS: 35.0
         Python: 45.0
+    tc_009:
+      human_from_scratch_min: 210  # DMC safety report: 8 safety domains + totality-of-evidence recommendation
+      human_verify_agent_min:
+        R: 35.0
+        SAS: 30.0
+        Python: 40.0
 
 # ────────────────────────────────────────────────────────────
 # Reference agent run baselines

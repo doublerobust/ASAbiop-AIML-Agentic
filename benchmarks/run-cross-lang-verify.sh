@@ -719,3 +719,43 @@ if python3 "$BENCH/scoring-harness/score.py" verify --tc TC-035 \
 else
   echo "  ✗ TC-035 verification FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
+
+# TC-009: Safety Signal Evaluation & DMC Report — Level 3 (shared ADSL/ADAE/ADLB)
+echo ""
+echo "── TC-009 (Level 3: Safety Signal / DMC) ──────────────────"
+echo "  Generating shared TC-009 safety datasets (ADSL/ADAE/ADLB)..."
+if (cd "$RDIR" && Rscript "generate_tc009_safety_signal.R" --seed $SEED --n $N --out "$SHARED") 2>&1; then
+  echo "  ✓ Shared TC-009 datasets generated"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ TC-009 data generation FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  R:   tc-009-safety-signal.R"
+if (cd "$RDIR" && Rscript "tc-009-safety-signal.R" \
+  --data-adsl "$SHARED/adsl_tc009.csv" \
+  --data-adae "$SHARED/adae_tc009.csv" \
+  --data-adlb "$SHARED/adlb_tc009.csv" \
+  --out "$R_OUT/TC-009.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_009_safety_signal.py"
+if (cd "$PYDIR" && python3 "tc_009_safety_signal.py" \
+  --data-adsl "$SHARED/adsl_tc009.csv" \
+  --data-adae "$SHARED/adae_tc009.csv" \
+  --data-adlb "$SHARED/adlb_tc009.csv" \
+  --out "$PY_OUT/TC-009.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# Verify TC-009 cross-language (dedicated comparator — 841+ fields)
+echo ""
+echo "── TC-009 Cross-Language Verification ─────────────"
+if python3 "$BENCH/references/verification/tc009_cross_lang_compare.py" \
+  "$R_OUT/TC-009.json" "$PY_OUT/TC-009.json" 2>&1; then
+  echo "  ✓ TC-009 verification completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ TC-009 verification FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi

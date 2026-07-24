@@ -1,0 +1,230 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-009 Safety Signal Evaluation and DMC Report Output Schema",
+  "description": "Schema for validating TC-009 ground truth analysis output (Level 3). Covers the 8 safety-evaluation areas: AE overview, exposure-adjusted rates, Grade 3+ events, lab abnormalities (Hy's Law / QTc), time-to-first Grade 3+ AE (KM/log-rank/Cox), irAE, statistical signal detection (MGPS), and safety recommendation.",
+  "type": "object",
+  "required": ["tc_id", "tc_title", "level", "study_design", "ae_overview", "exposure_adjusted", "grade3_plus", "lab_abnormalities", "time_to_grade3", "ae_special_interest", "signal_detection", "recommendation"],
+  "properties": {
+    "tc_id": {"type": "string", "const": "TC-009"},
+    "tc_title": {"type": "string"},
+    "level": {"type": "integer", "const": 3},
+    "study_design": {
+      "type": "object",
+      "required": ["n_subjects", "n_per_arm", "total_patient_years", "arms"],
+      "properties": {
+        "n_subjects": {"type": "integer", "minimum": 1},
+        "n_per_arm": {
+          "type": "object",
+          "required": ["Active", "Placebo"],
+          "properties": {
+            "Active": {"type": "integer", "minimum": 1},
+            "Placebo": {"type": "integer", "minimum": 1}
+          }
+        },
+        "total_patient_years": {
+          "type": "object",
+          "required": ["Active", "Placebo"],
+          "properties": {
+            "Active": {"type": "number", "minimum": 0},
+            "Placebo": {"type": "number", "minimum": 0}
+          }
+        },
+        "arms": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 2}
+      }
+    },
+    "ae_overview": {
+      "type": "object",
+      "required": ["by_arm", "risk_difference"],
+      "properties": {
+        "by_arm": {
+          "type": "object",
+          "required": ["Active", "Placebo"],
+          "properties": {
+            "Active": {"$ref": "#/definitions/arm_ae_overview"},
+            "Placebo": {"$ref": "#/definitions/arm_ae_overview"}
+          }
+        },
+        "risk_difference": {
+          "type": "object",
+          "required": ["any_ae", "sae", "discontinuation", "death"],
+          "properties": {
+            "any_ae": {"$ref": "#/definitions/rd_block"},
+            "sae": {"$ref": "#/definitions/rd_block"},
+            "discontinuation": {"$ref": "#/definitions/rd_block"},
+            "death": {"$ref": "#/definitions/rd_block"}
+          }
+        }
+      }
+    },
+    "exposure_adjusted": {
+      "type": "object",
+      "required": ["total_patient_years", "ae_per_100py", "sae_per_100py", "common_pts"],
+      "properties": {
+        "total_patient_years": {"type": "object"},
+        "ae_per_100py": {"type": "object"},
+        "sae_per_100py": {"type": "object"},
+        "common_pts": {"type": "object", "additionalProperties": {"type": "object"}}
+      }
+    },
+    "grade3_plus": {
+      "type": "object",
+      "required": ["by_arm", "risk_difference", "rd_ci", "fisher_p", "top_pts"],
+      "properties": {
+        "by_arm": {"type": "object"},
+        "risk_difference": {"type": "number"},
+        "rd_ci": {"type": "object", "required": ["lower", "upper"]},
+        "fisher_p": {"type": "number", "minimum": 0, "maximum": 1},
+        "top_pts": {"type": "object", "additionalProperties": {"type": "object"}}
+      }
+    },
+    "lab_abnormalities": {
+      "type": "object",
+      "required": ["hys_law", "qtc_prolongation", "alt_elevation_3xuln", "ast_elevation_3xuln", "bili_elevation_2xuln"],
+      "properties": {
+        "hys_law": {
+          "type": "object",
+          "required": ["n_active", "n_placebo", "pct_active", "pct_placebo", "risk_difference", "rd_ci", "fisher_p", "interpretation"],
+          "properties": {
+            "n_active": {"type": "integer", "minimum": 0},
+            "n_placebo": {"type": "integer", "minimum": 0},
+            "pct_active": {"type": "number"},
+            "pct_placebo": {"type": "number"},
+            "risk_difference": {"type": "number"},
+            "rd_ci": {"type": "object", "required": ["lower", "upper"]},
+            "fisher_p": {"type": "number", "minimum": 0, "maximum": 1},
+            "interpretation": {"type": "string"}
+          }
+        },
+        "qtc_prolongation": {
+          "type": "object",
+          "required": ["n_active", "n_placebo", "pct_active", "pct_placebo", "risk_difference", "rd_ci", "fisher_p", "definition"],
+          "properties": {
+            "n_active": {"type": "integer", "minimum": 0},
+            "n_placebo": {"type": "integer", "minimum": 0},
+            "pct_active": {"type": "number"},
+            "pct_placebo": {"type": "number"},
+            "risk_difference": {"type": "number"},
+            "rd_ci": {"type": "object", "required": ["lower", "upper"]},
+            "fisher_p": {"type": "number", "minimum": 0, "maximum": 1},
+            "definition": {"type": "string"}
+          }
+        },
+        "alt_elevation_3xuln": {"type": "object", "required": ["n_active", "n_placebo"]},
+        "ast_elevation_3xuln": {"type": "object", "required": ["n_active", "n_placebo"]},
+        "bili_elevation_2xuln": {"type": "object", "required": ["n_active", "n_placebo"]}
+      }
+    },
+    "time_to_grade3": {
+      "type": "object",
+      "required": ["n_with_g3", "median_active", "median_placebo", "logrank_p", "cox_hr", "cox_ci", "cox_p", "n_active_events", "n_placebo_events"],
+      "properties": {
+        "n_with_g3": {"type": "integer", "minimum": 0},
+        "median_active": {"$ref": "#/definitions/median_block"},
+        "median_placebo": {"$ref": "#/definitions/median_block"},
+        "logrank_p": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "cox_hr": {"type": ["number", "null"], "minimum": 0},
+        "cox_ci": {"type": "object", "required": ["lower", "upper"]},
+        "cox_p": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "n_active_events": {"type": "integer", "minimum": 0},
+        "n_placebo_events": {"type": "integer", "minimum": 0}
+      }
+    },
+    "ae_special_interest": {
+      "type": "object",
+      "required": ["irae"],
+      "properties": {
+        "irae": {
+          "type": "object",
+          "required": ["n_active", "n_placebo", "pct_active", "pct_placebo", "risk_difference", "rd_ci", "fisher_p", "median_onset_active", "median_onset_placebo"],
+          "properties": {
+            "n_active": {"type": "integer", "minimum": 0},
+            "n_placebo": {"type": "integer", "minimum": 0},
+            "pct_active": {"type": "number"},
+            "pct_placebo": {"type": "number"},
+            "risk_difference": {"type": "number"},
+            "rd_ci": {"type": "object", "required": ["lower", "upper"]},
+            "fisher_p": {"type": "number", "minimum": 0, "maximum": 1},
+            "median_onset_active": {"type": ["number", "null"]},
+            "median_onset_placebo": {"type": ["number", "null"]}
+          }
+        }
+      }
+    },
+    "signal_detection": {
+      "type": "object",
+      "required": ["mgps", "risk_difference_signals"],
+      "properties": {
+        "mgps": {
+          "type": "object",
+          "required": ["method", "threshold", "results"],
+          "properties": {
+            "method": {"type": "string"},
+            "threshold": {"type": "string"},
+            "results": {"type": "object", "additionalProperties": {"type": "object"}}
+          }
+        },
+        "risk_difference_signals": {"type": "object", "additionalProperties": {"type": "object"}}
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "required": ["overall", "rationale", "key_findings", "conditions", "signals_summary"],
+      "properties": {
+        "overall": {"type": "string", "enum": ["Pause", "Modify", "Continue with enhanced monitoring", "Continue"]},
+        "rationale": {"type": "string"},
+        "key_findings": {"type": "array", "items": {"type": "string"}},
+        "conditions": {"type": "array", "items": {"type": "string"}},
+        "signals_summary": {
+          "type": "object",
+          "required": ["hys_law", "qtc", "irae", "grade3_plus", "discontinuation", "death", "n_signals"],
+          "properties": {
+            "hys_law": {"type": "boolean"},
+            "qtc": {"type": "boolean"},
+            "irae": {"type": "boolean"},
+            "grade3_plus": {"type": "boolean"},
+            "discontinuation": {"type": "boolean"},
+            "death": {"type": "boolean"},
+            "n_signals": {"type": "integer", "minimum": 0, "maximum": 6}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "arm_ae_overview": {
+      "type": "object",
+      "required": ["n", "n_any_ae", "pct_any_ae", "n_sae", "pct_sae", "n_disc", "pct_disc", "n_died", "pct_died", "total_ae_reports"],
+      "properties": {
+        "n": {"type": "integer", "minimum": 1},
+        "n_any_ae": {"type": "integer", "minimum": 0},
+        "pct_any_ae": {"type": "number"},
+        "n_sae": {"type": "integer", "minimum": 0},
+        "pct_sae": {"type": "number"},
+        "n_disc": {"type": "integer", "minimum": 0},
+        "pct_disc": {"type": "number"},
+        "n_died": {"type": "integer", "minimum": 0},
+        "pct_died": {"type": "number"},
+        "total_ae_reports": {"type": "integer", "minimum": 0}
+      }
+    },
+    "rd_block": {
+      "type": "object",
+      "required": ["rd", "ci_lower", "ci_upper", "fisher_p"],
+      "properties": {
+        "rd": {"type": "number"},
+        "ci_lower": {"type": "number"},
+        "ci_upper": {"type": "number"},
+        "fisher_p": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "median_block": {
+      "type": "object",
+      "required": ["median", "ci_lower", "ci_upper"],
+      "properties": {
+        "median": {"type": ["number", "null"]},
+        "ci_lower": {"type": ["number", "null"]},
+        "ci_upper": {"type": ["number", "null"]}
+      }
+    }
+  }
+}

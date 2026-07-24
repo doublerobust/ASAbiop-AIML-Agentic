@@ -4333,3 +4333,157 @@ Cross-language ARS consistency checks pass for TCs using shared data (TC-003, TC
 4. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 + TC-007 + TC-008
 5. **White paper WG review** — circulate v1.11 for working group feedback
 6. **Efficiency scoring** — collect actual agent run metrics from frontier model eval
+
+---
+
+## Day 53 (2026-07-24): TC-009 Level 3 — Safety Signal Evaluation & DMC Report (Validation, Finalization, Commit)
+
+**Date:** July 24, 2026 (Friday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### 🎯 Assignment
+
+Day 52's plan called for TC-009 Level 3 implementation (safety signal evaluation / DMC
+report). On resuming, the working tree contained a **substantially complete but
+uncommitted and unlogged** TC-009 implementation from an interrupted prior session
+(July 23): all source/schema/scorer/memo files existed, as did generated result files,
+but nothing had been validated end-to-end, documented, or pushed. Today's work was to
+**validate, finalize, and commit** TC-009.
+
+### ✅ What Got Done
+
+**1. End-to-end validation — reproduced from scratch (not stale result files)**
+
+Re-ran the entire TC-009 pipeline from raw seed to verified outputs to confirm
+reproducibility:
+
+```
+R generate_tc009_safety_signal.R --seed 42 --n 200   → shared ADSL/ADAE/ADLB CSVs
+R  tc-009-safety-signal.R   --data-adsl/--data-adae/--data-adlb  → TC-009.json
+Py tc_009_safety_signal.py  --data-adsl/--data-adae/--data-adlb  → TC-009.json
+python3 tc009_cross_lang_compare.py R.json Py.json              → 841/841 fields
+```
+
+- **Cross-language score: 1.0000** (841/841 fields match, R vs Python on shared data) ✅
+- **JSON Schema validation: PASS** for both R and Python outputs ✅
+- **Scorer self-comparison (ground truth vs itself + reference DMC report):**
+  - Numerical: 0.30/0.30 ✅
+  - Structural: 0.20/0.20 ✅
+  - Concepts: 0.20/0.20 ✅
+  - **Auto-scored total: 0.70/0.70 (100%)** ✅
+  - LLM-judge portion (0.30) pending agent-generated DMC report
+
+**2. KM median CI cross-language fix confirmed**
+
+The skill-documented pitfall — `lifelines` KM median CI does not match R
+`survival::survfit` (Brookmeyer-Crowley log-transform vs linear interpolation) — was
+already resolved in the TC-009 Python ground truth via the manual Greenwood log-transform
+implementation. Confirmed: time-to-first Grade 3+ AE median (Active=202, Placebo=426
+days) and CI bounds match R exactly. Cox PH HR (1.7711, Efron ties) and log-rank p also
+match. This fix is now captured in `references/km-median-ci-cross-language.md` so future
+survival TCs avoid the same trap.
+
+**3. Pipeline integration confirmed**
+
+- `run-cross-lang-verify.sh` — TC-009 block present (shared-data generation + R + Python +
+  dedicated 841-field comparator). Executes cleanly.
+- `tolerances.yaml` — TC-009 tolerance spec present (counts exact, RD ±0.0001, Fisher p
+  ±1e-6, KM median exact, KM CI exact, Cox HR ±1e-4), cross_language_score: 1.0000.
+
+**4. Cleanup**
+
+- Removed redundant duplicate result files (`tc-009-results.json` lowercase copies);
+  retained canonical `TC-009.json` (uppercase, matching repo convention).
+- YAML parse check: efficiency.yaml (v0.6) and tolerances.yaml both parse cleanly.
+
+**5. Documentation updates**
+
+- `white-paper-v1.md` → **v1.12** (date 2026-07-24): Abstract, Level 3 description, and
+  roadmap Phase 3 updated to include TC-009 as the third implemented Level 3 test case.
+- `efficiency.yaml` → **v0.6**: Added TC-009 human baseline (210 min from scratch; verify
+  R 35 / SAS 30 / Python 40 min). Reference agent baselines (tc_009) were already present.
+- This progress-log entry.
+
+### 📊 TC-009 Design Summary (the third Level 3 test case)
+
+**Scenario:** Phase III oncology, Active vs Placebo, 400 subjects (200/arm), SAFFL=Y
+safety set. The agent acts as study statistician producing an Independent Data Monitoring
+Committee (DMC) safety report covering 8 safety domains:
+
+1. **AE overview** — Any AE / SAE / discontinuation / death, with risk difference + 95% CI + Fisher p
+2. **Exposure-adjusted AE rates** — AE/SAE reports per 100 patient-years
+3. **Grade 3+ adverse events** — subject counts, risk difference, Fisher p
+4. **Lab abnormalities** — Hy's Law (ALT/AST >3×ULN AND bilirubin >2×ULN) and QTc prolongation
+5. **Time-to-first Grade 3+ AE** — Kaplan-Meier median + Brookmeyer-Crowley CI, log-rank, Cox PH HR
+6. **Adverse events of special interest** — immune-related AEs (irAE), onset timing
+7. **Statistical signal detection** — Empirical Bayes / MGPS (EBGM) disproportionality + risk-difference signals (95% CI excludes 0)
+8. **DMC recommendation** — totality-of-evidence Continue / Modify / Pause with mitigation actions
+
+**Confirmed signals (ground truth):** Hy's Law ✅ (10 vs 2, p=0.0358), irAE ✅ (156 vs 38,
+p<0.0001), Grade 3+ ✅ (RD 0.205, 95% CI 0.111–0.299). QTc ❌ (CI includes 0).
+**Recommendation: MODIFY** (3 confirmed signals < 4 threshold; no fatal DILI → enhanced
+monitoring + protocol amendment rather than termination).
+
+> **Regulatory note (ITT-only):** Phase III oncology superiority trial. The safety
+> analysis set is all randomized subjects who received any study treatment (SAFFL=Y). No
+> per-protocol analysis is performed; ITT is the sole primary analysis population, per
+> FDA/EMA standards.
+
+### Cross-Language Verification (key metrics, fresh run)
+
+| Metric | R | Python | Match |
+|---|---|---|---|
+| N subjects | 400 | 400 | ✅ |
+| AE any (Active) | 200 | 200 | ✅ |
+| SAE (Active) | 98 | 98 | ✅ |
+| Hy's Law (Active) | 10 | 10 | ✅ |
+| QTc (Active) | 9 | 9 | ✅ |
+| irAE (Active) | 156 | 156 | ✅ |
+| Grade 3+ (Active) | 138 | 138 | ✅ |
+| G3+ risk difference | 0.205 | 0.205 | ✅ |
+| TTG3 median Active (days) | 202 | 202 | ✅ |
+| TTG3 median Placebo (days) | 426 | 426 | ✅ |
+| TTG3 Cox HR | 1.7711 | 1.7711 | ✅ |
+| Recommendation | Modify | Modify | ✅ |
+| n_signals | 3 | 3 | ✅ |
+| **Overall (841 fields)** | — | — | **1.0000 ✅** |
+
+### 📄 TC-009 Files (6-file Level 3 pattern)
+
+| File | Type | Description |
+|---|---|---|
+| `references/ground-truth/R/generate_tc009_safety_signal.R` | R generator | Shared ADSL/ADAE/ADLB data generation |
+| `references/ground-truth/R/tc-009-safety-signal.R` | R ground truth | 8-domain safety analysis |
+| `references/ground-truth/Python/tc_009_safety_signal.py` | Python ground truth | Mirrors R (manual Greenwood KM CI) |
+| `references/ground-truth/reference-memos/tc-009-reference-dmc-report.md` | Reference doc | Full DMC report with all sections |
+| `references/output-schemas/tc-009-output-schema.json` | JSON Schema | Output validation |
+| `scoring-harness/tc009_scorer.py` | Expert rubric scorer | 30% numerical + 20% structural + 20% concepts + 30% LLM-judge |
+| `references/verification/tc009_cross_lang_compare.py` | Cross-lang comparator | 841-field R↔Python verification |
+
+### 📊 Updated Score Summary
+
+| Component | Status |
+|---|---|
+| Level 1 TCs (27) | All verified at 1.0000 |
+| Level 2 TCs (4) | TC-004 (auto-scorer), TC-005 (error injection), TC-006 (1.0000), TC-035 (1.0000) |
+| Level 3 TCs (3/4) | TC-007 ✅, TC-008 ✅, TC-009 ✅ (all with R+Python ground truth, scorers, reference docs) |
+| ARS envelopes | 21 TCs covered (28 files) |
+| Total TCs | 34 (27 L1 + 4 L2 + 3 L3) |
+
+### ⚠️ Minor Notes / Non-Blocking
+
+- The Python TC-009 script emits pandas `FutureWarning` (fillna downcasting) on the
+  overview boolean columns. Non-fatal — output is correct and schema-valid. Can be
+  silenced in a future pass with `pd.set_option('future.no_silent_downcasting', True)`.
+- No SAS reference implementation for TC-009 yet (Level 3 SAS reference scripts exist
+  only for TC-001–003 among Level 1; Level 3 TCs are R+Python only). Consistent with
+  TC-007/TC-008 approach.
+
+### 🔮 Plan for Day 54+
+
+1. **TC-010 Level 3 implementation** — CSR statistical sections (the final Level 3 TC)
+2. **TC-004 LLM-judge API integration** — wire SAP drafting scorer to actual LLM API
+3. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 + TC-007/008/009
+4. **White paper WG review** — circulate v1.12 for working group feedback
+5. **Efficiency scoring** — collect actual agent run metrics from frontier model eval
+6. **ARS envelopes for Level 3 TCs** — extend `--ars-output` to TC-007/008/009

@@ -1117,3 +1117,61 @@ TC-035:
     consistency:
       exact: true
       weight: 0.02
+
+# TC-009: Safety Signal Evaluation & DMC Report (Level 3)
+# Cross-language verification uses a dedicated comparator (tc009_cross_lang_compare.py)
+# over 841 fields. Level 3 auto-scorable portion is handled by tc009_scorer.py rubric.
+TC-009:
+  description: "Safety Signal Evaluation and DMC Report"
+  level: 3
+  cross_language_score: 1.0000   # 841/841 fields match (R vs Python on shared data)
+  cross_language_comparator: "references/verification/tc009_cross_lang_compare.py"
+  rubric_scorer: "scoring-harness/tc009_scorer.py"
+  tolerances:
+    # Counts: exact match (shared data)
+    counts:
+      absolute: 0
+      weight: 0.10
+    # Risk differences / percentages / CI bounds: ±0.0001
+    risk_difference:
+      absolute: 0.0001
+      weight: 0.05
+    percentages:
+      absolute: 0.01
+      weight: 0.03
+    # Fisher exact p-values: ±1e-6
+    fisher_p:
+      absolute: 0.000001
+      weight: 0.04
+    # KM median (days): exact (step-function crossing)
+    km_median:
+      absolute: 0
+      weight: 0.04
+    # KM median CI bounds (days): exact (Brookmeyer-Crowley log-transform)
+    km_median_ci:
+      absolute: 0
+      weight: 0.04
+      allow_null: true   # NA when CI band does not cross 0.5
+    # Cox HR / CI: ±1e-4
+    cox_hr:
+      absolute: 0.0001
+      weight: 0.04
+    cox_ci:
+      absolute: 0.0001
+      weight: 0.03
+    # Log-rank p: ±1e-6
+    logrank_p:
+      absolute: 0.000001
+      weight: 0.03
+    # MGPS EBGM: ±1e-4
+    ebgm:
+      absolute: 0.0001
+      weight: 0.03
+    # Recommendation: exact (categorical)
+    recommendation:
+      exact: true
+      weight: 0.02
+    # Signal flags (booleans): exact
+    signal_flags:
+      exact: true
+      weight: 0.05
