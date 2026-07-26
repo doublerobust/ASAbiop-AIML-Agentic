@@ -3,8 +3,8 @@
 # Reference: benchmarks/operational-efficiency.md
 
 meta:
-  version: "0.6"
-  updated: "2026-07-24"
+  version: "0.7"
+  updated: "2026-07-25"
 
 # ────────────────────────────────────────────────────────────
 # Model pricing reference — May 2026
@@ -353,6 +353,12 @@ cost_transparency_defaults:
         R: 35.0
         SAS: 30.0
         Python: 40.0
+    tc_010:
+      human_from_scratch_min: 480  # CSR Sections 9+11: full regulatory document (ICH E3)
+      human_verify_agent_min:
+        R: 45.0
+        SAS: 40.0
+        Python: 50.0
 
 # ────────────────────────────────────────────────────────────
 # Reference agent run baselines

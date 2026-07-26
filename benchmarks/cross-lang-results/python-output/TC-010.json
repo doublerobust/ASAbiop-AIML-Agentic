@@ -1,0 +1,537 @@
+{
+  "tc_id": "TC-010",
+  "tc_title": "CSR Statistical Sections (ICH E3)",
+  "level": 3,
+  "study_design": {
+    "study_id": "BENCHMARK-010",
+    "phase": "Phase III",
+    "indication": "Advanced solid tumors",
+    "arms": [
+      "Active",
+      "Placebo"
+    ],
+    "n_subjects": 400,
+    "primary_endpoint": "PFS per RECIST 1.1",
+    "secondary_endpoints": [
+      "ORR",
+      "DCR",
+      "OS"
+    ],
+    "population": "ITT (all randomized subjects)",
+    "regulatory_note": "ITT is the sole primary analysis population. No per-protocol analysis performed per FDA/EMA standards for Phase III oncology."
+  },
+  "section_9_methods": {
+    "analysis_populations": {
+      "ITT": "All randomized subjects (ITTFL = Y)",
+      "safety": "All subjects who received any study treatment (SAFFL = Y)"
+    },
+    "primary_analysis": "ITT population",
+    "primary_endpoint_method": "Kaplan-Meier estimation; Cox proportional hazards for HR; log-rank test (2-sided, alpha=0.05)",
+    "software": {
+      "python": "3.9.6",
+      "lifelines": "0.30.0"
+    },
+    "data_cutoff": "Database lock after last patient last visit",
+    "missing_data_handling": "Subjects with missing PFS event date censored at last known tumor assessment date",
+    "multiplicity": "No multiplicity adjustment for primary endpoint (single primary); secondary endpoints reported descriptively"
+  },
+  "section_11_1_disposition": {
+    "n_randomized": 400,
+    "n_treated": 400,
+    "by_arm": {
+      "Active": {
+        "n_randomized": 200,
+        "n_completed": 169,
+        "pct_completed": 84.5,
+        "n_discontinued": 31,
+        "pct_discontinued": 15.5,
+        "n_died": 48,
+        "pct_died": 24.0,
+        "discontinuation_reasons": {
+          "Disease progression": 14,
+          "Withdrawal by subject": 8,
+          "Adverse event": 7,
+          "Physician decision": 2
+        },
+        "n_major_deviations": 34,
+        "pct_major_deviations": 17.0,
+        "total_deviations": 44
+      },
+      "Placebo": {
+        "n_randomized": 200,
+        "n_completed": 155,
+        "pct_completed": 77.5,
+        "n_discontinued": 45,
+        "pct_discontinued": 22.5,
+        "n_died": 73,
+        "pct_died": 36.5,
+        "discontinuation_reasons": {
+          "Disease progression": 23,
+          "Withdrawal by subject": 10,
+          "Adverse event": 9,
+          "Physician decision": 3
+        },
+        "n_major_deviations": 32,
+        "pct_major_deviations": 16.0,
+        "total_deviations": 43
+      }
+    },
+    "n_completed_total": 324,
+    "n_discontinued_total": 76,
+    "n_major_deviations_total": 66,
+    "total_deviations_all": 87
+  },
+  "section_11_2_demographics": {
+    "by_arm": {
+      "Active": {
+        "n": 200,
+        "AGE": {
+          "mean": 61.335,
+          "sd": 10.1957,
+          "median": 61.0,
+          "min": 37.0,
+          "max": 85.0
+        },
+        "ECOG": {
+          "mean": 0.485,
+          "sd": 0.501,
+          "median": 0.0,
+          "min": 0.0,
+          "max": 1.0
+        },
+        "TRT_DURATION_MO": {
+          "mean": 8.3185,
+          "sd": 3.9698,
+          "median": 7.95,
+          "min": 1.1,
+          "max": 21.5
+        },
+        "sex": {
+          "M": 126,
+          "F": 74
+        },
+        "agegr1": {
+          "<65": 130,
+          ">=65": 70
+        },
+        "race": {
+          "White": 148,
+          "Asian": 26,
+          "Other": 13,
+          "Black": 13
+        },
+        "ecog_dist": {
+          "0": 103,
+          "1": 97
+        },
+        "disease_stage": {
+          "IV": 131,
+          "IIIB": 69
+        }
+      },
+      "Placebo": {
+        "n": 200,
+        "AGE": {
+          "mean": 62.07,
+          "sd": 9.4276,
+          "median": 62.0,
+          "min": 35.0,
+          "max": 85.0
+        },
+        "ECOG": {
+          "mean": 0.375,
+          "sd": 0.4853,
+          "median": 0.0,
+          "min": 0.0,
+          "max": 1.0
+        },
+        "TRT_DURATION_MO": {
+          "mean": 8.1795,
+          "sd": 3.8241,
+          "median": 8.1,
+          "min": 0.5,
+          "max": 18.4
+        },
+        "sex": {
+          "F": 101,
+          "M": 99
+        },
+        "agegr1": {
+          "<65": 126,
+          ">=65": 74
+        },
+        "race": {
+          "White": 141,
+          "Asian": 35,
+          "Black": 19,
+          "Other": 5
+        },
+        "ecog_dist": {
+          "0": 125,
+          "1": 75
+        },
+        "disease_stage": {
+          "IV": 144,
+          "IIIB": 56
+        }
+      }
+    },
+    "overall": {
+      "n": 400,
+      "AGE": {
+        "mean": 61.7025,
+        "sd": 9.8138,
+        "median": 61.5,
+        "min": 35.0,
+        "max": 85.0
+      },
+      "sex": {
+        "M": 225,
+        "F": 175
+      },
+      "agegr1": {
+        "<65": 256,
+        ">=65": 144
+      },
+      "race": {
+        "White": 289,
+        "Asian": 61,
+        "Black": 32,
+        "Other": 18
+      },
+      "ecog_dist": {
+        "0": 228,
+        "1": 172
+      },
+      "disease_stage": {
+        "IV": 275,
+        "IIIB": 125
+      }
+    },
+    "age_balance_test": {
+      "method": "t-test",
+      "p": 0.4546,
+      "mean_diff": 0.735
+    },
+    "sex_balance_test": {
+      "method": "chi-square",
+      "p": 0.0088
+    }
+  },
+  "section_11_4_efficacy": {
+    "primary_pfs": {
+      "endpoint": "PFS",
+      "method": "Kaplan-Meier + Cox PH + log-rank",
+      "by_arm": {
+        "Active": {
+          "n": 200,
+          "n_events": 115,
+          "n_censored": 85,
+          "median": 282.4,
+          "ci_lower": 248.4,
+          "ci_upper": 377.1
+        },
+        "Placebo": {
+          "n": 200,
+          "n_events": 150,
+          "n_censored": 50,
+          "median": 158.7,
+          "ci_lower": 140.6,
+          "ci_upper": 184.9
+        }
+      },
+      "cox": {
+        "hr": 0.5607,
+        "ci_lower": 0.439,
+        "ci_upper": 0.7161,
+        "p": 0.0
+      },
+      "logrank_p": 0.0,
+      "interpretation": "Significant PFS benefit for Active vs Placebo"
+    },
+    "secondary_os": {
+      "endpoint": "OS",
+      "method": "Kaplan-Meier + Cox PH + log-rank",
+      "by_arm": {
+        "Active": {
+          "n": 200,
+          "n_events": 111,
+          "n_censored": 89,
+          "median": 776.4,
+          "ci_lower": 600.1,
+          "ci_upper": 1034.4
+        },
+        "Placebo": {
+          "n": 200,
+          "n_events": 124,
+          "n_censored": 76,
+          "median": 553.0,
+          "ci_lower": 431.8,
+          "ci_upper": 693.7
+        }
+      },
+      "cox": {
+        "hr": 0.6591,
+        "ci_lower": 0.5074,
+        "ci_upper": 0.8561,
+        "p": 0.0018
+      },
+      "logrank_p": 0.0022
+    },
+    "secondary_orr_dcr": {
+      "endpoint": "ORR (CR+PR)",
+      "method": "RECIST 1.1",
+      "by_arm": {
+        "Active": {
+          "n": 200,
+          "n_responders": 69,
+          "orr_pct": 34.5,
+          "n_dcr": 132,
+          "dcr_pct": 66.0,
+          "bor_dist": {
+            "SD": 63,
+            "PR": 60,
+            "PD": 57,
+            "NE": 11,
+            "CR": 9
+          }
+        },
+        "Placebo": {
+          "n": 200,
+          "n_responders": 12,
+          "orr_pct": 6.0,
+          "n_dcr": 90,
+          "dcr_pct": 45.0,
+          "bor_dist": {
+            "PD": 101,
+            "SD": 78,
+            "PR": 12,
+            "NE": 9
+          }
+        }
+      },
+      "risk_difference": {
+        "rd": 0.285,
+        "ci_lower": 0.2114,
+        "ci_upper": 0.3586,
+        "fisher_p": 0.0
+      },
+      "dcr_risk_difference": {
+        "rd": 0.21,
+        "ci_lower": 0.1148,
+        "ci_upper": 0.3052,
+        "fisher_p": 0.0
+      }
+    },
+    "subgroup_forest": {
+      "SEX": {
+        "F": {
+          "n": 175,
+          "n_events": 124,
+          "hr": 0.6132,
+          "ci_lower": 0.4256,
+          "ci_upper": 0.8835,
+          "p": 0.0087
+        },
+        "M": {
+          "n": 225,
+          "n_events": 141,
+          "hr": 0.5361,
+          "ci_lower": 0.3836,
+          "ci_upper": 0.7494,
+          "p": 0.0003
+        }
+      },
+      "AGEGR1": {
+        "<65": {
+          "n": 256,
+          "n_events": 163,
+          "hr": 0.603,
+          "ci_lower": 0.4422,
+          "ci_upper": 0.8222,
+          "p": 0.0014
+        },
+        ">=65": {
+          "n": 144,
+          "n_events": 102,
+          "hr": 0.4794,
+          "ci_lower": 0.3205,
+          "ci_upper": 0.7171,
+          "p": 0.0003
+        }
+      },
+      "ECOG": {
+        "0": {
+          "n": 228,
+          "n_events": 151,
+          "hr": 0.5034,
+          "ci_lower": 0.3591,
+          "ci_upper": 0.7057,
+          "p": 0.0001
+        },
+        "1": {
+          "n": 172,
+          "n_events": 114,
+          "hr": 0.6538,
+          "ci_lower": 0.4519,
+          "ci_upper": 0.9458,
+          "p": 0.0241
+        }
+      },
+      "DISEASE_STAGE": {
+        "IIIB": {
+          "n": 125,
+          "n_events": 77,
+          "hr": 0.5335,
+          "ci_lower": 0.3383,
+          "ci_upper": 0.8416,
+          "p": 0.0069
+        },
+        "IV": {
+          "n": 275,
+          "n_events": 188,
+          "hr": 0.5719,
+          "ci_lower": 0.427,
+          "ci_upper": 0.7659,
+          "p": 0.0002
+        }
+      }
+    },
+    "sensitivity_pfs": {
+      "method": "Censor at last follow-up if discontinued for non-progression reasons",
+      "cox": {
+        "hr": 0.5679,
+        "ci_lower": 0.4411,
+        "ci_upper": 0.7313,
+        "p": 0.0
+      },
+      "logrank_p": 0.0
+    }
+  },
+  "section_11_5_safety": {
+    "by_arm": {
+      "Active": {
+        "n": 200,
+        "n_any_ae": 180,
+        "pct_any_ae": 90.0,
+        "n_sae": 47,
+        "pct_sae": 23.5,
+        "n_grade3_plus": 77,
+        "pct_grade3_plus": 38.5,
+        "n_disc_due_ae": 29,
+        "pct_disc_due_ae": 14.5,
+        "n_deaths": 48,
+        "pct_deaths": 24.0,
+        "total_ae_reports": 501,
+        "n_ae_by_grade": {
+          "1": 267,
+          "2": 136,
+          "3": 67,
+          "4": 21,
+          "5": 10
+        }
+      },
+      "Placebo": {
+        "n": 200,
+        "n_any_ae": 127,
+        "pct_any_ae": 63.5,
+        "n_sae": 39,
+        "pct_sae": 19.5,
+        "n_grade3_plus": 60,
+        "pct_grade3_plus": 30.0,
+        "n_disc_due_ae": 27,
+        "pct_disc_due_ae": 13.5,
+        "n_deaths": 73,
+        "pct_deaths": 36.5,
+        "total_ae_reports": 311,
+        "n_ae_by_grade": {
+          "1": 157,
+          "2": 75,
+          "3": 49,
+          "4": 22,
+          "5": 8
+        }
+      }
+    },
+    "top_socs_active": {
+      "Respiratory, thoracic and mediastinal disorders": {
+        "n_subjects": 58,
+        "pct": 29.0,
+        "n_reports": 71,
+        "top_pts": {
+          "Cough": 40,
+          "Dyspnoea": 31
+        }
+      },
+      "Metabolism and nutrition disorders": {
+        "n_subjects": 57,
+        "pct": 28.5,
+        "n_reports": 67,
+        "top_pts": {
+          "Hypokalaemia": 39,
+          "Decreased appetite": 28
+        }
+      },
+      "Blood and lymphatic system disorders": {
+        "n_subjects": 55,
+        "pct": 27.5,
+        "n_reports": 64,
+        "top_pts": {
+          "Thrombocytopenia": 24,
+          "Neutropenia": 24,
+          "Anaemia": 16
+        }
+      },
+      "General disorders": {
+        "n_subjects": 54,
+        "pct": 27.0,
+        "n_reports": 64,
+        "top_pts": {
+          "Fatigue": 25,
+          "Pyrexia": 21,
+          "Oedema peripheral": 18
+        }
+      },
+      "Skin and subcutaneous tissue disorders": {
+        "n_subjects": 53,
+        "pct": 26.5,
+        "n_reports": 64,
+        "top_pts": {
+          "Rash": 28,
+          "Alopecia": 19,
+          "Pruritus": 17
+        }
+      }
+    },
+    "death_summary": {
+      "n_deaths_total": 121,
+      "n_deaths_active": 48,
+      "n_deaths_placebo": 73,
+      "n_grade5_ae_reports": 18
+    },
+    "lab_abnormalities": {
+      "Active": {
+        "n_alt_3xuln": 0,
+        "pct_alt_3xuln": 0.0,
+        "n_ast_3xuln": 0,
+        "pct_ast_3xuln": 0.0,
+        "n_bili_2xuln": 0,
+        "pct_bili_2xuln": 0.0,
+        "alt_mean": 32.462,
+        "ast_mean": 28.5805,
+        "bili_mean": 0.695
+      },
+      "Placebo": {
+        "n_alt_3xuln": 0,
+        "pct_alt_3xuln": 0.0,
+        "n_ast_3xuln": 0,
+        "pct_ast_3xuln": 0.0,
+        "n_bili_2xuln": 0,
+        "pct_bili_2xuln": 0.0,
+        "alt_mean": 23.256,
+        "ast_mean": 24.0935,
+        "bili_mean": 0.6952
+      }
+    }
+  }
+}

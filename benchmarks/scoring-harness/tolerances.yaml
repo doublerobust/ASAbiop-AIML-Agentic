@@ -1175,3 +1175,73 @@ TC-009:
     signal_flags:
       exact: true
       weight: 0.05
+
+  # ──────────────────────────────────────────────────────────────
+  # TC-010: CSR Statistical Sections (Level 3)
+  # ITT-only Phase III oncology; cross-language verified on shared data
+  # ──────────────────────────────────────────────────────────────
+  TC-010:
+    cross_language_score: 1.0000
+    # Disposition counts: exact
+    disposition_counts:
+      exact: true
+      weight: 0.05
+    # Demographics: mean ±0.01, SD ±0.01
+    demographics_mean:
+      absolute: 0.01
+      weight: 0.03
+    demographics_sd:
+      absolute: 0.01
+      weight: 0.02
+    # PFS/OS KM median: exact (shared data, identical algorithm)
+    km_median:
+      exact: true
+      weight: 0.05
+    # KM median CI bounds: exact (log-transform, shared data)
+    km_median_ci:
+      exact: true
+      weight: 0.04
+      allow_null: true
+    # Cox HR / CI: ±1e-4
+    cox_hr:
+      absolute: 0.0001
+      weight: 0.05
+    cox_ci:
+      absolute: 0.0001
+      weight: 0.04
+    # Log-rank p: ±1e-6
+    logrank_p:
+      absolute: 0.000001
+      weight: 0.04
+    # ORR/DCR counts: exact
+    response_counts:
+      exact: true
+      weight: 0.04
+    # ORR/DCR percentages: ±0.01
+    response_pct:
+      absolute: 0.01
+      weight: 0.03
+    # Risk difference: ±1e-4
+    risk_difference:
+      absolute: 0.0001
+      weight: 0.03
+    # Fisher p: ±1e-6
+    fisher_p:
+      absolute: 0.000001
+      weight: 0.02
+    # Safety AE counts: exact
+    safety_counts:
+      exact: true
+      weight: 0.05
+    # Safety percentages: ±0.01
+    safety_pct:
+      absolute: 0.01
+      weight: 0.03
+    # Subgroup HRs: ±1e-4
+    subgroup_hr:
+      absolute: 0.0001
+      weight: 0.04
+    # Sensitivity Cox HR: ±1e-4
+    sensitivity_hr:
+      absolute: 0.0001
+      weight: 0.03

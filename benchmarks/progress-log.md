@@ -4487,3 +4487,151 @@ monitoring + protocol amendment rather than termination).
 4. **White paper WG review** — circulate v1.12 for working group feedback
 5. **Efficiency scoring** — collect actual agent run metrics from frontier model eval
 6. **ARS envelopes for Level 3 TCs** — extend `--ars-output` to TC-007/008/009
+
+---
+
+## Day 54 (2026-07-26): TC-010 Level 3 — CSR Statistical Sections (Final Level 3 TC)
+
+**Date:** July 26, 2026 (Sunday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### 🎯 Assignment
+
+Day 53's plan called for TC-010 Level 3 implementation (CSR statistical sections — the
+final Level 3 test case). On resuming, the working tree contained a **substantially
+complete but uncommitted and unlogged** TC-010 implementation from an interrupted prior
+session: all source/schema/scorer/memo/comparator files existed, as did generated result
+files and self-test scores, but nothing had been validated end-to-end, documented, or
+pushed. Today's work was to **validate, finalize, and commit** TC-010 — completing all 4
+Level 3 test cases.
+
+### ✅ What Got Done
+
+**1. End-to-end validation — reproduced from scratch (not stale result files)**
+
+Re-ran the entire TC-010 pipeline from raw seed to verified outputs to confirm
+reproducibility:
+
+```
+R generate_tc010_csr.R --seed 42 --n 200   → shared ADSL/ADTTE/ADRS/ADAE/ADLB CSVs
+R  tc-010-csr-statistical.R   --data-adsl/--data-adtte/--data-adrs/--data-adae/--data-adlb  → TC-010.json
+Py tc_010_csr_statistical.py  --data-adsl/--data-adtte/--data-adrs/--data-adae/--data-adlb  → TC-010.json
+python3 tc010_cross_lang_compare.py R.json Py.json              → 341/341 fields
+```
+
+- **Cross-language score: 1.0000** (341/341 fields match, R vs Python on shared data) ✅
+- **JSON Schema validation: PASS** for both R and Python outputs ✅
+- **Scorer self-comparison (ground truth vs itself + reference CSR):**
+  - Numerical: 0.30/0.30 ✅
+  - Structural: 0.20/0.20 ✅
+  - Concepts: 0.20/0.20 ✅
+  - **Auto-scored total: 0.70/0.70 (100%)** ✅
+  - LLM-judge portion (0.30) pending agent-generated CSR
+
+**2. Scorer weight-design bug fixed**
+
+The original `tc010_scorer.py` had numerical weights summing to 0.36 (not 0.30 as
+documented), which would make the total possible score 1.06 instead of 1.00. Rescaled all
+10 numerical criterion weights to sum to exactly 0.30, preserving relative importance
+(PFS Cox HR highest at 0.040, PFS medians at 0.035, secondary metrics at 0.025–0.030).
+Now: 0.30 (numerical) + 0.20 (structural) + 0.20 (concepts) + 0.30 (LLM-judge) = 1.00.
+
+**3. Pipeline integration confirmed**
+
+- `run-cross-lang-verify.sh` — TC-010 block added (shared-data generation + R + Python +
+  dedicated 341-field comparator). Follows the same pattern as TC-009.
+- `tolerances.yaml` — TC-010 tolerance spec present (counts exact, KM median/CI exact,
+  Cox HR ±1e-4, logrank p ±1e-6, Fisher p ±1e-6, response pct ±0.01, subgroup HR ±1e-4,
+  sensitivity HR ±1e-4), cross_language_score: 1.0000.
+- `efficiency.yaml` (v0.7) — TC-010 human baseline (480 min from scratch; verify R 45 /
+  SAS 40 / Python 50 min) and reference agent baselines already present.
+
+**4. Documentation updates**
+
+- `white-paper-v1.md` → **v1.13** (date 2026-07-26): Abstract, Level 3 description, and
+  roadmap Phase 3 updated to include TC-010 as the fourth and final implemented Level 3
+  test case. All 4 Level 3 TCs now marked as implemented.
+- This progress-log entry.
+
+### 📊 TC-010 Design Summary (the fourth and final Level 3 test case)
+
+**Scenario:** Phase III oncology, Active vs Placebo, 400 subjects (200/arm), ITT population
+(ITTFL=Y for all randomized subjects). The agent acts as study statistician producing the
+statistical sections of an ICH E3-compliant Clinical Study Report covering:
+
+1. **Section 9 (Statistical Methods)** — Analysis populations (ITT primary, safety
+   secondary), primary endpoint method (KM + Cox PH + log-rank), software versions, data
+   cutoff, missing data handling, multiplicity approach
+2. **Section 11.1 (Patient Disposition)** — Randomized/treated/completed/discontinued
+   counts, discontinuation reasons, deaths, major protocol deviations per arm
+3. **Section 11.2 (Demographics)** — Age/ECOG/treatment duration continuous stats
+   (mean/SD/median/min/max), categorical distributions (sex, age group, race, ECOG,
+   disease stage), baseline balance tests (t-test for age, chi-square for sex)
+4. **Section 11.4 (Efficacy Results)** —
+   - Primary PFS: KM median + 95% CI (Brookmeyer-Crowley log-transform), Cox PH HR
+     (Efron ties) + CI + p, log-rank p, per-arm events/censored
+   - Secondary OS: KM median + CI, Cox HR + CI + p, log-rank p
+   - Secondary ORR/DCR: CR/PR/SD/PD counts, ORR% and DCR% per arm, risk difference +
+     Wald CI + Fisher exact p
+   - Subgroup forest: Cox PH HR per subgroup level (SEX, AGEGR1, ECOG, DISEASE_STAGE)
+   - Sensitivity: PFS re-analysis censoring subjects who discontinued for non-progression
+     reasons (withdrawal/physician decision) at last follow-up
+5. **Section 11.5 (Safety Results)** — AE summary (any AE, SAE, Grade 3+, discontinuations,
+   deaths) per arm, top SOCs by subject count (Active), death summary, lab abnormalities
+   (ALT/AST >3×ULN, bilirubin >2×ULN)
+
+**Confirmed results (ground truth):** PFS Active median=282.4d, Placebo=158.7d, HR=0.5607,
+p<0.0001 (significant benefit). OS HR=0.6591, p=0.0018. ORR Active=34.5%, Placebo=6.0%.
+
+> **Regulatory note (ITT-only):** Phase III oncology superiority trial. ITT is the sole
+> primary analysis population. No per-protocol analysis is performed; the safety analysis
+> set is all randomized subjects who received any study treatment (SAFFL=Y), per FDA/EMA
+> standards.
+
+### Cross-Language Verification (key metrics, fresh run)
+
+| Metric | R | Python | Match |
+|---|---|---|---|
+| N subjects | 400 | 400 | ✅ |
+| PFS median Active (days) | 282.4 | 282.4 | ✅ |
+| PFS median Placebo (days) | 158.7 | 158.7 | ✅ |
+| PFS Cox HR | 0.5607 | 0.5607 | ✅ |
+| PFS log-rank p | 0.0000 | 0.0000 | ✅ |
+| OS Cox HR | 0.6591 | 0.6591 | ✅ |
+| OS log-rank p | 0.0018 | 0.0018 | ✅ |
+| ORR Active % | 34.5 | 34.5 | ✅ |
+| ORR Placebo % | 6.0 | 6.0 | ✅ |
+| Any AE Active | 180 | 180 | ✅ |
+| Grade 3+ Active % | 38.5 | 38.5 | ✅ |
+| **Overall (341 fields)** | — | — | **1.0000 ✅** |
+
+### 📄 TC-010 Files (7-file Level 3 pattern)
+
+| File | Type | Description |
+|---|---|---|
+| `references/ground-truth/R/generate_tc010_csr.R` | R generator | Shared ADSL/ADTTE/ADRS/ADAE/ADLB data generation |
+| `references/ground-truth/R/tc-010-csr-statistical.R` | R ground truth | ICH E3 Sections 9+11 statistical analysis |
+| `references/ground-truth/Python/tc_010_csr_statistical.py` | Python ground truth | Mirrors R (manual Greenwood KM CI) |
+| `references/ground-truth/reference-memos/tc-010-reference-csr.md` | Reference doc | Full CSR with Sections 9 and 11 |
+| `references/output-schemas/tc-010-output-schema.json` | JSON Schema | Output validation |
+| `scoring-harness/tc010_scorer.py` | Expert rubric scorer | 30% numerical + 20% structural + 20% concepts + 30% LLM-judge |
+| `references/verification/tc010_cross_lang_compare.py` | Cross-lang comparator | 341-field R↔Python verification |
+
+### 📊 Updated Score Summary
+
+| Component | Status |
+|---|---|
+| Level 1 TCs (27) | All verified at 1.0000 |
+| Level 2 TCs (4) | TC-004 (auto-scorer), TC-005 (error injection), TC-006 (1.0000), TC-035 (1.0000) |
+| Level 3 TCs (4/4) | TC-007 ✅, TC-008 ✅, TC-009 ✅, TC-010 ✅ (all with R+Python ground truth, scorers, reference docs) |
+| ARS envelopes | 21 TCs covered (28 files) |
+| Total TCs | 35 (27 L1 + 4 L2 + 4 L3) — all 4 Level 3 TCs now complete |
+
+### 🔮 Plan for Day 55+
+
+1. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 + all 4 Level 3 TCs
+2. **TC-004 LLM-judge API integration** — wire SAP drafting scorer to actual LLM API
+3. **White paper WG review** — circulate v1.13 for working group feedback (all TCs now implemented)
+4. **Efficiency scoring** — collect actual agent run metrics from frontier model eval
+5. **ARS envelopes for Level 3 TCs** — extend `--ars-output` to TC-007/008/009/010
+6. **SAS reference scripts for Level 3 TCs** — currently R+Python only; consider SAS cross-validation for regulatory-critical TCs

@@ -1,0 +1,263 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TC-010 CSR Statistical Sections (ICH E3) Output Schema",
+  "description": "Schema for validating TC-010 ground truth output (Level 3). Covers CSR Sections 9 (Statistical Methods), 11.1 (Patient Disposition), 11.2 (Demographics), 11.4 (Efficacy: primary PFS, secondary OS/ORR/DCR, subgroup forest, sensitivity), and 11.5 (Safety: AE summary, top SOCs, deaths, lab abnormalities). ITT is the sole primary analysis population — no per-protocol analysis.",
+  "type": "object",
+  "required": ["tc_id", "tc_title", "level", "study_design", "section_9_methods", "section_11_1_disposition", "section_11_2_demographics", "section_11_4_efficacy", "section_11_5_safety"],
+  "properties": {
+    "tc_id": {"type": "string", "const": "TC-010"},
+    "tc_title": {"type": "string"},
+    "level": {"type": "integer", "const": 3},
+    "study_design": {
+      "type": "object",
+      "required": ["study_id", "phase", "indication", "arms", "n_subjects", "primary_endpoint", "secondary_endpoints", "population", "regulatory_note"],
+      "properties": {
+        "study_id": {"type": "string"},
+        "phase": {"type": "string"},
+        "indication": {"type": "string"},
+        "arms": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 2},
+        "n_subjects": {"type": "integer", "minimum": 1},
+        "primary_endpoint": {"type": "string"},
+        "secondary_endpoints": {"type": "array", "items": {"type": "string"}},
+        "population": {"type": "string"},
+        "regulatory_note": {"type": "string"}
+      }
+    },
+    "section_9_methods": {
+      "type": "object",
+      "required": ["analysis_populations", "primary_analysis", "primary_endpoint_method", "software", "data_cutoff", "missing_data_handling", "multiplicity"],
+      "properties": {
+        "analysis_populations": {"type": "object"},
+        "primary_analysis": {"type": "string"},
+        "primary_endpoint_method": {"type": "string"},
+        "software": {"type": "object"},
+        "data_cutoff": {"type": "string"},
+        "missing_data_handling": {"type": "string"},
+        "multiplicity": {"type": "string"}
+      }
+    },
+    "section_11_1_disposition": {
+      "type": "object",
+      "required": ["n_randomized", "n_treated", "by_arm", "n_completed_total", "n_discontinued_total", "n_major_deviations_total", "total_deviations_all"],
+      "properties": {
+        "n_randomized": {"type": "integer", "minimum": 1},
+        "n_treated": {"type": "integer", "minimum": 1},
+        "by_arm": {
+          "type": "object",
+          "required": ["Active", "Placebo"],
+          "properties": {
+            "Active": {"$ref": "#/definitions/disposition_arm"},
+            "Placebo": {"$ref": "#/definitions/disposition_arm"}
+          }
+        },
+        "n_completed_total": {"type": "integer", "minimum": 0},
+        "n_discontinued_total": {"type": "integer", "minimum": 0},
+        "n_major_deviations_total": {"type": "integer", "minimum": 0},
+        "total_deviations_all": {"type": "integer", "minimum": 0}
+      }
+    },
+    "section_11_2_demographics": {
+      "type": "object",
+      "required": ["by_arm", "overall", "age_balance_test", "sex_balance_test"],
+      "properties": {
+        "by_arm": {"type": "object"},
+        "overall": {"type": "object"},
+        "age_balance_test": {
+          "type": "object",
+          "required": ["method", "p", "mean_diff"],
+          "properties": {
+            "method": {"type": "string"},
+            "p": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+            "mean_diff": {"type": ["number", "null"]}
+          }
+        },
+        "sex_balance_test": {
+          "type": "object",
+          "required": ["method", "p"],
+          "properties": {
+            "method": {"type": "string"},
+            "p": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+          }
+        }
+      }
+    },
+    "section_11_4_efficacy": {
+      "type": "object",
+      "required": ["primary_pfs", "secondary_os", "secondary_orr_dcr", "subgroup_forest", "sensitivity_pfs"],
+      "properties": {
+        "primary_pfs": {
+          "type": "object",
+          "required": ["endpoint", "method", "by_arm", "cox", "logrank_p", "interpretation"],
+          "properties": {
+            "endpoint": {"type": "string"},
+            "method": {"type": "string"},
+            "by_arm": {
+              "type": "object",
+              "required": ["Active", "Placebo"],
+              "properties": {
+                "Active": {"$ref": "#/definitions/km_arm_block"},
+                "Placebo": {"$ref": "#/definitions/km_arm_block"}
+              }
+            },
+            "cox": {"$ref": "#/definitions/cox_block"},
+            "logrank_p": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+            "interpretation": {"type": "string"}
+          }
+        },
+        "secondary_os": {
+          "type": "object",
+          "required": ["endpoint", "method", "by_arm", "cox", "logrank_p"],
+          "properties": {
+            "endpoint": {"type": "string"},
+            "method": {"type": "string"},
+            "by_arm": {"type": "object"},
+            "cox": {"$ref": "#/definitions/cox_block"},
+            "logrank_p": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+          }
+        },
+        "secondary_orr_dcr": {
+          "type": "object",
+          "required": ["endpoint", "method", "by_arm", "risk_difference", "dcr_risk_difference"],
+          "properties": {
+            "endpoint": {"type": "string"},
+            "method": {"type": "string"},
+            "by_arm": {"type": "object"},
+            "risk_difference": {"$ref": "#/definitions/rd_block"},
+            "dcr_risk_difference": {"$ref": "#/definitions/rd_block"}
+          }
+        },
+        "subgroup_forest": {
+          "type": "object",
+          "additionalProperties": {"type": "object"}
+        },
+        "sensitivity_pfs": {
+          "type": "object",
+          "required": ["method", "cox", "logrank_p"],
+          "properties": {
+            "method": {"type": "string"},
+            "cox": {"$ref": "#/definitions/cox_block"},
+            "logrank_p": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+          }
+        }
+      }
+    },
+    "section_11_5_safety": {
+      "type": "object",
+      "required": ["by_arm", "top_socs_active", "death_summary", "lab_abnormalities"],
+      "properties": {
+        "by_arm": {
+          "type": "object",
+          "required": ["Active", "Placebo"],
+          "properties": {
+            "Active": {"$ref": "#/definitions/safety_arm_block"},
+            "Placebo": {"$ref": "#/definitions/safety_arm_block"}
+          }
+        },
+        "top_socs_active": {"type": "object", "additionalProperties": {"type": "object"}},
+        "death_summary": {
+          "type": "object",
+          "required": ["n_deaths_total", "n_deaths_active", "n_deaths_placebo", "n_grade5_ae_reports"],
+          "properties": {
+            "n_deaths_total": {"type": "integer", "minimum": 0},
+            "n_deaths_active": {"type": "integer", "minimum": 0},
+            "n_deaths_placebo": {"type": "integer", "minimum": 0},
+            "n_grade5_ae_reports": {"type": "integer", "minimum": 0}
+          }
+        },
+        "lab_abnormalities": {
+          "type": "object",
+          "required": ["Active", "Placebo"],
+          "properties": {
+            "Active": {"$ref": "#/definitions/lab_block"},
+            "Placebo": {"$ref": "#/definitions/lab_block"}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "disposition_arm": {
+      "type": "object",
+      "required": ["n_randomized", "n_completed", "pct_completed", "n_discontinued", "pct_discontinued", "n_died", "pct_died", "discontinuation_reasons", "n_major_deviations", "pct_major_deviations", "total_deviations"],
+      "properties": {
+        "n_randomized": {"type": "integer", "minimum": 1},
+        "n_completed": {"type": "integer", "minimum": 0},
+        "pct_completed": {"type": "number"},
+        "n_discontinued": {"type": "integer", "minimum": 0},
+        "pct_discontinued": {"type": "number"},
+        "n_died": {"type": "integer", "minimum": 0},
+        "pct_died": {"type": "number"},
+        "discontinuation_reasons": {"type": "object"},
+        "n_major_deviations": {"type": "integer", "minimum": 0},
+        "pct_major_deviations": {"type": "number"},
+        "total_deviations": {"type": "integer", "minimum": 0}
+      }
+    },
+    "km_arm_block": {
+      "type": "object",
+      "required": ["n", "n_events", "n_censored", "median", "ci_lower", "ci_upper"],
+      "properties": {
+        "n": {"type": "integer", "minimum": 1},
+        "n_events": {"type": "integer", "minimum": 0},
+        "n_censored": {"type": "integer", "minimum": 0},
+        "median": {"type": ["number", "null"]},
+        "ci_lower": {"type": ["number", "null"]},
+        "ci_upper": {"type": ["number", "null"]}
+      }
+    },
+    "cox_block": {
+      "type": "object",
+      "required": ["hr", "ci_lower", "ci_upper", "p"],
+      "properties": {
+        "hr": {"type": ["number", "null"], "minimum": 0},
+        "ci_lower": {"type": ["number", "null"]},
+        "ci_upper": {"type": ["number", "null"]},
+        "p": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
+    },
+    "rd_block": {
+      "type": "object",
+      "required": ["rd", "ci_lower", "ci_upper", "fisher_p"],
+      "properties": {
+        "rd": {"type": "number"},
+        "ci_lower": {"type": "number"},
+        "ci_upper": {"type": "number"},
+        "fisher_p": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "safety_arm_block": {
+      "type": "object",
+      "required": ["n", "n_any_ae", "pct_any_ae", "n_sae", "pct_sae", "n_grade3_plus", "pct_grade3_plus", "n_disc_due_ae", "pct_disc_due_ae", "n_deaths", "pct_deaths", "total_ae_reports", "n_ae_by_grade"],
+      "properties": {
+        "n": {"type": "integer", "minimum": 1},
+        "n_any_ae": {"type": "integer", "minimum": 0},
+        "pct_any_ae": {"type": "number"},
+        "n_sae": {"type": "integer", "minimum": 0},
+        "pct_sae": {"type": "number"},
+        "n_grade3_plus": {"type": "integer", "minimum": 0},
+        "pct_grade3_plus": {"type": "number"},
+        "n_disc_due_ae": {"type": "integer", "minimum": 0},
+        "pct_disc_due_ae": {"type": "number"},
+        "n_deaths": {"type": "integer", "minimum": 0},
+        "pct_deaths": {"type": "number"},
+        "total_ae_reports": {"type": "integer", "minimum": 0},
+        "n_ae_by_grade": {"type": "object"}
+      }
+    },
+    "lab_block": {
+      "type": "object",
+      "required": ["n_alt_3xuln", "pct_alt_3xuln", "n_ast_3xuln", "pct_ast_3xuln", "n_bili_2xuln", "pct_bili_2xuln", "alt_mean", "ast_mean", "bili_mean"],
+      "properties": {
+        "n_alt_3xuln": {"type": "integer", "minimum": 0},
+        "pct_alt_3xuln": {"type": "number"},
+        "n_ast_3xuln": {"type": "integer", "minimum": 0},
+        "pct_ast_3xuln": {"type": "number"},
+        "n_bili_2xuln": {"type": "integer", "minimum": 0},
+        "pct_bili_2xuln": {"type": "number"},
+        "alt_mean": {"type": "number"},
+        "ast_mean": {"type": "number"},
+        "bili_mean": {"type": "number"}
+      }
+    }
+  }
+}

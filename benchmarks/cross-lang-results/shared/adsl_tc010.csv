@@ -1,0 +1,401 @@
+"USUBJID","STUDYID","TRT01P","TRT01PN","ITTFL","SAFFL","SEX","AGE","AGEGR1","RACE","ECOG","DISEASE_STAGE","DISCONTINUED","DISC_REASON","TRT_DURATION_MO","FOLLOWUP_DAYS","DIED","MAJOR_DEVIATION","N_DEVIATIONS"
+"SUBJ-0001","BENCHMARK-010","Placebo",0,"Y","Y","F",42,"<65","White",1,"IIIB",0,"Completed",13.2,373,0,0,0
+"SUBJ-0002","BENCHMARK-010","Placebo",0,"Y","Y","F",65,">=65","White",1,"IV",0,"Completed",4.1,402,1,0,0
+"SUBJ-0003","BENCHMARK-010","Placebo",0,"Y","Y","M",74,">=65","White",1,"IV",0,"Completed",12.1,500,1,0,0
+"SUBJ-0004","BENCHMARK-010","Placebo",0,"Y","Y","F",83,">=65","White",0,"IIIB",0,"Completed",11.7,498,1,0,0
+"SUBJ-0005","BENCHMARK-010","Placebo",0,"Y","Y","F",48,"<65","Asian",0,"IIIB",0,"Completed",12.3,500,1,0,0
+"SUBJ-0006","BENCHMARK-010","Placebo",0,"Y","Y","M",50,"<65","Black",1,"IIIB",1,"Disease progression",2.3,116,0,0,0
+"SUBJ-0007","BENCHMARK-010","Placebo",0,"Y","Y","F",55,"<65","Asian",0,"IV",0,"Completed",17.4,496,0,0,0
+"SUBJ-0008","BENCHMARK-010","Placebo",0,"Y","Y","M",51,"<65","White",1,"IIIB",0,"Completed",0.5,449,1,1,2
+"SUBJ-0009","BENCHMARK-010","Placebo",0,"Y","Y","F",56,"<65","White",0,"IV",1,"Disease progression",5.6,123,0,0,0
+"SUBJ-0010","BENCHMARK-010","Placebo",0,"Y","Y","F",60,"<65","White",0,"IV",0,"Completed",9.4,600,0,0,0
+"SUBJ-0011","BENCHMARK-010","Placebo",0,"Y","Y","M",50,"<65","Black",0,"IV",1,"Disease progression",2.4,72,0,1,1
+"SUBJ-0012","BENCHMARK-010","Placebo",0,"Y","Y","F",82,">=65","Other",0,"IV",0,"Completed",11.6,505,0,0,0
+"SUBJ-0013","BENCHMARK-010","Placebo",0,"Y","Y","F",63,"<65","White",0,"IV",0,"Completed",9.4,454,1,1,2
+"SUBJ-0014","BENCHMARK-010","Placebo",0,"Y","Y","M",61,"<65","White",1,"IV",0,"Completed",6.3,422,1,0,0
+"SUBJ-0015","BENCHMARK-010","Placebo",0,"Y","Y","M",67,">=65","Asian",1,"IV",1,"Withdrawal by subject",5.7,170,0,0,0
+"SUBJ-0016","BENCHMARK-010","Placebo",0,"Y","Y","F",62,"<65","White",1,"IIIB",0,"Completed",8,394,0,0,0
+"SUBJ-0017","BENCHMARK-010","Placebo",0,"Y","Y","F",61,"<65","White",1,"IV",0,"Completed",11.1,601,1,1,1
+"SUBJ-0018","BENCHMARK-010","Placebo",0,"Y","Y","M",77,">=65","White",1,"IV",1,"Withdrawal by subject",5.8,215,0,0,0
+"SUBJ-0019","BENCHMARK-010","Placebo",0,"Y","Y","M",60,"<65","White",1,"IIIB",0,"Completed",5.3,382,1,1,2
+"SUBJ-0020","BENCHMARK-010","Placebo",0,"Y","Y","F",49,"<65","Asian",1,"IIIB",0,"Completed",6.9,332,0,0,0
+"SUBJ-0021","BENCHMARK-010","Placebo",0,"Y","Y","F",66,">=65","White",0,"IV",0,"Completed",5.3,370,0,0,0
+"SUBJ-0022","BENCHMARK-010","Placebo",0,"Y","Y","M",58,"<65","White",1,"IV",0,"Completed",10.9,412,0,0,0
+"SUBJ-0023","BENCHMARK-010","Placebo",0,"Y","Y","F",57,"<65","White",1,"IV",1,"Withdrawal by subject",1.7,97,1,0,0
+"SUBJ-0024","BENCHMARK-010","Placebo",0,"Y","Y","F",51,"<65","White",0,"IV",0,"Completed",5.6,534,0,0,0
+"SUBJ-0025","BENCHMARK-010","Placebo",0,"Y","Y","M",66,">=65","Other",1,"IIIB",0,"Completed",9.1,430,0,1,1
+"SUBJ-0026","BENCHMARK-010","Placebo",0,"Y","Y","M",60,"<65","Asian",1,"IV",0,"Completed",3,567,0,0,0
+"SUBJ-0027","BENCHMARK-010","Placebo",0,"Y","Y","M",67,">=65","White",0,"IV",1,"Adverse event",4.3,260,0,0,0
+"SUBJ-0028","BENCHMARK-010","Placebo",0,"Y","Y","F",60,"<65","White",0,"IV",1,"Withdrawal by subject",5.7,260,1,0,0
+"SUBJ-0029","BENCHMARK-010","Placebo",0,"Y","Y","M",55,"<65","Black",0,"IIIB",0,"Completed",13.7,286,1,0,0
+"SUBJ-0030","BENCHMARK-010","Placebo",0,"Y","Y","F",75,">=65","White",0,"IIIB",0,"Completed",8.1,478,1,0,0
+"SUBJ-0031","BENCHMARK-010","Placebo",0,"Y","Y","F",59,"<65","Asian",0,"IV",0,"Completed",7.2,384,1,0,0
+"SUBJ-0032","BENCHMARK-010","Placebo",0,"Y","Y","F",71,">=65","White",0,"IV",1,"Disease progression",3.2,86,0,0,0
+"SUBJ-0033","BENCHMARK-010","Placebo",0,"Y","Y","M",50,"<65","White",0,"IV",1,"Withdrawal by subject",3.3,218,0,0,0
+"SUBJ-0034","BENCHMARK-010","Placebo",0,"Y","Y","F",57,"<65","Asian",0,"IV",0,"Completed",7.9,442,1,0,0
+"SUBJ-0035","BENCHMARK-010","Placebo",0,"Y","Y","M",59,"<65","Asian",1,"IV",0,"Completed",7.1,429,0,0,0
+"SUBJ-0036","BENCHMARK-010","Placebo",0,"Y","Y","F",58,"<65","White",1,"IV",0,"Completed",8,208,1,0,0
+"SUBJ-0037","BENCHMARK-010","Placebo",0,"Y","Y","M",75,">=65","White",0,"IV",0,"Completed",12.7,505,1,0,0
+"SUBJ-0038","BENCHMARK-010","Placebo",0,"Y","Y","M",62,"<65","White",0,"IV",1,"Disease progression",5.1,240,0,0,0
+"SUBJ-0039","BENCHMARK-010","Placebo",0,"Y","Y","F",64,"<65","White",1,"IV",0,"Completed",6.7,323,1,0,0
+"SUBJ-0040","BENCHMARK-010","Placebo",0,"Y","Y","F",53,"<65","White",1,"IV",0,"Completed",9.1,310,1,0,0
+"SUBJ-0041","BENCHMARK-010","Placebo",0,"Y","Y","M",55,"<65","Asian",0,"IIIB",0,"Completed",7.9,351,0,0,0
+"SUBJ-0042","BENCHMARK-010","Placebo",0,"Y","Y","M",72,">=65","White",1,"IV",1,"Disease progression",4.4,134,0,0,0
+"SUBJ-0043","BENCHMARK-010","Placebo",0,"Y","Y","M",75,">=65","Asian",0,"IV",0,"Completed",11.1,434,0,0,0
+"SUBJ-0044","BENCHMARK-010","Placebo",0,"Y","Y","F",74,">=65","Other",0,"IIIB",0,"Completed",2.8,570,0,0,0
+"SUBJ-0045","BENCHMARK-010","Placebo",0,"Y","Y","M",48,"<65","White",0,"IIIB",0,"Completed",7.5,439,1,0,0
+"SUBJ-0046","BENCHMARK-010","Placebo",0,"Y","Y","F",82,">=65","Asian",0,"IIIB",0,"Completed",1,473,0,0,0
+"SUBJ-0047","BENCHMARK-010","Placebo",0,"Y","Y","F",72,">=65","White",0,"IIIB",1,"Adverse event",2.5,68,0,0,0
+"SUBJ-0048","BENCHMARK-010","Placebo",0,"Y","Y","F",62,"<65","Asian",1,"IV",0,"Completed",11.5,266,0,0,0
+"SUBJ-0049","BENCHMARK-010","Placebo",0,"Y","Y","F",69,">=65","White",0,"IV",0,"Completed",5.9,330,1,1,2
+"SUBJ-0050","BENCHMARK-010","Placebo",0,"Y","Y","F",52,"<65","Asian",0,"IV",0,"Completed",4.5,492,0,0,0
+"SUBJ-0051","BENCHMARK-010","Placebo",0,"Y","Y","M",51,"<65","Asian",1,"IV",0,"Completed",13.4,332,1,0,0
+"SUBJ-0052","BENCHMARK-010","Placebo",0,"Y","Y","M",62,"<65","Asian",0,"IV",0,"Completed",5.6,476,1,0,0
+"SUBJ-0053","BENCHMARK-010","Placebo",0,"Y","Y","M",50,"<65","White",0,"IV",0,"Completed",12.2,398,0,0,0
+"SUBJ-0054","BENCHMARK-010","Placebo",0,"Y","Y","F",64,"<65","White",1,"IIIB",0,"Completed",9.7,458,0,0,0
+"SUBJ-0055","BENCHMARK-010","Placebo",0,"Y","Y","M",75,">=65","White",0,"IIIB",0,"Completed",12.1,316,0,0,0
+"SUBJ-0056","BENCHMARK-010","Placebo",0,"Y","Y","F",52,"<65","White",1,"IV",0,"Completed",12.5,325,0,0,0
+"SUBJ-0057","BENCHMARK-010","Placebo",0,"Y","Y","F",55,"<65","White",0,"IV",0,"Completed",13,410,0,0,0
+"SUBJ-0058","BENCHMARK-010","Placebo",0,"Y","Y","M",62,"<65","White",0,"IV",0,"Completed",13.3,399,1,0,0
+"SUBJ-0059","BENCHMARK-010","Placebo",0,"Y","Y","M",52,"<65","White",0,"IV",0,"Completed",10,241,0,0,0
+"SUBJ-0060","BENCHMARK-010","Placebo",0,"Y","Y","M",58,"<65","Black",1,"IV",0,"Completed",9.6,474,0,0,0
+"SUBJ-0061","BENCHMARK-010","Placebo",0,"Y","Y","F",71,">=65","White",0,"IV",0,"Completed",5.7,225,0,0,0
+"SUBJ-0062","BENCHMARK-010","Placebo",0,"Y","Y","F",72,">=65","Asian",1,"IV",0,"Completed",4.8,378,1,1,1
+"SUBJ-0063","BENCHMARK-010","Placebo",0,"Y","Y","F",66,">=65","Asian",1,"IV",0,"Completed",6.9,426,0,0,0
+"SUBJ-0064","BENCHMARK-010","Placebo",0,"Y","Y","F",43,"<65","White",1,"IV",0,"Completed",8.5,350,1,0,0
+"SUBJ-0065","BENCHMARK-010","Placebo",0,"Y","Y","F",61,"<65","White",0,"IV",0,"Completed",5.5,280,1,1,2
+"SUBJ-0066","BENCHMARK-010","Placebo",0,"Y","Y","M",73,">=65","White",0,"IIIB",0,"Completed",11.9,380,1,0,0
+"SUBJ-0067","BENCHMARK-010","Placebo",0,"Y","Y","M",70,">=65","Black",1,"IV",1,"Disease progression",4.1,220,1,0,0
+"SUBJ-0068","BENCHMARK-010","Placebo",0,"Y","Y","F",60,"<65","White",0,"IV",0,"Completed",10.2,328,1,0,0
+"SUBJ-0069","BENCHMARK-010","Placebo",0,"Y","Y","F",35,"<65","Black",0,"IV",0,"Completed",12,284,1,0,0
+"SUBJ-0070","BENCHMARK-010","Placebo",0,"Y","Y","M",63,"<65","White",1,"IIIB",1,"Physician decision",3.8,77,0,0,0
+"SUBJ-0071","BENCHMARK-010","Placebo",0,"Y","Y","M",68,">=65","White",0,"IV",1,"Disease progression",3.7,213,0,0,0
+"SUBJ-0072","BENCHMARK-010","Placebo",0,"Y","Y","M",62,"<65","Asian",0,"IV",0,"Completed",1.6,375,0,1,2
+"SUBJ-0073","BENCHMARK-010","Placebo",0,"Y","Y","M",64,"<65","White",1,"IIIB",0,"Completed",9.8,562,0,1,2
+"SUBJ-0074","BENCHMARK-010","Placebo",0,"Y","Y","M",66,">=65","White",0,"IV",1,"Disease progression",5.6,198,0,0,0
+"SUBJ-0075","BENCHMARK-010","Placebo",0,"Y","Y","M",58,"<65","White",0,"IV",0,"Completed",10.9,458,0,0,0
+"SUBJ-0076","BENCHMARK-010","Placebo",0,"Y","Y","F",75,">=65","White",0,"IV",0,"Completed",12.2,378,1,0,0
+"SUBJ-0077","BENCHMARK-010","Placebo",0,"Y","Y","M",67,">=65","White",1,"IV",0,"Completed",7.1,429,0,0,0
+"SUBJ-0078","BENCHMARK-010","Placebo",0,"Y","Y","M",50,"<65","Asian",0,"IIIB",0,"Completed",10,354,0,0,0
+"SUBJ-0079","BENCHMARK-010","Placebo",0,"Y","Y","M",76,">=65","White",0,"IV",0,"Completed",12.9,500,1,0,0
+"SUBJ-0080","BENCHMARK-010","Placebo",0,"Y","Y","M",74,">=65","White",1,"IV",1,"Disease progression",2.6,70,0,0,0
+"SUBJ-0081","BENCHMARK-010","Placebo",0,"Y","Y","F",70,">=65","Asian",1,"IV",0,"Completed",12.5,435,1,0,0
+"SUBJ-0082","BENCHMARK-010","Placebo",0,"Y","Y","M",45,"<65","White",1,"IV",1,"Physician decision",2.8,270,1,0,0
+"SUBJ-0083","BENCHMARK-010","Placebo",0,"Y","Y","M",56,"<65","White",0,"IV",0,"Completed",7.3,526,0,0,0
+"SUBJ-0084","BENCHMARK-010","Placebo",0,"Y","Y","F",68,">=65","White",0,"IV",0,"Completed",18.2,398,0,0,0
+"SUBJ-0085","BENCHMARK-010","Placebo",0,"Y","Y","F",62,"<65","White",0,"IV",0,"Completed",10.8,470,0,1,1
+"SUBJ-0086","BENCHMARK-010","Placebo",0,"Y","Y","F",65,">=65","White",0,"IV",0,"Completed",8.7,460,0,0,0
+"SUBJ-0087","BENCHMARK-010","Placebo",0,"Y","Y","M",85,">=65","Asian",0,"IV",0,"Completed",12.4,355,0,0,0
+"SUBJ-0088","BENCHMARK-010","Placebo",0,"Y","Y","M",54,"<65","White",0,"IV",0,"Completed",8.1,412,0,1,1
+"SUBJ-0089","BENCHMARK-010","Placebo",0,"Y","Y","M",41,"<65","White",0,"IIIB",0,"Completed",11.2,407,1,1,2
+"SUBJ-0090","BENCHMARK-010","Placebo",0,"Y","Y","M",65,">=65","White",1,"IV",0,"Completed",7.8,532,1,0,0
+"SUBJ-0091","BENCHMARK-010","Placebo",0,"Y","Y","F",55,"<65","White",0,"IIIB",1,"Disease progression",2.7,161,0,0,0
+"SUBJ-0092","BENCHMARK-010","Placebo",0,"Y","Y","M",66,">=65","White",0,"IV",0,"Completed",10.7,449,0,0,0
+"SUBJ-0093","BENCHMARK-010","Placebo",0,"Y","Y","M",54,"<65","White",0,"IV",1,"Withdrawal by subject",2.1,205,0,0,0
+"SUBJ-0094","BENCHMARK-010","Placebo",0,"Y","Y","F",84,">=65","Asian",1,"IV",1,"Disease progression",5.7,236,0,0,0
+"SUBJ-0095","BENCHMARK-010","Placebo",0,"Y","Y","F",61,"<65","Asian",0,"IV",1,"Adverse event",2.5,308,0,0,0
+"SUBJ-0096","BENCHMARK-010","Placebo",0,"Y","Y","F",57,"<65","White",1,"IIIB",0,"Completed",13.7,473,1,0,0
+"SUBJ-0097","BENCHMARK-010","Placebo",0,"Y","Y","M",60,"<65","White",1,"IV",0,"Completed",10,575,1,0,0
+"SUBJ-0098","BENCHMARK-010","Placebo",0,"Y","Y","M",71,">=65","White",0,"IV",0,"Completed",11.9,516,0,0,0
+"SUBJ-0099","BENCHMARK-010","Placebo",0,"Y","Y","F",63,"<65","White",1,"IV",0,"Completed",11.2,454,0,0,0
+"SUBJ-0100","BENCHMARK-010","Placebo",0,"Y","Y","F",46,"<65","White",0,"IV",0,"Completed",9.4,359,0,0,0
+"SUBJ-0101","BENCHMARK-010","Placebo",0,"Y","Y","F",62,"<65","Asian",0,"IV",0,"Completed",11.3,456,0,0,0
+"SUBJ-0102","BENCHMARK-010","Placebo",0,"Y","Y","M",70,">=65","Other",0,"IV",1,"Disease progression",6,96,0,1,1
+"SUBJ-0103","BENCHMARK-010","Placebo",0,"Y","Y","M",62,"<65","White",1,"IV",0,"Completed",4.6,236,0,0,0
+"SUBJ-0104","BENCHMARK-010","Placebo",0,"Y","Y","M",69,">=65","White",0,"IV",0,"Completed",10.2,266,1,1,1
+"SUBJ-0105","BENCHMARK-010","Placebo",0,"Y","Y","F",61,"<65","White",0,"IV",1,"Disease progression",1.7,84,1,0,0
+"SUBJ-0106","BENCHMARK-010","Placebo",0,"Y","Y","F",61,"<65","Black",1,"IV",0,"Completed",5.5,561,0,0,0
+"SUBJ-0107","BENCHMARK-010","Placebo",0,"Y","Y","F",67,">=65","Asian",0,"IIIB",0,"Completed",8.8,482,0,0,0
+"SUBJ-0108","BENCHMARK-010","Placebo",0,"Y","Y","F",72,">=65","Black",0,"IIIB",0,"Completed",8.4,185,0,0,0
+"SUBJ-0109","BENCHMARK-010","Placebo",0,"Y","Y","M",50,"<65","Black",1,"IV",0,"Completed",7.5,467,1,0,0
+"SUBJ-0110","BENCHMARK-010","Placebo",0,"Y","Y","M",62,"<65","White",1,"IV",1,"Disease progression",5.3,115,0,0,0
+"SUBJ-0111","BENCHMARK-010","Placebo",0,"Y","Y","F",61,"<65","White",0,"IIIB",0,"Completed",5.3,394,0,0,0
+"SUBJ-0112","BENCHMARK-010","Placebo",0,"Y","Y","F",54,"<65","Asian",1,"IIIB",1,"Adverse event",4,216,0,1,1
+"SUBJ-0113","BENCHMARK-010","Placebo",0,"Y","Y","F",52,"<65","White",1,"IV",1,"Disease progression",5.2,122,0,0,0
+"SUBJ-0114","BENCHMARK-010","Placebo",0,"Y","Y","M",56,"<65","White",1,"IIIB",0,"Completed",9.2,506,1,0,0
+"SUBJ-0115","BENCHMARK-010","Placebo",0,"Y","Y","M",68,">=65","White",0,"IIIB",0,"Completed",8.6,362,0,0,0
+"SUBJ-0116","BENCHMARK-010","Placebo",0,"Y","Y","M",58,"<65","White",0,"IIIB",0,"Completed",7.6,407,0,0,0
+"SUBJ-0117","BENCHMARK-010","Placebo",0,"Y","Y","M",54,"<65","White",1,"IV",0,"Completed",3.1,479,0,0,0
+"SUBJ-0118","BENCHMARK-010","Placebo",0,"Y","Y","M",64,"<65","White",0,"IV",0,"Completed",5.7,474,0,1,1
+"SUBJ-0119","BENCHMARK-010","Placebo",0,"Y","Y","F",50,"<65","Asian",0,"IIIB",0,"Completed",10.8,381,1,1,1
+"SUBJ-0120","BENCHMARK-010","Placebo",0,"Y","Y","F",72,">=65","White",1,"IV",0,"Completed",9.1,366,1,0,0
+"SUBJ-0121","BENCHMARK-010","Placebo",0,"Y","Y","M",57,"<65","White",0,"IV",1,"Adverse event",4.1,293,1,0,0
+"SUBJ-0122","BENCHMARK-010","Placebo",0,"Y","Y","M",64,"<65","White",1,"IV",0,"Completed",11.1,302,0,0,0
+"SUBJ-0123","BENCHMARK-010","Placebo",0,"Y","Y","F",63,"<65","Black",1,"IV",0,"Completed",11.8,451,0,0,0
+"SUBJ-0124","BENCHMARK-010","Placebo",0,"Y","Y","F",62,"<65","Black",0,"IIIB",0,"Completed",8.5,437,0,0,0
+"SUBJ-0125","BENCHMARK-010","Placebo",0,"Y","Y","F",80,">=65","White",1,"IV",1,"Disease progression",3.3,124,0,0,0
+"SUBJ-0126","BENCHMARK-010","Placebo",0,"Y","Y","M",54,"<65","Asian",0,"IIIB",0,"Completed",13.9,392,0,0,0
+"SUBJ-0127","BENCHMARK-010","Placebo",0,"Y","Y","F",73,">=65","Asian",0,"IV",0,"Completed",10.4,248,0,0,0
+"SUBJ-0128","BENCHMARK-010","Placebo",0,"Y","Y","F",62,"<65","Asian",1,"IV",0,"Completed",13.3,219,1,0,0
+"SUBJ-0129","BENCHMARK-010","Placebo",0,"Y","Y","M",54,"<65","Black",0,"IV",0,"Completed",8.8,291,1,0,0
+"SUBJ-0130","BENCHMARK-010","Placebo",0,"Y","Y","F",61,"<65","White",0,"IV",0,"Completed",14.2,457,0,1,1
+"SUBJ-0131","BENCHMARK-010","Placebo",0,"Y","Y","F",69,">=65","White",0,"IV",0,"Completed",8.7,405,0,1,2
+"SUBJ-0132","BENCHMARK-010","Placebo",0,"Y","Y","F",58,"<65","White",0,"IV",0,"Completed",12.2,347,0,1,2
+"SUBJ-0133","BENCHMARK-010","Placebo",0,"Y","Y","F",54,"<65","Black",1,"IV",0,"Completed",7.8,342,0,0,0
+"SUBJ-0134","BENCHMARK-010","Placebo",0,"Y","Y","F",64,"<65","Black",0,"IIIB",0,"Completed",5.2,475,0,0,0
+"SUBJ-0135","BENCHMARK-010","Placebo",0,"Y","Y","F",72,">=65","White",1,"IV",0,"Completed",12.5,259,1,1,1
+"SUBJ-0136","BENCHMARK-010","Placebo",0,"Y","Y","F",61,"<65","White",0,"IIIB",0,"Completed",17,495,0,0,0
+"SUBJ-0137","BENCHMARK-010","Placebo",0,"Y","Y","F",48,"<65","White",0,"IIIB",0,"Completed",7.9,465,1,0,0
+"SUBJ-0138","BENCHMARK-010","Placebo",0,"Y","Y","M",49,"<65","White",1,"IIIB",1,"Disease progression",5,218,0,1,1
+"SUBJ-0139","BENCHMARK-010","Placebo",0,"Y","Y","F",54,"<65","White",1,"IV",1,"Disease progression",1.6,267,0,1,1
+"SUBJ-0140","BENCHMARK-010","Placebo",0,"Y","Y","F",57,"<65","White",0,"IV",0,"Completed",12.2,509,0,0,0
+"SUBJ-0141","BENCHMARK-010","Placebo",0,"Y","Y","M",62,"<65","Asian",0,"IIIB",0,"Completed",5.5,555,1,0,0
+"SUBJ-0142","BENCHMARK-010","Placebo",0,"Y","Y","M",69,">=65","White",0,"IV",0,"Completed",10,569,0,0,0
+"SUBJ-0143","BENCHMARK-010","Placebo",0,"Y","Y","M",58,"<65","White",0,"IV",0,"Completed",6.3,457,0,0,0
+"SUBJ-0144","BENCHMARK-010","Placebo",0,"Y","Y","F",51,"<65","White",0,"IV",0,"Completed",4.3,399,1,1,1
+"SUBJ-0145","BENCHMARK-010","Placebo",0,"Y","Y","F",68,">=65","White",0,"IV",0,"Completed",11.3,466,1,0,0
+"SUBJ-0146","BENCHMARK-010","Placebo",0,"Y","Y","F",65,">=65","Black",0,"IIIB",0,"Completed",14.6,394,1,0,0
+"SUBJ-0147","BENCHMARK-010","Placebo",0,"Y","Y","M",74,">=65","White",0,"IV",0,"Completed",6.2,320,1,0,0
+"SUBJ-0148","BENCHMARK-010","Placebo",0,"Y","Y","F",45,"<65","White",0,"IIIB",1,"Adverse event",5.8,326,1,0,0
+"SUBJ-0149","BENCHMARK-010","Placebo",0,"Y","Y","M",63,"<65","Asian",0,"IV",0,"Completed",5.2,489,0,1,1
+"SUBJ-0150","BENCHMARK-010","Placebo",0,"Y","Y","M",76,">=65","White",0,"IV",1,"Withdrawal by subject",3.7,360,0,0,0
+"SUBJ-0151","BENCHMARK-010","Placebo",0,"Y","Y","F",69,">=65","White",0,"IIIB",0,"Completed",11.3,587,1,0,0
+"SUBJ-0152","BENCHMARK-010","Placebo",0,"Y","Y","M",54,"<65","White",1,"IV",0,"Completed",11.5,567,0,0,0
+"SUBJ-0153","BENCHMARK-010","Placebo",0,"Y","Y","F",69,">=65","White",0,"IV",0,"Completed",10.6,499,1,0,0
+"SUBJ-0154","BENCHMARK-010","Placebo",0,"Y","Y","M",53,"<65","White",0,"IV",0,"Completed",11.7,416,1,0,0
+"SUBJ-0155","BENCHMARK-010","Placebo",0,"Y","Y","F",57,"<65","Asian",1,"IV",1,"Adverse event",5.6,162,0,0,0
+"SUBJ-0156","BENCHMARK-010","Placebo",0,"Y","Y","F",74,">=65","White",0,"IIIB",0,"Completed",8.4,379,1,1,1
+"SUBJ-0157","BENCHMARK-010","Placebo",0,"Y","Y","M",59,"<65","White",1,"IV",0,"Completed",11.4,342,0,0,0
+"SUBJ-0158","BENCHMARK-010","Placebo",0,"Y","Y","M",70,">=65","White",0,"IV",0,"Completed",8,381,0,0,0
+"SUBJ-0159","BENCHMARK-010","Placebo",0,"Y","Y","M",59,"<65","White",0,"IV",1,"Withdrawal by subject",3.7,169,0,0,0
+"SUBJ-0160","BENCHMARK-010","Placebo",0,"Y","Y","F",46,"<65","White",0,"IIIB",0,"Completed",4.2,458,1,0,0
+"SUBJ-0161","BENCHMARK-010","Placebo",0,"Y","Y","F",54,"<65","White",0,"IV",0,"Completed",18.4,299,0,0,0
+"SUBJ-0162","BENCHMARK-010","Placebo",0,"Y","Y","F",51,"<65","Asian",0,"IIIB",0,"Completed",3.1,540,1,0,0
+"SUBJ-0163","BENCHMARK-010","Placebo",0,"Y","Y","F",57,"<65","White",1,"IV",0,"Completed",9.1,549,0,1,2
+"SUBJ-0164","BENCHMARK-010","Placebo",0,"Y","Y","M",59,"<65","White",0,"IIIB",0,"Completed",15.8,568,0,0,0
+"SUBJ-0165","BENCHMARK-010","Placebo",0,"Y","Y","M",60,"<65","Black",1,"IV",0,"Completed",11.9,298,0,0,0
+"SUBJ-0166","BENCHMARK-010","Placebo",0,"Y","Y","M",60,"<65","White",1,"IV",0,"Completed",8.4,379,0,0,0
+"SUBJ-0167","BENCHMARK-010","Placebo",0,"Y","Y","M",81,">=65","White",0,"IV",0,"Completed",10.9,379,0,0,0
+"SUBJ-0168","BENCHMARK-010","Placebo",0,"Y","Y","M",48,"<65","White",0,"IIIB",0,"Completed",15.2,375,1,0,0
+"SUBJ-0169","BENCHMARK-010","Placebo",0,"Y","Y","M",58,"<65","Black",0,"IV",0,"Completed",9.7,364,0,0,0
+"SUBJ-0170","BENCHMARK-010","Placebo",0,"Y","Y","M",65,">=65","White",1,"IV",0,"Completed",7,364,1,0,0
+"SUBJ-0171","BENCHMARK-010","Placebo",0,"Y","Y","F",78,">=65","White",1,"IV",0,"Completed",14.1,323,1,0,0
+"SUBJ-0172","BENCHMARK-010","Placebo",0,"Y","Y","M",63,"<65","White",0,"IV",0,"Completed",15.5,364,0,0,0
+"SUBJ-0173","BENCHMARK-010","Placebo",0,"Y","Y","M",74,">=65","White",0,"IV",1,"Disease progression",1.5,134,1,0,0
+"SUBJ-0174","BENCHMARK-010","Placebo",0,"Y","Y","M",46,"<65","White",1,"IV",1,"Adverse event",3.8,233,0,0,0
+"SUBJ-0175","BENCHMARK-010","Placebo",0,"Y","Y","M",76,">=65","White",0,"IV",0,"Completed",9.5,481,0,0,0
+"SUBJ-0176","BENCHMARK-010","Placebo",0,"Y","Y","M",55,"<65","White",0,"IV",0,"Completed",11.5,516,0,0,0
+"SUBJ-0177","BENCHMARK-010","Placebo",0,"Y","Y","F",59,"<65","White",0,"IV",1,"Physician decision",5.9,220,0,0,0
+"SUBJ-0178","BENCHMARK-010","Placebo",0,"Y","Y","F",51,"<65","White",0,"IV",0,"Completed",8.9,424,0,1,1
+"SUBJ-0179","BENCHMARK-010","Placebo",0,"Y","Y","F",63,"<65","White",1,"IIIB",0,"Completed",10.5,654,0,0,0
+"SUBJ-0180","BENCHMARK-010","Placebo",0,"Y","Y","F",80,">=65","Other",0,"IV",0,"Completed",4.8,374,0,0,0
+"SUBJ-0181","BENCHMARK-010","Placebo",0,"Y","Y","F",85,">=65","White",0,"IV",1,"Withdrawal by subject",3.5,141,0,0,0
+"SUBJ-0182","BENCHMARK-010","Placebo",0,"Y","Y","F",51,"<65","Black",0,"IIIB",1,"Withdrawal by subject",3.8,152,1,0,0
+"SUBJ-0183","BENCHMARK-010","Placebo",0,"Y","Y","M",67,">=65","White",1,"IV",0,"Completed",9.3,527,0,0,0
+"SUBJ-0184","BENCHMARK-010","Placebo",0,"Y","Y","M",76,">=65","White",0,"IIIB",0,"Completed",8.5,475,1,0,0
+"SUBJ-0185","BENCHMARK-010","Placebo",0,"Y","Y","F",60,"<65","Asian",0,"IV",0,"Completed",3.1,328,0,0,0
+"SUBJ-0186","BENCHMARK-010","Placebo",0,"Y","Y","F",60,"<65","White",0,"IIIB",0,"Completed",7,523,0,0,0
+"SUBJ-0187","BENCHMARK-010","Placebo",0,"Y","Y","F",59,"<65","White",1,"IV",0,"Completed",9.7,533,0,0,0
+"SUBJ-0188","BENCHMARK-010","Placebo",0,"Y","Y","F",68,">=65","White",0,"IV",1,"Disease progression",5.6,183,0,0,0
+"SUBJ-0189","BENCHMARK-010","Placebo",0,"Y","Y","M",76,">=65","White",0,"IV",0,"Completed",9.3,143,0,0,0
+"SUBJ-0190","BENCHMARK-010","Placebo",0,"Y","Y","M",69,">=65","White",0,"IIIB",1,"Disease progression",2.7,141,1,0,0
+"SUBJ-0191","BENCHMARK-010","Placebo",0,"Y","Y","M",65,">=65","White",0,"IV",0,"Completed",8.5,572,0,0,0
+"SUBJ-0192","BENCHMARK-010","Placebo",0,"Y","Y","F",59,"<65","Black",1,"IV",0,"Completed",10.5,403,1,0,0
+"SUBJ-0193","BENCHMARK-010","Placebo",0,"Y","Y","M",67,">=65","White",1,"IIIB",0,"Completed",8.1,354,0,0,0
+"SUBJ-0194","BENCHMARK-010","Placebo",0,"Y","Y","M",57,"<65","White",1,"IIIB",0,"Completed",7.9,405,0,1,1
+"SUBJ-0195","BENCHMARK-010","Placebo",0,"Y","Y","M",59,"<65","White",0,"IV",1,"Adverse event",5.7,67,0,0,0
+"SUBJ-0196","BENCHMARK-010","Placebo",0,"Y","Y","M",73,">=65","White",0,"IV",0,"Completed",11.2,306,1,0,0
+"SUBJ-0197","BENCHMARK-010","Placebo",0,"Y","Y","M",66,">=65","White",1,"IV",0,"Completed",11.9,411,1,0,0
+"SUBJ-0198","BENCHMARK-010","Placebo",0,"Y","Y","M",64,"<65","White",0,"IV",0,"Completed",17.2,504,0,0,0
+"SUBJ-0199","BENCHMARK-010","Placebo",0,"Y","Y","F",59,"<65","White",1,"IIIB",0,"Completed",5.6,441,1,1,1
+"SUBJ-0200","BENCHMARK-010","Placebo",0,"Y","Y","F",71,">=65","White",0,"IV",1,"Disease progression",5.8,134,0,0,0
+"SUBJ-0201","BENCHMARK-010","Active",1,"Y","Y","F",75,">=65","White",1,"IV",0,"Completed",11.3,317,0,0,0
+"SUBJ-0202","BENCHMARK-010","Active",1,"Y","Y","M",53,"<65","White",0,"IIIB",0,"Completed",14.7,569,1,1,1
+"SUBJ-0203","BENCHMARK-010","Active",1,"Y","Y","F",63,"<65","White",0,"IV",0,"Completed",13.3,539,0,0,0
+"SUBJ-0204","BENCHMARK-010","Active",1,"Y","Y","M",62,"<65","White",1,"IV",0,"Completed",7.4,482,0,0,0
+"SUBJ-0205","BENCHMARK-010","Active",1,"Y","Y","M",56,"<65","White",0,"IV",1,"Withdrawal by subject",5.2,238,0,0,0
+"SUBJ-0206","BENCHMARK-010","Active",1,"Y","Y","M",52,"<65","White",1,"IV",0,"Completed",14.9,506,1,0,0
+"SUBJ-0207","BENCHMARK-010","Active",1,"Y","Y","F",62,"<65","White",0,"IV",0,"Completed",14.4,358,0,0,0
+"SUBJ-0208","BENCHMARK-010","Active",1,"Y","Y","M",69,">=65","White",0,"IV",0,"Completed",9.8,332,0,0,0
+"SUBJ-0209","BENCHMARK-010","Active",1,"Y","Y","M",77,">=65","White",1,"IIIB",0,"Completed",15,197,0,0,0
+"SUBJ-0210","BENCHMARK-010","Active",1,"Y","Y","M",43,"<65","White",1,"IV",0,"Completed",9,439,0,0,0
+"SUBJ-0211","BENCHMARK-010","Active",1,"Y","Y","M",55,"<65","White",0,"IV",0,"Completed",6.1,189,0,0,0
+"SUBJ-0212","BENCHMARK-010","Active",1,"Y","Y","F",59,"<65","White",0,"IV",0,"Completed",8.8,418,0,0,0
+"SUBJ-0213","BENCHMARK-010","Active",1,"Y","Y","M",45,"<65","White",0,"IV",0,"Completed",9.3,464,1,0,0
+"SUBJ-0214","BENCHMARK-010","Active",1,"Y","Y","M",54,"<65","White",0,"IV",1,"Withdrawal by subject",4.3,325,1,0,0
+"SUBJ-0215","BENCHMARK-010","Active",1,"Y","Y","M",54,"<65","White",0,"IV",0,"Completed",8.4,522,0,1,2
+"SUBJ-0216","BENCHMARK-010","Active",1,"Y","Y","F",55,"<65","White",0,"IV",0,"Completed",7.5,482,0,0,0
+"SUBJ-0217","BENCHMARK-010","Active",1,"Y","Y","F",40,"<65","Asian",0,"IIIB",0,"Completed",10.7,334,0,0,0
+"SUBJ-0218","BENCHMARK-010","Active",1,"Y","Y","M",64,"<65","White",0,"IV",0,"Completed",7.1,509,1,1,1
+"SUBJ-0219","BENCHMARK-010","Active",1,"Y","Y","M",56,"<65","White",0,"IIIB",0,"Completed",10.7,426,1,0,0
+"SUBJ-0220","BENCHMARK-010","Active",1,"Y","Y","F",77,">=65","Asian",1,"IV",0,"Completed",10.9,234,0,0,0
+"SUBJ-0221","BENCHMARK-010","Active",1,"Y","Y","M",70,">=65","White",0,"IV",1,"Disease progression",2.2,190,1,0,0
+"SUBJ-0222","BENCHMARK-010","Active",1,"Y","Y","M",47,"<65","White",1,"IV",0,"Completed",8.8,242,0,0,0
+"SUBJ-0223","BENCHMARK-010","Active",1,"Y","Y","M",63,"<65","Other",0,"IIIB",0,"Completed",17.3,315,0,1,1
+"SUBJ-0224","BENCHMARK-010","Active",1,"Y","Y","F",56,"<65","Asian",0,"IV",0,"Completed",14.4,358,0,0,0
+"SUBJ-0225","BENCHMARK-010","Active",1,"Y","Y","M",71,">=65","White",1,"IV",0,"Completed",14.4,361,0,0,0
+"SUBJ-0226","BENCHMARK-010","Active",1,"Y","Y","F",63,"<65","Other",0,"IV",0,"Completed",9.2,513,0,0,0
+"SUBJ-0227","BENCHMARK-010","Active",1,"Y","Y","M",56,"<65","White",1,"IIIB",0,"Completed",6.1,413,0,0,0
+"SUBJ-0228","BENCHMARK-010","Active",1,"Y","Y","M",66,">=65","White",0,"IV",0,"Completed",11,326,0,0,0
+"SUBJ-0229","BENCHMARK-010","Active",1,"Y","Y","M",64,"<65","Asian",1,"IV",0,"Completed",9.2,357,1,0,0
+"SUBJ-0230","BENCHMARK-010","Active",1,"Y","Y","M",60,"<65","Black",1,"IV",0,"Completed",21.5,362,1,0,0
+"SUBJ-0231","BENCHMARK-010","Active",1,"Y","Y","M",82,">=65","White",0,"IV",0,"Completed",2.2,439,0,0,0
+"SUBJ-0232","BENCHMARK-010","Active",1,"Y","Y","M",57,"<65","Black",1,"IIIB",0,"Completed",8.3,474,1,0,0
+"SUBJ-0233","BENCHMARK-010","Active",1,"Y","Y","M",57,"<65","Black",0,"IIIB",0,"Completed",14.2,378,1,1,1
+"SUBJ-0234","BENCHMARK-010","Active",1,"Y","Y","M",47,"<65","Asian",0,"IV",1,"Withdrawal by subject",5.8,227,0,0,0
+"SUBJ-0235","BENCHMARK-010","Active",1,"Y","Y","F",62,"<65","White",0,"IV",0,"Completed",8.1,472,0,0,0
+"SUBJ-0236","BENCHMARK-010","Active",1,"Y","Y","F",71,">=65","White",1,"IIIB",1,"Adverse event",3.8,165,0,1,1
+"SUBJ-0237","BENCHMARK-010","Active",1,"Y","Y","M",41,"<65","White",1,"IIIB",1,"Disease progression",3.4,269,0,0,0
+"SUBJ-0238","BENCHMARK-010","Active",1,"Y","Y","F",59,"<65","Other",1,"IV",1,"Disease progression",5.6,120,1,0,0
+"SUBJ-0239","BENCHMARK-010","Active",1,"Y","Y","F",50,"<65","White",0,"IIIB",0,"Completed",8.6,343,0,0,0
+"SUBJ-0240","BENCHMARK-010","Active",1,"Y","Y","M",76,">=65","White",1,"IIIB",0,"Completed",13.7,354,0,0,0
+"SUBJ-0241","BENCHMARK-010","Active",1,"Y","Y","M",76,">=65","White",1,"IV",0,"Completed",4.3,389,0,0,0
+"SUBJ-0242","BENCHMARK-010","Active",1,"Y","Y","F",65,">=65","White",1,"IV",0,"Completed",14,332,0,0,0
+"SUBJ-0243","BENCHMARK-010","Active",1,"Y","Y","M",76,">=65","Black",0,"IIIB",1,"Disease progression",2.2,137,1,0,0
+"SUBJ-0244","BENCHMARK-010","Active",1,"Y","Y","M",53,"<65","White",1,"IV",0,"Completed",4.7,292,0,0,0
+"SUBJ-0245","BENCHMARK-010","Active",1,"Y","Y","M",72,">=65","White",0,"IIIB",0,"Completed",3.7,458,0,0,0
+"SUBJ-0246","BENCHMARK-010","Active",1,"Y","Y","M",56,"<65","White",0,"IV",0,"Completed",9.1,373,0,1,1
+"SUBJ-0247","BENCHMARK-010","Active",1,"Y","Y","M",65,">=65","White",1,"IV",0,"Completed",10,500,0,0,0
+"SUBJ-0248","BENCHMARK-010","Active",1,"Y","Y","M",59,"<65","Black",1,"IV",0,"Completed",13.2,463,0,0,0
+"SUBJ-0249","BENCHMARK-010","Active",1,"Y","Y","M",59,"<65","White",1,"IV",0,"Completed",8.9,369,0,1,1
+"SUBJ-0250","BENCHMARK-010","Active",1,"Y","Y","F",67,">=65","Black",1,"IV",0,"Completed",10.5,385,0,0,0
+"SUBJ-0251","BENCHMARK-010","Active",1,"Y","Y","M",49,"<65","Black",1,"IV",0,"Completed",13.5,481,1,0,0
+"SUBJ-0252","BENCHMARK-010","Active",1,"Y","Y","M",59,"<65","White",0,"IV",0,"Completed",13.1,494,0,1,1
+"SUBJ-0253","BENCHMARK-010","Active",1,"Y","Y","M",64,"<65","Asian",0,"IV",0,"Completed",11.9,468,0,0,0
+"SUBJ-0254","BENCHMARK-010","Active",1,"Y","Y","M",58,"<65","White",1,"IIIB",1,"Adverse event",4.7,216,0,0,0
+"SUBJ-0255","BENCHMARK-010","Active",1,"Y","Y","M",63,"<65","White",0,"IIIB",1,"Disease progression",1.1,121,0,0,0
+"SUBJ-0256","BENCHMARK-010","Active",1,"Y","Y","F",59,"<65","Black",1,"IV",1,"Withdrawal by subject",2.2,218,0,0,0
+"SUBJ-0257","BENCHMARK-010","Active",1,"Y","Y","M",78,">=65","White",0,"IV",0,"Completed",12.9,278,0,0,0
+"SUBJ-0258","BENCHMARK-010","Active",1,"Y","Y","M",69,">=65","White",1,"IV",0,"Completed",8.8,428,0,0,0
+"SUBJ-0259","BENCHMARK-010","Active",1,"Y","Y","F",85,">=65","White",1,"IV",1,"Adverse event",5.4,95,0,0,0
+"SUBJ-0260","BENCHMARK-010","Active",1,"Y","Y","F",54,"<65","White",1,"IV",1,"Disease progression",2.9,248,0,0,0
+"SUBJ-0261","BENCHMARK-010","Active",1,"Y","Y","F",70,">=65","White",1,"IV",1,"Withdrawal by subject",1.9,141,0,1,1
+"SUBJ-0262","BENCHMARK-010","Active",1,"Y","Y","M",83,">=65","White",1,"IIIB",0,"Completed",5.6,404,0,1,1
+"SUBJ-0263","BENCHMARK-010","Active",1,"Y","Y","M",65,">=65","White",1,"IV",0,"Completed",14.1,572,1,0,0
+"SUBJ-0264","BENCHMARK-010","Active",1,"Y","Y","F",51,"<65","White",0,"IV",1,"Disease progression",1.8,212,0,1,1
+"SUBJ-0265","BENCHMARK-010","Active",1,"Y","Y","M",52,"<65","White",1,"IV",0,"Completed",3.5,171,0,0,0
+"SUBJ-0266","BENCHMARK-010","Active",1,"Y","Y","M",62,"<65","White",1,"IV",0,"Completed",13.5,255,0,0,0
+"SUBJ-0267","BENCHMARK-010","Active",1,"Y","Y","F",75,">=65","White",0,"IIIB",0,"Completed",9.3,278,0,0,0
+"SUBJ-0268","BENCHMARK-010","Active",1,"Y","Y","M",70,">=65","White",1,"IV",0,"Completed",12.4,292,0,0,0
+"SUBJ-0269","BENCHMARK-010","Active",1,"Y","Y","F",41,"<65","White",0,"IV",0,"Completed",15.8,628,0,0,0
+"SUBJ-0270","BENCHMARK-010","Active",1,"Y","Y","F",55,"<65","White",1,"IIIB",0,"Completed",12.8,522,0,1,2
+"SUBJ-0271","BENCHMARK-010","Active",1,"Y","Y","M",62,"<65","Asian",0,"IV",0,"Completed",7.8,409,1,0,0
+"SUBJ-0272","BENCHMARK-010","Active",1,"Y","Y","F",47,"<65","White",1,"IV",0,"Completed",8.5,518,0,0,0
+"SUBJ-0273","BENCHMARK-010","Active",1,"Y","Y","M",69,">=65","White",1,"IIIB",0,"Completed",5.5,646,0,0,0
+"SUBJ-0274","BENCHMARK-010","Active",1,"Y","Y","M",37,"<65","Asian",0,"IV",0,"Completed",6.1,484,1,0,0
+"SUBJ-0275","BENCHMARK-010","Active",1,"Y","Y","F",63,"<65","White",1,"IV",0,"Completed",10.7,598,0,0,0
+"SUBJ-0276","BENCHMARK-010","Active",1,"Y","Y","M",58,"<65","White",0,"IV",0,"Completed",8,305,0,0,0
+"SUBJ-0277","BENCHMARK-010","Active",1,"Y","Y","M",57,"<65","Asian",0,"IV",0,"Completed",11.3,312,0,0,0
+"SUBJ-0278","BENCHMARK-010","Active",1,"Y","Y","M",59,"<65","White",0,"IV",0,"Completed",11.9,527,1,0,0
+"SUBJ-0279","BENCHMARK-010","Active",1,"Y","Y","M",65,">=65","White",0,"IIIB",0,"Completed",10.3,509,0,0,0
+"SUBJ-0280","BENCHMARK-010","Active",1,"Y","Y","M",66,">=65","Asian",0,"IIIB",1,"Disease progression",5,152,1,0,0
+"SUBJ-0281","BENCHMARK-010","Active",1,"Y","Y","M",60,"<65","White",0,"IV",0,"Completed",3.8,469,0,0,0
+"SUBJ-0282","BENCHMARK-010","Active",1,"Y","Y","M",43,"<65","Other",1,"IIIB",1,"Physician decision",5.1,178,0,1,1
+"SUBJ-0283","BENCHMARK-010","Active",1,"Y","Y","M",48,"<65","Other",0,"IIIB",0,"Completed",5.4,515,1,1,1
+"SUBJ-0284","BENCHMARK-010","Active",1,"Y","Y","F",47,"<65","White",0,"IIIB",0,"Completed",11.3,605,0,0,0
+"SUBJ-0285","BENCHMARK-010","Active",1,"Y","Y","M",70,">=65","White",1,"IV",0,"Completed",11.7,544,0,0,0
+"SUBJ-0286","BENCHMARK-010","Active",1,"Y","Y","M",60,"<65","White",1,"IIIB",0,"Completed",10.1,282,0,0,0
+"SUBJ-0287","BENCHMARK-010","Active",1,"Y","Y","M",65,">=65","White",0,"IIIB",0,"Completed",5.4,467,0,0,0
+"SUBJ-0288","BENCHMARK-010","Active",1,"Y","Y","M",46,"<65","Other",0,"IIIB",0,"Completed",6.4,421,0,0,0
+"SUBJ-0289","BENCHMARK-010","Active",1,"Y","Y","M",57,"<65","White",0,"IV",0,"Completed",7.3,429,0,0,0
+"SUBJ-0290","BENCHMARK-010","Active",1,"Y","Y","M",68,">=65","White",1,"IV",1,"Physician decision",3.7,211,0,0,0
+"SUBJ-0291","BENCHMARK-010","Active",1,"Y","Y","F",60,"<65","Asian",1,"IV",0,"Completed",17.2,293,0,1,1
+"SUBJ-0292","BENCHMARK-010","Active",1,"Y","Y","F",61,"<65","White",1,"IV",0,"Completed",5.8,453,0,1,1
+"SUBJ-0293","BENCHMARK-010","Active",1,"Y","Y","M",61,"<65","White",0,"IV",0,"Completed",1.5,555,0,0,0
+"SUBJ-0294","BENCHMARK-010","Active",1,"Y","Y","M",74,">=65","White",0,"IV",0,"Completed",8.6,584,0,0,0
+"SUBJ-0295","BENCHMARK-010","Active",1,"Y","Y","M",56,"<65","White",0,"IV",0,"Completed",6.1,468,0,0,0
+"SUBJ-0296","BENCHMARK-010","Active",1,"Y","Y","M",69,">=65","White",0,"IIIB",0,"Completed",1.4,346,1,1,3
+"SUBJ-0297","BENCHMARK-010","Active",1,"Y","Y","F",71,">=65","White",1,"IIIB",0,"Completed",5.9,362,0,0,0
+"SUBJ-0298","BENCHMARK-010","Active",1,"Y","Y","F",50,"<65","Asian",0,"IV",0,"Completed",7.7,359,0,0,0
+"SUBJ-0299","BENCHMARK-010","Active",1,"Y","Y","M",63,"<65","White",0,"IV",0,"Completed",5.1,480,0,0,0
+"SUBJ-0300","BENCHMARK-010","Active",1,"Y","Y","M",62,"<65","White",0,"IV",1,"Disease progression",2.5,204,0,0,0
+"SUBJ-0301","BENCHMARK-010","Active",1,"Y","Y","M",72,">=65","White",1,"IV",0,"Completed",12.2,710,0,0,0
+"SUBJ-0302","BENCHMARK-010","Active",1,"Y","Y","M",71,">=65","Other",1,"IIIB",0,"Completed",7.9,393,0,0,0
+"SUBJ-0303","BENCHMARK-010","Active",1,"Y","Y","M",62,"<65","White",1,"IIIB",0,"Completed",3.8,435,1,0,0
+"SUBJ-0304","BENCHMARK-010","Active",1,"Y","Y","M",63,"<65","Black",1,"IV",0,"Completed",11.1,399,1,0,0
+"SUBJ-0305","BENCHMARK-010","Active",1,"Y","Y","F",55,"<65","White",0,"IIIB",0,"Completed",6,356,0,0,0
+"SUBJ-0306","BENCHMARK-010","Active",1,"Y","Y","F",60,"<65","White",1,"IV",0,"Completed",6.1,505,1,0,0
+"SUBJ-0307","BENCHMARK-010","Active",1,"Y","Y","M",52,"<65","White",0,"IIIB",0,"Completed",9.5,367,0,0,0
+"SUBJ-0308","BENCHMARK-010","Active",1,"Y","Y","M",52,"<65","White",0,"IIIB",0,"Completed",5.6,420,0,0,0
+"SUBJ-0309","BENCHMARK-010","Active",1,"Y","Y","M",50,"<65","White",0,"IIIB",0,"Completed",8,392,0,0,0
+"SUBJ-0310","BENCHMARK-010","Active",1,"Y","Y","M",70,">=65","White",1,"IIIB",0,"Completed",6.3,137,0,0,0
+"SUBJ-0311","BENCHMARK-010","Active",1,"Y","Y","M",73,">=65","White",1,"IV",0,"Completed",10.4,485,0,0,0
+"SUBJ-0312","BENCHMARK-010","Active",1,"Y","Y","F",58,"<65","White",0,"IIIB",0,"Completed",6,436,0,1,1
+"SUBJ-0313","BENCHMARK-010","Active",1,"Y","Y","M",51,"<65","White",1,"IIIB",0,"Completed",6,335,1,0,0
+"SUBJ-0314","BENCHMARK-010","Active",1,"Y","Y","M",61,"<65","White",0,"IIIB",0,"Completed",5.6,556,0,0,0
+"SUBJ-0315","BENCHMARK-010","Active",1,"Y","Y","M",84,">=65","Black",1,"IV",0,"Completed",9,294,1,0,0
+"SUBJ-0316","BENCHMARK-010","Active",1,"Y","Y","F",82,">=65","White",0,"IV",1,"Withdrawal by subject",4.4,107,1,0,0
+"SUBJ-0317","BENCHMARK-010","Active",1,"Y","Y","M",45,"<65","White",1,"IV",0,"Completed",5.9,351,0,1,2
+"SUBJ-0318","BENCHMARK-010","Active",1,"Y","Y","F",58,"<65","White",1,"IV",0,"Completed",9.8,302,0,0,0
+"SUBJ-0319","BENCHMARK-010","Active",1,"Y","Y","F",77,">=65","White",1,"IV",0,"Completed",6.7,499,1,0,0
+"SUBJ-0320","BENCHMARK-010","Active",1,"Y","Y","F",62,"<65","Other",0,"IIIB",0,"Completed",5.2,429,1,0,0
+"SUBJ-0321","BENCHMARK-010","Active",1,"Y","Y","M",78,">=65","Asian",1,"IIIB",0,"Completed",12.8,383,0,1,1
+"SUBJ-0322","BENCHMARK-010","Active",1,"Y","Y","M",59,"<65","White",1,"IIIB",0,"Completed",7,421,1,0,0
+"SUBJ-0323","BENCHMARK-010","Active",1,"Y","Y","M",68,">=65","White",0,"IV",1,"Disease progression",5.2,89,0,0,0
+"SUBJ-0324","BENCHMARK-010","Active",1,"Y","Y","M",64,"<65","White",0,"IIIB",1,"Adverse event",5.5,290,0,0,0
+"SUBJ-0325","BENCHMARK-010","Active",1,"Y","Y","F",85,">=65","White",0,"IV",1,"Adverse event",5.6,107,0,0,0
+"SUBJ-0326","BENCHMARK-010","Active",1,"Y","Y","F",71,">=65","White",1,"IIIB",0,"Completed",12.9,413,0,1,2
+"SUBJ-0327","BENCHMARK-010","Active",1,"Y","Y","M",50,"<65","White",0,"IIIB",0,"Completed",16.5,420,0,1,2
+"SUBJ-0328","BENCHMARK-010","Active",1,"Y","Y","F",56,"<65","Asian",1,"IIIB",0,"Completed",6.1,309,1,1,3
+"SUBJ-0329","BENCHMARK-010","Active",1,"Y","Y","F",66,">=65","Asian",1,"IV",0,"Completed",9.3,514,0,0,0
+"SUBJ-0330","BENCHMARK-010","Active",1,"Y","Y","F",43,"<65","Asian",0,"IIIB",1,"Adverse event",2.6,139,0,0,0
+"SUBJ-0331","BENCHMARK-010","Active",1,"Y","Y","F",44,"<65","White",1,"IV",0,"Completed",7.2,643,1,0,0
+"SUBJ-0332","BENCHMARK-010","Active",1,"Y","Y","M",51,"<65","Black",0,"IV",1,"Adverse event",5.1,340,1,0,0
+"SUBJ-0333","BENCHMARK-010","Active",1,"Y","Y","M",59,"<65","White",1,"IV",0,"Completed",7.5,472,0,0,0
+"SUBJ-0334","BENCHMARK-010","Active",1,"Y","Y","M",74,">=65","White",1,"IV",1,"Withdrawal by subject",2.6,106,0,1,1
+"SUBJ-0335","BENCHMARK-010","Active",1,"Y","Y","F",59,"<65","White",0,"IV",0,"Completed",1.2,463,0,0,0
+"SUBJ-0336","BENCHMARK-010","Active",1,"Y","Y","M",64,"<65","Other",0,"IV",1,"Disease progression",2.7,153,0,0,0
+"SUBJ-0337","BENCHMARK-010","Active",1,"Y","Y","M",61,"<65","White",0,"IV",0,"Completed",7.8,393,1,0,0
+"SUBJ-0338","BENCHMARK-010","Active",1,"Y","Y","M",55,"<65","White",1,"IV",0,"Completed",15,499,0,0,0
+"SUBJ-0339","BENCHMARK-010","Active",1,"Y","Y","F",76,">=65","White",1,"IIIB",0,"Completed",5.1,504,1,0,0
+"SUBJ-0340","BENCHMARK-010","Active",1,"Y","Y","M",51,"<65","Asian",0,"IV",0,"Completed",7.3,423,0,0,0
+"SUBJ-0341","BENCHMARK-010","Active",1,"Y","Y","M",60,"<65","Black",0,"IV",0,"Completed",11.8,396,0,0,0
+"SUBJ-0342","BENCHMARK-010","Active",1,"Y","Y","M",59,"<65","Asian",0,"IIIB",0,"Completed",8.1,446,0,0,0
+"SUBJ-0343","BENCHMARK-010","Active",1,"Y","Y","F",67,">=65","White",0,"IV",0,"Completed",10.7,261,1,1,2
+"SUBJ-0344","BENCHMARK-010","Active",1,"Y","Y","M",78,">=65","White",0,"IV",0,"Completed",13.7,382,1,0,0
+"SUBJ-0345","BENCHMARK-010","Active",1,"Y","Y","M",67,">=65","White",1,"IV",0,"Completed",16.6,601,0,0,0
+"SUBJ-0346","BENCHMARK-010","Active",1,"Y","Y","M",76,">=65","Asian",0,"IV",0,"Completed",9.2,246,0,0,0
+"SUBJ-0347","BENCHMARK-010","Active",1,"Y","Y","F",70,">=65","White",1,"IV",0,"Completed",6.1,583,0,0,0
+"SUBJ-0348","BENCHMARK-010","Active",1,"Y","Y","M",56,"<65","White",0,"IIIB",0,"Completed",5.2,473,0,0,0
+"SUBJ-0349","BENCHMARK-010","Active",1,"Y","Y","F",63,"<65","Asian",1,"IV",0,"Completed",7.1,384,0,0,0
+"SUBJ-0350","BENCHMARK-010","Active",1,"Y","Y","F",76,">=65","White",0,"IV",0,"Completed",7.5,644,1,1,1
+"SUBJ-0351","BENCHMARK-010","Active",1,"Y","Y","M",46,"<65","White",1,"IV",0,"Completed",4.8,416,1,0,0
+"SUBJ-0352","BENCHMARK-010","Active",1,"Y","Y","F",65,">=65","Black",1,"IIIB",0,"Completed",11.1,609,1,1,1
+"SUBJ-0353","BENCHMARK-010","Active",1,"Y","Y","M",60,"<65","White",1,"IV",0,"Completed",14,422,0,0,0
+"SUBJ-0354","BENCHMARK-010","Active",1,"Y","Y","M",71,">=65","White",1,"IV",0,"Completed",7.4,475,0,0,0
+"SUBJ-0355","BENCHMARK-010","Active",1,"Y","Y","F",70,">=65","White",1,"IIIB",0,"Completed",5.4,363,0,0,0
+"SUBJ-0356","BENCHMARK-010","Active",1,"Y","Y","M",65,">=65","Asian",0,"IIIB",0,"Completed",4.5,327,1,1,1
+"SUBJ-0357","BENCHMARK-010","Active",1,"Y","Y","F",77,">=65","White",0,"IV",0,"Completed",11.7,220,0,0,0
+"SUBJ-0358","BENCHMARK-010","Active",1,"Y","Y","F",47,"<65","White",1,"IIIB",0,"Completed",9.1,358,0,0,0
+"SUBJ-0359","BENCHMARK-010","Active",1,"Y","Y","M",71,">=65","White",0,"IIIB",0,"Completed",2.3,493,0,0,0
+"SUBJ-0360","BENCHMARK-010","Active",1,"Y","Y","M",46,"<65","White",0,"IV",0,"Completed",8.6,310,0,0,0
+"SUBJ-0361","BENCHMARK-010","Active",1,"Y","Y","F",68,">=65","White",1,"IIIB",1,"Disease progression",3,67,0,0,0
+"SUBJ-0362","BENCHMARK-010","Active",1,"Y","Y","F",63,"<65","Other",0,"IV",0,"Completed",6,376,0,0,0
+"SUBJ-0363","BENCHMARK-010","Active",1,"Y","Y","M",72,">=65","Asian",0,"IV",0,"Completed",4.7,436,0,1,1
+"SUBJ-0364","BENCHMARK-010","Active",1,"Y","Y","F",63,"<65","White",1,"IV",0,"Completed",7.4,371,0,0,0
+"SUBJ-0365","BENCHMARK-010","Active",1,"Y","Y","F",46,"<65","White",1,"IV",0,"Completed",6.5,541,0,1,1
+"SUBJ-0366","BENCHMARK-010","Active",1,"Y","Y","F",42,"<65","Asian",0,"IV",0,"Completed",6.6,449,0,1,1
+"SUBJ-0367","BENCHMARK-010","Active",1,"Y","Y","F",67,">=65","White",0,"IV",1,"Disease progression",1.7,214,0,0,0
+"SUBJ-0368","BENCHMARK-010","Active",1,"Y","Y","F",61,"<65","Other",1,"IV",0,"Completed",8.5,310,0,0,0
+"SUBJ-0369","BENCHMARK-010","Active",1,"Y","Y","M",56,"<65","Asian",0,"IV",1,"Disease progression",5.3,118,0,0,0
+"SUBJ-0370","BENCHMARK-010","Active",1,"Y","Y","M",59,"<65","White",0,"IIIB",1,"Withdrawal by subject",2.1,284,1,0,0
+"SUBJ-0371","BENCHMARK-010","Active",1,"Y","Y","M",55,"<65","White",1,"IV",0,"Completed",16.3,387,0,0,0
+"SUBJ-0372","BENCHMARK-010","Active",1,"Y","Y","M",60,"<65","Other",0,"IV",0,"Completed",9.9,531,0,0,0
+"SUBJ-0373","BENCHMARK-010","Active",1,"Y","Y","F",53,"<65","White",0,"IV",0,"Completed",5.3,257,0,0,0
+"SUBJ-0374","BENCHMARK-010","Active",1,"Y","Y","M",42,"<65","White",0,"IV",0,"Completed",10.8,454,0,0,0
+"SUBJ-0375","BENCHMARK-010","Active",1,"Y","Y","F",60,"<65","White",1,"IV",0,"Completed",12.8,368,0,0,0
+"SUBJ-0376","BENCHMARK-010","Active",1,"Y","Y","F",72,">=65","White",0,"IV",0,"Completed",15.6,566,1,0,0
+"SUBJ-0377","BENCHMARK-010","Active",1,"Y","Y","M",81,">=65","White",1,"IV",0,"Completed",11.8,463,0,0,0
+"SUBJ-0378","BENCHMARK-010","Active",1,"Y","Y","M",62,"<65","White",1,"IV",0,"Completed",14,317,0,0,0
+"SUBJ-0379","BENCHMARK-010","Active",1,"Y","Y","M",61,"<65","Other",1,"IV",0,"Completed",10.5,289,0,1,1
+"SUBJ-0380","BENCHMARK-010","Active",1,"Y","Y","F",72,">=65","White",1,"IV",0,"Completed",4.5,443,1,0,0
+"SUBJ-0381","BENCHMARK-010","Active",1,"Y","Y","F",63,"<65","White",1,"IV",0,"Completed",6,389,0,0,0
+"SUBJ-0382","BENCHMARK-010","Active",1,"Y","Y","M",58,"<65","White",0,"IIIB",0,"Completed",15.6,412,0,0,0
+"SUBJ-0383","BENCHMARK-010","Active",1,"Y","Y","M",45,"<65","White",0,"IIIB",0,"Completed",11.5,403,0,0,0
+"SUBJ-0384","BENCHMARK-010","Active",1,"Y","Y","M",49,"<65","White",0,"IIIB",0,"Completed",6.7,486,0,0,0
+"SUBJ-0385","BENCHMARK-010","Active",1,"Y","Y","F",66,">=65","Asian",0,"IIIB",0,"Completed",6.5,313,0,0,0
+"SUBJ-0386","BENCHMARK-010","Active",1,"Y","Y","F",47,"<65","White",0,"IIIB",0,"Completed",5.8,767,0,1,1
+"SUBJ-0387","BENCHMARK-010","Active",1,"Y","Y","M",72,">=65","White",1,"IIIB",0,"Completed",9.5,449,1,0,0
+"SUBJ-0388","BENCHMARK-010","Active",1,"Y","Y","F",49,"<65","White",1,"IV",0,"Completed",8.1,366,0,0,0
+"SUBJ-0389","BENCHMARK-010","Active",1,"Y","Y","M",60,"<65","White",1,"IV",0,"Completed",5.7,406,0,0,0
+"SUBJ-0390","BENCHMARK-010","Active",1,"Y","Y","M",62,"<65","White",1,"IIIB",0,"Completed",13.2,474,0,0,0
+"SUBJ-0391","BENCHMARK-010","Active",1,"Y","Y","F",62,"<65","White",1,"IIIB",0,"Completed",9.1,483,1,0,0
+"SUBJ-0392","BENCHMARK-010","Active",1,"Y","Y","M",64,"<65","Asian",1,"IV",0,"Completed",11.7,243,0,0,0
+"SUBJ-0393","BENCHMARK-010","Active",1,"Y","Y","F",68,">=65","White",0,"IV",0,"Completed",7.7,213,0,0,0
+"SUBJ-0394","BENCHMARK-010","Active",1,"Y","Y","M",61,"<65","White",1,"IIIB",0,"Completed",9.6,411,0,0,0
+"SUBJ-0395","BENCHMARK-010","Active",1,"Y","Y","F",60,"<65","White",1,"IV",0,"Completed",12.6,504,0,0,0
+"SUBJ-0396","BENCHMARK-010","Active",1,"Y","Y","M",64,"<65","White",0,"IV",0,"Completed",11.4,437,1,0,0
+"SUBJ-0397","BENCHMARK-010","Active",1,"Y","Y","F",58,"<65","White",0,"IV",0,"Completed",12.3,523,0,0,0
+"SUBJ-0398","BENCHMARK-010","Active",1,"Y","Y","F",77,">=65","White",0,"IIIB",0,"Completed",2.6,460,0,0,0
+"SUBJ-0399","BENCHMARK-010","Active",1,"Y","Y","F",40,"<65","White",0,"IV",0,"Completed",9.6,461,0,0,0
+"SUBJ-0400","BENCHMARK-010","Active",1,"Y","Y","M",72,">=65","White",1,"IIIB",0,"Completed",8.3,588,1,0,0

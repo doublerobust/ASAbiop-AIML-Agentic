@@ -759,3 +759,47 @@ if python3 "$BENCH/references/verification/tc009_cross_lang_compare.py" \
 else
   echo "  ✗ TC-009 verification FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
+
+# TC-010: CSR Statistical Sections (ICH E3) — Level 3 (shared ADSL/ADTTE/ADRS/ADAE/ADLB)
+echo ""
+echo "── TC-010 (Level 3: CSR Statistical Sections) ──────────────────"
+echo "  Generating shared TC-010 CSR datasets (ADSL/ADTTE/ADRS/ADAE/ADLB)..."
+if (cd "$RDIR" && Rscript "generate_tc010_csr.R" --seed $SEED --n $N --out "$SHARED") 2>&1; then
+  echo "  ✓ Shared TC-010 datasets generated"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ TC-010 data generation FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  R:   tc-010-csr-statistical.R"
+if (cd "$RDIR" && Rscript "tc-010-csr-statistical.R" \
+  --data-adsl "$SHARED/adsl_tc010.csv" \
+  --data-adtte "$SHARED/adtte_tc010.csv" \
+  --data-adrs "$SHARED/adrs_tc010.csv" \
+  --data-adae "$SHARED/adae_tc010.csv" \
+  --data-adlb "$SHARED/adlb_tc010.csv" \
+  --output "$R_OUT/TC-010.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_010_csr_statistical.py"
+if (cd "$PYDIR" && python3 "tc_010_csr_statistical.py" \
+  --data-adsl "$SHARED/adsl_tc010.csv" \
+  --data-adtte "$SHARED/adtte_tc010.csv" \
+  --data-adrs "$SHARED/adrs_tc010.csv" \
+  --data-adae "$SHARED/adae_tc010.csv" \
+  --data-adlb "$SHARED/adlb_tc010.csv" \
+  --output "$PY_OUT/TC-010.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# Verify TC-010 cross-language (dedicated comparator — 341+ fields)
+echo ""
+echo "── TC-010 Cross-Language Verification ─────────────"
+if python3 "$BENCH/references/verification/tc010_cross_lang_compare.py" \
+  "$R_OUT/TC-010.json" "$PY_OUT/TC-010.json" 2>&1; then
+  echo "  ✓ TC-010 verification completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ TC-010 verification FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
