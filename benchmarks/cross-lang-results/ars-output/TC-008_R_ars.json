@@ -1,0 +1,154 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-008",
+    "version": "1.0",
+    "analysisReason": "Phase I dose-finding study design with BOIN and simulation operating characteristics",
+    "analysisMethod": {
+      "name": "BOIN (Bayesian Optimal Interval) + Monte Carlo simulation",
+      "codeTemplate": "boin(dlt_data, dose_levels, target=0.30, cohort=3, max_n=30)",
+      "parameters": {
+        "target_dlt_rate": 0.3,
+        "n_doses": 5,
+        "cohort_size": 3,
+        "max_n": 30,
+        "escalation_boundary": 0.2308,
+        "deescalation_boundary": 0.4286,
+        "n_sim": 2000,
+        "seed": 42,
+        "expansion_cohort_size": 6,
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "DLT",
+        "dataset": "ADXD",
+        "role": "dose-limiting toxicity (0/1)"
+      },
+      {
+        "name": "DOSE",
+        "dataset": "ADSL",
+        "role": "dose level assigned"
+      },
+      {
+        "name": "USUBJID",
+        "dataset": "ADSL",
+        "role": "subject identifier"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "All treated patients (Phase I)",
+      "filter": "SAFFL = 'Y' (all who received any study drug)"
+    },
+    "analysisDataset": "ADXD",
+    "resultGroups": [
+      {
+        "id": "Dose_1",
+        "n": 0
+      },
+      {
+        "id": "Dose_2",
+        "n": 0
+      },
+      {
+        "id": "Dose_3",
+        "n": 0
+      },
+      {
+        "id": "Dose_4",
+        "n": 0
+      },
+      {
+        "id": "Dose_5",
+        "n": 0
+      }
+    ],
+    "documentation": "Level 3 Phase I dose-finding design. ITT/PP distinction does not apply \u2014 all treated patients form the analysis set. BOIN identifies Dose 3 (40 mg) as RP2D with 0.403 selection probability. True DLT rates: [0.05, 0.12, 0.25, 0.35, 0.45]. Dose 3 (true rate 0.25) is the true MTD (closest to target 0.30).",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "target_dlt_rate",
+          "value": 0.3
+        },
+        {
+          "name": "n_doses",
+          "value": 5
+        },
+        {
+          "name": "cohort_size",
+          "value": 3
+        },
+        {
+          "name": "max_n",
+          "value": 30
+        },
+        {
+          "name": "escalation_boundary",
+          "value": 0.2308
+        },
+        {
+          "name": "deescalation_boundary",
+          "value": 0.4286
+        },
+        {
+          "name": "n_sim",
+          "value": 2000
+        },
+        {
+          "name": "prob_select_dose1",
+          "value": 0.043
+        },
+        {
+          "name": "prob_select_dose2",
+          "value": 0.167
+        },
+        {
+          "name": "prob_select_dose3_mtd",
+          "value": 0.403
+        },
+        {
+          "name": "prob_select_dose4",
+          "value": 0.288
+        },
+        {
+          "name": "prob_select_dose5",
+          "value": 0.089
+        },
+        {
+          "name": "prob_no_safe_dose",
+          "value": 0.01
+        },
+        {
+          "name": "expected_n_dlts",
+          "value": 7.0425
+        },
+        {
+          "name": "expected_sample_size",
+          "value": 29.7375
+        },
+        {
+          "name": "prob_early_stop",
+          "value": 0.01
+        },
+        {
+          "name": "rpd_dose_level",
+          "value": 3
+        },
+        {
+          "name": "rpd_dose_mg",
+          "value": 40,
+          "unit": "mg"
+        },
+        {
+          "name": "expansion_cohort_size",
+          "value": 6
+        },
+        {
+          "name": "expected_dlt_rate_at_rpd",
+          "value": 0.25
+        }
+      ]
+    }
+  }
+}

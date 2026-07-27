@@ -1,0 +1,234 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-009",
+    "version": "1.0",
+    "analysisReason": "Safety signal evaluation and DMC report \u2014 8-domain safety analysis with totality-of-evidence recommendation",
+    "analysisMethod": {
+      "name": "AE frequency + exposure-adjusted rates + KM/Cox PH + MGPS disproportionality + Fisher exact",
+      "codeTemplate": "survfit(Surv(TTG3, 1-CNSR) ~ TRT01A); coxph(...); fisher.test(matrix); mgps(ADAE)",
+      "parameters": {
+        "n_domains": 8,
+        "ae_hierarchy": "SOC \u2192 PT (MedDRA)",
+        "km_ci_method": "Brookmeyer-Crowley (log-log transform)",
+        "cox_ties": "Efron",
+        "mgps_threshold": "EBGM >= 2.0 AND observed >= 3",
+        "signal_definition": "risk difference 95% CI excludes 0 OR MGPS EBGM >= 2.0",
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AESOC",
+        "dataset": "ADAE",
+        "role": "System Organ Class"
+      },
+      {
+        "name": "AEDECOD",
+        "dataset": "ADAE",
+        "role": "Preferred Term"
+      },
+      {
+        "name": "AESER",
+        "dataset": "ADAE",
+        "role": "serious AE flag"
+      },
+      {
+        "name": "AESEV",
+        "dataset": "ADAE",
+        "role": "severity (Grade 3+)"
+      },
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "time to first Grade 3+ AE"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SAFFL",
+        "dataset": "ADSL",
+        "role": "safety flag"
+      },
+      {
+        "name": "LBSTRESN",
+        "dataset": "ADLB",
+        "role": "lab result (Hy's Law / QTc)"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "Safety (SAFFL=Y)",
+      "filter": "SAFFL = 'Y' \u2014 all randomized who received any study treatment"
+    },
+    "analysisDataset": "ADAE",
+    "resultGroups": [
+      {
+        "id": "Active",
+        "n": 200
+      },
+      {
+        "id": "Placebo",
+        "n": 200
+      }
+    ],
+    "documentation": "Level 3 DMC safety report. 8 domains: (1) AE overview, (2) exposure-adjusted AE rates, (3) Grade 3+ AEs, (4) lab abnormalities (Hy's Law, QTc), (5) time-to-first Grade 3+ AE (KM + Cox PH + log-rank), (6) irAE, (7) MGPS disproportionality, (8) DMC recommendation. Phase III oncology \u2014 ITT is sole primary population; no per-protocol analysis per FDA/EMA standards.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_total",
+          "value": 400
+        },
+        {
+          "name": "n_active",
+          "value": 200
+        },
+        {
+          "name": "n_placebo",
+          "value": 200
+        },
+        {
+          "name": "any_ae_active",
+          "value": 200
+        },
+        {
+          "name": "any_ae_placebo",
+          "value": 194
+        },
+        {
+          "name": "sae_active",
+          "value": 98
+        },
+        {
+          "name": "sae_placebo",
+          "value": 74
+        },
+        {
+          "name": "disc_active",
+          "value": 55
+        },
+        {
+          "name": "disc_placebo",
+          "value": 44
+        },
+        {
+          "name": "died_active",
+          "value": 17
+        },
+        {
+          "name": "died_placebo",
+          "value": 21
+        },
+        {
+          "name": "g3_active",
+          "value": 138
+        },
+        {
+          "name": "g3_placebo",
+          "value": 97
+        },
+        {
+          "name": "g3_risk_difference",
+          "value": 0.205
+        },
+        {
+          "name": "g3_fisher_p",
+          "value": 4.5e-05
+        },
+        {
+          "name": "hys_law_active",
+          "value": 10
+        },
+        {
+          "name": "hys_law_placebo",
+          "value": 2
+        },
+        {
+          "name": "hys_law_fisher_p",
+          "value": 0.03578
+        },
+        {
+          "name": "qtc_active",
+          "value": 9
+        },
+        {
+          "name": "qtc_placebo",
+          "value": 5
+        },
+        {
+          "name": "qtc_fisher_p",
+          "value": 0.415534
+        },
+        {
+          "name": "irae_active",
+          "value": 156
+        },
+        {
+          "name": "irae_placebo",
+          "value": 38
+        },
+        {
+          "name": "irae_fisher_p",
+          "value": 0.0
+        },
+        {
+          "name": "ttg3_median_active",
+          "value": 202.0,
+          "unit": "days"
+        },
+        {
+          "name": "ttg3_median_placebo",
+          "value": 426.0,
+          "unit": "days"
+        },
+        {
+          "name": "ttg3_cox_hr",
+          "value": 1.7711
+        },
+        {
+          "name": "ttg3_cox_ci_lower",
+          "value": 1.3647
+        },
+        {
+          "name": "ttg3_cox_ci_upper",
+          "value": 2.2985
+        },
+        {
+          "name": "ttg3_logrank_p",
+          "value": 1.3e-05
+        },
+        {
+          "name": "n_signals",
+          "value": 3
+        },
+        {
+          "name": "signal_hys_law",
+          "value": true
+        },
+        {
+          "name": "signal_qtc",
+          "value": false
+        },
+        {
+          "name": "signal_irae",
+          "value": true
+        },
+        {
+          "name": "signal_grade3_plus",
+          "value": true
+        },
+        {
+          "name": "recommendation",
+          "value": "Modify"
+        }
+      ]
+    }
+  }
+}

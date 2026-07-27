@@ -1,0 +1,174 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-007",
+    "version": "1.0",
+    "analysisReason": "Regulatory response: analyze ITT vs per-protocol discrepancy, tipping point, and sensitivity analyses",
+    "analysisMethod": {
+      "name": "Cox PH (Efron ties) + log-rank + tipping-point analysis",
+      "codeTemplate": "coxph(Surv(AVAL, 1-CNSR) ~ TRT01PN, data=ADTTE); survdiff(...)",
+      "parameters": {
+        "ties": "Efron",
+        "itt_primary": true,
+        "pp_role": "supportive sensitivity (regulatory query response)",
+        "tipping_point_method": "reclassify censored\u2194event in excluded Active subjects",
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "analysis time (PFS)"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring (0=event)"
+      },
+      {
+        "name": "TRT01PN",
+        "dataset": "ADSL",
+        "role": "treatment (numeric)"
+      },
+      {
+        "name": "ITTFL",
+        "dataset": "ADSL",
+        "role": "ITT flag"
+      },
+      {
+        "name": "PPFL",
+        "dataset": "ADSL",
+        "role": "per-protocol flag (supportive)"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT (primary) + PP (supportive)",
+      "filter": "ITTFL = 'Y' (primary); PPFL = 'Y' (supportive sensitivity)"
+    },
+    "analysisDataset": "ADTTE",
+    "resultGroups": [
+      {
+        "id": "ITT",
+        "n": 500
+      },
+      {
+        "id": "PP",
+        "n": 413
+      }
+    ],
+    "documentation": "Level 3 regulatory response scenario. ITT is the sole primary analysis population for the superiority claim (FDA/EMA standard). PP, tipping-point, and worst/best-case analyses are supportive sensitivity analyses performed to respond to a regulatory reviewer's query about the ITT/PP discrepancy. Differential exclusion (Active excludes censored/well subjects; Placebo excludes event/ill subjects) drives the discrepancy.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "itt_n",
+          "value": 500
+        },
+        {
+          "name": "itt_hr",
+          "value": 0.7717
+        },
+        {
+          "name": "itt_hr_ci_lower",
+          "value": 0.6238
+        },
+        {
+          "name": "itt_hr_ci_upper",
+          "value": 0.9547
+        },
+        {
+          "name": "itt_logrank_p",
+          "value": 0.0167
+        },
+        {
+          "name": "itt_wald_p",
+          "value": 0.017
+        },
+        {
+          "name": "itt_significant",
+          "value": true
+        },
+        {
+          "name": "pp_n",
+          "value": 413
+        },
+        {
+          "name": "pp_hr",
+          "value": 0.8312
+        },
+        {
+          "name": "pp_hr_ci_lower",
+          "value": 0.6621
+        },
+        {
+          "name": "pp_hr_ci_upper",
+          "value": 1.0435
+        },
+        {
+          "name": "pp_logrank_p",
+          "value": 0.1103
+        },
+        {
+          "name": "pp_significant",
+          "value": false
+        },
+        {
+          "name": "hr_difference",
+          "value": -0.0595
+        },
+        {
+          "name": "n_excluded",
+          "value": 87
+        },
+        {
+          "name": "excluded_active",
+          "value": 44
+        },
+        {
+          "name": "excluded_placebo",
+          "value": 43
+        },
+        {
+          "name": "excl_events_active",
+          "value": 13
+        },
+        {
+          "name": "excl_events_placebo",
+          "value": 30
+        },
+        {
+          "name": "event_imbalance_fisher_p",
+          "value": 0.0002
+        },
+        {
+          "name": "tipping_n_shifted",
+          "value": 8
+        },
+        {
+          "name": "tipping_hr",
+          "value": 0.8106
+        },
+        {
+          "name": "tipping_p",
+          "value": 0.0501
+        },
+        {
+          "name": "worst_case_hr",
+          "value": 0.8408
+        },
+        {
+          "name": "worst_case_p",
+          "value": 0.1184
+        },
+        {
+          "name": "best_case_hr",
+          "value": 0.859
+        },
+        {
+          "name": "best_case_p",
+          "value": 0.1363
+        }
+      ]
+    }
+  }
+}

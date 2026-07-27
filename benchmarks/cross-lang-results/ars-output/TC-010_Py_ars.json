@@ -1,0 +1,249 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-010",
+    "version": "1.0",
+    "analysisReason": "ICH E3 CSR statistical sections \u2014 disposition, demographics, primary/secondary efficacy, subgroup forest, sensitivity, safety",
+    "analysisMethod": {
+      "name": "KM + Cox PH (Efron) + log-rank + RECIST 1.1 + descriptive stats",
+      "codeTemplate": "survfit(Surv(AVAL, 1-CNSR) ~ TRT01A); coxph(...); prop.test(x, n); t.test(AGE ~ TRT01A)",
+      "parameters": {
+        "csr_standard": "ICH E3",
+        "primary_endpoint": "PFS per RECIST 1.1",
+        "secondary_endpoints": [
+          "ORR",
+          "DCR",
+          "OS"
+        ],
+        "km_ci_method": "Brookmeyer-Crowley (log-log transform)",
+        "cox_ties": "Efron",
+        "response_criteria": "RECIST 1.1",
+        "itt_primary": true,
+        "pp_analysis": "not performed (FDA/EMA oncology standard)",
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "analysis time (PFS/OS)"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring (0=event)"
+      },
+      {
+        "name": "BOR",
+        "dataset": "ADRS",
+        "role": "best overall response"
+      },
+      {
+        "name": "AESOC",
+        "dataset": "ADAE",
+        "role": "System Organ Class"
+      },
+      {
+        "name": "AEDECOD",
+        "dataset": "ADAE",
+        "role": "Preferred Term"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "ITTFL",
+        "dataset": "ADSL",
+        "role": "ITT flag"
+      },
+      {
+        "name": "SAFFL",
+        "dataset": "ADSL",
+        "role": "safety flag"
+      },
+      {
+        "name": "AGE",
+        "dataset": "ADSL",
+        "role": "age (baseline balance)"
+      },
+      {
+        "name": "SEX",
+        "dataset": "ADSL",
+        "role": "sex (baseline balance)"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT (primary) + Safety (secondary)",
+      "filter": "ITTFL = 'Y' (primary efficacy); SAFFL = 'Y' (safety)"
+    },
+    "analysisDataset": "ADTTE/ADRS/ADAE",
+    "resultGroups": [
+      {
+        "id": "Active",
+        "n": 200
+      },
+      {
+        "id": "Placebo",
+        "n": 200
+      }
+    ],
+    "documentation": "Level 3 ICH E3 CSR statistical sections. Phase III oncology superiority trial \u2014 ITT is the sole primary analysis population; no per-protocol analysis performed per FDA/EMA standards. Covers Section 9 (methods) and Section 11 (disposition, demographics, primary PFS, secondary OS/ORR/DCR, subgroup forest, sensitivity, safety).",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_randomized",
+          "value": 400
+        },
+        {
+          "name": "n_treated",
+          "value": 400
+        },
+        {
+          "name": "n_completed",
+          "value": 324
+        },
+        {
+          "name": "n_discontinued",
+          "value": 76
+        },
+        {
+          "name": "n_major_deviations",
+          "value": 66
+        },
+        {
+          "name": "age_balance_p",
+          "value": 0.4546
+        },
+        {
+          "name": "sex_balance_p",
+          "value": 0.0088
+        },
+        {
+          "name": "pfs_median_active",
+          "value": 282.4,
+          "unit": "days"
+        },
+        {
+          "name": "pfs_median_placebo",
+          "value": 158.7,
+          "unit": "days"
+        },
+        {
+          "name": "pfs_cox_hr",
+          "value": 0.5607
+        },
+        {
+          "name": "pfs_cox_ci_lower",
+          "value": 0.439
+        },
+        {
+          "name": "pfs_cox_ci_upper",
+          "value": 0.7161
+        },
+        {
+          "name": "pfs_cox_p",
+          "value": 0.0
+        },
+        {
+          "name": "pfs_logrank_p",
+          "value": 0.0
+        },
+        {
+          "name": "pfs_events_active",
+          "value": 115
+        },
+        {
+          "name": "pfs_events_placebo",
+          "value": 150
+        },
+        {
+          "name": "os_cox_hr",
+          "value": 0.6591
+        },
+        {
+          "name": "os_cox_ci_lower",
+          "value": 0.5074
+        },
+        {
+          "name": "os_cox_ci_upper",
+          "value": 0.8561
+        },
+        {
+          "name": "os_cox_p",
+          "value": 0.0018
+        },
+        {
+          "name": "os_logrank_p",
+          "value": 0.0022
+        },
+        {
+          "name": "orr_active_pct",
+          "value": 34.5,
+          "unit": "%"
+        },
+        {
+          "name": "orr_placebo_pct",
+          "value": 6.0,
+          "unit": "%"
+        },
+        {
+          "name": "orr_risk_difference",
+          "value": 0.285
+        },
+        {
+          "name": "orr_fisher_p",
+          "value": 0.0
+        },
+        {
+          "name": "dcr_active_pct",
+          "value": 66.0,
+          "unit": "%"
+        },
+        {
+          "name": "dcr_placebo_pct",
+          "value": 45.0,
+          "unit": "%"
+        },
+        {
+          "name": "sensitivity_pfs_hr",
+          "value": 0.5679
+        },
+        {
+          "name": "sensitivity_pfs_p",
+          "value": 0.0
+        },
+        {
+          "name": "any_ae_active",
+          "value": 180
+        },
+        {
+          "name": "any_ae_placebo",
+          "value": 127
+        },
+        {
+          "name": "sae_active",
+          "value": 47
+        },
+        {
+          "name": "sae_placebo",
+          "value": 39
+        },
+        {
+          "name": "g3_active",
+          "value": 77
+        },
+        {
+          "name": "g3_placebo",
+          "value": 60
+        },
+        {
+          "name": "n_deaths_total",
+          "value": 121
+        }
+      ]
+    }
+  }
+}

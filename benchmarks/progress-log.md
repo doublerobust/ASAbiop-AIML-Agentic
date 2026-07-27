@@ -4635,3 +4635,135 @@ p<0.0001 (significant benefit). OS HR=0.6591, p=0.0018. ORR Active=34.5%, Placeb
 4. **Efficiency scoring** — collect actual agent run metrics from frontier model eval
 5. **ARS envelopes for Level 3 TCs** — extend `--ars-output` to TC-007/008/009/010
 6. **SAS reference scripts for Level 3 TCs** — currently R+Python only; consider SAS cross-validation for regulatory-critical TCs
+
+---
+
+## Day 55 (2026-07-27): ARS Envelopes Extended to All 4 Level 3 TCs
+
+**Date:** July 27, 2026 (Monday)
+**Model:** GLM 5.2 (openrouter/z-ai/glm-5.2)
+
+### 🎯 Assignment
+
+Day 54's plan listed 5 items for Day 55+. Items #1 (frontier model eval), #2
+(TC-004 LLM-judge API), #4 (efficiency scoring) require external agents/APIs
+not reliably available in a cron session; item #3 (WG review) requires external
+circulation. Item #5 — extending ARS envelopes to the 4 Level 3 TCs
+(TC-007/008/009/010) — is a self-contained, code-driven deliverable that closes
+the ARS coverage gap across the test case library and follows the exact pattern
+established on Day 50 (ARS extension to 8 remaining Level 1 TCs). This was the
+day's deliverable.
+
+### ✅ What Got Built
+
+**1. `scripts/ars-extend-level3.py` — ARS envelope generator for Level 3 TCs**
+
+A standalone generator (modeled on the Day 50 `ars-extend-remaining.py`)
+that reads existing benchmark JSON outputs from `cross-lang-results/{r,python}-output/`,
+wraps them in CDISC ARS v1.0 envelopes with TC-specific metadata, and writes
+to `cross-lang-results/ars-output/`. Four per-TC builders:
+
+| TC | Builder | Stats | Vars | Result Groups | Key Statistics |
+|---|---|---|---|---|---|
+| TC-007 (Regulatory Response) | `build_tc007` | 27 | 5 | ITT, PP | ITT/PP HR+p, hr_difference, n_excluded, excl_events by arm, tipping N/HR/p, worst/best-case HR+p |
+| TC-008 (Dose-Finding/BOIN) | `build_tc008` | 20 | 3 | 5 dose levels | target DLT rate, BOIN boundaries, P(select each dose), expected DLTs/N, RP2D dose, expansion cohort size |
+| TC-009 (DMC Safety Report) | `build_tc009` | 36 | 9 | Active, Placebo | any AE/SAE/disc/died by arm, G3+ RD+p, Hy's Law/QTc/irAE by arm+p, TTG3 median+CI+Cox HR+p, n_signals, recommendation |
+| TC-010 (CSR Statistical Sections) | `build_tc010` | 36 | 10 | Active, Placebo | disposition counts, age/sex balance p, PFS/OS Cox HR+CI+p+logrank, ORR/DCR by arm+RD+Fisher p, sensitivity HR, AE/SAE/G3+ by arm, deaths |
+
+**Total: 119 statistics wrapped, 27 variables documented across 4 Level 3 TCs.**
+
+The generator handles the filename convention difference: TC-007/008 use
+lowercase `tc-007-results.json` / `tc-008-results.json`; TC-009/010 use
+uppercase `TC-009.json` / `TC-010.json`.
+
+**2. 8 new ARS envelope files generated** (R + Python per TC):
+
+- `TC-007_R_ars.json`, `TC-007_Py_ars.json`
+- `TC-008_R_ars.json`, `TC-008_Py_ars.json`
+- `TC-009_R_ars.json`, `TC-009_Py_ars.json`
+- `TC-010_R_ars.json`, `TC-010_Py_ars.json`
+
+**3. Domain-knowledge compliance (ITT-only rule)**
+
+All Level 3 ARS builders that involve Phase III oncology (TC-007, TC-009,
+TC-010) explicitly document in the ARS `documentation` field that ITT is the
+sole primary analysis population per FDA/EMA standards and that no per-protocol
+analysis is performed. TC-007 (which explicitly involves an ITT/PP discrepancy
+scenario) documents that PP is computed only as a supportive sensitivity
+analysis to respond to a regulatory reviewer query — ITT remains primary for
+the superiority claim. TC-008 (Phase I dose-finding) correctly notes that
+ITT/PP distinction does not apply — all treated patients are the analysis set.
+
+**4. Bug fixes during development**
+
+- **TC-008 result group `n` field:** Initial attempt set `n: None` for dose
+  levels (no fixed per-dose allocation — BOIN allocates adaptively). The ARS
+  schema requires `n` to be number/integer if present, and the validator
+  requires `n` on every result group. Fixed by setting `n: 0` with a clear
+  documentation note that this is a design-stage envelope (expected total N
+  and selection probabilities are in the statistics block).
+- **TC-009 field name mismatch:** Initial builder looked for `n_death` but the
+  ground truth uses `n_died`. Fixed lookup to `n_died`.
+- **TC-010 field name mismatch:** Initial builder looked for `n_g3_ae` but the
+  ground truth uses `n_grade3_plus`. Fixed lookup to `n_grade3_plus`.
+
+### 📊 Validation Results
+
+**Schema validation (all 36 ARS envelope files):** ✅ ALL VALID
+
+| ARS File Group | Files | Schema | Cross-Lang |
+|---|---|---|---|
+| Level 1/2 (existing) | 28 | ✅ | ✅ (where shared data) |
+| TC-007 (Level 3) | 2 | ✅ | ✅ Consistent (27 stats) |
+| TC-008 (Level 3) | 2 | ✅ | ✅ Consistent (20 stats) |
+| TC-009 (Level 3) | 2 | ✅ | ✅ Consistent (36 stats) |
+| TC-010 (Level 3) | 2 | ✅ | ✅ Consistent (36 stats) |
+| **Total** | **36** | **✅ ALL VALID** | **✅ All 4 Level 3 consistent** |
+
+**Cross-language consistency:** All 4 Level 3 TCs pass R↔Python ARS
+cross-check (TC-007: 27/27, TC-008: 20/20, TC-009: 36/36, TC-010: 36/36
+statistics consistent). This confirms the ARS envelopes accurately reflect
+the cross-language-verified ground truth.
+
+### 📊 Updated ARS Coverage Summary
+
+| Metric | Before (Day 54) | After (Day 55) | Delta |
+|---|---|---|---|
+| TCs with generated ARS envelopes | 13 | 17 | +4 (all Level 3) |
+| Total ARS envelope files | 28 | 36 | +8 |
+| Level 3 TCs with ARS | 0 | 4 | +4 (all Level 3) |
+| TCs with `--ars-output` script support | 21 | 21 | 0 (Level 3 uses standalone generator) |
+
+**ARS coverage by level:**
+- Level 1: 13 of 27 TCs (TC-003, TC-011–018, TC-020–022)
+- Level 2: 0 of 4 TCs (TC-035 has ARS via POC demo; TC-004/005/006 pending)
+- Level 3: 4 of 4 TCs (TC-007, TC-008, TC-009, TC-010) ✅ Complete
+- **Total: 17 of 35 TCs (49%)**
+
+### 📄 Files Created/Updated
+
+| File | Type | Description |
+|---|---|---|
+| `scripts/ars-extend-level3.py` | NEW | ARS envelope generator for 4 Level 3 TCs (4 builders, 119 stats) |
+| `cross-lang-results/ars-output/TC-007_R_ars.json` | NEW | TC-007 R ARS envelope (27 stats) |
+| `cross-lang-results/ars-output/TC-007_Py_ars.json` | NEW | TC-007 Python ARS envelope |
+| `cross-lang-results/ars-output/TC-008_R_ars.json` | NEW | TC-008 R ARS envelope (20 stats) |
+| `cross-lang-results/ars-output/TC-008_Py_ars.json` | NEW | TC-008 Python ARS envelope |
+| `cross-lang-results/ars-output/TC-009_R_ars.json` | NEW | TC-009 R ARS envelope (36 stats) |
+| `cross-lang-results/ars-output/TC-009_Py_ars.json` | NEW | TC-009 Python ARS envelope |
+| `cross-lang-results/ars-output/TC-010_R_ars.json` | NEW | TC-010 R ARS envelope (36 stats) |
+| `cross-lang-results/ars-output/TC-010_Py_ars.json` | NEW | TC-010 Python ARS envelope |
+| `cdisc-ars-alignment.md` | UPDATED | v0.3 → v0.4, Phase 9 added, status updated |
+| `white-paper-v1.md` | UPDATED | v1.13 → v1.14, ARS coverage 13→17 TCs / 28→36 files, abstract + §2.7 + Finding 3 + roadmap + conclusion updated |
+| `progress-log.md` | UPDATED | This entry |
+
+### 🔮 Plan for Day 56+
+
+1. **Frontier model evaluation run** — test 2–3 models on Level 1 + Level 2 + all 4 Level 3 TCs (requires external agent/API access)
+2. **TC-004 LLM-judge API integration** — wire SAP drafting scorer to actual LLM API
+3. **White paper WG review** — circulate v1.14 for working group feedback (all TCs implemented, ARS coverage expanded)
+4. **Efficiency scoring** — collect actual agent run metrics from frontier model eval
+5. **ARS envelopes for remaining Level 1/2 TCs** — extend generated envelopes from 17 to all 35 TCs (18 remaining: TC-001/002/019/023–028/029–034 + TC-004/005/006)
+6. **SAS reference scripts for Level 3 TCs** — currently R+Python only; consider SAS cross-validation for regulatory-critical TCs
+7. **Add `--ars-output` to Level 3 ground truth scripts** — currently wrapped via standalone generator; native flag would enable per-run ARS generation
+
