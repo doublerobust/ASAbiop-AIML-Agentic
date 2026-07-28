@@ -1,0 +1,84 @@
+{
+  "test_case_id": "TC-006",
+  "title": "Blinded Sample Size Re-Estimation at Interim",
+  "level": "Level 2",
+  "input_parameters": {
+    "seed": 42,
+    "enrolled": 400,
+    "events_observed": 120,
+    "pooled_median_pfs": 5.2,
+    "accrual_rate": 20.0,
+    "original_hr": 0.75,
+    "original_events": 127,
+    "planned_n": 600,
+    "alpha": 0.05,
+    "power": 0.9
+  },
+  "current_status": {
+    "enrolled": 400,
+    "planned_n": 600,
+    "enrollment_pct": 66.7,
+    "events_observed": 120,
+    "original_events": 127,
+    "information_fraction": 0.9449,
+    "accrual_rate": 20.0
+  },
+  "blinded_estimation": {
+    "pooled_median_pfs": 5.2,
+    "pooled_median_ci_lower": null,
+    "pooled_median_ci_upper": null,
+    "estimated_event_rate_monthly": 6.0,
+    "lambda": 0.133298
+  },
+  "scenarios": {
+    "optimistic": {
+      "hr": 0.7,
+      "control_median_pfs": 6.3143,
+      "treatment_median_pfs": 4.42,
+      "events_needed": 83,
+      "total_n_needed": 84,
+      "incremental_n": -516,
+      "conditional_power": 1.0,
+      "recommendation": "continue_as_planned"
+    },
+    "original": {
+      "hr": 0.75,
+      "control_median_pfs": 6.0667,
+      "treatment_median_pfs": 4.55,
+      "events_needed": 127,
+      "total_n_needed": 129,
+      "incremental_n": -471,
+      "conditional_power": 1.0,
+      "recommendation": "continue_as_planned"
+    },
+    "pessimistic": {
+      "hr": 0.8,
+      "control_median_pfs": 5.85,
+      "treatment_median_pfs": 4.68,
+      "events_needed": 211,
+      "total_n_needed": 213,
+      "incremental_n": -387,
+      "conditional_power": 0.9745,
+      "recommendation": "increase_sample_size"
+    }
+  },
+  "overall_recommendation": "continue_as_planned",
+  "recommendation_rationale": "Based on pooled median PFS of 5.2 months and information fraction of 94.5%, the recommendation is to continue as planned. Under the original HR=0.75 scenario, conditional power is 100.0%.",
+  "assumptions": [
+    "Blinded analysis assumes equal allocation (1:1) and similar event rates across arms",
+    "Control median deconvolution uses exponential assumption and design HR",
+    "Sample size re-estimation uses Schoenfeld formula",
+    "Conditional power computed under assumed HR (not unblinded)",
+    "Accrual rate assumed constant throughout enrollment period",
+    "6 months additional follow-up assumed after last patient enrolled"
+  ],
+  "limitations": [
+    "Blinded analysis cannot confirm treatment effect direction",
+    "Deconvolution is approximate and sensitive to HR assumption",
+    "Conditional power under assumed HR may differ from actual under true HR",
+    "Does not account for competing risks or informative censoring",
+    "Accrual rate may vary over time"
+  ],
+  "language": "Python",
+  "version": "1.0.0"
+}

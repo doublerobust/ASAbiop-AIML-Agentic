@@ -1,0 +1,183 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-006",
+    "version": "1.0",
+    "analysisReason": "Blinded sample size re-estimation at interim: pooled event rate, conditional power, and enrollment adequacy assessment",
+    "analysisMethod": {
+      "name": "Schoenfeld formula + blinded pooled median + conditional power under assumed HR",
+      "codeTemplate": "ssr_blinded(pooled_median, events, hr_scenarios, accrual_rate, alpha=0.05, power=0.90)",
+      "parameters": {
+        "enrolled": 400,
+        "events_observed": 120,
+        "pooled_median_pfs": 5.2,
+        "accrual_rate": 20,
+        "original_hr": 0.75,
+        "original_events": 127,
+        "planned_n": 600,
+        "alpha": 0.05,
+        "power": 0.9,
+        "blinded": true,
+        "itt_primary": true,
+        "pp_analysis": "not performed (FDA/EMA oncology standard)",
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "PFS time"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring (0=event)"
+      },
+      {
+        "name": "ITTFL",
+        "dataset": "ADSL",
+        "role": "ITT flag"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment (blinded)"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT (blinded pooled)",
+      "filter": "ITTFL = 'Y' \u2014 blinded analysis, treatment arms pooled"
+    },
+    "analysisDataset": "ADTTE",
+    "resultGroups": [
+      {
+        "id": "Pooled (blinded)",
+        "n": 400
+      }
+    ],
+    "documentation": "Level 2 blinded sample size re-estimation. Phase III oncology superiority trial \u2014 ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed. Blinded SSR uses pooled event data (no unblinding) to assess whether the planned sample size is adequate under optimistic, original, and pessimistic HR scenarios. Conditional power is computed under each assumed HR.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "enrolled",
+          "value": 400
+        },
+        {
+          "name": "planned_n",
+          "value": 600
+        },
+        {
+          "name": "enrollment_pct",
+          "value": 66.7,
+          "unit": "%"
+        },
+        {
+          "name": "events_observed",
+          "value": 120
+        },
+        {
+          "name": "original_events",
+          "value": 127
+        },
+        {
+          "name": "information_fraction",
+          "value": 0.9449
+        },
+        {
+          "name": "accrual_rate",
+          "value": 20
+        },
+        {
+          "name": "pooled_median_pfs",
+          "value": 5.2,
+          "unit": "months"
+        },
+        {
+          "name": "estimated_event_rate_monthly",
+          "value": 6
+        },
+        {
+          "name": "lambda",
+          "value": 0.1333
+        },
+        {
+          "name": "optimistic_hr",
+          "value": 0.7
+        },
+        {
+          "name": "optimistic_events_needed",
+          "value": 83
+        },
+        {
+          "name": "optimistic_total_n_needed",
+          "value": 84
+        },
+        {
+          "name": "optimistic_incremental_n",
+          "value": -516
+        },
+        {
+          "name": "optimistic_conditional_power",
+          "value": 1
+        },
+        {
+          "name": "optimistic_recommendation",
+          "value": "continue_as_planned"
+        },
+        {
+          "name": "original_hr",
+          "value": 0.75
+        },
+        {
+          "name": "original_events_needed",
+          "value": 127
+        },
+        {
+          "name": "original_total_n_needed",
+          "value": 129
+        },
+        {
+          "name": "original_incremental_n",
+          "value": -471
+        },
+        {
+          "name": "original_conditional_power",
+          "value": 1
+        },
+        {
+          "name": "original_recommendation",
+          "value": "continue_as_planned"
+        },
+        {
+          "name": "pessimistic_hr",
+          "value": 0.8
+        },
+        {
+          "name": "pessimistic_events_needed",
+          "value": 211
+        },
+        {
+          "name": "pessimistic_total_n_needed",
+          "value": 213
+        },
+        {
+          "name": "pessimistic_incremental_n",
+          "value": -387
+        },
+        {
+          "name": "pessimistic_conditional_power",
+          "value": 0.9745
+        },
+        {
+          "name": "pessimistic_recommendation",
+          "value": "increase_sample_size"
+        },
+        {
+          "name": "overall_recommendation",
+          "value": "continue_as_planned"
+        }
+      ]
+    }
+  }
+}

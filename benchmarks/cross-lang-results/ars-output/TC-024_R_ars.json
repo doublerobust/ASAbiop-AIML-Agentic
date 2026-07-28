@@ -1,0 +1,185 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-024",
+    "version": "1.0",
+    "analysisReason": "Secondary efficacy: Overall Survival (OS) KM median, Cox HR, log-rank, subgroup forest",
+    "analysisMethod": {
+      "name": "Kaplan-Meier + Cox PH + log-rank",
+      "codeTemplate": "survfit(Surv(AVAL, 1-CNSR) ~ TRT01A); coxph(...); survdiff(...)",
+      "parameters": {
+        "endpoint": "Overall Survival",
+        "ci_method": "log-log",
+        "population": "ITT",
+        "n_subgroups": 6,
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "analysis time"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SEX",
+        "dataset": "ADSL",
+        "role": "subgroup: sex"
+      },
+      {
+        "name": "AGEGR1",
+        "dataset": "ADSL",
+        "role": "subgroup: age group"
+      },
+      {
+        "name": "ECOG",
+        "dataset": "ADSL",
+        "role": "subgroup: ECOG"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADTTE",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 106
+      },
+      {
+        "id": "Control",
+        "n": 85
+      }
+    ],
+    "documentation": "Overall Survival analysis: KM median + CI, Cox PH HR + CI, log-rank test, subgroup forest plots. Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "median_overall_survival_experimental",
+          "value": 24.58,
+          "unit": "months"
+        },
+        {
+          "name": "median_overall_survival_control",
+          "value": 16.41,
+          "unit": "months"
+        },
+        {
+          "name": "median_ci_lower_experimental",
+          "value": 19.22,
+          "unit": "months"
+        },
+        {
+          "name": "median_ci_upper_experimental",
+          "value": 29.8,
+          "unit": "months"
+        },
+        {
+          "name": "median_ci_lower_control",
+          "value": 11.23,
+          "unit": "months"
+        },
+        {
+          "name": "median_ci_upper_control",
+          "value": 19.15,
+          "unit": "months"
+        },
+        {
+          "name": "hazard_ratio",
+          "value": 0.6727
+        },
+        {
+          "name": "hr_ci_lower",
+          "value": 0.4866
+        },
+        {
+          "name": "hr_ci_upper",
+          "value": 0.93
+        },
+        {
+          "name": "logrank_chisq",
+          "value": 5.8281
+        },
+        {
+          "name": "logrank_p",
+          "value": 0.0158
+        },
+        {
+          "name": "n_events_experimental",
+          "value": 80
+        },
+        {
+          "name": "n_events_control",
+          "value": 73
+        },
+        {
+          "name": "n_total_experimental",
+          "value": 106
+        },
+        {
+          "name": "n_total_control",
+          "value": 85
+        },
+        {
+          "name": "event_rate_experimental",
+          "value": 0.7547
+        },
+        {
+          "name": "event_rate_control",
+          "value": 0.8588
+        },
+        {
+          "name": "n_censored_total",
+          "value": 38
+        },
+        {
+          "name": "n_events_total",
+          "value": 153
+        },
+        {
+          "name": "censoring_rate",
+          "value": 0.199
+        },
+        {
+          "name": "estimable",
+          "value": true
+        },
+        {
+          "name": "subgroup_hr_SEX_F",
+          "value": 0.6929
+        },
+        {
+          "name": "subgroup_hr_SEX_M",
+          "value": 0.6182
+        },
+        {
+          "name": "subgroup_hr_AGEGR1_<65",
+          "value": 0.6882
+        },
+        {
+          "name": "subgroup_hr_AGEGR1_>=65",
+          "value": 0.6432
+        },
+        {
+          "name": "subgroup_hr_ECOG_0",
+          "value": 0.7087
+        },
+        {
+          "name": "subgroup_hr_ECOG_1",
+          "value": 0.6142
+        }
+      ]
+    }
+  }
+}

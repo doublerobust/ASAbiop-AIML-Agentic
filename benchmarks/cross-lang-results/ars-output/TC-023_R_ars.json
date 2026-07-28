@@ -1,0 +1,143 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-023",
+    "version": "1.0",
+    "analysisReason": "Efficacy: Disease Control Rate (DCR = CR + PR + SD) by subgroup with CI",
+    "analysisMethod": {
+      "name": "Binomial proportion + Wald CI",
+      "codeTemplate": "prop.test(x=disease_controlled, n=n_total)",
+      "parameters": {
+        "dcr_definition": "CR + PR + SD",
+        "ci_method": "wald",
+        "subgroups": [
+          "SEX",
+          "AGEGR1",
+          "ECOG"
+        ],
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "BOR",
+        "dataset": "ADRS",
+        "role": "best overall response"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "ITTFL",
+        "dataset": "ADSL",
+        "role": "ITT flag"
+      },
+      {
+        "name": "SEX",
+        "dataset": "ADSL",
+        "role": "subgroup: sex"
+      },
+      {
+        "name": "AGEGR1",
+        "dataset": "ADSL",
+        "role": "subgroup: age group"
+      },
+      {
+        "name": "ECOG",
+        "dataset": "ADSL",
+        "role": "subgroup: ECOG"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADRS",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 102
+      },
+      {
+        "id": "Control",
+        "n": 86
+      }
+    ],
+    "documentation": "DCR (CR+PR+SD) overall and by subgroup (SEX, AGEGR1, ECOG) with 95% CI. Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "dcr_experimental",
+          "value": 67.6,
+          "unit": "%"
+        },
+        {
+          "name": "dcr_control",
+          "value": 36,
+          "unit": "%"
+        },
+        {
+          "name": "dcr_difference",
+          "value": 31.6,
+          "unit": "%"
+        },
+        {
+          "name": "diff_ci_lower",
+          "value": 18,
+          "unit": "%"
+        },
+        {
+          "name": "diff_ci_upper",
+          "value": 45.2,
+          "unit": "%"
+        },
+        {
+          "name": "n_experimental",
+          "value": 102
+        },
+        {
+          "name": "n_control",
+          "value": 86
+        },
+        {
+          "name": "disease_controlled_exp",
+          "value": 69
+        },
+        {
+          "name": "disease_controlled_ctrl",
+          "value": 31
+        },
+        {
+          "name": "ci_lower_experimental",
+          "value": 58.1,
+          "unit": "%"
+        },
+        {
+          "name": "ci_upper_experimental",
+          "value": 75.9,
+          "unit": "%"
+        },
+        {
+          "name": "ci_lower_control",
+          "value": 26.7,
+          "unit": "%"
+        },
+        {
+          "name": "ci_upper_control",
+          "value": 46.6,
+          "unit": "%"
+        },
+        {
+          "name": "n_cr_exp",
+          "value": 14
+        },
+        {
+          "name": "n_cr_ctrl",
+          "value": 2
+        }
+      ]
+    }
+  }
+}

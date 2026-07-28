@@ -261,6 +261,7 @@ structure is already compatible with ARS's statistical-summary model. A future
 | **Phase 7** | End-to-end ARS POC demo (TC-035 Level 2) | ✅ Done (Day 49 — `scripts/ars-poc-demo.sh`) |
 | **Phase 8** | ARS envelopes for TC-011/013/014/015/016/017/018/020 | ✅ Done (Day 50 — `scripts/ars-extend-remaining.py`) |
 | **Phase 9** | ARS envelopes for Level 3 TCs (TC-007/008/009/010) | ✅ Done (Day 55 — `scripts/ars-extend-level3.py`) |
+| **Phase 10** | ARS envelopes for remaining TCs (TC-006/028/031) | ✅ Done (Day 56 — `scripts/ars-extend-final.py`) |
 
 ---
 

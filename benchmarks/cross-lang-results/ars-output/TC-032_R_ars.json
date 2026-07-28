@@ -1,0 +1,147 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-032",
+    "version": "1.0",
+    "analysisReason": "Safety: immune-related adverse event (irAE) summary by category, PT, and severity",
+    "analysisMethod": {
+      "name": "Frequency tabulation by irAE category \u2192 PT \u2192 severity",
+      "codeTemplate": "aggregate(AEDECOD ~ IRAE_CATEGORY + AETOXGR + TRT01A, data=ADAE)",
+      "parameters": {
+        "severity_grades": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "hierarchy": "irAE category \u2192 PT \u2192 severity grade",
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AEDECOD",
+        "dataset": "ADAE",
+        "role": "Preferred Term"
+      },
+      {
+        "name": "AETOXGR",
+        "dataset": "ADAE",
+        "role": "severity grade"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SAFFL",
+        "dataset": "ADSL",
+        "role": "safety flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "Safety",
+      "filter": "SAFFL = 'Y'"
+    },
+    "analysisDataset": "ADAE",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 99
+      },
+      {
+        "id": "Control",
+        "n": 89
+      }
+    ],
+    "documentation": "irAE summary: 6 irAE categories, 270 table rows. Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_experimental",
+          "value": 99
+        },
+        {
+          "name": "n_control",
+          "value": 89
+        },
+        {
+          "name": "n_irae_categories",
+          "value": 6
+        },
+        {
+          "name": "n_table_rows",
+          "value": 270
+        },
+        {
+          "name": "n_any_irae_experimental",
+          "value": 99
+        },
+        {
+          "name": "n_any_irae_control",
+          "value": 84
+        },
+        {
+          "name": "pct_any_irae_experimental",
+          "value": 100,
+          "unit": "%"
+        },
+        {
+          "name": "pct_any_irae_control",
+          "value": 94.4,
+          "unit": "%"
+        },
+        {
+          "name": "n_g3_irae_experimental",
+          "value": 84
+        },
+        {
+          "name": "n_g3_irae_control",
+          "value": 55
+        },
+        {
+          "name": "n_irae_disc_experimental",
+          "value": 28
+        },
+        {
+          "name": "n_irae_disc_control",
+          "value": 19
+        },
+        {
+          "name": "n_irae_steroids_experimental",
+          "value": 62
+        },
+        {
+          "name": "n_irae_steroids_control",
+          "value": 37
+        },
+        {
+          "name": "n_grade3_experimental",
+          "value": 60
+        },
+        {
+          "name": "n_grade3_control",
+          "value": 37
+        },
+        {
+          "name": "n_grade4_experimental",
+          "value": 34
+        },
+        {
+          "name": "n_grade4_control",
+          "value": 20
+        },
+        {
+          "name": "n_grade5_experimental",
+          "value": 26
+        },
+        {
+          "name": "n_grade5_control",
+          "value": 8
+        }
+      ]
+    }
+  }
+}

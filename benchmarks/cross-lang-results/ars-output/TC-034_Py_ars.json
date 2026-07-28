@@ -1,0 +1,189 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-034",
+    "version": "1.0",
+    "analysisReason": "Data quality: sufficient follow-up assessment (adequate follow-up, reverse KM, follow-up duration)",
+    "analysisMethod": {
+      "name": "Descriptive statistics + reverse Kaplan-Meier",
+      "codeTemplate": "summary(FU_POST_DOSE ~ TRT01A); survfit(Surv(FU_POST_DOSE, 1) ~ 1, type='reverse')",
+      "parameters": {
+        "followup_threshold_days": 90,
+        "date_unit": "days",
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "FU_POST_DOSE",
+        "dataset": "ADSL",
+        "role": "follow-up post last dose (days)"
+      },
+      {
+        "name": "FU_FROM_RAND",
+        "dataset": "ADSL",
+        "role": "follow-up from randomization (days)"
+      },
+      {
+        "name": "ADEQUATE_FU",
+        "dataset": "ADSL",
+        "role": "adequate follow-up flag"
+      },
+      {
+        "name": "STATUS",
+        "dataset": "ADSL",
+        "role": "patient status (ongoing/completed/discontinued/died)"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SAFFL",
+        "dataset": "ADSL",
+        "role": "safety flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "Safety",
+      "filter": "SAFFL = 'Y'"
+    },
+    "analysisDataset": "ADSL",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 100
+      },
+      {
+        "id": "Control",
+        "n": 100
+      }
+    ],
+    "documentation": "Sufficient follow-up: adequate follow-up rate (\u226590 days), reverse KM median follow-up, status distribution. Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_adequate_followup_experimental",
+          "value": 60
+        },
+        {
+          "name": "n_adequate_followup_control",
+          "value": 55
+        },
+        {
+          "name": "pct_adequate_followup_experimental",
+          "value": 60.0,
+          "unit": "%"
+        },
+        {
+          "name": "pct_adequate_followup_control",
+          "value": 55.0,
+          "unit": "%"
+        },
+        {
+          "name": "n_ongoing_experimental",
+          "value": 20
+        },
+        {
+          "name": "n_ongoing_control",
+          "value": 19
+        },
+        {
+          "name": "n_completed_experimental",
+          "value": 59
+        },
+        {
+          "name": "n_completed_control",
+          "value": 51
+        },
+        {
+          "name": "n_discontinued_experimental",
+          "value": 9
+        },
+        {
+          "name": "n_discontinued_control",
+          "value": 16
+        },
+        {
+          "name": "n_died_experimental",
+          "value": 12
+        },
+        {
+          "name": "n_died_control",
+          "value": 14
+        },
+        {
+          "name": "median_reverse_km_followup_experimental",
+          "value": 427.0,
+          "unit": "days"
+        },
+        {
+          "name": "median_reverse_km_followup_control",
+          "value": 259.0,
+          "unit": "days"
+        },
+        {
+          "name": "reverse_km_ci_lower_experimental",
+          "value": 411.0,
+          "unit": "days"
+        },
+        {
+          "name": "reverse_km_ci_upper_experimental",
+          "value": 457.0,
+          "unit": "days"
+        },
+        {
+          "name": "reverse_km_ci_lower_control",
+          "value": 251.0,
+          "unit": "days"
+        },
+        {
+          "name": "reverse_km_ci_upper_control",
+          "value": 277.0,
+          "unit": "days"
+        },
+        {
+          "name": "mean_fu_post_dose_experimental",
+          "value": 109.34,
+          "unit": "days"
+        },
+        {
+          "name": "mean_fu_post_dose_control",
+          "value": 95.45,
+          "unit": "days"
+        },
+        {
+          "name": "median_fu_post_dose_experimental",
+          "value": 113.5,
+          "unit": "days"
+        },
+        {
+          "name": "median_fu_post_dose_control",
+          "value": 97.5,
+          "unit": "days"
+        },
+        {
+          "name": "mean_fu_from_rand_experimental",
+          "value": 410.55,
+          "unit": "days"
+        },
+        {
+          "name": "mean_fu_from_rand_control",
+          "value": 256.1,
+          "unit": "days"
+        },
+        {
+          "name": "median_fu_from_rand_experimental",
+          "value": 417.5,
+          "unit": "days"
+        },
+        {
+          "name": "median_fu_from_rand_control",
+          "value": 254.0,
+          "unit": "days"
+        }
+      ]
+    }
+  }
+}

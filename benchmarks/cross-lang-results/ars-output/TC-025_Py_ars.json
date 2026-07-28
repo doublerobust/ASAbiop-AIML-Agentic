@@ -1,0 +1,183 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-025",
+    "version": "1.0",
+    "analysisReason": "Efficacy: Best Overall Response (BOR) summary with ORR, DCR, Fisher exact test",
+    "analysisMethod": {
+      "name": "Binomial proportion + Fisher exact test",
+      "codeTemplate": "fisher.test(matrix(c(orr, n-orr), nrow=2))",
+      "parameters": {
+        "endpoint": "Best Overall Response",
+        "response_criteria": "RECIST 1.1 (CR + PR = ORR; CR + PR + SD = DCR)",
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "BOR",
+        "dataset": "ADRS",
+        "role": "best overall response"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "ITTFL",
+        "dataset": "ADSL",
+        "role": "ITT flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADRS",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 107
+      },
+      {
+        "id": "Control",
+        "n": 88
+      }
+    ],
+    "documentation": "BOR summary: CR/PR/SD/PD/NE counts, ORR and DCR with 95% CI, ORR difference with Fisher exact and chi-square tests. Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "orr_rate_experimental",
+          "value": 0.4486,
+          "unit": "proportion"
+        },
+        {
+          "name": "orr_rate_control",
+          "value": 0.2045,
+          "unit": "proportion"
+        },
+        {
+          "name": "orr_n_experimental",
+          "value": 48
+        },
+        {
+          "name": "orr_n_control",
+          "value": 18
+        },
+        {
+          "name": "orr_ci_lower_experimental",
+          "value": 0.3523
+        },
+        {
+          "name": "orr_ci_upper_experimental",
+          "value": 0.5478
+        },
+        {
+          "name": "orr_ci_lower_control",
+          "value": 0.126
+        },
+        {
+          "name": "orr_ci_upper_control",
+          "value": 0.3039
+        },
+        {
+          "name": "dcr_rate_experimental",
+          "value": 0.8505,
+          "unit": "proportion"
+        },
+        {
+          "name": "dcr_rate_control",
+          "value": 0.6932,
+          "unit": "proportion"
+        },
+        {
+          "name": "dcr_n_experimental",
+          "value": 91
+        },
+        {
+          "name": "dcr_n_control",
+          "value": 61
+        },
+        {
+          "name": "orr_difference",
+          "value": 0.2441,
+          "unit": "proportion"
+        },
+        {
+          "name": "orr_diff_ci_lower",
+          "value": 0.1177
+        },
+        {
+          "name": "orr_diff_ci_upper",
+          "value": 0.3705
+        },
+        {
+          "name": "fisher_exact_p",
+          "value": 0.000433
+        },
+        {
+          "name": "chi_square_p",
+          "value": 0.000338
+        },
+        {
+          "name": "n_total_experimental",
+          "value": 107
+        },
+        {
+          "name": "n_total_control",
+          "value": 88
+        },
+        {
+          "name": "n_evaluable_experimental",
+          "value": 100
+        },
+        {
+          "name": "n_evaluable_control",
+          "value": 80
+        },
+        {
+          "name": "n_cr_experimental",
+          "value": 6
+        },
+        {
+          "name": "n_pr_experimental",
+          "value": 42
+        },
+        {
+          "name": "n_sd_experimental",
+          "value": 43
+        },
+        {
+          "name": "n_pd_experimental",
+          "value": 9
+        },
+        {
+          "name": "n_ne_experimental",
+          "value": 7
+        },
+        {
+          "name": "n_cr_control",
+          "value": 2
+        },
+        {
+          "name": "n_pr_control",
+          "value": 16
+        },
+        {
+          "name": "n_sd_control",
+          "value": 43
+        },
+        {
+          "name": "n_pd_control",
+          "value": 19
+        },
+        {
+          "name": "n_ne_control",
+          "value": 8
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-002",
+    "version": "1.0",
+    "analysisReason": "Baseline characteristics: demographics summary table by treatment arm",
+    "analysisMethod": {
+      "name": "Descriptive statistics + frequency tabulation",
+      "codeTemplate": "summary(AGE ~ TRT01P); table(SEX, TRT01P)",
+      "parameters": {
+        "continuous_vars": [
+          "AGE"
+        ],
+        "categorical_vars": [
+          "SEX",
+          "RACE",
+          "ECOG"
+        ],
+        "stats": [
+          "n",
+          "mean",
+          "SD",
+          "median",
+          "min",
+          "max"
+        ],
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AGE",
+        "dataset": "ADSL",
+        "role": "continuous: age"
+      },
+      {
+        "name": "SEX",
+        "dataset": "ADSL",
+        "role": "categorical: sex"
+      },
+      {
+        "name": "RACE",
+        "dataset": "ADSL",
+        "role": "categorical: race"
+      },
+      {
+        "name": "ECOG",
+        "dataset": "ADSL",
+        "role": "categorical: ECOG"
+      },
+      {
+        "name": "TRT01P",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SAFFL",
+        "dataset": "ADSL",
+        "role": "safety flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "Safety",
+      "filter": "SAFFL = 'Y'"
+    },
+    "analysisDataset": "ADSL",
+    "resultGroups": [
+      {
+        "id": "Active",
+        "n": 109
+      },
+      {
+        "id": "Placebo",
+        "n": 87
+      }
+    ],
+    "documentation": "Baseline demographics: age (continuous) and sex/race/ECOG (categorical) by treatment arm. Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_total",
+          "value": 196
+        },
+        {
+          "name": "n_active",
+          "value": 109
+        },
+        {
+          "name": "n_placebo",
+          "value": 87
+        },
+        {
+          "name": "mean_age_active",
+          "value": 57.6,
+          "unit": "years"
+        },
+        {
+          "name": "mean_age_placebo",
+          "value": 57.16,
+          "unit": "years"
+        },
+        {
+          "name": "median_age_active",
+          "value": 58.0,
+          "unit": "years"
+        },
+        {
+          "name": "median_age_placebo",
+          "value": 58.0,
+          "unit": "years"
+        },
+        {
+          "name": "sd_age_active",
+          "value": 11.88,
+          "unit": "years"
+        },
+        {
+          "name": "sd_age_placebo",
+          "value": 11.29,
+          "unit": "years"
+        },
+        {
+          "name": "min_age_active",
+          "value": 26,
+          "unit": "years"
+        },
+        {
+          "name": "max_age_active",
+          "value": 90,
+          "unit": "years"
+        },
+        {
+          "name": "min_age_placebo",
+          "value": 34,
+          "unit": "years"
+        },
+        {
+          "name": "max_age_placebo",
+          "value": 83,
+          "unit": "years"
+        },
+        {
+          "name": "n_sex_male_active",
+          "value": 65
+        },
+        {
+          "name": "n_sex_female_active",
+          "value": 44
+        },
+        {
+          "name": "n_sex_male_placebo",
+          "value": 48
+        },
+        {
+          "name": "n_sex_female_placebo",
+          "value": 39
+        }
+      ]
+    }
+  }
+}

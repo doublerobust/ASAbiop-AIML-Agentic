@@ -1,0 +1,240 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-031",
+    "version": "1.0",
+    "analysisReason": "Time-to-first-treatment: KM median, log-rank, Cox HR, and treatment receipt rates by arm",
+    "analysisMethod": {
+      "name": "Kaplan-Meier + log-rank + Cox PH (Efron ties)",
+      "codeTemplate": "survfit(Surv(TTT, 1-CNSR) ~ TRT01A); survdiff(...); coxph(Surv(TTT, 1-CNSR) ~ TRT01PN)",
+      "parameters": {
+        "n_total": 189,
+        "population": "ITT",
+        "time_unit": "days",
+        "censoring_rule": "subjects who never receive treatment are censored at follow-up time",
+        "itt_primary": true,
+        "pp_analysis": "not performed (FDA/EMA oncology standard)",
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "TTT_DAYS",
+        "dataset": "ADSL",
+        "role": "time-to-first-treatment (days)"
+      },
+      {
+        "name": "CNSR_TTT",
+        "dataset": "ADSL",
+        "role": "censoring (1=censored)"
+      },
+      {
+        "name": "RECEIVED_TX",
+        "dataset": "ADSL",
+        "role": "treatment received flag"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment arm"
+      },
+      {
+        "name": "ITTFL",
+        "dataset": "ADSL",
+        "role": "ITT flag"
+      },
+      {
+        "name": "RANDDT",
+        "dataset": "ADSL",
+        "role": "randomization date"
+      },
+      {
+        "name": "FIRSTDOSEDT",
+        "dataset": "ADSL",
+        "role": "first dose date"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y' \u2014 all randomized subjects"
+    },
+    "analysisDataset": "ADSL",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 92
+      },
+      {
+        "id": "Control",
+        "n": 97
+      }
+    ],
+    "documentation": "Level 1 time-to-first-treatment analysis. Phase III oncology superiority trial \u2014 ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed. Time from randomization to first dose of study treatment; subjects who never receive treatment are censored at their follow-up time. KM median with CI, log-rank test, Cox HR with CI, and treatment receipt rates.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_total",
+          "value": 189
+        },
+        {
+          "name": "n_experimental",
+          "value": 92
+        },
+        {
+          "name": "n_control",
+          "value": 97
+        },
+        {
+          "name": "km_median_experimental",
+          "value": 3.0,
+          "unit": "days"
+        },
+        {
+          "name": "km_ci_lower_experimental",
+          "value": 3.0,
+          "unit": "days"
+        },
+        {
+          "name": "km_ci_upper_experimental",
+          "value": 3.0,
+          "unit": "days"
+        },
+        {
+          "name": "n_events_experimental",
+          "value": 88
+        },
+        {
+          "name": "estimable_experimental",
+          "value": true
+        },
+        {
+          "name": "km_median_control",
+          "value": 6.0,
+          "unit": "days"
+        },
+        {
+          "name": "km_ci_lower_control",
+          "value": 4.0,
+          "unit": "days"
+        },
+        {
+          "name": "km_ci_upper_control",
+          "value": 6.0,
+          "unit": "days"
+        },
+        {
+          "name": "n_events_control",
+          "value": 91
+        },
+        {
+          "name": "estimable_control",
+          "value": true
+        },
+        {
+          "name": "logrank_chisq",
+          "value": 20.7833
+        },
+        {
+          "name": "logrank_df",
+          "value": 1
+        },
+        {
+          "name": "logrank_p_value",
+          "value": 0.0
+        },
+        {
+          "name": "cox_hr",
+          "value": 1.9978
+        },
+        {
+          "name": "cox_hr_lower",
+          "value": 1.4782
+        },
+        {
+          "name": "cox_hr_upper",
+          "value": 2.7
+        },
+        {
+          "name": "cox_p_value",
+          "value": 0.0
+        },
+        {
+          "name": "mean_ttt_experimental",
+          "value": 12.6739,
+          "unit": "days"
+        },
+        {
+          "name": "median_ttt_experimental",
+          "value": 3.0,
+          "unit": "days"
+        },
+        {
+          "name": "sd_ttt_experimental",
+          "value": 47.3419,
+          "unit": "days"
+        },
+        {
+          "name": "min_ttt_experimental",
+          "value": 0.0,
+          "unit": "days"
+        },
+        {
+          "name": "max_ttt_experimental",
+          "value": 291.0,
+          "unit": "days"
+        },
+        {
+          "name": "mean_ttt_control",
+          "value": 14.3814,
+          "unit": "days"
+        },
+        {
+          "name": "median_ttt_control",
+          "value": 6.0,
+          "unit": "days"
+        },
+        {
+          "name": "sd_ttt_control",
+          "value": 38.0489,
+          "unit": "days"
+        },
+        {
+          "name": "min_ttt_control",
+          "value": 0.0,
+          "unit": "days"
+        },
+        {
+          "name": "max_ttt_control",
+          "value": 217.0,
+          "unit": "days"
+        },
+        {
+          "name": "n_received_experimental",
+          "value": 88
+        },
+        {
+          "name": "n_censored_experimental",
+          "value": 4
+        },
+        {
+          "name": "pct_received_experimental",
+          "value": 95.65,
+          "unit": "%"
+        },
+        {
+          "name": "n_received_control",
+          "value": 91
+        },
+        {
+          "name": "n_censored_control",
+          "value": 6
+        },
+        {
+          "name": "pct_received_control",
+          "value": 93.81,
+          "unit": "%"
+        }
+      ]
+    }
+  }
+}

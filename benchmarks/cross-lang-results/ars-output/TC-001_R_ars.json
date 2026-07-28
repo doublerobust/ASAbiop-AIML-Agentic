@@ -1,0 +1,82 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-001",
+    "version": "1.0",
+    "analysisReason": "Primary efficacy: Kaplan-Meier median PFS estimation with 95% CI",
+    "analysisMethod": {
+      "name": "Kaplan-Meier survival estimation",
+      "codeTemplate": "survfit(Surv(AVAL, 1-CNSR) ~ 1)",
+      "parameters": {
+        "ci_method": "log-log",
+        "estimable": true,
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "analysis time"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "ITTFL",
+        "dataset": "ADSL",
+        "role": "ITT flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADTTE",
+    "resultGroups": [
+      {
+        "id": "Overall",
+        "n": 106
+      }
+    ],
+    "documentation": "KM median PFS estimation. Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "median_pfs",
+          "value": 11.01,
+          "unit": "months"
+        },
+        {
+          "name": "ci_lower",
+          "value": 7.12,
+          "unit": "months"
+        },
+        {
+          "name": "ci_upper",
+          "value": 15.1,
+          "unit": "months"
+        },
+        {
+          "name": "n_events",
+          "value": 65
+        },
+        {
+          "name": "n_total",
+          "value": 106
+        },
+        {
+          "name": "estimable",
+          "value": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-019",
+    "version": "1.0",
+    "analysisReason": "Safety: concomitant medications summary by ATC class and medication",
+    "analysisMethod": {
+      "name": "Frequency tabulation by ATC hierarchy",
+      "codeTemplate": "aggregate(CMDECOD ~ TRT01A + ATC_CLASS, data=ADCM)",
+      "parameters": {
+        "hierarchy": "ATC class \u2192 medication",
+        "sort": "alphabetical by ATC class",
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "CMDECOD",
+        "dataset": "ADCM",
+        "role": "medication name"
+      },
+      {
+        "name": "ATC_CLASS",
+        "dataset": "ADCM",
+        "role": "ATC class"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SAFFL",
+        "dataset": "ADSL",
+        "role": "safety flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "Safety",
+      "filter": "SAFFL = 'Y'"
+    },
+    "analysisDataset": "ADCM",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 103
+      },
+      {
+        "id": "Control",
+        "n": 86
+      }
+    ],
+    "documentation": "Concomitant medications summary: 8 ATC classes, 31 detailed rows (class + medication). Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_experimental",
+          "value": 103
+        },
+        {
+          "name": "n_control",
+          "value": 86
+        },
+        {
+          "name": "n_atc_classes",
+          "value": 8
+        },
+        {
+          "name": "n_detailed_rows",
+          "value": 31
+        },
+        {
+          "name": "n_any_conmed_experimental",
+          "value": 103
+        },
+        {
+          "name": "n_any_conmed_control",
+          "value": 86
+        },
+        {
+          "name": "pct_any_conmed_experimental",
+          "value": 100.0,
+          "unit": "%"
+        },
+        {
+          "name": "pct_any_conmed_control",
+          "value": 100.0,
+          "unit": "%"
+        }
+      ]
+    }
+  }
+}

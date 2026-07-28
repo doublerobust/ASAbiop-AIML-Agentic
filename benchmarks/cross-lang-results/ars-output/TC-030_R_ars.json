@@ -1,0 +1,161 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-030",
+    "version": "1.0",
+    "analysisReason": "Efficacy: ORR by subgroup with interaction testing (logistic Wald, Breslow-Day)",
+    "analysisMethod": {
+      "name": "Binomial proportion + logistic interaction + Breslow-Day",
+      "codeTemplate": "glm(BOR_RESP ~ TRT01A * SUBGROUP, family=binomial)",
+      "parameters": {
+        "ci_method": "clopper-pearson",
+        "subgroups": [
+          "SEX",
+          "AGEGR1",
+          "ECOG"
+        ],
+        "interaction_method": "logistic_wald",
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "BOR",
+        "dataset": "ADRS",
+        "role": "best overall response"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "ITTFL",
+        "dataset": "ADSL",
+        "role": "ITT flag"
+      },
+      {
+        "name": "SEX",
+        "dataset": "ADSL",
+        "role": "subgroup: sex"
+      },
+      {
+        "name": "AGEGR1",
+        "dataset": "ADSL",
+        "role": "subgroup: age group"
+      },
+      {
+        "name": "ECOG",
+        "dataset": "ADSL",
+        "role": "subgroup: ECOG"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADRS",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 111
+      },
+      {
+        "id": "Control",
+        "n": 89
+      }
+    ],
+    "documentation": "ORR by subgroup (SEX, AGEGR1, ECOG) with Clopper-Pearson CI, ORR difference CI, and logistic Wald + Breslow-Day interaction tests. Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "orr_experimental",
+          "value": 37.8,
+          "unit": "%"
+        },
+        {
+          "name": "orr_control",
+          "value": 15.7,
+          "unit": "%"
+        },
+        {
+          "name": "orr_difference",
+          "value": 22.1,
+          "unit": "%"
+        },
+        {
+          "name": "responders_experimental",
+          "value": 42
+        },
+        {
+          "name": "responders_control",
+          "value": 14
+        },
+        {
+          "name": "n_experimental",
+          "value": 111
+        },
+        {
+          "name": "n_control",
+          "value": 89
+        },
+        {
+          "name": "ci_lower_experimental",
+          "value": 28.8,
+          "unit": "%"
+        },
+        {
+          "name": "ci_upper_experimental",
+          "value": 47.5,
+          "unit": "%"
+        },
+        {
+          "name": "ci_lower_control",
+          "value": 8.9,
+          "unit": "%"
+        },
+        {
+          "name": "ci_upper_control",
+          "value": 25,
+          "unit": "%"
+        },
+        {
+          "name": "interaction_p_SEX",
+          "value": 0.3479
+        },
+        {
+          "name": "interaction_p_AGEGR1",
+          "value": 0.1934
+        },
+        {
+          "name": "interaction_p_ECOG",
+          "value": 0.936
+        },
+        {
+          "name": "interaction_or_SEX",
+          "value": 0.4672
+        },
+        {
+          "name": "interaction_or_AGEGR1",
+          "value": 0.381
+        },
+        {
+          "name": "interaction_or_ECOG",
+          "value": 0.9364
+        },
+        {
+          "name": "breslow_day_p_SEX",
+          "value": 0.3479
+        },
+        {
+          "name": "breslow_day_p_AGEGR1",
+          "value": 0.1841
+        },
+        {
+          "name": "breslow_day_p_ECOG",
+          "value": 0.9266
+        }
+      ]
+    }
+  }
+}

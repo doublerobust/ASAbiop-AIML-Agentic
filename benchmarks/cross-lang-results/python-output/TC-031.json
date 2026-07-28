@@ -1,0 +1,1969 @@
+{
+  "tc_id": "TC-031",
+  "tc_name": "Time-to-First-Treatment",
+  "metadata": {
+    "n_total": 189,
+    "n_experimental": 92,
+    "n_control": 97,
+    "population": "ITT",
+    "time_unit": "days",
+    "censoring_rule": "subjects who never receive treatment are censored at follow-up time",
+    "python_version": "3.9.6 (default, May 22 2026, 11:13:45) \n[Clang 21.0.0 (clang-2100.1.1.101)]"
+  },
+  "km_median_ttt": {
+    "experimental": {
+      "median": 3.0,
+      "ci_lower": 3.0,
+      "ci_upper": 3.0,
+      "n_events": 88,
+      "n_total": 92,
+      "estimable": true
+    },
+    "control": {
+      "median": 6.0,
+      "ci_lower": 4.0,
+      "ci_upper": 6.0,
+      "n_events": 91,
+      "n_total": 97,
+      "estimable": true
+    }
+  },
+  "logrank_test": {
+    "chisq": 20.7833,
+    "df": 1,
+    "p_value": 0.0
+  },
+  "cox_hr": {
+    "hr": 1.9978,
+    "hr_lower": 1.4782,
+    "hr_upper": 2.7,
+    "p_value": 0.0,
+    "n": 189
+  },
+  "ttt_summary": {
+    "experimental": {
+      "n": 92,
+      "mean": 12.6739,
+      "sd": 47.3419,
+      "median": 3.0,
+      "min": 0.0,
+      "max": 291.0,
+      "q1": 2.0,
+      "q3": 4.25
+    },
+    "control": {
+      "n": 97,
+      "mean": 14.3814,
+      "sd": 38.0489,
+      "median": 6.0,
+      "min": 0.0,
+      "max": 217.0,
+      "q1": 3.0,
+      "q3": 8.0
+    }
+  },
+  "received_treatment": {
+    "experimental": {
+      "n_received": 88,
+      "n_censored": 4,
+      "pct_received": 95.65
+    },
+    "control": {
+      "n_received": 91,
+      "n_censored": 6,
+      "pct_received": 93.81
+    }
+  },
+  "per_subject": [
+    {
+      "USUBJID": "SUB0001",
+      "TRT01A": "Control",
+      "RANDDT": "2023-06-28",
+      "FIRSTDOSEDT": "2023-07-01",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0002",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-09-03",
+      "FIRSTDOSEDT": "2023-09-03",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0003",
+      "TRT01A": "Control",
+      "RANDDT": "2023-06-29",
+      "FIRSTDOSEDT": "2023-07-01",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0004",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-06-11",
+      "FIRSTDOSEDT": "2023-06-12",
+      "TTT_DAYS": 1,
+      "TTT_MONTHS": 0.0329,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0005",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-10",
+      "FIRSTDOSEDT": "2023-12-12",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0006",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-02-28",
+      "FIRSTDOSEDT": "2023-03-01",
+      "TTT_DAYS": 1,
+      "TTT_MONTHS": 0.0329,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0007",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-07-29",
+      "FIRSTDOSEDT": "2023-08-01",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0008",
+      "TRT01A": "Control",
+      "RANDDT": "2023-07-18",
+      "FIRSTDOSEDT": "2023-07-24",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0009",
+      "TRT01A": "Control",
+      "RANDDT": "2023-06-23",
+      "FIRSTDOSEDT": "2023-07-02",
+      "TTT_DAYS": 9,
+      "TTT_MONTHS": 0.2957,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0010",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-10-23",
+      "FIRSTDOSEDT": "2023-10-30",
+      "TTT_DAYS": 7,
+      "TTT_MONTHS": 0.23,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0011",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-04-08",
+      "FIRSTDOSEDT": "2023-04-08",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0012",
+      "TRT01A": "Control",
+      "RANDDT": "2023-12-16",
+      "FIRSTDOSEDT": "2023-12-24",
+      "TTT_DAYS": 8,
+      "TTT_MONTHS": 0.2628,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0013",
+      "TRT01A": "Control",
+      "RANDDT": "2023-05-02",
+      "FIRSTDOSEDT": "2023-05-06",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0014",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-07-19",
+      "FIRSTDOSEDT": "2023-07-28",
+      "TTT_DAYS": 9,
+      "TTT_MONTHS": 0.2957,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0015",
+      "TRT01A": "Control",
+      "RANDDT": "2023-07-10",
+      "FIRSTDOSEDT": "2023-07-16",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0016",
+      "TRT01A": "Control",
+      "RANDDT": "2023-11-08",
+      "FIRSTDOSEDT": "2023-11-13",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0017",
+      "TRT01A": "Control",
+      "RANDDT": "2023-06-10",
+      "FIRSTDOSEDT": null,
+      "TTT_DAYS": 157,
+      "TTT_MONTHS": 5.1581,
+      "RECEIVED_TX": 0,
+      "CNSR_TTT": 1
+    },
+    {
+      "USUBJID": "SUB0019",
+      "TRT01A": "Control",
+      "RANDDT": "2023-01-08",
+      "FIRSTDOSEDT": "2023-01-19",
+      "TTT_DAYS": 11,
+      "TTT_MONTHS": 0.3614,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0020",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-05-14",
+      "FIRSTDOSEDT": "2023-05-17",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0021",
+      "TRT01A": "Control",
+      "RANDDT": "2023-10-30",
+      "FIRSTDOSEDT": "2023-11-04",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0022",
+      "TRT01A": "Control",
+      "RANDDT": "2023-01-04",
+      "FIRSTDOSEDT": null,
+      "TTT_DAYS": 217,
+      "TTT_MONTHS": 7.1294,
+      "RECEIVED_TX": 0,
+      "CNSR_TTT": 1
+    },
+    {
+      "USUBJID": "SUB0023",
+      "TRT01A": "Control",
+      "RANDDT": "2023-11-24",
+      "FIRSTDOSEDT": "2023-11-26",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0024",
+      "TRT01A": "Control",
+      "RANDDT": "2023-07-18",
+      "FIRSTDOSEDT": "2023-07-24",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0025",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-21",
+      "FIRSTDOSEDT": "2023-02-26",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0026",
+      "TRT01A": "Control",
+      "RANDDT": "2023-04-21",
+      "FIRSTDOSEDT": "2023-04-27",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0027",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-07-22",
+      "FIRSTDOSEDT": "2023-07-24",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0028",
+      "TRT01A": "Control",
+      "RANDDT": "2023-04-26",
+      "FIRSTDOSEDT": "2023-04-26",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0029",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-09",
+      "FIRSTDOSEDT": "2023-02-09",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0030",
+      "TRT01A": "Control",
+      "RANDDT": "2023-09-01",
+      "FIRSTDOSEDT": "2023-09-03",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0031",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-09-04",
+      "FIRSTDOSEDT": "2023-09-09",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0032",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-02-13",
+      "FIRSTDOSEDT": "2023-02-16",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0034",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-03-31",
+      "FIRSTDOSEDT": "2023-04-03",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0035",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-08-30",
+      "FIRSTDOSEDT": "2023-09-02",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0036",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-09-25",
+      "FIRSTDOSEDT": "2023-09-27",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0037",
+      "TRT01A": "Control",
+      "RANDDT": "2023-09-24",
+      "FIRSTDOSEDT": null,
+      "TTT_DAYS": 190,
+      "TTT_MONTHS": 6.2423,
+      "RECEIVED_TX": 0,
+      "CNSR_TTT": 1
+    },
+    {
+      "USUBJID": "SUB0038",
+      "TRT01A": "Control",
+      "RANDDT": "2023-12-10",
+      "FIRSTDOSEDT": "2023-12-14",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0039",
+      "TRT01A": "Control",
+      "RANDDT": "2023-10-09",
+      "FIRSTDOSEDT": "2023-10-15",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0040",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-04-28",
+      "FIRSTDOSEDT": "2023-05-04",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0041",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-09",
+      "FIRSTDOSEDT": "2023-02-13",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0043",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-02",
+      "FIRSTDOSEDT": "2023-12-03",
+      "TTT_DAYS": 1,
+      "TTT_MONTHS": 0.0329,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0044",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-23",
+      "FIRSTDOSEDT": "2023-12-28",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0045",
+      "TRT01A": "Control",
+      "RANDDT": "2023-03-26",
+      "FIRSTDOSEDT": "2023-04-08",
+      "TTT_DAYS": 13,
+      "TTT_MONTHS": 0.4271,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0046",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-03-28",
+      "FIRSTDOSEDT": "2023-04-01",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0047",
+      "TRT01A": "Control",
+      "RANDDT": "2023-01-14",
+      "FIRSTDOSEDT": "2023-01-23",
+      "TTT_DAYS": 9,
+      "TTT_MONTHS": 0.2957,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0048",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-02-21",
+      "FIRSTDOSEDT": "2023-02-26",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0049",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-07-23",
+      "FIRSTDOSEDT": "2023-07-27",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0050",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-07-20",
+      "FIRSTDOSEDT": "2023-07-21",
+      "TTT_DAYS": 1,
+      "TTT_MONTHS": 0.0329,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0051",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-05-16",
+      "FIRSTDOSEDT": "2023-05-18",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0052",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-04-24",
+      "FIRSTDOSEDT": "2023-04-28",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0053",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-10-31",
+      "FIRSTDOSEDT": "2023-11-03",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0054",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-06-18",
+      "FIRSTDOSEDT": null,
+      "TTT_DAYS": 291,
+      "TTT_MONTHS": 9.5606,
+      "RECEIVED_TX": 0,
+      "CNSR_TTT": 1
+    },
+    {
+      "USUBJID": "SUB0055",
+      "TRT01A": "Control",
+      "RANDDT": "2023-10-23",
+      "FIRSTDOSEDT": "2023-10-30",
+      "TTT_DAYS": 7,
+      "TTT_MONTHS": 0.23,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0056",
+      "TRT01A": "Control",
+      "RANDDT": "2023-12-19",
+      "FIRSTDOSEDT": "2023-12-27",
+      "TTT_DAYS": 8,
+      "TTT_MONTHS": 0.2628,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0057",
+      "TRT01A": "Control",
+      "RANDDT": "2023-04-27",
+      "FIRSTDOSEDT": "2023-05-03",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0058",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-03-16",
+      "FIRSTDOSEDT": "2023-03-22",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0059",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-15",
+      "FIRSTDOSEDT": "2023-12-15",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0060",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-08-21",
+      "FIRSTDOSEDT": "2023-08-24",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0061",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-04-17",
+      "FIRSTDOSEDT": "2023-04-20",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0062",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-08-16",
+      "FIRSTDOSEDT": "2023-08-20",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0063",
+      "TRT01A": "Control",
+      "RANDDT": "2023-07-08",
+      "FIRSTDOSEDT": "2023-07-12",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0064",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-11-28",
+      "FIRSTDOSEDT": "2023-11-28",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0065",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-04-04",
+      "FIRSTDOSEDT": "2023-04-08",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0066",
+      "TRT01A": "Control",
+      "RANDDT": "2023-12-29",
+      "FIRSTDOSEDT": "2024-01-07",
+      "TTT_DAYS": 9,
+      "TTT_MONTHS": 0.2957,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0067",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-09",
+      "FIRSTDOSEDT": "2023-12-09",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0068",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-03-08",
+      "FIRSTDOSEDT": "2023-03-13",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0069",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-03-02",
+      "FIRSTDOSEDT": "2023-03-04",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0070",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-07-15",
+      "FIRSTDOSEDT": "2023-07-18",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0071",
+      "TRT01A": "Control",
+      "RANDDT": "2023-01-17",
+      "FIRSTDOSEDT": "2023-01-20",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0072",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-04-20",
+      "FIRSTDOSEDT": "2023-04-22",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0073",
+      "TRT01A": "Control",
+      "RANDDT": "2023-06-09",
+      "FIRSTDOSEDT": "2023-06-15",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0074",
+      "TRT01A": "Control",
+      "RANDDT": "2023-12-21",
+      "FIRSTDOSEDT": "2023-12-24",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0075",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-30",
+      "FIRSTDOSEDT": "2024-01-05",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0076",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-25",
+      "FIRSTDOSEDT": "2023-02-25",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0077",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-11-23",
+      "FIRSTDOSEDT": "2023-11-27",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0078",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-02-03",
+      "FIRSTDOSEDT": "2023-02-09",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0079",
+      "TRT01A": "Control",
+      "RANDDT": "2023-10-01",
+      "FIRSTDOSEDT": "2023-10-06",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0081",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-11-23",
+      "FIRSTDOSEDT": "2023-11-25",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0082",
+      "TRT01A": "Control",
+      "RANDDT": "2023-03-23",
+      "FIRSTDOSEDT": "2023-03-30",
+      "TTT_DAYS": 7,
+      "TTT_MONTHS": 0.23,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0083",
+      "TRT01A": "Control",
+      "RANDDT": "2023-11-24",
+      "FIRSTDOSEDT": "2023-11-27",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0084",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-12",
+      "FIRSTDOSEDT": "2023-02-20",
+      "TTT_DAYS": 8,
+      "TTT_MONTHS": 0.2628,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0086",
+      "TRT01A": "Control",
+      "RANDDT": "2023-06-21",
+      "FIRSTDOSEDT": "2023-06-23",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0087",
+      "TRT01A": "Control",
+      "RANDDT": "2023-04-26",
+      "FIRSTDOSEDT": "2023-04-28",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0088",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-01-09",
+      "FIRSTDOSEDT": "2023-01-14",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0089",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-10-10",
+      "FIRSTDOSEDT": "2023-10-15",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0090",
+      "TRT01A": "Control",
+      "RANDDT": "2023-05-03",
+      "FIRSTDOSEDT": "2023-05-12",
+      "TTT_DAYS": 9,
+      "TTT_MONTHS": 0.2957,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0091",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-08-31",
+      "FIRSTDOSEDT": "2023-09-04",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0092",
+      "TRT01A": "Control",
+      "RANDDT": "2023-05-31",
+      "FIRSTDOSEDT": "2023-06-09",
+      "TTT_DAYS": 9,
+      "TTT_MONTHS": 0.2957,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0093",
+      "TRT01A": "Control",
+      "RANDDT": "2023-05-17",
+      "FIRSTDOSEDT": "2023-05-22",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0094",
+      "TRT01A": "Control",
+      "RANDDT": "2023-11-21",
+      "FIRSTDOSEDT": "2023-11-27",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0095",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-04",
+      "FIRSTDOSEDT": "2023-02-14",
+      "TTT_DAYS": 10,
+      "TTT_MONTHS": 0.3285,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0096",
+      "TRT01A": "Control",
+      "RANDDT": "2023-09-27",
+      "FIRSTDOSEDT": "2023-10-01",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0097",
+      "TRT01A": "Control",
+      "RANDDT": "2023-10-01",
+      "FIRSTDOSEDT": "2023-10-03",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0098",
+      "TRT01A": "Control",
+      "RANDDT": "2023-05-20",
+      "FIRSTDOSEDT": "2023-05-24",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0099",
+      "TRT01A": "Control",
+      "RANDDT": "2023-04-07",
+      "FIRSTDOSEDT": "2023-04-13",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0100",
+      "TRT01A": "Control",
+      "RANDDT": "2023-01-02",
+      "FIRSTDOSEDT": "2023-01-02",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0101",
+      "TRT01A": "Control",
+      "RANDDT": "2023-12-09",
+      "FIRSTDOSEDT": "2023-12-16",
+      "TTT_DAYS": 7,
+      "TTT_MONTHS": 0.23,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0102",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-13",
+      "FIRSTDOSEDT": "2023-12-15",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0103",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-03-30",
+      "FIRSTDOSEDT": "2023-04-03",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0105",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-14",
+      "FIRSTDOSEDT": "2023-02-17",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0106",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-01-25",
+      "FIRSTDOSEDT": "2023-01-25",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0107",
+      "TRT01A": "Control",
+      "RANDDT": "2023-11-01",
+      "FIRSTDOSEDT": null,
+      "TTT_DAYS": 114,
+      "TTT_MONTHS": 3.7454,
+      "RECEIVED_TX": 0,
+      "CNSR_TTT": 1
+    },
+    {
+      "USUBJID": "SUB0108",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-11-23",
+      "FIRSTDOSEDT": "2023-11-26",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0109",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-26",
+      "FIRSTDOSEDT": "2023-03-02",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0110",
+      "TRT01A": "Control",
+      "RANDDT": "2023-10-01",
+      "FIRSTDOSEDT": "2023-10-05",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0111",
+      "TRT01A": "Control",
+      "RANDDT": "2023-03-07",
+      "FIRSTDOSEDT": "2023-03-12",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0112",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-05-15",
+      "FIRSTDOSEDT": "2023-05-17",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0113",
+      "TRT01A": "Control",
+      "RANDDT": "2023-08-08",
+      "FIRSTDOSEDT": "2023-08-10",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0114",
+      "TRT01A": "Control",
+      "RANDDT": "2023-09-21",
+      "FIRSTDOSEDT": "2023-09-28",
+      "TTT_DAYS": 7,
+      "TTT_MONTHS": 0.23,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0115",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-11-17",
+      "FIRSTDOSEDT": "2023-11-23",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0116",
+      "TRT01A": "Control",
+      "RANDDT": "2023-01-17",
+      "FIRSTDOSEDT": "2023-01-23",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0117",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-03-13",
+      "FIRSTDOSEDT": "2023-03-18",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0118",
+      "TRT01A": "Control",
+      "RANDDT": "2023-04-13",
+      "FIRSTDOSEDT": "2023-04-19",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0119",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-04-24",
+      "FIRSTDOSEDT": "2023-04-29",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0120",
+      "TRT01A": "Control",
+      "RANDDT": "2024-01-01",
+      "FIRSTDOSEDT": "2024-01-06",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0121",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-10-12",
+      "FIRSTDOSEDT": "2023-10-15",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0122",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-04-28",
+      "FIRSTDOSEDT": "2023-05-01",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0123",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-22",
+      "FIRSTDOSEDT": "2023-12-26",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0124",
+      "TRT01A": "Control",
+      "RANDDT": "2023-07-02",
+      "FIRSTDOSEDT": "2023-07-03",
+      "TTT_DAYS": 1,
+      "TTT_MONTHS": 0.0329,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0125",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-07-03",
+      "FIRSTDOSEDT": "2023-07-06",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0126",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-06-08",
+      "FIRSTDOSEDT": "2023-06-11",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0127",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-22",
+      "FIRSTDOSEDT": "2023-02-28",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0129",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-01-06",
+      "FIRSTDOSEDT": "2023-01-07",
+      "TTT_DAYS": 1,
+      "TTT_MONTHS": 0.0329,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0130",
+      "TRT01A": "Control",
+      "RANDDT": "2023-03-05",
+      "FIRSTDOSEDT": "2023-03-13",
+      "TTT_DAYS": 8,
+      "TTT_MONTHS": 0.2628,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0131",
+      "TRT01A": "Control",
+      "RANDDT": "2023-03-26",
+      "FIRSTDOSEDT": "2023-04-02",
+      "TTT_DAYS": 7,
+      "TTT_MONTHS": 0.23,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0132",
+      "TRT01A": "Control",
+      "RANDDT": "2023-04-13",
+      "FIRSTDOSEDT": "2023-04-18",
+      "TTT_DAYS": 5,
+      "TTT_MONTHS": 0.1643,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0133",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-18",
+      "FIRSTDOSEDT": "2023-02-21",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0135",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-09-06",
+      "FIRSTDOSEDT": null,
+      "TTT_DAYS": 160,
+      "TTT_MONTHS": 5.2567,
+      "RECEIVED_TX": 0,
+      "CNSR_TTT": 1
+    },
+    {
+      "USUBJID": "SUB0136",
+      "TRT01A": "Control",
+      "RANDDT": "2023-12-21",
+      "FIRSTDOSEDT": null,
+      "TTT_DAYS": 76,
+      "TTT_MONTHS": 2.4969,
+      "RECEIVED_TX": 0,
+      "CNSR_TTT": 1
+    },
+    {
+      "USUBJID": "SUB0137",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-02-14",
+      "FIRSTDOSEDT": "2023-02-20",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0138",
+      "TRT01A": "Control",
+      "RANDDT": "2023-04-19",
+      "FIRSTDOSEDT": "2023-04-25",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0139",
+      "TRT01A": "Control",
+      "RANDDT": "2023-07-05",
+      "FIRSTDOSEDT": "2023-07-07",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0140",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-06",
+      "FIRSTDOSEDT": "2023-12-10",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0141",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-09-12",
+      "FIRSTDOSEDT": "2023-09-20",
+      "TTT_DAYS": 8,
+      "TTT_MONTHS": 0.2628,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0142",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-10-08",
+      "FIRSTDOSEDT": "2023-10-11",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0143",
+      "TRT01A": "Control",
+      "RANDDT": "2023-08-01",
+      "FIRSTDOSEDT": "2023-08-10",
+      "TTT_DAYS": 9,
+      "TTT_MONTHS": 0.2957,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0144",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-06-02",
+      "FIRSTDOSEDT": "2023-06-08",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0145",
+      "TRT01A": "Control",
+      "RANDDT": "2023-03-15",
+      "FIRSTDOSEDT": "2023-03-21",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0146",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-11-13",
+      "FIRSTDOSEDT": "2023-11-16",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0147",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-10-22",
+      "FIRSTDOSEDT": "2023-10-28",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0148",
+      "TRT01A": "Control",
+      "RANDDT": "2023-01-10",
+      "FIRSTDOSEDT": "2023-01-14",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0151",
+      "TRT01A": "Control",
+      "RANDDT": "2023-09-28",
+      "FIRSTDOSEDT": "2023-10-09",
+      "TTT_DAYS": 11,
+      "TTT_MONTHS": 0.3614,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0152",
+      "TRT01A": "Control",
+      "RANDDT": "2023-10-30",
+      "FIRSTDOSEDT": "2023-10-31",
+      "TTT_DAYS": 1,
+      "TTT_MONTHS": 0.0329,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0153",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-17",
+      "FIRSTDOSEDT": "2023-02-19",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0155",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-15",
+      "FIRSTDOSEDT": "2023-02-25",
+      "TTT_DAYS": 10,
+      "TTT_MONTHS": 0.3285,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0156",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-07-27",
+      "FIRSTDOSEDT": "2023-07-27",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0157",
+      "TRT01A": "Control",
+      "RANDDT": "2023-12-06",
+      "FIRSTDOSEDT": "2023-12-12",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0158",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-01-30",
+      "FIRSTDOSEDT": "2023-02-01",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0159",
+      "TRT01A": "Control",
+      "RANDDT": "2023-05-26",
+      "FIRSTDOSEDT": null,
+      "TTT_DAYS": 171,
+      "TTT_MONTHS": 5.6181,
+      "RECEIVED_TX": 0,
+      "CNSR_TTT": 1
+    },
+    {
+      "USUBJID": "SUB0160",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-23",
+      "FIRSTDOSEDT": "2023-12-27",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0161",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-04-21",
+      "FIRSTDOSEDT": "2023-04-24",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0162",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-18",
+      "FIRSTDOSEDT": "2023-02-21",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0163",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-06-28",
+      "FIRSTDOSEDT": "2023-07-01",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0164",
+      "TRT01A": "Control",
+      "RANDDT": "2023-07-06",
+      "FIRSTDOSEDT": "2023-07-12",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0165",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-08-31",
+      "FIRSTDOSEDT": "2023-09-02",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0166",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-04-25",
+      "FIRSTDOSEDT": "2023-04-28",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0167",
+      "TRT01A": "Control",
+      "RANDDT": "2023-12-16",
+      "FIRSTDOSEDT": "2023-12-19",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0168",
+      "TRT01A": "Control",
+      "RANDDT": "2023-07-10",
+      "FIRSTDOSEDT": "2023-07-19",
+      "TTT_DAYS": 9,
+      "TTT_MONTHS": 0.2957,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0169",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-04-15",
+      "FIRSTDOSEDT": "2023-04-17",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0170",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-18",
+      "FIRSTDOSEDT": null,
+      "TTT_DAYS": 170,
+      "TTT_MONTHS": 5.5852,
+      "RECEIVED_TX": 0,
+      "CNSR_TTT": 1
+    },
+    {
+      "USUBJID": "SUB0171",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-05",
+      "FIRSTDOSEDT": "2023-12-07",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0172",
+      "TRT01A": "Control",
+      "RANDDT": "2023-07-02",
+      "FIRSTDOSEDT": "2023-07-09",
+      "TTT_DAYS": 7,
+      "TTT_MONTHS": 0.23,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0173",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-01-10",
+      "FIRSTDOSEDT": null,
+      "TTT_DAYS": 280,
+      "TTT_MONTHS": 9.1992,
+      "RECEIVED_TX": 0,
+      "CNSR_TTT": 1
+    },
+    {
+      "USUBJID": "SUB0174",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-08-07",
+      "FIRSTDOSEDT": "2023-08-07",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0175",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-07-23",
+      "FIRSTDOSEDT": "2023-07-23",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0176",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-02-24",
+      "FIRSTDOSEDT": "2023-02-24",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0177",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-08-21",
+      "FIRSTDOSEDT": "2023-08-21",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0178",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-11-04",
+      "FIRSTDOSEDT": "2023-11-06",
+      "TTT_DAYS": 2,
+      "TTT_MONTHS": 0.0657,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0179",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-02-08",
+      "FIRSTDOSEDT": "2023-02-12",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0180",
+      "TRT01A": "Control",
+      "RANDDT": "2023-09-22",
+      "FIRSTDOSEDT": "2023-09-25",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0181",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-21",
+      "FIRSTDOSEDT": "2023-02-22",
+      "TTT_DAYS": 1,
+      "TTT_MONTHS": 0.0329,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0182",
+      "TRT01A": "Control",
+      "RANDDT": "2023-10-02",
+      "FIRSTDOSEDT": "2023-10-09",
+      "TTT_DAYS": 7,
+      "TTT_MONTHS": 0.23,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0183",
+      "TRT01A": "Control",
+      "RANDDT": "2023-06-03",
+      "FIRSTDOSEDT": "2023-06-09",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0184",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-01-03",
+      "FIRSTDOSEDT": "2023-01-06",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0185",
+      "TRT01A": "Control",
+      "RANDDT": "2023-12-20",
+      "FIRSTDOSEDT": "2023-12-29",
+      "TTT_DAYS": 9,
+      "TTT_MONTHS": 0.2957,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0186",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-03-02",
+      "FIRSTDOSEDT": "2023-03-05",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0187",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-08-07",
+      "FIRSTDOSEDT": "2023-08-08",
+      "TTT_DAYS": 1,
+      "TTT_MONTHS": 0.0329,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0188",
+      "TRT01A": "Control",
+      "RANDDT": "2023-03-08",
+      "FIRSTDOSEDT": "2023-03-14",
+      "TTT_DAYS": 6,
+      "TTT_MONTHS": 0.1971,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0189",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-12-08",
+      "FIRSTDOSEDT": "2023-12-08",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0190",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-09-28",
+      "FIRSTDOSEDT": "2023-09-29",
+      "TTT_DAYS": 1,
+      "TTT_MONTHS": 0.0329,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0191",
+      "TRT01A": "Control",
+      "RANDDT": "2023-10-22",
+      "FIRSTDOSEDT": "2023-10-25",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0192",
+      "TRT01A": "Control",
+      "RANDDT": "2023-06-08",
+      "FIRSTDOSEDT": "2023-06-12",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0193",
+      "TRT01A": "Control",
+      "RANDDT": "2023-06-21",
+      "FIRSTDOSEDT": "2023-06-30",
+      "TTT_DAYS": 9,
+      "TTT_MONTHS": 0.2957,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0194",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-08-21",
+      "FIRSTDOSEDT": "2023-08-21",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0195",
+      "TRT01A": "Control",
+      "RANDDT": "2023-10-15",
+      "FIRSTDOSEDT": "2023-10-15",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0196",
+      "TRT01A": "Control",
+      "RANDDT": "2023-11-06",
+      "FIRSTDOSEDT": "2023-11-16",
+      "TTT_DAYS": 10,
+      "TTT_MONTHS": 0.3285,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0197",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-01-07",
+      "FIRSTDOSEDT": "2023-01-11",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0198",
+      "TRT01A": "Experimental",
+      "RANDDT": "2023-08-31",
+      "FIRSTDOSEDT": "2023-09-03",
+      "TTT_DAYS": 3,
+      "TTT_MONTHS": 0.0986,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0199",
+      "TRT01A": "Control",
+      "RANDDT": "2023-02-09",
+      "FIRSTDOSEDT": "2023-02-09",
+      "TTT_DAYS": 0,
+      "TTT_MONTHS": 0.0,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    },
+    {
+      "USUBJID": "SUB0200",
+      "TRT01A": "Control",
+      "RANDDT": "2023-04-16",
+      "FIRSTDOSEDT": "2023-04-20",
+      "TTT_DAYS": 4,
+      "TTT_MONTHS": 0.1314,
+      "RECEIVED_TX": 1,
+      "CNSR_TTT": 0
+    }
+  ]
+}

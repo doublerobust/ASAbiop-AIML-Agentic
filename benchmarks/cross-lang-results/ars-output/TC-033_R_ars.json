@@ -1,0 +1,179 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-033",
+    "version": "1.0",
+    "analysisReason": "Safety: dose intensity summary (RDI, dose reductions, interruptions, treatment duration)",
+    "analysisMethod": {
+      "name": "Descriptive statistics for relative dose intensity",
+      "codeTemplate": "summary(RDI ~ TRT01A); table(DOSERED, TRT01A)",
+      "parameters": {
+        "rdi_threshold": 80,
+        "duration_unit": "weeks",
+        "dose_unit": "mg",
+        "language": "R"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "RDI",
+        "dataset": "ADEX",
+        "role": "relative dose intensity (%)"
+      },
+      {
+        "name": "CUMDOSE",
+        "dataset": "ADEX",
+        "role": "cumulative dose"
+      },
+      {
+        "name": "TREATDUR",
+        "dataset": "ADEX",
+        "role": "treatment duration"
+      },
+      {
+        "name": "DOSERED",
+        "dataset": "ADEX",
+        "role": "dose reduction flag"
+      },
+      {
+        "name": "DOSEINT",
+        "dataset": "ADEX",
+        "role": "dose interruption flag"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SAFFL",
+        "dataset": "ADSL",
+        "role": "safety flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "Safety",
+      "filter": "SAFFL = 'Y'"
+    },
+    "analysisDataset": "ADEX",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 100
+      },
+      {
+        "id": "Control",
+        "n": 100
+      }
+    ],
+    "documentation": "Dose intensity: RDI mean/SD/median, RDI \u226580% count, dose reductions/interruptions, treatment duration. Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "mean_rdi_experimental",
+          "value": 84.0138,
+          "unit": "%"
+        },
+        {
+          "name": "mean_rdi_control",
+          "value": 89.5835,
+          "unit": "%"
+        },
+        {
+          "name": "median_rdi_experimental",
+          "value": 84.94,
+          "unit": "%"
+        },
+        {
+          "name": "median_rdi_control",
+          "value": 89.075,
+          "unit": "%"
+        },
+        {
+          "name": "sd_rdi_experimental",
+          "value": 8.5985,
+          "unit": "%"
+        },
+        {
+          "name": "sd_rdi_control",
+          "value": 5.6842,
+          "unit": "%"
+        },
+        {
+          "name": "min_rdi_experimental",
+          "value": 70.27,
+          "unit": "%"
+        },
+        {
+          "name": "min_rdi_control",
+          "value": 80.24,
+          "unit": "%"
+        },
+        {
+          "name": "max_rdi_experimental",
+          "value": 99.84,
+          "unit": "%"
+        },
+        {
+          "name": "max_rdi_control",
+          "value": 99.86,
+          "unit": "%"
+        },
+        {
+          "name": "n_rdi_ge80_experimental",
+          "value": 66
+        },
+        {
+          "name": "n_rdi_ge80_control",
+          "value": 100
+        },
+        {
+          "name": "pct_rdi_ge80_experimental",
+          "value": 66,
+          "unit": "%"
+        },
+        {
+          "name": "pct_rdi_ge80_control",
+          "value": 100,
+          "unit": "%"
+        },
+        {
+          "name": "n_dose_reduction_experimental",
+          "value": 14
+        },
+        {
+          "name": "n_dose_reduction_control",
+          "value": 10
+        },
+        {
+          "name": "n_dose_interruption_experimental",
+          "value": 8
+        },
+        {
+          "name": "n_dose_interruption_control",
+          "value": 6
+        },
+        {
+          "name": "mean_duration_experimental",
+          "value": 46.84,
+          "unit": "weeks"
+        },
+        {
+          "name": "mean_duration_control",
+          "value": 27.36,
+          "unit": "weeks"
+        },
+        {
+          "name": "median_duration_experimental",
+          "value": 47,
+          "unit": "weeks"
+        },
+        {
+          "name": "median_duration_control",
+          "value": 27,
+          "unit": "weeks"
+        }
+      ]
+    }
+  }
+}

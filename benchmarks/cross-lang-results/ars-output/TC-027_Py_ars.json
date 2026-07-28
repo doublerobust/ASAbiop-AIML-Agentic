@@ -1,0 +1,185 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-027",
+    "version": "1.0",
+    "analysisReason": "Efficacy: Duration of Stable Disease (DOSD) in ITT subjects with BOR=SD",
+    "analysisMethod": {
+      "name": "Kaplan-Meier + Cox PH + log-rank",
+      "codeTemplate": "survfit(Surv(AVAL, 1-CNSR) ~ TRT01A); coxph(...); survdiff(...)",
+      "parameters": {
+        "endpoint": "DOSD",
+        "ci_method": "log-log",
+        "population": "ITT with BOR=SD",
+        "n_subgroups": 6,
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AVAL",
+        "dataset": "ADTTE",
+        "role": "analysis time"
+      },
+      {
+        "name": "CNSR",
+        "dataset": "ADTTE",
+        "role": "censoring"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SEX",
+        "dataset": "ADSL",
+        "role": "subgroup: sex"
+      },
+      {
+        "name": "AGEGR1",
+        "dataset": "ADSL",
+        "role": "subgroup: age group"
+      },
+      {
+        "name": "ECOG",
+        "dataset": "ADSL",
+        "role": "subgroup: ECOG"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT with BOR=SD",
+      "filter": "ITTFL = 'Y'"
+    },
+    "analysisDataset": "ADTTE",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 42
+      },
+      {
+        "id": "Control",
+        "n": 41
+      }
+    ],
+    "documentation": "DOSD analysis: KM median + CI, Cox PH HR + CI, log-rank test, subgroup forest plots. Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "median_dosd_experimental",
+          "value": 5.44,
+          "unit": "months"
+        },
+        {
+          "name": "median_dosd_control",
+          "value": 2.33,
+          "unit": "months"
+        },
+        {
+          "name": "median_ci_lower_experimental",
+          "value": 2.65,
+          "unit": "months"
+        },
+        {
+          "name": "median_ci_upper_experimental",
+          "value": 9.83,
+          "unit": "months"
+        },
+        {
+          "name": "median_ci_lower_control",
+          "value": 1.15,
+          "unit": "months"
+        },
+        {
+          "name": "median_ci_upper_control",
+          "value": 4.71,
+          "unit": "months"
+        },
+        {
+          "name": "hazard_ratio",
+          "value": 0.5223
+        },
+        {
+          "name": "hr_ci_lower",
+          "value": 0.2978
+        },
+        {
+          "name": "hr_ci_upper",
+          "value": 0.9161
+        },
+        {
+          "name": "logrank_chisq",
+          "value": 5.2928
+        },
+        {
+          "name": "logrank_p",
+          "value": 0.021413
+        },
+        {
+          "name": "n_events_experimental",
+          "value": 24
+        },
+        {
+          "name": "n_events_control",
+          "value": 29
+        },
+        {
+          "name": "n_total_experimental",
+          "value": 42
+        },
+        {
+          "name": "n_total_control",
+          "value": 41
+        },
+        {
+          "name": "event_rate_experimental",
+          "value": 0.5714
+        },
+        {
+          "name": "event_rate_control",
+          "value": 0.7073
+        },
+        {
+          "name": "n_censored_total",
+          "value": 30
+        },
+        {
+          "name": "n_events_total",
+          "value": 53
+        },
+        {
+          "name": "censoring_rate",
+          "value": 0.3614
+        },
+        {
+          "name": "estimable",
+          "value": true
+        },
+        {
+          "name": "subgroup_hr_SEX_F",
+          "value": 0.7997
+        },
+        {
+          "name": "subgroup_hr_SEX_M",
+          "value": 0.3692
+        },
+        {
+          "name": "subgroup_hr_AGEGR1_<65",
+          "value": 0.4958
+        },
+        {
+          "name": "subgroup_hr_AGEGR1_>=65",
+          "value": 0.5444
+        },
+        {
+          "name": "subgroup_hr_ECOG_0",
+          "value": 0.5818
+        },
+        {
+          "name": "subgroup_hr_ECOG_1",
+          "value": 0.419
+        }
+      ]
+    }
+  }
+}

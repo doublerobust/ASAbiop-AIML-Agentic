@@ -1,0 +1,1655 @@
+{
+  "test_case_id": "TC-028",
+  "title": "Change in Tumor Size by Cycle (Longitudinal)",
+  "parameters": {
+    "seed": 42,
+    "n_subjects": 150
+  },
+  "cycles": [
+    "C1D1",
+    "C2D1",
+    "C3D1",
+    "C4D1",
+    "C5D1",
+    "C6D1"
+  ],
+  "baseline_cycle": "C1D1",
+  "visit_summaries": {
+    "C1D1": {
+      "all": {
+        "cycle": "C1D1",
+        "arm": "All",
+        "n_total": 150,
+        "n_assessed": 150,
+        "n_missing": 0,
+        "mean_pct_change": 0.0,
+        "median_pct_change": 0.0,
+        "se_pct_change": 0.0,
+        "mean_sld": 71.41,
+        "median_sld": 70.45,
+        "min_pct_change": 0.0,
+        "max_pct_change": 0.0
+      },
+      "experimental": {
+        "cycle": "C1D1",
+        "arm": "Experimental",
+        "n_total": 75,
+        "n_assessed": 75,
+        "n_missing": 0,
+        "mean_pct_change": 0.0,
+        "median_pct_change": 0.0,
+        "se_pct_change": 0.0,
+        "mean_sld": 72.96,
+        "median_sld": 72.9,
+        "min_pct_change": 0.0,
+        "max_pct_change": 0.0
+      },
+      "control": {
+        "cycle": "C1D1",
+        "arm": "Control",
+        "n_total": 75,
+        "n_assessed": 75,
+        "n_missing": 0,
+        "mean_pct_change": 0.0,
+        "median_pct_change": 0.0,
+        "se_pct_change": 0.0,
+        "mean_sld": 69.86,
+        "median_sld": 70.0,
+        "min_pct_change": 0.0,
+        "max_pct_change": 0.0
+      }
+    },
+    "C2D1": {
+      "all": {
+        "cycle": "C2D1",
+        "arm": "All",
+        "n_total": 150,
+        "n_assessed": 141,
+        "n_missing": 9,
+        "mean_pct_change": -17.52,
+        "median_pct_change": -16.6,
+        "se_pct_change": 1.288,
+        "mean_sld": 57.59,
+        "median_sld": 54.2,
+        "min_pct_change": -63.8,
+        "max_pct_change": 16.9
+      },
+      "experimental": {
+        "cycle": "C2D1",
+        "arm": "Experimental",
+        "n_total": 75,
+        "n_assessed": 69,
+        "n_missing": 6,
+        "mean_pct_change": -24.32,
+        "median_pct_change": -23.2,
+        "se_pct_change": 1.873,
+        "mean_sld": 53.31,
+        "median_sld": 48.1,
+        "min_pct_change": -63.8,
+        "max_pct_change": 14.0
+      },
+      "control": {
+        "cycle": "C2D1",
+        "arm": "Control",
+        "n_total": 75,
+        "n_assessed": 72,
+        "n_missing": 3,
+        "mean_pct_change": -10.99,
+        "median_pct_change": -9.65,
+        "se_pct_change": 1.399,
+        "mean_sld": 61.68,
+        "median_sld": 59.3,
+        "min_pct_change": -37.0,
+        "max_pct_change": 16.9
+      }
+    },
+    "C3D1": {
+      "all": {
+        "cycle": "C3D1",
+        "arm": "All",
+        "n_total": 150,
+        "n_assessed": 130,
+        "n_missing": 20,
+        "mean_pct_change": -27.38,
+        "median_pct_change": -26.7,
+        "se_pct_change": 2.527,
+        "mean_sld": 50.83,
+        "median_sld": 45.7,
+        "min_pct_change": -128.5,
+        "max_pct_change": 28.9
+      },
+      "experimental": {
+        "cycle": "C3D1",
+        "arm": "Experimental",
+        "n_total": 75,
+        "n_assessed": 59,
+        "n_missing": 16,
+        "mean_pct_change": -40.69,
+        "median_pct_change": -33.2,
+        "se_pct_change": 4.055,
+        "mean_sld": 42.41,
+        "median_sld": 42.2,
+        "min_pct_change": -128.5,
+        "max_pct_change": 25.0
+      },
+      "control": {
+        "cycle": "C3D1",
+        "arm": "Control",
+        "n_total": 75,
+        "n_assessed": 71,
+        "n_missing": 4,
+        "mean_pct_change": -16.33,
+        "median_pct_change": -11.7,
+        "se_pct_change": 2.526,
+        "mean_sld": 57.83,
+        "median_sld": 54.3,
+        "min_pct_change": -68.6,
+        "max_pct_change": 28.9
+      }
+    },
+    "C4D1": {
+      "all": {
+        "cycle": "C4D1",
+        "arm": "All",
+        "n_total": 150,
+        "n_assessed": 113,
+        "n_missing": 37,
+        "mean_pct_change": -28.49,
+        "median_pct_change": -21.6,
+        "se_pct_change": 3.939,
+        "mean_sld": 51.25,
+        "median_sld": 46.3,
+        "min_pct_change": -188.5,
+        "max_pct_change": 35.8
+      },
+      "experimental": {
+        "cycle": "C4D1",
+        "arm": "Experimental",
+        "n_total": 75,
+        "n_assessed": 50,
+        "n_missing": 25,
+        "mean_pct_change": -49.92,
+        "median_pct_change": -35.65,
+        "se_pct_change": 6.978,
+        "mean_sld": 38.9,
+        "median_sld": 31.15,
+        "min_pct_change": -188.5,
+        "max_pct_change": 25.3
+      },
+      "control": {
+        "cycle": "C4D1",
+        "arm": "Control",
+        "n_total": 75,
+        "n_assessed": 63,
+        "n_missing": 12,
+        "mean_pct_change": -11.48,
+        "median_pct_change": -7.8,
+        "se_pct_change": 3.032,
+        "mean_sld": 61.06,
+        "median_sld": 59.0,
+        "min_pct_change": -74.6,
+        "max_pct_change": 35.8
+      }
+    },
+    "C5D1": {
+      "all": {
+        "cycle": "C5D1",
+        "arm": "All",
+        "n_total": 150,
+        "n_assessed": 80,
+        "n_missing": 70,
+        "mean_pct_change": -27.15,
+        "median_pct_change": -18.25,
+        "se_pct_change": 5.174,
+        "mean_sld": 53.25,
+        "median_sld": 46.9,
+        "min_pct_change": -182.9,
+        "max_pct_change": 36.0
+      },
+      "experimental": {
+        "cycle": "C5D1",
+        "arm": "Experimental",
+        "n_total": 75,
+        "n_assessed": 38,
+        "n_missing": 37,
+        "mean_pct_change": -49.92,
+        "median_pct_change": -37.1,
+        "se_pct_change": 8.596,
+        "mean_sld": 40.36,
+        "median_sld": 33.45,
+        "min_pct_change": -182.9,
+        "max_pct_change": 35.4
+      },
+      "control": {
+        "cycle": "C5D1",
+        "arm": "Control",
+        "n_total": 75,
+        "n_assessed": 42,
+        "n_missing": 33,
+        "mean_pct_change": -6.55,
+        "median_pct_change": -5.75,
+        "se_pct_change": 4.013,
+        "mean_sld": 64.91,
+        "median_sld": 62.5,
+        "min_pct_change": -70.6,
+        "max_pct_change": 36.0
+      }
+    },
+    "C6D1": {
+      "all": {
+        "cycle": "C6D1",
+        "arm": "All",
+        "n_total": 150,
+        "n_assessed": 61,
+        "n_missing": 89,
+        "mean_pct_change": -19.6,
+        "median_pct_change": -6.6,
+        "se_pct_change": 5.97,
+        "mean_sld": 57.87,
+        "median_sld": 49.5,
+        "min_pct_change": -176.8,
+        "max_pct_change": 53.3
+      },
+      "experimental": {
+        "cycle": "C6D1",
+        "arm": "Experimental",
+        "n_total": 75,
+        "n_assessed": 30,
+        "n_missing": 45,
+        "mean_pct_change": -41.15,
+        "median_pct_change": -30.85,
+        "se_pct_change": 9.58,
+        "mean_sld": 45.9,
+        "median_sld": 42.9,
+        "min_pct_change": -176.8,
+        "max_pct_change": 53.3
+      },
+      "control": {
+        "cycle": "C6D1",
+        "arm": "Control",
+        "n_total": 75,
+        "n_assessed": 31,
+        "n_missing": 44,
+        "mean_pct_change": 1.26,
+        "median_pct_change": 2.2,
+        "se_pct_change": 4.991,
+        "mean_sld": 69.45,
+        "median_sld": 69.9,
+        "min_pct_change": -70.1,
+        "max_pct_change": 48.7
+      }
+    }
+  },
+  "overall_summary": {
+    "experimental": {
+      "arm": "Experimental",
+      "n_subjects": 75,
+      "mean_best_pct_change": -52.24,
+      "median_best_pct_change": -39.6,
+      "mean_worst_pct_change": -19.53,
+      "median_worst_pct_change": -19.8,
+      "mean_n_assessments": 3.3
+    },
+    "control": {
+      "arm": "Control",
+      "n_subjects": 75,
+      "mean_best_pct_change": -21.38,
+      "median_best_pct_change": -17.6,
+      "mean_worst_pct_change": 0.72,
+      "median_worst_pct_change": -1.65,
+      "mean_n_assessments": 3.7
+    }
+  },
+  "subject_summaries": [
+    {
+      "USUBJID": "SUBJ-0001",
+      "TRT01A": "Experimental",
+      "best_pct_change": -188.5,
+      "worst_pct_change": -63.8,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0002",
+      "TRT01A": "Experimental",
+      "best_pct_change": null,
+      "worst_pct_change": null,
+      "time_to_best": null,
+      "n_assessments": 0
+    },
+    {
+      "USUBJID": "SUBJ-0003",
+      "TRT01A": "Experimental",
+      "best_pct_change": -39.6,
+      "worst_pct_change": -19.2,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0004",
+      "TRT01A": "Experimental",
+      "best_pct_change": -37.3,
+      "worst_pct_change": -37.3,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 1
+    },
+    {
+      "USUBJID": "SUBJ-0005",
+      "TRT01A": "Experimental",
+      "best_pct_change": 9.8,
+      "worst_pct_change": 53.3,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0006",
+      "TRT01A": "Experimental",
+      "best_pct_change": -64.6,
+      "worst_pct_change": -22.2,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0007",
+      "TRT01A": "Experimental",
+      "best_pct_change": -0.4,
+      "worst_pct_change": 29.7,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0008",
+      "TRT01A": "Experimental",
+      "best_pct_change": 10.1,
+      "worst_pct_change": 14.0,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0009",
+      "TRT01A": "Experimental",
+      "best_pct_change": -7.0,
+      "worst_pct_change": -7.0,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 1
+    },
+    {
+      "USUBJID": "SUBJ-0010",
+      "TRT01A": "Experimental",
+      "best_pct_change": null,
+      "worst_pct_change": null,
+      "time_to_best": null,
+      "n_assessments": 0
+    },
+    {
+      "USUBJID": "SUBJ-0011",
+      "TRT01A": "Experimental",
+      "best_pct_change": -22.1,
+      "worst_pct_change": -22.1,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 1
+    },
+    {
+      "USUBJID": "SUBJ-0012",
+      "TRT01A": "Experimental",
+      "best_pct_change": -31.2,
+      "worst_pct_change": -13.0,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0013",
+      "TRT01A": "Experimental",
+      "best_pct_change": -51.9,
+      "worst_pct_change": -12.6,
+      "time_to_best_cycle": "C5D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0014",
+      "TRT01A": "Experimental",
+      "best_pct_change": -122.2,
+      "worst_pct_change": -40.7,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0015",
+      "TRT01A": "Experimental",
+      "best_pct_change": -79.8,
+      "worst_pct_change": -27.4,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0016",
+      "TRT01A": "Experimental",
+      "best_pct_change": -4.0,
+      "worst_pct_change": 20.1,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0017",
+      "TRT01A": "Experimental",
+      "best_pct_change": -93.6,
+      "worst_pct_change": -30.7,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0018",
+      "TRT01A": "Experimental",
+      "best_pct_change": -15.7,
+      "worst_pct_change": -15.7,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 1
+    },
+    {
+      "USUBJID": "SUBJ-0019",
+      "TRT01A": "Experimental",
+      "best_pct_change": -41.8,
+      "worst_pct_change": -41.8,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 1
+    },
+    {
+      "USUBJID": "SUBJ-0020",
+      "TRT01A": "Experimental",
+      "best_pct_change": -73.2,
+      "worst_pct_change": -23.6,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0021",
+      "TRT01A": "Experimental",
+      "best_pct_change": -28.1,
+      "worst_pct_change": -16.9,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0022",
+      "TRT01A": "Experimental",
+      "best_pct_change": 3.9,
+      "worst_pct_change": 7.1,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0023",
+      "TRT01A": "Experimental",
+      "best_pct_change": -115.2,
+      "worst_pct_change": -23.2,
+      "time_to_best_cycle": "C5D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0024",
+      "TRT01A": "Experimental",
+      "best_pct_change": -44.2,
+      "worst_pct_change": -28.0,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C5D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0025",
+      "TRT01A": "Experimental",
+      "best_pct_change": -23.2,
+      "worst_pct_change": 2.1,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0026",
+      "TRT01A": "Experimental",
+      "best_pct_change": -99.0,
+      "worst_pct_change": -33.2,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0027",
+      "TRT01A": "Experimental",
+      "best_pct_change": -163.4,
+      "worst_pct_change": -55.4,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0028",
+      "TRT01A": "Experimental",
+      "best_pct_change": -63.4,
+      "worst_pct_change": -28.9,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0029",
+      "TRT01A": "Experimental",
+      "best_pct_change": -52.1,
+      "worst_pct_change": -22.7,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0030",
+      "TRT01A": "Experimental",
+      "best_pct_change": -50.0,
+      "worst_pct_change": -12.0,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0031",
+      "TRT01A": "Experimental",
+      "best_pct_change": -23.2,
+      "worst_pct_change": -23.2,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 1
+    },
+    {
+      "USUBJID": "SUBJ-0032",
+      "TRT01A": "Experimental",
+      "best_pct_change": -70.6,
+      "worst_pct_change": -32.9,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0033",
+      "TRT01A": "Experimental",
+      "best_pct_change": -59.8,
+      "worst_pct_change": -10.8,
+      "time_to_best_cycle": "C5D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0034",
+      "TRT01A": "Experimental",
+      "best_pct_change": -39.6,
+      "worst_pct_change": -35.2,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0035",
+      "TRT01A": "Experimental",
+      "best_pct_change": -37.4,
+      "worst_pct_change": -11.6,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C5D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0036",
+      "TRT01A": "Experimental",
+      "best_pct_change": -12.0,
+      "worst_pct_change": -12.0,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 1
+    },
+    {
+      "USUBJID": "SUBJ-0037",
+      "TRT01A": "Experimental",
+      "best_pct_change": -18.0,
+      "worst_pct_change": -5.2,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0038",
+      "TRT01A": "Experimental",
+      "best_pct_change": -29.4,
+      "worst_pct_change": -19.8,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0039",
+      "TRT01A": "Experimental",
+      "best_pct_change": -51.3,
+      "worst_pct_change": -27.7,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0040",
+      "TRT01A": "Experimental",
+      "best_pct_change": -50.8,
+      "worst_pct_change": -22.6,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0041",
+      "TRT01A": "Experimental",
+      "best_pct_change": -182.9,
+      "worst_pct_change": -45.4,
+      "time_to_best_cycle": "C5D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0042",
+      "TRT01A": "Experimental",
+      "best_pct_change": -38.0,
+      "worst_pct_change": -9.0,
+      "time_to_best_cycle": "C5D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0043",
+      "TRT01A": "Experimental",
+      "best_pct_change": -30.4,
+      "worst_pct_change": -24.4,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0044",
+      "TRT01A": "Experimental",
+      "best_pct_change": -29.3,
+      "worst_pct_change": -6.6,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0045",
+      "TRT01A": "Experimental",
+      "best_pct_change": -10.9,
+      "worst_pct_change": 0.4,
+      "time_to_best_cycle": "C5D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0046",
+      "TRT01A": "Experimental",
+      "best_pct_change": -99.9,
+      "worst_pct_change": -33.4,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0047",
+      "TRT01A": "Experimental",
+      "best_pct_change": -33.0,
+      "worst_pct_change": -15.4,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0048",
+      "TRT01A": "Experimental",
+      "best_pct_change": -4.6,
+      "worst_pct_change": 25.3,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0049",
+      "TRT01A": "Experimental",
+      "best_pct_change": -27.5,
+      "worst_pct_change": -10.4,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0050",
+      "TRT01A": "Experimental",
+      "best_pct_change": -47.1,
+      "worst_pct_change": -16.6,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0051",
+      "TRT01A": "Experimental",
+      "best_pct_change": -139.3,
+      "worst_pct_change": -50.1,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0052",
+      "TRT01A": "Experimental",
+      "best_pct_change": -60.3,
+      "worst_pct_change": -17.6,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0053",
+      "TRT01A": "Experimental",
+      "best_pct_change": -41.4,
+      "worst_pct_change": -41.4,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 1
+    },
+    {
+      "USUBJID": "SUBJ-0054",
+      "TRT01A": "Experimental",
+      "best_pct_change": -63.6,
+      "worst_pct_change": -24.2,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0055",
+      "TRT01A": "Experimental",
+      "best_pct_change": -32.2,
+      "worst_pct_change": -6.0,
+      "time_to_best_cycle": "C5D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0056",
+      "TRT01A": "Experimental",
+      "best_pct_change": null,
+      "worst_pct_change": null,
+      "time_to_best": null,
+      "n_assessments": 0
+    },
+    {
+      "USUBJID": "SUBJ-0057",
+      "TRT01A": "Experimental",
+      "best_pct_change": -149.4,
+      "worst_pct_change": -47.3,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0058",
+      "TRT01A": "Experimental",
+      "best_pct_change": -34.2,
+      "worst_pct_change": -13.4,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0059",
+      "TRT01A": "Experimental",
+      "best_pct_change": -19.5,
+      "worst_pct_change": -9.4,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0060",
+      "TRT01A": "Experimental",
+      "best_pct_change": -22.4,
+      "worst_pct_change": -19.3,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0061",
+      "TRT01A": "Experimental",
+      "best_pct_change": -80.0,
+      "worst_pct_change": -41.9,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0062",
+      "TRT01A": "Experimental",
+      "best_pct_change": -29.6,
+      "worst_pct_change": -29.6,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 1
+    },
+    {
+      "USUBJID": "SUBJ-0063",
+      "TRT01A": "Experimental",
+      "best_pct_change": null,
+      "worst_pct_change": null,
+      "time_to_best": null,
+      "n_assessments": 0
+    },
+    {
+      "USUBJID": "SUBJ-0064",
+      "TRT01A": "Experimental",
+      "best_pct_change": null,
+      "worst_pct_change": null,
+      "time_to_best": null,
+      "n_assessments": 0
+    },
+    {
+      "USUBJID": "SUBJ-0065",
+      "TRT01A": "Experimental",
+      "best_pct_change": -93.1,
+      "worst_pct_change": -49.4,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0066",
+      "TRT01A": "Experimental",
+      "best_pct_change": -63.3,
+      "worst_pct_change": -16.4,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0067",
+      "TRT01A": "Experimental",
+      "best_pct_change": null,
+      "worst_pct_change": null,
+      "time_to_best": null,
+      "n_assessments": 0
+    },
+    {
+      "USUBJID": "SUBJ-0068",
+      "TRT01A": "Experimental",
+      "best_pct_change": -36.2,
+      "worst_pct_change": -7.6,
+      "time_to_best_cycle": "C5D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0069",
+      "TRT01A": "Experimental",
+      "best_pct_change": -81.2,
+      "worst_pct_change": -39.2,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0070",
+      "TRT01A": "Experimental",
+      "best_pct_change": -34.1,
+      "worst_pct_change": -2.0,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0071",
+      "TRT01A": "Experimental",
+      "best_pct_change": -60.4,
+      "worst_pct_change": -29.6,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0072",
+      "TRT01A": "Experimental",
+      "best_pct_change": -84.1,
+      "worst_pct_change": -29.7,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0073",
+      "TRT01A": "Experimental",
+      "best_pct_change": -27.7,
+      "worst_pct_change": -8.9,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0074",
+      "TRT01A": "Experimental",
+      "best_pct_change": -27.3,
+      "worst_pct_change": -15.3,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0075",
+      "TRT01A": "Experimental",
+      "best_pct_change": -41.9,
+      "worst_pct_change": -41.9,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 1
+    },
+    {
+      "USUBJID": "SUBJ-0076",
+      "TRT01A": "Control",
+      "best_pct_change": -29.1,
+      "worst_pct_change": -2.8,
+      "time_to_best_cycle": "C5D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0077",
+      "TRT01A": "Control",
+      "best_pct_change": -20.0,
+      "worst_pct_change": -1.7,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0078",
+      "TRT01A": "Control",
+      "best_pct_change": -15.3,
+      "worst_pct_change": 48.7,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0079",
+      "TRT01A": "Control",
+      "best_pct_change": -74.6,
+      "worst_pct_change": -25.0,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0080",
+      "TRT01A": "Control",
+      "best_pct_change": 3.0,
+      "worst_pct_change": 12.4,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0081",
+      "TRT01A": "Control",
+      "best_pct_change": -27.0,
+      "worst_pct_change": -10.1,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0082",
+      "TRT01A": "Control",
+      "best_pct_change": -48.3,
+      "worst_pct_change": 2.4,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0083",
+      "TRT01A": "Control",
+      "best_pct_change": -28.4,
+      "worst_pct_change": 1.8,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0084",
+      "TRT01A": "Control",
+      "best_pct_change": -5.1,
+      "worst_pct_change": -2.1,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C3D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0085",
+      "TRT01A": "Control",
+      "best_pct_change": -28.8,
+      "worst_pct_change": -3.7,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0086",
+      "TRT01A": "Control",
+      "best_pct_change": -33.8,
+      "worst_pct_change": -15.0,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0087",
+      "TRT01A": "Control",
+      "best_pct_change": -42.8,
+      "worst_pct_change": -19.6,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0088",
+      "TRT01A": "Control",
+      "best_pct_change": -49.2,
+      "worst_pct_change": -24.6,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C5D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0089",
+      "TRT01A": "Control",
+      "best_pct_change": 3.8,
+      "worst_pct_change": 22.4,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0090",
+      "TRT01A": "Control",
+      "best_pct_change": -56.3,
+      "worst_pct_change": -24.9,
+      "time_to_best_cycle": "C6D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0091",
+      "TRT01A": "Control",
+      "best_pct_change": -32.2,
+      "worst_pct_change": -1.8,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0092",
+      "TRT01A": "Control",
+      "best_pct_change": -7.7,
+      "worst_pct_change": 4.8,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0093",
+      "TRT01A": "Control",
+      "best_pct_change": -10.0,
+      "worst_pct_change": 6.2,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0094",
+      "TRT01A": "Control",
+      "best_pct_change": -54.1,
+      "worst_pct_change": -25.7,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0095",
+      "TRT01A": "Control",
+      "best_pct_change": -13.5,
+      "worst_pct_change": 23.1,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0096",
+      "TRT01A": "Control",
+      "best_pct_change": null,
+      "worst_pct_change": null,
+      "time_to_best": null,
+      "n_assessments": 0
+    },
+    {
+      "USUBJID": "SUBJ-0097",
+      "TRT01A": "Control",
+      "best_pct_change": -29.0,
+      "worst_pct_change": -2.5,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C5D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0098",
+      "TRT01A": "Control",
+      "best_pct_change": -7.1,
+      "worst_pct_change": 19.6,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0099",
+      "TRT01A": "Control",
+      "best_pct_change": -48.3,
+      "worst_pct_change": -10.8,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0100",
+      "TRT01A": "Control",
+      "best_pct_change": -15.7,
+      "worst_pct_change": -15.7,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 1
+    },
+    {
+      "USUBJID": "SUBJ-0101",
+      "TRT01A": "Control",
+      "best_pct_change": 16.9,
+      "worst_pct_change": 27.0,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C3D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0102",
+      "TRT01A": "Control",
+      "best_pct_change": -40.8,
+      "worst_pct_change": -25.1,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0103",
+      "TRT01A": "Control",
+      "best_pct_change": -35.9,
+      "worst_pct_change": -11.8,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0104",
+      "TRT01A": "Control",
+      "best_pct_change": -47.0,
+      "worst_pct_change": -23.1,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0105",
+      "TRT01A": "Control",
+      "best_pct_change": -32.5,
+      "worst_pct_change": -13.2,
+      "time_to_best_cycle": "C5D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0106",
+      "TRT01A": "Control",
+      "best_pct_change": -30.0,
+      "worst_pct_change": -24.4,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C5D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0107",
+      "TRT01A": "Control",
+      "best_pct_change": -30.1,
+      "worst_pct_change": 25.2,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0108",
+      "TRT01A": "Control",
+      "best_pct_change": -27.0,
+      "worst_pct_change": -9.5,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0109",
+      "TRT01A": "Control",
+      "best_pct_change": -3.7,
+      "worst_pct_change": -1.6,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C3D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0110",
+      "TRT01A": "Control",
+      "best_pct_change": -18.4,
+      "worst_pct_change": 18.3,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0111",
+      "TRT01A": "Control",
+      "best_pct_change": -64.4,
+      "worst_pct_change": -33.7,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0112",
+      "TRT01A": "Control",
+      "best_pct_change": -6.0,
+      "worst_pct_change": 42.9,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0113",
+      "TRT01A": "Control",
+      "best_pct_change": null,
+      "worst_pct_change": null,
+      "time_to_best": null,
+      "n_assessments": 0
+    },
+    {
+      "USUBJID": "SUBJ-0114",
+      "TRT01A": "Control",
+      "best_pct_change": -2.8,
+      "worst_pct_change": 3.9,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0115",
+      "TRT01A": "Control",
+      "best_pct_change": -4.9,
+      "worst_pct_change": 10.9,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C5D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0116",
+      "TRT01A": "Control",
+      "best_pct_change": 0.9,
+      "worst_pct_change": 36.1,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0117",
+      "TRT01A": "Control",
+      "best_pct_change": 3.0,
+      "worst_pct_change": 4.8,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C3D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0118",
+      "TRT01A": "Control",
+      "best_pct_change": -14.0,
+      "worst_pct_change": 7.2,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0119",
+      "TRT01A": "Control",
+      "best_pct_change": 3.2,
+      "worst_pct_change": 20.3,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0120",
+      "TRT01A": "Control",
+      "best_pct_change": -68.6,
+      "worst_pct_change": -37.0,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0121",
+      "TRT01A": "Control",
+      "best_pct_change": -23.3,
+      "worst_pct_change": -4.7,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0122",
+      "TRT01A": "Control",
+      "best_pct_change": 14.1,
+      "worst_pct_change": 35.8,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0123",
+      "TRT01A": "Control",
+      "best_pct_change": 0.2,
+      "worst_pct_change": 11.0,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0124",
+      "TRT01A": "Control",
+      "best_pct_change": -4.5,
+      "worst_pct_change": 9.0,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0125",
+      "TRT01A": "Control",
+      "best_pct_change": -26.3,
+      "worst_pct_change": -1.9,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0126",
+      "TRT01A": "Control",
+      "best_pct_change": -24.2,
+      "worst_pct_change": 2.3,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C4D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0127",
+      "TRT01A": "Control",
+      "best_pct_change": -5.3,
+      "worst_pct_change": 29.9,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C5D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0128",
+      "TRT01A": "Control",
+      "best_pct_change": 4.6,
+      "worst_pct_change": 36.0,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C5D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0129",
+      "TRT01A": "Control",
+      "best_pct_change": -6.4,
+      "worst_pct_change": 15.8,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0130",
+      "TRT01A": "Control",
+      "best_pct_change": -41.6,
+      "worst_pct_change": -23.1,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0131",
+      "TRT01A": "Control",
+      "best_pct_change": -28.8,
+      "worst_pct_change": 2.8,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C5D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0132",
+      "TRT01A": "Control",
+      "best_pct_change": -18.6,
+      "worst_pct_change": 2.2,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0133",
+      "TRT01A": "Control",
+      "best_pct_change": -30.3,
+      "worst_pct_change": -9.3,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0134",
+      "TRT01A": "Control",
+      "best_pct_change": -50.3,
+      "worst_pct_change": -22.3,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0135",
+      "TRT01A": "Control",
+      "best_pct_change": -10.9,
+      "worst_pct_change": -7.2,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0136",
+      "TRT01A": "Control",
+      "best_pct_change": -9.7,
+      "worst_pct_change": -5.5,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C3D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0137",
+      "TRT01A": "Control",
+      "best_pct_change": -16.4,
+      "worst_pct_change": -3.0,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0138",
+      "TRT01A": "Control",
+      "best_pct_change": -33.9,
+      "worst_pct_change": -21.5,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0139",
+      "TRT01A": "Control",
+      "best_pct_change": 5.4,
+      "worst_pct_change": 34.7,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0140",
+      "TRT01A": "Control",
+      "best_pct_change": -13.4,
+      "worst_pct_change": 0.4,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0141",
+      "TRT01A": "Control",
+      "best_pct_change": -9.3,
+      "worst_pct_change": 2.7,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0142",
+      "TRT01A": "Control",
+      "best_pct_change": -10.3,
+      "worst_pct_change": -1.4,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C5D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0143",
+      "TRT01A": "Control",
+      "best_pct_change": -10.3,
+      "worst_pct_change": 5.3,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    },
+    {
+      "USUBJID": "SUBJ-0144",
+      "TRT01A": "Control",
+      "best_pct_change": -7.0,
+      "worst_pct_change": -2.1,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0145",
+      "TRT01A": "Control",
+      "best_pct_change": 3.4,
+      "worst_pct_change": 29.9,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C5D1",
+      "n_assessments": 4
+    },
+    {
+      "USUBJID": "SUBJ-0146",
+      "TRT01A": "Control",
+      "best_pct_change": -24.1,
+      "worst_pct_change": -8.8,
+      "time_to_best_cycle": "C3D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0147",
+      "TRT01A": "Control",
+      "best_pct_change": -60.5,
+      "worst_pct_change": -19.4,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C2D1",
+      "n_assessments": 3
+    },
+    {
+      "USUBJID": "SUBJ-0148",
+      "TRT01A": "Control",
+      "best_pct_change": -13.5,
+      "worst_pct_change": -7.0,
+      "time_to_best_cycle": "C2D1",
+      "time_to_worst_cycle": "C3D1",
+      "n_assessments": 2
+    },
+    {
+      "USUBJID": "SUBJ-0149",
+      "TRT01A": "Control",
+      "best_pct_change": null,
+      "worst_pct_change": null,
+      "time_to_best": null,
+      "n_assessments": 0
+    },
+    {
+      "USUBJID": "SUBJ-0150",
+      "TRT01A": "Control",
+      "best_pct_change": -16.8,
+      "worst_pct_change": -1.5,
+      "time_to_best_cycle": "C4D1",
+      "time_to_worst_cycle": "C6D1",
+      "n_assessments": 5
+    }
+  ],
+  "n_subjects": 150,
+  "metadata": {
+    "language": "Python",
+    "packages": [
+      "json",
+      "random",
+      "statistics"
+    ]
+  }
+}

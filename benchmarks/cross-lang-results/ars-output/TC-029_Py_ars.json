@@ -1,0 +1,134 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-029",
+    "version": "1.0",
+    "analysisReason": "Safety: adverse event summary by SOC, preferred term, and maximum severity grade",
+    "analysisMethod": {
+      "name": "Frequency tabulation by SOC \u2192 PT \u2192 severity",
+      "codeTemplate": "aggregate(AEDECOD ~ AESOC + AETOXGR + TRT01A, data=ADAE)",
+      "parameters": {
+        "severity_grades": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "hierarchy": "SOC \u2192 PT \u2192 severity grade",
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "AESOC",
+        "dataset": "ADAE",
+        "role": "System Organ Class"
+      },
+      {
+        "name": "AEDECOD",
+        "dataset": "ADAE",
+        "role": "Preferred Term"
+      },
+      {
+        "name": "AETOXGR",
+        "dataset": "ADAE",
+        "role": "severity grade"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "SAFFL",
+        "dataset": "ADSL",
+        "role": "safety flag"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "Safety",
+      "filter": "SAFFL = 'Y'"
+    },
+    "analysisDataset": "ADAE",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 100
+      },
+      {
+        "id": "Control",
+        "n": 100
+      }
+    ],
+    "documentation": "AE severity summary: 8 SOCs, 228 table rows (SOC/PT \u00d7 severity). Phase III oncology superiority trial. ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "n_experimental",
+          "value": 100
+        },
+        {
+          "name": "n_control",
+          "value": 100
+        },
+        {
+          "name": "n_socs",
+          "value": 8
+        },
+        {
+          "name": "n_table_rows",
+          "value": 228
+        },
+        {
+          "name": "n_any_ae_experimental",
+          "value": 100
+        },
+        {
+          "name": "n_any_ae_control",
+          "value": 100
+        },
+        {
+          "name": "n_sae_experimental",
+          "value": 100
+        },
+        {
+          "name": "n_sae_control",
+          "value": 100
+        },
+        {
+          "name": "n_ae_disc_experimental",
+          "value": 100
+        },
+        {
+          "name": "n_ae_disc_control",
+          "value": 100
+        },
+        {
+          "name": "n_grade3_experimental",
+          "value": 100
+        },
+        {
+          "name": "n_grade3_control",
+          "value": 100
+        },
+        {
+          "name": "n_grade4_experimental",
+          "value": 100
+        },
+        {
+          "name": "n_grade4_control",
+          "value": 100
+        },
+        {
+          "name": "n_grade5_experimental",
+          "value": 99
+        },
+        {
+          "name": "n_grade5_control",
+          "value": 99
+        }
+      ]
+    }
+  }
+}

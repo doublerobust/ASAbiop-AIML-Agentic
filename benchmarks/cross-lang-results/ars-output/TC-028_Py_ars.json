@@ -1,0 +1,303 @@
+{
+  "ars_version": "1.0",
+  "analysisResult": {
+    "id": "TC-028",
+    "version": "1.0",
+    "analysisReason": "Longitudinal tumor size change: % change from baseline in SLD at each treatment cycle with visit-wise summary statistics",
+    "analysisMethod": {
+      "name": "Descriptive statistics + longitudinal % change from baseline",
+      "codeTemplate": "tumor_pct_change = (SLD - SLD_baseline) / SLD_baseline * 100; summary_stats(pct_change ~ cycle + arm)",
+      "parameters": {
+        "n_subjects": 150,
+        "seed": 42,
+        "cycles": [
+          "C1D1",
+          "C2D1",
+          "C3D1",
+          "C4D1",
+          "C5D1",
+          "C6D1"
+        ],
+        "baseline_cycle": "C1D1",
+        "itt_primary": true,
+        "pp_analysis": "not performed (FDA/EMA oncology standard)",
+        "language": "Python"
+      }
+    },
+    "analysisVariables": [
+      {
+        "name": "SLD",
+        "dataset": "ADTR",
+        "role": "sum of longest diameters (mm)"
+      },
+      {
+        "name": "AVISIT",
+        "dataset": "ADTR",
+        "role": "visit/cycle"
+      },
+      {
+        "name": "TRT01A",
+        "dataset": "ADSL",
+        "role": "treatment"
+      },
+      {
+        "name": "ITTFL",
+        "dataset": "ADSL",
+        "role": "ITT flag"
+      },
+      {
+        "name": "USUBJID",
+        "dataset": "ADSL",
+        "role": "subject identifier"
+      }
+    ],
+    "analysisPopulation": {
+      "name": "ITT",
+      "filter": "ITTFL = 'Y' \u2014 all randomized subjects with tumor assessments"
+    },
+    "analysisDataset": "ADTR",
+    "resultGroups": [
+      {
+        "id": "Experimental",
+        "n": 75
+      },
+      {
+        "id": "Control",
+        "n": 75
+      }
+    ],
+    "documentation": "Level 1 longitudinal tumor size analysis. Phase III oncology superiority trial \u2014 ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed. Computes percentage change from baseline in SLD at each treatment cycle (C2D1\u2013C6D1) with visit-wise summary statistics by arm. Overall summary includes best/worst % change and mean number of assessments.",
+    "analysisResultsData": {
+      "statistics": [
+        {
+          "name": "C2D1_n_assessed_experimental",
+          "value": 69
+        },
+        {
+          "name": "C2D1_n_missing_experimental",
+          "value": 6
+        },
+        {
+          "name": "C2D1_mean_pct_change_experimental",
+          "value": -24.32,
+          "unit": "%"
+        },
+        {
+          "name": "C2D1_median_pct_change_experimental",
+          "value": -23.2,
+          "unit": "%"
+        },
+        {
+          "name": "C2D1_n_assessed_control",
+          "value": 72
+        },
+        {
+          "name": "C2D1_n_missing_control",
+          "value": 3
+        },
+        {
+          "name": "C2D1_mean_pct_change_control",
+          "value": -10.99,
+          "unit": "%"
+        },
+        {
+          "name": "C2D1_median_pct_change_control",
+          "value": -9.65,
+          "unit": "%"
+        },
+        {
+          "name": "C3D1_n_assessed_experimental",
+          "value": 59
+        },
+        {
+          "name": "C3D1_n_missing_experimental",
+          "value": 16
+        },
+        {
+          "name": "C3D1_mean_pct_change_experimental",
+          "value": -40.69,
+          "unit": "%"
+        },
+        {
+          "name": "C3D1_median_pct_change_experimental",
+          "value": -33.2,
+          "unit": "%"
+        },
+        {
+          "name": "C3D1_n_assessed_control",
+          "value": 71
+        },
+        {
+          "name": "C3D1_n_missing_control",
+          "value": 4
+        },
+        {
+          "name": "C3D1_mean_pct_change_control",
+          "value": -16.33,
+          "unit": "%"
+        },
+        {
+          "name": "C3D1_median_pct_change_control",
+          "value": -11.7,
+          "unit": "%"
+        },
+        {
+          "name": "C4D1_n_assessed_experimental",
+          "value": 50
+        },
+        {
+          "name": "C4D1_n_missing_experimental",
+          "value": 25
+        },
+        {
+          "name": "C4D1_mean_pct_change_experimental",
+          "value": -49.92,
+          "unit": "%"
+        },
+        {
+          "name": "C4D1_median_pct_change_experimental",
+          "value": -35.65,
+          "unit": "%"
+        },
+        {
+          "name": "C4D1_n_assessed_control",
+          "value": 63
+        },
+        {
+          "name": "C4D1_n_missing_control",
+          "value": 12
+        },
+        {
+          "name": "C4D1_mean_pct_change_control",
+          "value": -11.48,
+          "unit": "%"
+        },
+        {
+          "name": "C4D1_median_pct_change_control",
+          "value": -7.8,
+          "unit": "%"
+        },
+        {
+          "name": "C5D1_n_assessed_experimental",
+          "value": 38
+        },
+        {
+          "name": "C5D1_n_missing_experimental",
+          "value": 37
+        },
+        {
+          "name": "C5D1_mean_pct_change_experimental",
+          "value": -49.92,
+          "unit": "%"
+        },
+        {
+          "name": "C5D1_median_pct_change_experimental",
+          "value": -37.1,
+          "unit": "%"
+        },
+        {
+          "name": "C5D1_n_assessed_control",
+          "value": 42
+        },
+        {
+          "name": "C5D1_n_missing_control",
+          "value": 33
+        },
+        {
+          "name": "C5D1_mean_pct_change_control",
+          "value": -6.55,
+          "unit": "%"
+        },
+        {
+          "name": "C5D1_median_pct_change_control",
+          "value": -5.75,
+          "unit": "%"
+        },
+        {
+          "name": "C6D1_n_assessed_experimental",
+          "value": 30
+        },
+        {
+          "name": "C6D1_n_missing_experimental",
+          "value": 45
+        },
+        {
+          "name": "C6D1_mean_pct_change_experimental",
+          "value": -41.15,
+          "unit": "%"
+        },
+        {
+          "name": "C6D1_median_pct_change_experimental",
+          "value": -30.85,
+          "unit": "%"
+        },
+        {
+          "name": "C6D1_n_assessed_control",
+          "value": 31
+        },
+        {
+          "name": "C6D1_n_missing_control",
+          "value": 44
+        },
+        {
+          "name": "C6D1_mean_pct_change_control",
+          "value": 1.26,
+          "unit": "%"
+        },
+        {
+          "name": "C6D1_median_pct_change_control",
+          "value": 2.2,
+          "unit": "%"
+        },
+        {
+          "name": "mean_best_pct_change_experimental",
+          "value": -52.24,
+          "unit": "%"
+        },
+        {
+          "name": "median_best_pct_change_experimental",
+          "value": -39.6,
+          "unit": "%"
+        },
+        {
+          "name": "mean_worst_pct_change_experimental",
+          "value": -19.53,
+          "unit": "%"
+        },
+        {
+          "name": "median_worst_pct_change_experimental",
+          "value": -19.8,
+          "unit": "%"
+        },
+        {
+          "name": "mean_n_assessments_experimental",
+          "value": 3.3
+        },
+        {
+          "name": "mean_best_pct_change_control",
+          "value": -21.38,
+          "unit": "%"
+        },
+        {
+          "name": "median_best_pct_change_control",
+          "value": -17.6,
+          "unit": "%"
+        },
+        {
+          "name": "mean_worst_pct_change_control",
+          "value": 0.72,
+          "unit": "%"
+        },
+        {
+          "name": "median_worst_pct_change_control",
+          "value": -1.65,
+          "unit": "%"
+        },
+        {
+          "name": "mean_n_assessments_control",
+          "value": 3.7
+        }
+      ]
+    }
+  }
+}
