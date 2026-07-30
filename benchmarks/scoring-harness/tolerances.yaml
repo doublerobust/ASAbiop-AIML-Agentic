@@ -604,6 +604,8 @@ TC-027:
 # ─────────────────────────────────────────────────────
 TC-028:
   description: "Change in Tumor Size by Cycle (Longitudinal)"
+  level: 1
+  cross_language_score: 1.0000   # Verified on shared longitudinal tumor data (R vs Python)
   tolerances:
     # Visit-wise mean % change (per arm, per cycle)
     exp_mean_pct_change:
@@ -1006,6 +1008,8 @@ TC-034:
 
 TC-031:
   description: "Time-to-First-Treatment"
+  level: 1
+  cross_language_score: 1.0000   # Verified on shared ADSL TTT data (R vs Python)
   tolerances:
     # KM median TTT per arm
     km_experimental:

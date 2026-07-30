@@ -2,10 +2,18 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "TC-028 Change in Tumor Size by Cycle Output Schema",
   "type": "object",
-  "required": ["test_case_id", "title", "cycles", "baseline_cycle", "visit_summaries", "overall_summary", "subject_summaries", "n_subjects", "language", "version"],
+  "required": ["test_case_id", "title", "cycles", "baseline_cycle", "visit_summaries", "overall_summary", "subject_summaries", "n_subjects", "metadata"],
   "properties": {
     "test_case_id": {"type": "string", "const": "TC-028"},
     "title": {"type": "string", "const": "Change in Tumor Size by Cycle (Longitudinal)"},
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "seed": {"type": "integer"},
+        "n": {"type": "integer"},
+        "data_csv": {"type": ["string", "null"]}
+      }
+    },
     "cycles": {
       "type": "array",
       "items": {"type": "string"},
@@ -38,8 +46,14 @@
       "items": {"$ref": "#/definitions/subjectSummary"}
     },
     "n_subjects": {"type": "integer", "minimum": 0},
-    "language": {"type": "string"},
-    "version": {"type": "string"}
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "language": {"type": "string"},
+        "packages": {"type": "array", "items": {"type": "string"}}
+      },
+      "required": ["language"]
+    }
   },
   "definitions": {
     "visitSummary": {

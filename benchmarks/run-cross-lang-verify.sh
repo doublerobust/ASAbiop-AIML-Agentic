@@ -210,9 +210,12 @@ echo "Generating TC-027 DOSD ADTTE..."
 source('tc-027-dosd.R')
 adtte <- generate_dosd_adtte(seed=$SEED, n_subjects=$N)
 write.csv(adtte, '$SHARED/tc027_dosd_adtte.csv', row.names=FALSE)
-cat('TC-027 DOSD ADTTE:', nrow(adtte), 'rows
-')
+cat('TC-027 DOSD ADTTE:', nrow(adtte), 'rows\n')
 ") 2>&1
+
+# TC-028: Generate shared longitudinal tumor size data
+echo "Generating TC-028 longitudinal tumor data..."
+(cd "$RDIR" && Rscript "generate_tc028_tumor_long.R" --seed $SEED --n 150 --output "$SHARED/tc028_tumor_long.csv") 2>&1
 
 
 # ───────────────────────────────────────────────────────────────────
@@ -551,6 +554,32 @@ else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
+# TC-028: Longitudinal Tumor Size by Cycle (shared longitudinal tumor data)
+echo "── TC-028 ──────────────────────────────────────────"
+echo "  R:   tc-028-tumor-size-by-cycle.R"
+if (cd "$RDIR" && Rscript "tc-028-tumor-size-by-cycle.R" --seed $SEED --n 150 --data-csv "$SHARED/tc028_tumor_long.csv" --output "$R_OUT/TC-028.json") 2>&1; then
+  echo "  ✓ R completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ R FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+echo "  Py:  tc_028_tumor_size_by_cycle.py"
+if (cd "$PYDIR" && python3 "tc_028_tumor_size_by_cycle.py" --seed $SEED --n 150 --data-csv "$SHARED/tc028_tumor_long.csv" --output "$PY_OUT/TC-028.json") 2>&1; then
+  echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# Verify TC-028 cross-language
+echo ""
+echo "── TC-028 Cross-Language Verification ─────────────"
+if python3 "$BENCH/scoring-harness/score.py" verify --tc TC-028 \
+  --r "$R_OUT/TC-028.json" \
+  --python "$PY_OUT/TC-028.json" 2>&1; then
+  echo "  ✓ TC-028 verification completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ TC-028 verification FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
 # TC-029: AE by Severity (shared ADAE with AESEV)
 echo "── TC-029 ──────────────────────────────────────────"
 echo "  R:   tc-029-ae-severity.R"
@@ -667,6 +696,17 @@ if (cd "$PYDIR" && python3 "tc_031_time_to_first_treatment.py" --seed $SEED --n 
   echo "  ✓ Python completed"; PASS_COUNT=$((PASS_COUNT + 1))
 else
   echo "  ✗ Python FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
+fi
+
+# Verify TC-031 cross-language
+echo ""
+echo "── TC-031 Cross-Language Verification ─────────────"
+if python3 "$BENCH/scoring-harness/score.py" verify --tc TC-031 \
+  --r "$R_OUT/TC-031.json" \
+  --python "$PY_OUT/TC-031.json" 2>&1; then
+  echo "  ✓ TC-031 verification completed"; PASS_COUNT=$((PASS_COUNT + 1))
+else
+  echo "  ✗ TC-031 verification FAILED"; FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
 # ───────────────────────────────────────────────────────────────────

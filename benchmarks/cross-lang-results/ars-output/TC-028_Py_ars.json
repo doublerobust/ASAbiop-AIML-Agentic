@@ -71,231 +71,231 @@
       "statistics": [
         {
           "name": "C2D1_n_assessed_experimental",
-          "value": 69
+          "value": 70
         },
         {
           "name": "C2D1_n_missing_experimental",
-          "value": 6
+          "value": 5
         },
         {
           "name": "C2D1_mean_pct_change_experimental",
-          "value": -24.32,
+          "value": -46.12,
           "unit": "%"
         },
         {
           "name": "C2D1_median_pct_change_experimental",
-          "value": -23.2,
+          "value": -44.0,
           "unit": "%"
         },
         {
           "name": "C2D1_n_assessed_control",
-          "value": 72
+          "value": 71
         },
         {
           "name": "C2D1_n_missing_control",
-          "value": 3
+          "value": 4
         },
         {
           "name": "C2D1_mean_pct_change_control",
-          "value": -10.99,
+          "value": -12.43,
           "unit": "%"
         },
         {
           "name": "C2D1_median_pct_change_control",
-          "value": -9.65,
+          "value": -8.7,
           "unit": "%"
         },
         {
           "name": "C3D1_n_assessed_experimental",
-          "value": 59
+          "value": 61
         },
         {
           "name": "C3D1_n_missing_experimental",
-          "value": 16
+          "value": 14
         },
         {
           "name": "C3D1_mean_pct_change_experimental",
-          "value": -40.69,
+          "value": -58.43,
           "unit": "%"
         },
         {
           "name": "C3D1_median_pct_change_experimental",
-          "value": -33.2,
+          "value": -51.6,
           "unit": "%"
         },
         {
           "name": "C3D1_n_assessed_control",
-          "value": 71
+          "value": 68
         },
         {
           "name": "C3D1_n_missing_control",
-          "value": 4
+          "value": 7
         },
         {
           "name": "C3D1_mean_pct_change_control",
-          "value": -16.33,
+          "value": -8.12,
           "unit": "%"
         },
         {
           "name": "C3D1_median_pct_change_control",
-          "value": -11.7,
+          "value": -4.3,
           "unit": "%"
         },
         {
           "name": "C4D1_n_assessed_experimental",
-          "value": 50
+          "value": 54
         },
         {
           "name": "C4D1_n_missing_experimental",
-          "value": 25
+          "value": 21
         },
         {
           "name": "C4D1_mean_pct_change_experimental",
-          "value": -49.92,
+          "value": -62.01,
           "unit": "%"
         },
         {
           "name": "C4D1_median_pct_change_experimental",
-          "value": -35.65,
+          "value": -47.85,
           "unit": "%"
         },
         {
           "name": "C4D1_n_assessed_control",
-          "value": 63
+          "value": 61
         },
         {
           "name": "C4D1_n_missing_control",
-          "value": 12
+          "value": 14
         },
         {
           "name": "C4D1_mean_pct_change_control",
-          "value": -11.48,
+          "value": -1.64,
           "unit": "%"
         },
         {
           "name": "C4D1_median_pct_change_control",
-          "value": -7.8,
-          "unit": "%"
-        },
-        {
-          "name": "C5D1_n_assessed_experimental",
-          "value": 38
-        },
-        {
-          "name": "C5D1_n_missing_experimental",
-          "value": 37
-        },
-        {
-          "name": "C5D1_mean_pct_change_experimental",
-          "value": -49.92,
-          "unit": "%"
-        },
-        {
-          "name": "C5D1_median_pct_change_experimental",
-          "value": -37.1,
-          "unit": "%"
-        },
-        {
-          "name": "C5D1_n_assessed_control",
-          "value": 42
-        },
-        {
-          "name": "C5D1_n_missing_control",
-          "value": 33
-        },
-        {
-          "name": "C5D1_mean_pct_change_control",
-          "value": -6.55,
-          "unit": "%"
-        },
-        {
-          "name": "C5D1_median_pct_change_control",
-          "value": -5.75,
-          "unit": "%"
-        },
-        {
-          "name": "C6D1_n_assessed_experimental",
-          "value": 30
-        },
-        {
-          "name": "C6D1_n_missing_experimental",
-          "value": 45
-        },
-        {
-          "name": "C6D1_mean_pct_change_experimental",
-          "value": -41.15,
-          "unit": "%"
-        },
-        {
-          "name": "C6D1_median_pct_change_experimental",
-          "value": -30.85,
-          "unit": "%"
-        },
-        {
-          "name": "C6D1_n_assessed_control",
-          "value": 31
-        },
-        {
-          "name": "C6D1_n_missing_control",
-          "value": 44
-        },
-        {
-          "name": "C6D1_mean_pct_change_control",
-          "value": 1.26,
-          "unit": "%"
-        },
-        {
-          "name": "C6D1_median_pct_change_control",
           "value": 2.2,
           "unit": "%"
         },
         {
+          "name": "C5D1_n_assessed_experimental",
+          "value": 47
+        },
+        {
+          "name": "C5D1_n_missing_experimental",
+          "value": 28
+        },
+        {
+          "name": "C5D1_mean_pct_change_experimental",
+          "value": -57.16,
+          "unit": "%"
+        },
+        {
+          "name": "C5D1_median_pct_change_experimental",
+          "value": -45.9,
+          "unit": "%"
+        },
+        {
+          "name": "C5D1_n_assessed_control",
+          "value": 41
+        },
+        {
+          "name": "C5D1_n_missing_control",
+          "value": 34
+        },
+        {
+          "name": "C5D1_mean_pct_change_control",
+          "value": 7.7,
+          "unit": "%"
+        },
+        {
+          "name": "C5D1_median_pct_change_control",
+          "value": 9.8,
+          "unit": "%"
+        },
+        {
+          "name": "C6D1_n_assessed_experimental",
+          "value": 41
+        },
+        {
+          "name": "C6D1_n_missing_experimental",
+          "value": 34
+        },
+        {
+          "name": "C6D1_mean_pct_change_experimental",
+          "value": -54.59,
+          "unit": "%"
+        },
+        {
+          "name": "C6D1_median_pct_change_experimental",
+          "value": -47.3,
+          "unit": "%"
+        },
+        {
+          "name": "C6D1_n_assessed_control",
+          "value": 30
+        },
+        {
+          "name": "C6D1_n_missing_control",
+          "value": 45
+        },
+        {
+          "name": "C6D1_mean_pct_change_control",
+          "value": 18.45,
+          "unit": "%"
+        },
+        {
+          "name": "C6D1_median_pct_change_control",
+          "value": 18.9,
+          "unit": "%"
+        },
+        {
           "name": "mean_best_pct_change_experimental",
-          "value": -52.24,
+          "value": -63.85,
           "unit": "%"
         },
         {
           "name": "median_best_pct_change_experimental",
-          "value": -39.6,
+          "value": -53.8,
           "unit": "%"
         },
         {
           "name": "mean_worst_pct_change_experimental",
-          "value": -19.53,
+          "value": -36.76,
           "unit": "%"
         },
         {
           "name": "median_worst_pct_change_experimental",
-          "value": -19.8,
+          "value": -36.7,
           "unit": "%"
         },
         {
           "name": "mean_n_assessments_experimental",
-          "value": 3.3
+          "value": 3.6
         },
         {
           "name": "mean_best_pct_change_control",
-          "value": -21.38,
+          "value": -15.46,
           "unit": "%"
         },
         {
           "name": "median_best_pct_change_control",
-          "value": -17.6,
+          "value": -11.7,
           "unit": "%"
         },
         {
           "name": "mean_worst_pct_change_control",
-          "value": 0.72,
+          "value": 9.5,
           "unit": "%"
         },
         {
           "name": "median_worst_pct_change_control",
-          "value": -1.65,
+          "value": 15.7,
           "unit": "%"
         },
         {
           "name": "mean_n_assessments_control",
-          "value": 3.7
+          "value": 3.6
         }
       ]
     }

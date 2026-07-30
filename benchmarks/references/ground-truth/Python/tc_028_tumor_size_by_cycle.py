@@ -200,7 +200,7 @@ def compute_subject_summary(subjects):
                 "TRT01A": subj["TRT01A"],
                 "best_pct_change": None,
                 "worst_pct_change": None,
-                "time_to_best": None,
+                "time_to_best_cycle": None,
                 "n_assessments": 0,
             })
             continue

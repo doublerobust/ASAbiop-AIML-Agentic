@@ -8,7 +8,7 @@
       "name": "Kaplan-Meier + log-rank + Cox PH (Efron ties)",
       "codeTemplate": "survfit(Surv(TTT, 1-CNSR) ~ TRT01A); survdiff(...); coxph(Surv(TTT, 1-CNSR) ~ TRT01PN)",
       "parameters": {
-        "n_total": 189,
+        "n_total": 190,
         "population": "ITT",
         "time_unit": "days",
         "censoring_rule": "subjects who never receive treatment are censored at follow-up time",
@@ -62,11 +62,11 @@
     "resultGroups": [
       {
         "id": "Experimental",
-        "n": 92
+        "n": 96
       },
       {
         "id": "Control",
-        "n": 97
+        "n": 94
       }
     ],
     "documentation": "Level 1 time-to-first-treatment analysis. Phase III oncology superiority trial \u2014 ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed. Time from randomization to first dose of study treatment; subjects who never receive treatment are censored at their follow-up time. KM median with CI, log-rank test, Cox HR with CI, and treatment receipt rates.",
@@ -74,19 +74,19 @@
       "statistics": [
         {
           "name": "n_total",
-          "value": 189
+          "value": 190
         },
         {
           "name": "n_experimental",
-          "value": 92
+          "value": 96
         },
         {
           "name": "n_control",
-          "value": 97
+          "value": 94
         },
         {
           "name": "km_median_experimental",
-          "value": 3.0,
+          "value": 4.0,
           "unit": "days"
         },
         {
@@ -96,12 +96,12 @@
         },
         {
           "name": "km_ci_upper_experimental",
-          "value": 3.0,
+          "value": 4.0,
           "unit": "days"
         },
         {
           "name": "n_events_experimental",
-          "value": 88
+          "value": 92
         },
         {
           "name": "estimable_experimental",
@@ -109,7 +109,7 @@
         },
         {
           "name": "km_median_control",
-          "value": 6.0,
+          "value": 5.0,
           "unit": "days"
         },
         {
@@ -124,7 +124,7 @@
         },
         {
           "name": "n_events_control",
-          "value": 91
+          "value": 88
         },
         {
           "name": "estimable_control",
@@ -132,7 +132,7 @@
         },
         {
           "name": "logrank_chisq",
-          "value": 20.7833
+          "value": 11.0604
         },
         {
           "name": "logrank_df",
@@ -140,37 +140,37 @@
         },
         {
           "name": "logrank_p_value",
-          "value": 0.0
+          "value": 0.0009
         },
         {
           "name": "cox_hr",
-          "value": 1.9978
+          "value": 1.6925
         },
         {
           "name": "cox_hr_lower",
-          "value": 1.4782
+          "value": 1.2531
         },
         {
           "name": "cox_hr_upper",
-          "value": 2.7
+          "value": 2.2858
         },
         {
           "name": "cox_p_value",
-          "value": 0.0
+          "value": 0.0006
         },
         {
           "name": "mean_ttt_experimental",
-          "value": 12.6739,
+          "value": 8.5938,
           "unit": "days"
         },
         {
           "name": "median_ttt_experimental",
-          "value": 3.0,
+          "value": 3.5,
           "unit": "days"
         },
         {
           "name": "sd_ttt_experimental",
-          "value": 47.3419,
+          "value": 28.9481,
           "unit": "days"
         },
         {
@@ -180,22 +180,22 @@
         },
         {
           "name": "max_ttt_experimental",
-          "value": 291.0,
+          "value": 217.0,
           "unit": "days"
         },
         {
           "name": "mean_ttt_control",
-          "value": 14.3814,
+          "value": 13.1809,
           "unit": "days"
         },
         {
           "name": "median_ttt_control",
-          "value": 6.0,
+          "value": 5.0,
           "unit": "days"
         },
         {
           "name": "sd_ttt_control",
-          "value": 38.0489,
+          "value": 33.9706,
           "unit": "days"
         },
         {
@@ -205,12 +205,12 @@
         },
         {
           "name": "max_ttt_control",
-          "value": 217.0,
+          "value": 190.0,
           "unit": "days"
         },
         {
           "name": "n_received_experimental",
-          "value": 88
+          "value": 92
         },
         {
           "name": "n_censored_experimental",
@@ -218,12 +218,12 @@
         },
         {
           "name": "pct_received_experimental",
-          "value": 95.65,
+          "value": 95.83,
           "unit": "%"
         },
         {
           "name": "n_received_control",
-          "value": 91
+          "value": 88
         },
         {
           "name": "n_censored_control",
@@ -231,7 +231,7 @@
         },
         {
           "name": "pct_received_control",
-          "value": 93.81,
+          "value": 93.62,
           "unit": "%"
         }
       ]
