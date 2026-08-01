@@ -8,12 +8,12 @@
       "name": "Schoenfeld formula + blinded pooled median + conditional power under assumed HR",
       "codeTemplate": "ssr_blinded(pooled_median, events, hr_scenarios, accrual_rate, alpha=0.05, power=0.90)",
       "parameters": {
-        "enrolled": 400,
+        "enrolled": 200,
         "events_observed": 120,
         "pooled_median_pfs": 5.2,
         "accrual_rate": 20,
         "original_hr": 0.75,
-        "original_events": 127,
+        "original_events": 508,
         "planned_n": 600,
         "alpha": 0.05,
         "power": 0.9,
@@ -53,7 +53,7 @@
     "resultGroups": [
       {
         "id": "Pooled (blinded)",
-        "n": 400
+        "n": 200
       }
     ],
     "documentation": "Level 2 blinded sample size re-estimation. Phase III oncology superiority trial \u2014 ITT is the sole primary analysis population per FDA/EMA standards; no per-protocol analysis is performed. Blinded SSR uses pooled event data (no unblinding) to assess whether the planned sample size is adequate under optimistic, original, and pessimistic HR scenarios. Conditional power is computed under each assumed HR.",
@@ -61,7 +61,7 @@
       "statistics": [
         {
           "name": "enrolled",
-          "value": 400
+          "value": 200
         },
         {
           "name": "planned_n",
@@ -69,7 +69,7 @@
         },
         {
           "name": "enrollment_pct",
-          "value": 66.7,
+          "value": 33.3,
           "unit": "%"
         },
         {
@@ -78,11 +78,11 @@
         },
         {
           "name": "original_events",
-          "value": 127
+          "value": 508
         },
         {
           "name": "information_fraction",
-          "value": 0.9449
+          "value": 0.2362
         },
         {
           "name": "accrual_rate",
@@ -95,7 +95,7 @@
         },
         {
           "name": "estimated_event_rate_monthly",
-          "value": 6
+          "value": 12
         },
         {
           "name": "lambda",
@@ -107,15 +107,15 @@
         },
         {
           "name": "optimistic_events_needed",
-          "value": 83
+          "value": 330
         },
         {
           "name": "optimistic_total_n_needed",
-          "value": 84
+          "value": 334
         },
         {
           "name": "optimistic_incremental_n",
-          "value": -516
+          "value": -266
         },
         {
           "name": "optimistic_conditional_power",
@@ -131,15 +131,15 @@
         },
         {
           "name": "original_events_needed",
-          "value": 127
+          "value": 508
         },
         {
           "name": "original_total_n_needed",
-          "value": 129
+          "value": 513
         },
         {
           "name": "original_incremental_n",
-          "value": -471
+          "value": -87
         },
         {
           "name": "original_conditional_power",
@@ -155,19 +155,19 @@
         },
         {
           "name": "pessimistic_events_needed",
-          "value": 211
+          "value": 844
         },
         {
           "name": "pessimistic_total_n_needed",
-          "value": 213
+          "value": 852
         },
         {
           "name": "pessimistic_incremental_n",
-          "value": -387
+          "value": 252
         },
         {
           "name": "pessimistic_conditional_power",
-          "value": 0.9745
+          "value": 1
         },
         {
           "name": "pessimistic_recommendation",

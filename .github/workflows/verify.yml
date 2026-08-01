@@ -1,0 +1,50 @@
+name: cross-language-verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.3"
+
+      - name: Install Python deps
+        working-directory: benchmarks/scoring-harness
+        run: |
+          pip install --quiet click pyyaml rich jsonschema numpy scipy pandas
+          pip install --quiet -r requirements.txt
+
+      - name: Install R deps
+        working-directory: benchmarks
+        run: |
+          Rscript -e 'if (!requireNamespace("jsonlite", quietly=TRUE)) install.packages("jsonlite", repos="https://cloud.r-project.org")'
+          Rscript -e 'if (!requireNamespace("optparse", quietly=TRUE)) install.packages("optparse", repos="https://cloud.r-project.org")'
+
+      - name: Schema validation — checked-in ground truth
+        working-directory: benchmarks
+        run: |
+          python3 scripts/validate-checked-in-outputs.py
+
+      - name: Mutation test — scorer must reject wrong answers
+        working-directory: benchmarks
+        run: |
+          python3 scripts/mutation-test.py
+
+      - name: Cross-language regression (fixed TCs)
+        working-directory: benchmarks
+        run: |
+          python3 scripts/regression-check-fixed-tcs.py

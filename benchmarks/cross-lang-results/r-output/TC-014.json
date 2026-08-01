@@ -1052,6 +1052,8 @@
   "metadata": {
     "language": "R",
     "sorting": "TRT01A, USUBJID, PDDY",
-    "packages": "jsonlite"
+    "packages": [
+      "jsonlite"
+    ]
   }
 }

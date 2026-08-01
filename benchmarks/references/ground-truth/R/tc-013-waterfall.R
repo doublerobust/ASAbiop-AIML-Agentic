@@ -100,7 +100,7 @@ output <- list(
   metadata = list(
     language = "R",
     sorting = "ascending by BESTPCHG",
-    packages = c("jsonlite")
+    packages = list("jsonlite")
   )
 )
 

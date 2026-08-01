@@ -93,7 +93,7 @@ def compute_dcr(data):
     subgroup_levels = {
         "SEX": ["Male", "Female"],
         "AGEGR1": ["<65", ">=65"],
-        "ECOG": [0, 1],
+        "ECOG": ["0", "1"],
     }
 
     overall_exp = data[data["TRT01PN"] == 1]
@@ -136,8 +136,11 @@ def compute_dcr(data):
     subgroup_results = []
     for sg in subgroups:
         for lvl in subgroup_levels[sg]:
-            sg_exp = data[(data["TRT01PN"] == 1) & (data[sg] == lvl)]
-            sg_ctrl = data[(data["TRT01PN"] == 0) & (data[sg] == lvl)]
+            # Cast to str for comparison (ECOG levels are integers in data,
+            # string in subgroup_levels — matches schema's string requirement
+            # and R behavior which coerces)
+            sg_exp = data[(data["TRT01PN"] == 1) & (data[sg].astype(str) == lvl)]
+            sg_ctrl = data[(data["TRT01PN"] == 0) & (data[sg].astype(str) == lvl)]
 
             if len(sg_exp) == 0 or len(sg_ctrl) == 0:
                 continue

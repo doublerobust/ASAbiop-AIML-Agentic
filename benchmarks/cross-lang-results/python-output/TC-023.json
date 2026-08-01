@@ -90,7 +90,7 @@
     },
     {
       "subgroup": "ECOG",
-      "level": 0,
+      "level": "0",
       "dcr_experimental": 68.8,
       "dcr_control": 45.5,
       "n_experimental": 64,
@@ -107,7 +107,7 @@
     },
     {
       "subgroup": "ECOG",
-      "level": 1,
+      "level": "1",
       "dcr_experimental": 65.8,
       "dcr_control": 19.4,
       "n_experimental": 38,

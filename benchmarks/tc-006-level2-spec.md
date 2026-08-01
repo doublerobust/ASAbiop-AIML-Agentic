@@ -97,7 +97,7 @@ The agent must produce a structured report (markdown) containing:
 | Scenario | HR | Events Needed | Total N Needed | Incremental N | Recommendation |
 |---|---|---|---|---|---|
 | Pessimistic | 0.80 | XXX | XXX | +XX | Increase |
-| Original | 0.75 | 331 | 600 | 0 | Continue |
+| Original | 0.75 | 508 | XXX | +XX | Increase |
 | Optimistic | 0.70 | XXX | XXX | -XX | Consider reduction |
 
 ### Conditional Power
@@ -126,12 +126,14 @@ At current info fraction (XX.X%):
 2. **Control median deconvolution:** Under HR assumption, if pooled median = M_p and HR = h, then:
    - Assuming exponential: 1/M_p = (1/M_control + 1/M_treatment) / 2
    - M_treatment = h × M_control
-   - Solve: M_control = M_p × (1 + h) / 2
-3. **Sample size re-estimation:** Schoenfeld formula:
-   - d = (z_{α/2} + z_{β})² / (ln(h))²
+   - Solve: M_control = M_p × (1 + 1/h) / 2
+3. **Sample size re-estimation:** Schoenfeld formula (equal allocation, p_A = p_B = 0.5):
+   - d = (z_{α/2} + z_{β})² / (p_A × p_B × (ln(h))²)
+   - With 1:1 allocation this is d = 4 × (z_{α/2} + z_{β})² / (ln(h))²
    - N = d / [(1 - exp(-λt)) × (proportion observed)]
-4. **Conditional power:** Using gsDesign `ssrCP()` or equivalent:
-   - CP = Φ(z_{1-α} √(1-f) - z_{observed} √f) where f = info fraction
+4. **Conditional power (blinded):** Using the expected-Z-under-H1 formulation
+   (an unblinded z_observed is unavailable in a blinded SSR):
+   - CP = Φ( (|ln(h)| × √d_required − z_{1−α/2}) / √(1−f) ) where f = info fraction
 
 ### Reference Implementation
 

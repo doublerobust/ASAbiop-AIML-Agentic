@@ -34,23 +34,23 @@
         "HIGH": 4
       }
     },
-    "percentages": [
-      {
+    "percentages": {
+      "LOW": {
         "LOW": 1.5,
         "NORMAL": 10.5,
         "HIGH": 0.5
       },
-      {
+      "NORMAL": {
         "LOW": 8,
         "NORMAL": 66,
         "HIGH": 2.5
       },
-      {
+      "HIGH": {
         "LOW": 0.5,
         "NORMAL": 8.5,
         "HIGH": 2
       }
-    ],
+    },
     "n_total": 200,
     "n_stable_normal": 132,
     "n_low_to_normal": 21,
@@ -76,23 +76,23 @@
         "HIGH": 0
       }
     },
-    "percentages": [
-      {
+    "percentages": {
+      "LOW": {
         "LOW": 1,
         "NORMAL": 9,
         "HIGH": 1
       },
-      {
+      "NORMAL": {
         "LOW": 6,
         "NORMAL": 69,
         "HIGH": 4
       },
-      {
+      "HIGH": {
         "LOW": 1,
         "NORMAL": 9,
         "HIGH": 0
       }
-    ],
+    },
     "n_total": 100,
     "n_stable_normal": 69,
     "n_low_to_normal": 9,
@@ -118,23 +118,23 @@
         "HIGH": 4
       }
     },
-    "percentages": [
-      {
+    "percentages": {
+      "LOW": {
         "LOW": 2,
         "NORMAL": 12,
         "HIGH": 0
       },
-      {
+      "NORMAL": {
         "LOW": 10,
         "NORMAL": 63,
         "HIGH": 1
       },
-      {
+      "HIGH": {
         "LOW": 0,
         "NORMAL": 8,
         "HIGH": 4
       }
-    ],
+    },
     "n_total": 100,
     "n_stable_normal": 63,
     "n_low_to_normal": 12,

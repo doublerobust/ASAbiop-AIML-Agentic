@@ -140,7 +140,7 @@ output <- list(
   metadata = list(
     language = "R",
     sorting = "TRT01A, USUBJID, PDDY",
-    packages = c("jsonlite")
+    packages = list("jsonlite")
   )
 )
 

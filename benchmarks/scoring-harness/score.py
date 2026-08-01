@@ -178,7 +178,9 @@ def compare_numeric(value_a, value_b, tol, field_name=""):
     rel_diff = abs_diff / abs(value_b) if value_b != 0 else float("inf")
 
     within_abs = abs_diff <= abs_tol
-    within_rel = True if rel_tol is None else rel_diff <= rel_tol
+    # Relative tolerance applies ONLY when explicitly specified. When absent,
+    # fall back to absolute-only comparison (do NOT pass unconditionally).
+    within_rel = rel_tol is not None and rel_diff <= rel_tol
 
     passed = within_abs or within_rel
 

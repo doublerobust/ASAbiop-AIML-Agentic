@@ -94,9 +94,12 @@ build_shift <- function(d) {
 
   list(
     counts = rows,
-    percentages = lapply(cats, function(bl) {
-      setNames(as.list(as.numeric(pct[bl, ])), cats)
-    }),
+    percentages = setNames(
+      lapply(cats, function(bl) {
+        setNames(as.list(as.numeric(pct[bl, ])), cats)
+      }),
+      cats
+    ),
     n_total = as.integer(n_total),
     # Shift summary
     n_stable_normal = as.integer(mat["NORMAL", "NORMAL"]),

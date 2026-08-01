@@ -33,8 +33,8 @@ option_list <- list(
               help = "Accrual rate in patients/month [default: 20]"),
   make_option("--original-hr", type = "double", default = 0.75,
               help = "Original design hazard ratio [default: 0.75]"),
-  make_option("--original-events", type = "integer", default = 127L,
-              help = "Original design required events [default: 127, Schoenfeld]"),
+  make_option("--original-events", type = "integer", default = 508L,
+              help = "Original design required events [default: 508, Schoenfeld with equal allocation]"),
   make_option("--planned-n", type = "integer", default = 600L,
               help = "Original planned total N [default: 600]"),
   make_option("--alpha", type = "double", default = 0.05,
@@ -147,9 +147,11 @@ deconvolve_control_median <- function(pooled_median, hr) {
 }
 
 #' Schoenfeld formula for required events
-#' d = (z_alpha/2 + z_beta)^2 / (ln(HR))^2
-schoenfeld_events <- function(hr, z_alpha, z_beta) {
-  (z_alpha + z_beta)^2 / (log(hr))^2
+#' d = (z_alpha + z_beta)^2 / (p_A * p_B * (ln(HR))^2)
+#' with equal allocation p_A = p_B = 0.5 by default (1/(p_A*p_B) = 4 factor)
+schoenfeld_events <- function(hr, z_alpha, z_beta, p_treatment = 0.5) {
+  p_control <- 1 - p_treatment
+  (z_alpha + z_beta)^2 / (p_treatment * p_control * log(hr)^2)
 }
 
 #' Conditional power at current information fraction

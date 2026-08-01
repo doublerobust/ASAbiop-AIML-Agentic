@@ -80,12 +80,25 @@ def deconvolve_control_median(pooled_median, hr):
     return pooled_median * (1 + 1 / hr) / 2
 
 
-def schoenfeld_events(hr, z_alpha, z_beta):
-    """Compute required events using Schoenfeld formula.
+def schoenfeld_events(hr, z_alpha, z_beta, p_treatment=0.5):
+    """Compute required events using the Schoenfeld formula.
 
-    d = (z_alpha/2 + z_beta)^2 / (ln(HR))^2
+    d = (z_alpha + z_beta)^2 / (p_A * p_B * (ln(HR))^2)
+
+    where p_A, p_B are the allocation proportions (equal allocation
+    p_A = p_B = 0.5 by default, giving the 1/(p_A*p_B) = 4 factor).
+
+    Args:
+        hr: Assumed hazard ratio (treatment vs control)
+        z_alpha: Standard normal quantile for the (two-sided) alpha level
+        z_beta: Standard normal quantile for target power
+        p_treatment: Proportion allocated to treatment arm (default 0.5)
+
+    Returns:
+        Total number of events required (both arms combined).
     """
-    return (z_alpha + z_beta) ** 2 / (math.log(hr)) ** 2
+    p_control = 1 - p_treatment
+    return (z_alpha + z_beta) ** 2 / (p_treatment * p_control * (math.log(hr)) ** 2)
 
 
 def conditional_power(d_observed, d_required, hr, alpha):
@@ -201,8 +214,8 @@ def main():
                         help="Accrual rate in patients/month (default: 20)")
     parser.add_argument("--original-hr", type=float, default=0.75,
                         help="Original design hazard ratio (default: 0.75)")
-    parser.add_argument("--original-events", type=int, default=127,
-                        help="Original design required events (default: 127, Schoenfeld)")
+    parser.add_argument("--original-events", type=int, default=508,
+                        help="Original design required events (default: 508, Schoenfeld with equal allocation)")
     parser.add_argument("--planned-n", type=int, default=600,
                         help="Original planned total N (default: 600)")
     parser.add_argument("--alpha", type=float, default=0.05,
