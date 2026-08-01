@@ -1,9 +1,9 @@
 # Cross-Language Verification Protocol — TFL Benchmark
 
-**Version:** 0.2 (Day 3 expansion; QC-revised 2026-06-18)
-**Date:** 2026-05-27 (revised 2026-06-18)
+**Version:** 0.3 (Day 57 expansion; TC-028/031 shared-data verification, KM median edge case)
+**Date:** 2026-05-27 (revised 2026-06-18, 2026-08-01)
 **Status:** 🟢 R and Python empirically cross-validated on SHARED data for
-TC-001/002/003 (score.py verify = 1.0); SAS reference-only (no license)
+TC-001/002/003, TC-028, TC-031 (score.py verify = 1.0); SAS reference-only (no license)
 **Dimension:** TFL-Specific Correctness — Ground Truth Validation & Numerical Tolerance
 
 ---
@@ -115,7 +115,7 @@ verification_test:
 | Aspect | R (survival::survfit) | SAS (PROC LIFETEST) | Python (lifelines) | Impact |
 |---|---|---|---|---|
 | **Confidence interval method** | conf.type = "log-log" (default) | Default = log-log (Greenwood with log-log transform) | Default = log-log | ✅ Consistent |
-| **Median definition** | Smallest t where S(t) ≤ 0.5 | Same convention | Same convention | ✅ Consistent |
+| **Median definition** | Midpoint of last t where S(t) ≥ 0.5 and first t where S(t) < 0.5 (linear interpolation in `quantile.survfit`) | Smallest t where S(t) ≤ 0.5 | First t where S(t) < 0.5 (strict; lifelines `median_survival_time_`) | ⚠️ Edge case |
 | **Tie handling at event times** | Product-limit estimator; ties contribute to denominator at that time | Same | Same | ✅ Consistent |
 | **Upper CI bound when S(t) never crosses 0.5** | NA reported | Upper limit not computed | NA reported | ⚠️ Need to handle missing |
 | **Greenwood variance formula** | Standard Greenwood | Standard Greenwood | Standard Greenwood | ✅ Consistent |
@@ -127,6 +127,25 @@ This has been empirically confirmed for TC-001: R `survfit` and Python
 `lifelines` both return median = 11.01 months, 95% CI (7.12, 15.10) on the
 shared `adtte_42.csv` (seed 42, n=200, ITT arm 1), via
 `score.py verify --tc TC-001` (score = 1.0).
+
+> **Edge case — exact 0.5 crossing (TC-031, Day 57):** When the survival
+> function lands **exactly** on S(t) = 0.5 at an event time, R's
+> `quantile.survfit` returns the midpoint between the last time where
+> S ≥ 0.5 and the first time where S < 0.5, while Python's lifelines
+> `median_survival_time_` returns the first time where S < 0.5 (strict
+> inequality). On the TC-031 shared dataset (`tc031_shared.csv`,
+> experimental arm), at t=3 S(t)=0.5 exactly; R reports median = 3.5
+> (midpoint of t=3 and t=4), lifelines reports 4.0. The 0.5-unit
+> difference is well within the TC-031 `km_experimental` tolerance
+> (absolute: 2.0), so `score.py verify --tc TC-031` reports score =
+> 1.0000. This is a **known convention difference**, not a bug; it
+> arises only when S(t) hits the quantile boundary exactly and is
+> documented here so benchmark users are aware that KM medians from
+> different packages may differ by up to one event-time unit in this
+> rare situation. SAS `PROC LIFETEST` uses the "smallest t where S ≤ 0.5"
+> convention, which would report 3.0 in this scenario — a third
+> distinct value. The generous tolerance accommodates all three
+> conventions.
 
 ### 3.2 Log-Rank Test (Unstratified)
 

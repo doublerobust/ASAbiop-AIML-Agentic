@@ -34,6 +34,7 @@ data_adrs <- "cross-lang-results/shared/adrs_tc010.csv"
 data_adae <- "cross-lang-results/shared/adae_tc010.csv"
 data_adlb <- "cross-lang-results/shared/adlb_tc010.csv"
 out_file <- "cross-lang-results/r-output/TC-010.json"
+ars_output <- NA
 
 i <- 1
 while (i <= length(args)) {
@@ -43,6 +44,7 @@ while (i <= length(args)) {
   else if (args[i] == "--data-adae" && i + 1 <= length(args)) { data_adae <- args[i + 1]; i <- i + 2 }
   else if (args[i] == "--data-adlb" && i + 1 <= length(args)) { data_adlb <- args[i + 1]; i <- i + 2 }
   else if (args[i] == "--output" && i + 1 <= length(args)) { out_file <- args[i + 1]; i <- i + 2 }
+  else if (args[i] == "--ars-output" && i + 1 <= length(args)) { ars_output <- args[i + 1]; i <- i + 2 }
   else { i <- i + 1 }
 }
 
@@ -415,3 +417,110 @@ cat(sprintf("  OS:  Active median=%.1f, Placebo median=%.1f, HR=%.4f, p=%.4f\n",
 cat(sprintf("  ORR: Active=%.1f%%, Placebo=%.1f%%\n",
   orr_result$by_arm$Active$orr_pct, orr_result$by_arm$Placebo$orr_pct))
 cat("[TC-010 R] Done.\n")
+
+# ─── ARS-compatible output envelope (CDISC ARS v1.0) ───
+# Native per-run ARS envelope generation — mirrors build_tc010() from
+# scripts/ars-extend-level3.py. Phase III oncology — ITT is sole primary
+# analysis population; no per-protocol analysis per FDA/EMA standards.
+if (!is.na(ars_output)) {
+  sd <- result$study_design
+  disp <- result$section_11_1_disposition
+  demo <- result$section_11_2_demographics
+  eff <- result$section_11_4_efficacy
+  pfs <- eff$primary_pfs
+  osr <- eff$secondary_os
+  orr <- eff$secondary_orr_dcr
+  safety <- result$section_11_5_safety
+  sby <- safety$by_arm
+
+  n_subj <- if (!is.null(sd$n_subjects)) sd$n_subjects else 400
+
+  ars_envelope <- list(
+    ars_version = "1.0",
+    analysisResult = list(
+      id = "TC-010",
+      version = "1.0",
+      analysisReason = "ICH E3 CSR statistical sections — disposition, demographics, primary/secondary efficacy, subgroup forest, sensitivity, safety",
+      analysisMethod = list(
+        name = "KM + Cox PH (Efron) + log-rank + RECIST 1.1 + descriptive stats",
+        codeTemplate = "survfit(Surv(AVAL, 1-CNSR) ~ TRT01A); coxph(...); prop.test(x, n); t.test(AGE ~ TRT01A)",
+        parameters = list(
+          csr_standard = "ICH E3",
+          primary_endpoint = sd$primary_endpoint,
+          secondary_endpoints = sd$secondary_endpoints,
+          km_ci_method = "Brookmeyer-Crowley (log-log transform)",
+          cox_ties = "Efron",
+          response_criteria = "RECIST 1.1",
+          itt_primary = TRUE,
+          pp_analysis = "not performed (FDA/EMA oncology standard)"
+        )
+      ),
+      analysisVariables = list(
+        list(name = "AVAL", dataset = "ADTTE", role = "analysis time (PFS/OS)"),
+        list(name = "CNSR", dataset = "ADTTE", role = "censoring (0=event)"),
+        list(name = "BOR", dataset = "ADRS", role = "best overall response"),
+        list(name = "AESOC", dataset = "ADAE", role = "System Organ Class"),
+        list(name = "AEDECOD", dataset = "ADAE", role = "Preferred Term"),
+        list(name = "TRT01A", dataset = "ADSL", role = "treatment"),
+        list(name = "ITTFL", dataset = "ADSL", role = "ITT flag"),
+        list(name = "SAFFL", dataset = "ADSL", role = "safety flag"),
+        list(name = "AGE", dataset = "ADSL", role = "age (baseline balance)"),
+        list(name = "SEX", dataset = "ADSL", role = "sex (baseline balance)")
+      ),
+      analysisPopulation = list(
+        name = "ITT (primary) + Safety (secondary)",
+        filter = "ITTFL = 'Y' (primary efficacy); SAFFL = 'Y' (safety)"
+      ),
+      analysisDataset = "ADTTE/ADRS/ADAE",
+      resultGroups = list(
+        list(id = "Active", n = as.integer(n_subj / 2)),
+        list(id = "Placebo", n = as.integer(n_subj / 2))
+      ),
+      documentation = "Level 3 ICH E3 CSR statistical sections. Phase III oncology superiority trial — ITT is the sole primary analysis population; no per-protocol analysis performed per FDA/EMA standards. Covers Section 9 (methods) and Section 11 (disposition, demographics, primary PFS, secondary OS/ORR/DCR, subgroup forest, sensitivity, safety).",
+      analysisResultsData = list(
+        statistics = list(
+          list(name = "n_randomized", value = disp$n_randomized),
+          list(name = "n_treated", value = disp$n_treated),
+          list(name = "n_completed", value = disp$n_completed_total),
+          list(name = "n_discontinued", value = disp$n_discontinued_total),
+          list(name = "n_major_deviations", value = disp$n_major_deviations_total),
+          list(name = "age_balance_p", value = demo$age_balance_test$p),
+          list(name = "sex_balance_p", value = demo$sex_balance_test$p),
+          list(name = "pfs_median_active", value = pfs$by_arm$Active$median, unit = "days"),
+          list(name = "pfs_median_placebo", value = pfs$by_arm$Placebo$median, unit = "days"),
+          list(name = "pfs_cox_hr", value = pfs$cox$hr),
+          list(name = "pfs_cox_ci_lower", value = pfs$cox$ci_lower),
+          list(name = "pfs_cox_ci_upper", value = pfs$cox$ci_upper),
+          list(name = "pfs_cox_p", value = pfs$cox$p),
+          list(name = "pfs_logrank_p", value = pfs$logrank_p),
+          list(name = "pfs_events_active", value = pfs$by_arm$Active$n_events),
+          list(name = "pfs_events_placebo", value = pfs$by_arm$Placebo$n_events),
+          list(name = "os_cox_hr", value = osr$cox$hr),
+          list(name = "os_cox_ci_lower", value = osr$cox$ci_lower),
+          list(name = "os_cox_ci_upper", value = osr$cox$ci_upper),
+          list(name = "os_cox_p", value = osr$cox$p),
+          list(name = "os_logrank_p", value = osr$logrank_p),
+          list(name = "orr_active_pct", value = orr$by_arm$Active$orr_pct, unit = "%"),
+          list(name = "orr_placebo_pct", value = orr$by_arm$Placebo$orr_pct, unit = "%"),
+          list(name = "orr_risk_difference", value = orr$risk_difference$rd),
+          list(name = "orr_fisher_p", value = orr$risk_difference$fisher_p),
+          list(name = "dcr_active_pct", value = orr$by_arm$Active$dcr_pct, unit = "%"),
+          list(name = "dcr_placebo_pct", value = orr$by_arm$Placebo$dcr_pct, unit = "%"),
+          list(name = "sensitivity_pfs_hr", value = eff$sensitivity_pfs$cox$hr),
+          list(name = "sensitivity_pfs_p", value = eff$sensitivity_pfs$cox$p),
+          list(name = "any_ae_active", value = sby$Active$n_any_ae),
+          list(name = "any_ae_placebo", value = sby$Placebo$n_any_ae),
+          list(name = "sae_active", value = sby$Active$n_sae),
+          list(name = "sae_placebo", value = sby$Placebo$n_sae),
+          list(name = "g3_active", value = sby$Active$n_grade3_plus),
+          list(name = "g3_placebo", value = sby$Placebo$n_grade3_plus),
+          list(name = "n_deaths_total", value = safety$death_summary$n_deaths_total)
+        )
+      )
+    )
+  )
+
+  ars_json <- toJSON(ars_envelope, auto_unbox = TRUE, null = "null", na = "null", pretty = TRUE, digits = 8)
+  writeLines(ars_json, ars_output)
+  cat(sprintf("[TC-010 R] Wrote ARS envelope to: %s\n", ars_output))
+}

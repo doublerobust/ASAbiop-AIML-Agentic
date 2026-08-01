@@ -27,6 +27,7 @@ args <- commandArgs(trailingOnly = TRUE)
 data_adtte <- NA
 data_adsl <- NA
 out_path <- NA
+ars_output <- NA
 seed <- 42
 n_subjects <- 500
 
@@ -35,6 +36,7 @@ while (i <= length(args)) {
   if (args[i] == "--data-adtte" && i + 1 <= length(args)) { data_adtte <- args[i + 1]; i <- i + 2 }
   else if (args[i] == "--data-adsl" && i + 1 <= length(args)) { data_adsl <- args[i + 1]; i <- i + 2 }
   else if (args[i] == "--out" && i + 1 <= length(args)) { out_path <- args[i + 1]; i <- i + 2 }
+  else if (args[i] == "--ars-output" && i + 1 <= length(args)) { ars_output <- args[i + 1]; i <- i + 2 }
   else if (args[i] == "--seed" && i + 1 <= length(args)) { seed <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--n" && i + 1 <= length(args)) { n_subjects <- as.integer(args[i + 1]); i <- i + 2 }
   else { i <- i + 1 }
@@ -294,4 +296,102 @@ if (!is.na(out_path) && nzchar(out_path)) {
   write_output(result, out_path)
 } else {
   print_output(result)
+}
+
+# ─────────────────────────────────────────────────────
+# ARS-compatible output envelope (CDISC ARS v1.0)
+# Mirrors build_tc007() from scripts/ars-extend-level3.py
+# ─────────────────────────────────────────────────────
+if (!is.na(ars_output) && nzchar(ars_output)) {
+  analysis <- result$analysis
+  itt <- analysis$itt
+  pp  <- analysis$pp
+  disc <- analysis$discrepancy
+  excl <- analysis$exclusion_pattern
+  tip  <- analysis$tipping_point
+  sens <- analysis$sensitivity_analyses
+  worst <- sens$worst_case
+  best  <- sens$best_case
+
+  ars_envelope <- list(
+    ars_version = "1.0",
+    analysisResult = list(
+      id = "TC-007",
+      version = "1.0",
+      analysisReason = paste0(
+        "Regulatory response: analyze ITT vs per-protocol discrepancy, ",
+        "tipping point, and sensitivity analyses"
+      ),
+      analysisMethod = list(
+        name = "Cox PH (Efron ties) + log-rank + tipping-point analysis",
+        codeTemplate = "coxph(Surv(AVAL, 1-CNSR) ~ TRT01PN, data=ADTTE); survdiff(...)",
+        parameters = list(
+          ties = "Efron",
+          itt_primary = TRUE,
+          pp_role = "supportive sensitivity (regulatory query response)",
+          tipping_point_method = "reclassify censored\u2194event in excluded Active subjects"
+        )
+      ),
+      analysisVariables = list(
+        list(name = "AVAL",    dataset = "ADTTE", role = "analysis time (PFS)"),
+        list(name = "CNSR",    dataset = "ADTTE", role = "censoring (0=event)"),
+        list(name = "TRT01PN", dataset = "ADSL",  role = "treatment (numeric)"),
+        list(name = "ITTFL",   dataset = "ADSL",  role = "ITT flag"),
+        list(name = "PPFL",    dataset = "ADSL",  role = "per-protocol flag (supportive)")
+      ),
+      analysisPopulation = list(
+        name = "ITT (primary) + PP (supportive)",
+        filter = "ITTFL = 'Y' (primary); PPFL = 'Y' (supportive sensitivity)"
+      ),
+      analysisDataset = "ADTTE",
+      resultGroups = list(
+        list(id = "ITT", n = itt$n),
+        list(id = "PP",  n = pp$n)
+      ),
+      documentation = paste0(
+        "Level 3 regulatory response scenario. ITT is the sole primary ",
+        "analysis population for the superiority claim (FDA/EMA standard). ",
+        "PP, tipping-point, and worst/best-case analyses are supportive ",
+        "sensitivity analyses performed to respond to a regulatory reviewer's ",
+        "query about the ITT/PP discrepancy. Differential exclusion (Active ",
+        "excludes censored/well subjects; Placebo excludes event/ill subjects) ",
+        "drives the discrepancy."
+      ),
+      analysisResultsData = list(
+        statistics = list(
+          list(name = "itt_n",                      value = itt$n),
+          list(name = "itt_hr",                     value = itt$hr),
+          list(name = "itt_hr_ci_lower",            value = itt$hr_ci_lower),
+          list(name = "itt_hr_ci_upper",            value = itt$hr_ci_upper),
+          list(name = "itt_logrank_p",              value = itt$logrank_p),
+          list(name = "itt_wald_p",                 value = itt$wald_p),
+          list(name = "itt_significant",            value = disc$itt_significant),
+          list(name = "pp_n",                       value = pp$n),
+          list(name = "pp_hr",                      value = pp$hr),
+          list(name = "pp_hr_ci_lower",             value = pp$hr_ci_lower),
+          list(name = "pp_hr_ci_upper",             value = pp$hr_ci_upper),
+          list(name = "pp_logrank_p",               value = pp$logrank_p),
+          list(name = "pp_significant",             value = disc$pp_significant),
+          list(name = "hr_difference",              value = disc$hr_difference),
+          list(name = "n_excluded",                 value = excl$n_excluded),
+          list(name = "excluded_active",            value = excl$excluded_active),
+          list(name = "excluded_placebo",           value = excl$excluded_placebo),
+          list(name = "excl_events_active",         value = excl$excl_events_active),
+          list(name = "excl_events_placebo",        value = excl$excl_events_placebo),
+          list(name = "event_imbalance_fisher_p",   value = excl$event_imbalance_fisher_p),
+          list(name = "tipping_n_shifted",          value = tip$n_shifted),
+          list(name = "tipping_hr",                 value = tip$hr_at_tipping),
+          list(name = "tipping_p",                  value = tip$p_at_tipping),
+          list(name = "worst_case_hr",              value = worst$hr),
+          list(name = "worst_case_p",               value = worst$p_value),
+          list(name = "best_case_hr",              value = best$hr),
+          list(name = "best_case_p",                value = best$p_value)
+        )
+      )
+    )
+  )
+
+  ars_json <- jsonlite::toJSON(ars_envelope, auto_unbox = TRUE, pretty = TRUE)
+  writeLines(ars_json, ars_output)
+  cat(sprintf("Wrote ARS-compatible output to: %s\n", ars_output))
 }

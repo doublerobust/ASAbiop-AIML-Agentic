@@ -565,6 +565,131 @@ def analyze(adsl, adae, adlb):
     return result
 
 
+# ─────────────────────────────────────────────────────
+# ARS-compatible output envelope (CDISC ARS v1.0)
+# Mirrors build_tc009 from scripts/ars-extend-level3.py
+# ─────────────────────────────────────────────────────
+def build_ars(result):
+    """Build an ARS v1.0 envelope for TC-009 safety signal DMC report.
+
+    Takes the 'result' dict produced by analyze() and wraps selected
+    statistics. The result dict structure matches what the standalone
+    generator's build_tc009 expects as 'data'.
+    """
+    sd = result.get("study_design", {})
+    overview = result.get("ae_overview", {})
+    by_arm = overview.get("by_arm", {})
+    active_ov = by_arm.get("Active", {})
+    placebo_ov = by_arm.get("Placebo", {})
+    g3 = result.get("grade3_plus", {})
+    g3_by = g3.get("by_arm", {})
+    hys = result.get("lab_abnormalities", {}).get("hys_law", {})
+    qtc = result.get("lab_abnormalities", {}).get("qtc_prolongation", {})
+    irae = result.get("ae_special_interest", {}).get("irae", {})
+    ttg3 = result.get("time_to_grade3", {})
+    rec = result.get("recommendation", {})
+    sig = rec.get("signals_summary", {})
+
+    return {
+        "ars_version": "1.0",
+        "analysisResult": {
+            "id": "TC-009",
+            "version": "1.0",
+            "analysisReason": (
+                "Safety signal evaluation and DMC report — 8-domain safety "
+                "analysis with totality-of-evidence recommendation"
+            ),
+            "analysisMethod": {
+                "name": (
+                    "AE frequency + exposure-adjusted rates + KM/Cox PH + "
+                    "MGPS disproportionality + Fisher exact"
+                ),
+                "codeTemplate": (
+                    "survfit(Surv(TTG3, 1-CNSR) ~ TRT01A); coxph(...); "
+                    "fisher.test(matrix); mgps(ADAE)"
+                ),
+                "parameters": {
+                    "n_domains": 8,
+                    "ae_hierarchy": "SOC → PT (MedDRA)",
+                    "km_ci_method": "Brookmeyer-Crowley (log-log transform)",
+                    "cox_ties": "Efron",
+                    "mgps_threshold": "EBGM >= 2.0 AND observed >= 3",
+                    "signal_definition": "risk difference 95% CI excludes 0 OR MGPS EBGM >= 2.0",
+                },
+            },
+            "analysisVariables": [
+                {"name": "AESOC", "dataset": "ADAE", "role": "System Organ Class"},
+                {"name": "AEDECOD", "dataset": "ADAE", "role": "Preferred Term"},
+                {"name": "AESER", "dataset": "ADAE", "role": "serious AE flag"},
+                {"name": "AESEV", "dataset": "ADAE", "role": "severity (Grade 3+)"},
+                {"name": "AVAL", "dataset": "ADTTE", "role": "time to first Grade 3+ AE"},
+                {"name": "CNSR", "dataset": "ADTTE", "role": "censoring"},
+                {"name": "TRT01A", "dataset": "ADSL", "role": "treatment"},
+                {"name": "SAFFL", "dataset": "ADSL", "role": "safety flag"},
+                {"name": "LBSTRESN", "dataset": "ADLB", "role": "lab result (Hy's Law / QTc)"},
+            ],
+            "analysisPopulation": {
+                "name": "Safety (SAFFL=Y)",
+                "filter": "SAFFL = 'Y' — all randomized who received any study treatment",
+            },
+            "analysisDataset": "ADAE",
+            "resultGroups": [
+                {"id": "Active", "n": sd.get("n_per_arm", {}).get("Active")},
+                {"id": "Placebo", "n": sd.get("n_per_arm", {}).get("Placebo")},
+            ],
+            "documentation": (
+                "Level 3 DMC safety report. 8 domains: (1) AE overview, "
+                "(2) exposure-adjusted AE rates, (3) Grade 3+ AEs, "
+                "(4) lab abnormalities (Hy's Law, QTc), (5) time-to-first "
+                "Grade 3+ AE (KM + Cox PH + log-rank), (6) irAE, "
+                "(7) MGPS disproportionality, (8) DMC recommendation. "
+                "Phase III oncology — ITT is sole primary population; "
+                "no per-protocol analysis per FDA/EMA standards."
+            ),
+            "analysisResultsData": {
+                "statistics": [
+                    {"name": "n_total", "value": sd.get("n_subjects")},
+                    {"name": "n_active", "value": sd.get("n_per_arm", {}).get("Active")},
+                    {"name": "n_placebo", "value": sd.get("n_per_arm", {}).get("Placebo")},
+                    {"name": "any_ae_active", "value": active_ov.get("n_any_ae")},
+                    {"name": "any_ae_placebo", "value": placebo_ov.get("n_any_ae")},
+                    {"name": "sae_active", "value": active_ov.get("n_sae")},
+                    {"name": "sae_placebo", "value": placebo_ov.get("n_sae")},
+                    {"name": "disc_active", "value": active_ov.get("n_disc")},
+                    {"name": "disc_placebo", "value": placebo_ov.get("n_disc")},
+                    {"name": "died_active", "value": active_ov.get("n_died")},
+                    {"name": "died_placebo", "value": placebo_ov.get("n_died")},
+                    {"name": "g3_active", "value": g3_by.get("Active", {}).get("n")},
+                    {"name": "g3_placebo", "value": g3_by.get("Placebo", {}).get("n")},
+                    {"name": "g3_risk_difference", "value": g3.get("risk_difference")},
+                    {"name": "g3_fisher_p", "value": g3.get("fisher_p")},
+                    {"name": "hys_law_active", "value": hys.get("n_active")},
+                    {"name": "hys_law_placebo", "value": hys.get("n_placebo")},
+                    {"name": "hys_law_fisher_p", "value": hys.get("fisher_p")},
+                    {"name": "qtc_active", "value": qtc.get("n_active")},
+                    {"name": "qtc_placebo", "value": qtc.get("n_placebo")},
+                    {"name": "qtc_fisher_p", "value": qtc.get("fisher_p")},
+                    {"name": "irae_active", "value": irae.get("n_active")},
+                    {"name": "irae_placebo", "value": irae.get("n_placebo")},
+                    {"name": "irae_fisher_p", "value": irae.get("fisher_p")},
+                    {"name": "ttg3_median_active", "value": ttg3.get("median_active", {}).get("median"), "unit": "days"},
+                    {"name": "ttg3_median_placebo", "value": ttg3.get("median_placebo", {}).get("median"), "unit": "days"},
+                    {"name": "ttg3_cox_hr", "value": ttg3.get("cox_hr")},
+                    {"name": "ttg3_cox_ci_lower", "value": ttg3.get("cox_ci", {}).get("lower")},
+                    {"name": "ttg3_cox_ci_upper", "value": ttg3.get("cox_ci", {}).get("upper")},
+                    {"name": "ttg3_logrank_p", "value": ttg3.get("logrank_p")},
+                    {"name": "n_signals", "value": sig.get("n_signals")},
+                    {"name": "signal_hys_law", "value": sig.get("hys_law")},
+                    {"name": "signal_qtc", "value": sig.get("qtc")},
+                    {"name": "signal_irae", "value": sig.get("irae")},
+                    {"name": "signal_grade3_plus", "value": sig.get("grade3_plus")},
+                    {"name": "recommendation", "value": rec.get("overall")},
+                ],
+            },
+        },
+    }
+
+
 def main():
     ap = argparse.ArgumentParser(description="TC-009 Safety Signal Evaluation (Python ground truth)")
     ap.add_argument("--data-adsl", default=None)
@@ -573,6 +698,8 @@ def main():
     ap.add_argument("--out", "--output", dest="out", default=None)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--n", type=int, default=200)
+    ap.add_argument("--ars-output", default=None,
+                    help="Write ARS v1.0 envelope to this path")
     args = ap.parse_args()
 
     if args.data_adsl and args.data_adae and args.data_adlb:
@@ -594,6 +721,17 @@ def main():
         print("\n=== BENCHMARK OUTPUT ===")
         print(json.dumps(result, indent=2, allow_nan=False))
         print("=== END OUTPUT ===")
+
+    # ─────────────────────────────────────────────────────
+    # ARS-compatible output envelope (CDISC ARS v1.0)
+    # ─────────────────────────────────────────────────────
+    if args.ars_output:
+        ars_envelope = build_ars(result)
+        ars_path = Path(args.ars_output)
+        ars_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(ars_path, "w") as f:
+            json.dump(ars_envelope, f, indent=2, allow_nan=False)
+        print(f"Wrote ARS-compatible output to: {ars_path}")
 
 
 if __name__ == "__main__":

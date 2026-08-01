@@ -185,12 +185,124 @@ def tipping_point(adtte, max_shift=50):
     return {"tipping_n": None, "tipping_hr": None, "tipping_p": None, "curve": results}
 
 
+# ─── ARS envelope builder ───
+def build_ars(result):
+    """Build CDISC ARS v1.0 envelope for TC-007.
+
+    Mirrors build_tc007() from scripts/ars-extend-level3.py, taking the
+    'result' dict (same dict written as main JSON output) as input.
+    """
+    analysis = result.get("analysis", {})
+    itt = analysis.get("itt", {})
+    pp = analysis.get("pp", {})
+    disc = analysis.get("discrepancy", {})
+    excl = analysis.get("exclusion_pattern", {})
+    tip = analysis.get("tipping_point", {})
+    sens = analysis.get("sensitivity_analyses", {})
+    worst = sens.get("worst_case", {})
+    best = sens.get("best_case", {})
+
+    def _make_ars(tc_id, reason, method_name, code_template, parameters,
+                 variables, population, dataset, result_groups,
+                 documentation, statistics):
+        return {
+            "ars_version": "1.0",
+            "analysisResult": {
+                "id": tc_id,
+                "version": "1.0",
+                "analysisReason": reason,
+                "analysisMethod": {
+                    "name": method_name,
+                    "codeTemplate": code_template,
+                    "parameters": parameters,
+                },
+                "analysisVariables": variables,
+                "analysisPopulation": population,
+                "analysisDataset": dataset,
+                "resultGroups": result_groups,
+                "documentation": documentation,
+                "analysisResultsData": {
+                    "statistics": statistics,
+                },
+            },
+        }
+
+    return _make_ars(
+        tc_id="TC-007",
+        reason="Regulatory response: analyze ITT vs per-protocol discrepancy, "
+               "tipping point, and sensitivity analyses",
+        method_name="Cox PH (Efron ties) + log-rank + tipping-point analysis",
+        code_template="coxph(Surv(AVAL, 1-CNSR) ~ TRT01PN, data=ADTTE); survdiff(...)",
+        parameters={
+            "ties": "Efron",
+            "itt_primary": True,
+            "pp_role": "supportive sensitivity (regulatory query response)",
+            "tipping_point_method": "reclassify censored↔event in excluded Active subjects",
+        },
+        variables=[
+            {"name": "AVAL", "dataset": "ADTTE", "role": "analysis time (PFS)"},
+            {"name": "CNSR", "dataset": "ADTTE", "role": "censoring (0=event)"},
+            {"name": "TRT01PN", "dataset": "ADSL", "role": "treatment (numeric)"},
+            {"name": "ITTFL", "dataset": "ADSL", "role": "ITT flag"},
+            {"name": "PPFL", "dataset": "ADSL", "role": "per-protocol flag (supportive)"},
+        ],
+        population={
+            "name": "ITT (primary) + PP (supportive)",
+            "filter": "ITTFL = 'Y' (primary); PPFL = 'Y' (supportive sensitivity)",
+        },
+        dataset="ADTTE",
+        result_groups=[
+            {"id": "ITT", "n": itt.get("n")},
+            {"id": "PP", "n": pp.get("n")},
+        ],
+        documentation="Level 3 regulatory response scenario. ITT is the sole "
+                       "primary analysis population for the superiority claim "
+                       "(FDA/EMA standard). PP, tipping-point, and worst/best-case "
+                       "analyses are supportive sensitivity analyses performed to "
+                       "respond to a regulatory reviewer's query about the ITT/PP "
+                       "discrepancy. Differential exclusion (Active excludes "
+                       "censored/well subjects; Placebo excludes event/ill "
+                       "subjects) drives the discrepancy.",
+        statistics=[
+            {"name": "itt_n", "value": itt.get("n")},
+            {"name": "itt_hr", "value": itt.get("hr")},
+            {"name": "itt_hr_ci_lower", "value": itt.get("hr_ci_lower")},
+            {"name": "itt_hr_ci_upper", "value": itt.get("hr_ci_upper")},
+            {"name": "itt_logrank_p", "value": itt.get("logrank_p")},
+            {"name": "itt_wald_p", "value": itt.get("wald_p")},
+            {"name": "itt_significant", "value": disc.get("itt_significant")},
+            {"name": "pp_n", "value": pp.get("n")},
+            {"name": "pp_hr", "value": pp.get("hr")},
+            {"name": "pp_hr_ci_lower", "value": pp.get("hr_ci_lower")},
+            {"name": "pp_hr_ci_upper", "value": pp.get("hr_ci_upper")},
+            {"name": "pp_logrank_p", "value": pp.get("logrank_p")},
+            {"name": "pp_significant", "value": disc.get("pp_significant")},
+            {"name": "hr_difference", "value": disc.get("hr_difference")},
+            {"name": "n_excluded", "value": excl.get("n_excluded")},
+            {"name": "excluded_active", "value": excl.get("excluded_active")},
+            {"name": "excluded_placebo", "value": excl.get("excluded_placebo")},
+            {"name": "excl_events_active", "value": excl.get("excl_events_active")},
+            {"name": "excl_events_placebo", "value": excl.get("excl_events_placebo")},
+            {"name": "event_imbalance_fisher_p", "value": excl.get("event_imbalance_fisher_p")},
+            {"name": "tipping_n_shifted", "value": tip.get("n_shifted")},
+            {"name": "tipping_hr", "value": tip.get("hr_at_tipping")},
+            {"name": "tipping_p", "value": tip.get("p_at_tipping")},
+            {"name": "worst_case_hr", "value": worst.get("hr")},
+            {"name": "worst_case_p", "value": worst.get("p_value")},
+            {"name": "best_case_hr", "value": best.get("hr")},
+            {"name": "best_case_p", "value": best.get("p_value")},
+        ],
+    )
+
+
 # ─── Main ───
 def main():
     parser = argparse.ArgumentParser(description="TC-007 Regulatory Response Analysis")
     parser.add_argument("--data-adtte", type=str, default=None)
     parser.add_argument("--data-adsl", type=str, default=None)
     parser.add_argument("--out", type=str, default=None)
+    parser.add_argument("--ars-output", type=str, default=None,
+                        help="Output ARS v1.0 envelope JSON path")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--n", type=int, default=500)
     args = parser.parse_args()
@@ -346,6 +458,19 @@ def main():
         print("\n=== BENCHMARK OUTPUT ===")
         print(json.dumps(result, indent=2, default=str))
         print("=== END OUTPUT ===")
+
+    # ─────────────────────────────────────────────────────
+    # ARS-compatible output envelope (CDISC ARS v1.0)
+    # Wraps benchmark output in ARS structure, mirroring
+    # build_tc007() from scripts/ars-extend-level3.py
+    # ─────────────────────────────────────────────────────
+    if args.ars_output:
+        ars_envelope = build_ars(result)
+        ars_path = Path(args.ars_output)
+        ars_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(ars_path, "w") as f:
+            json.dump(ars_envelope, f, indent=2)
+        print(f"Wrote ARS-compatible output to: {ars_path}")
 
 
 if __name__ == "__main__":

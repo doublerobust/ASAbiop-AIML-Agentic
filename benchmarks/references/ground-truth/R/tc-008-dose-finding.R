@@ -32,6 +32,7 @@ args <- commandArgs(trailingOnly = TRUE)
 params_path <- NA
 draws_path <- NA
 out_path <- NA
+ars_output <- NA
 seed <- 42
 n_sim <- 2000
 
@@ -40,6 +41,7 @@ while (i <= length(args)) {
   if (args[i] == "--params" && i + 1 <= length(args)) { params_path <- args[i + 1]; i <- i + 2 }
   else if (args[i] == "--draws" && i + 1 <= length(args)) { draws_path <- args[i + 1]; i <- i + 2 }
   else if (args[i] == "--out" && i + 1 <= length(args)) { out_path <- args[i + 1]; i <- i + 2 }
+  else if (args[i] == "--ars-output" && i + 1 <= length(args)) { ars_output <- args[i + 1]; i <- i + 2 }
   else if (args[i] == "--seed" && i + 1 <= length(args)) { seed <- as.integer(args[i + 1]); i <- i + 2 }
   else if (args[i] == "--n-sim" && i + 1 <= length(args)) { n_sim <- as.integer(args[i + 1]); i <- i + 2 }
   else { i <- i + 1 }
@@ -269,4 +271,109 @@ if (!is.na(out_path) && nzchar(out_path)) {
   write_output(result, out_path)
 } else {
   print_output(result)
+}
+
+# ─────────────────────────────────────────────────────
+# ARS-compatible output envelope (CDISC ARS v1.0)
+# Phase I dose-finding design — ITT/PP distinction does not apply.
+# Mirrors build_tc008() from scripts/ars-extend-level3.py.
+# ─────────────────────────────────────────────────────
+if (!is.na(ars_output) && nzchar(ars_output)) {
+  design <- result$design
+  sim <- result$simulation
+  oc <- sim$operating_characteristics
+  expansion <- result$expansion_cohort
+  true_rates <- design$true_dlt_rates
+  prob_select <- oc$prob_select_rpd
+  n_doses <- design$n_doses
+  rpd <- expansion$rpd
+
+  # Safe index helper (R is 1-indexed)
+  safe_index <- function(lst, idx) {
+    if (!is.null(lst) && length(lst) >= idx && idx > 0) lst[[idx]] else NULL
+  }
+
+  # Result groups: Dose_1 .. Dose_n, n=0 (design stage)
+  result_groups <- lapply(1:n_doses, function(i) {
+    list(id = paste0("Dose_", i), n = 0)
+  })
+
+  # Documentation string
+  prob_sel_rpd <- safe_index(prob_select, rpd)
+  true_rate_rpd <- safe_index(true_rates, rpd)
+  documentation <- paste0(
+    "Level 3 Phase I dose-finding design. ITT/PP distinction ",
+    "does not apply — all treated patients form the analysis set. ",
+    "BOIN identifies Dose ", rpd, " ",
+    "(", expansion$rpd_dose, " mg) as RP2D with ",
+    prob_sel_rpd, " ",
+    "selection probability. True DLT rates: ",
+    paste(true_rates, collapse = ", "), ". Dose ", rpd, " (true rate ",
+    true_rate_rpd, ") ",
+    "is the true MTD (closest to target 0.30)."
+  )
+
+  ars_envelope <- list(
+    ars_version = "1.0",
+    analysisResult = list(
+      id = "TC-008",
+      version = "1.0",
+      analysisReason = "Phase I dose-finding study design with BOIN and simulation operating characteristics",
+      analysisMethod = list(
+        name = "BOIN (Bayesian Optimal Interval) + Monte Carlo simulation",
+        codeTemplate = "boin(dlt_data, dose_levels, target=0.30, cohort=3, max_n=30)",
+        parameters = list(
+          target_dlt_rate = design$target_dlt_rate,
+          n_doses = design$n_doses,
+          cohort_size = design$cohort_size,
+          max_n = design$max_n,
+          escalation_boundary = design$escalation_boundary,
+          deescalation_boundary = design$deescalation_boundary,
+          n_sim = sim$n_sim,
+          seed = sim$seed,
+          expansion_cohort_size = design$expansion_cohort_size
+        )
+      ),
+      analysisVariables = list(
+        list(name = "DLT", dataset = "ADXD", role = "dose-limiting toxicity (0/1)"),
+        list(name = "DOSE", dataset = "ADSL", role = "dose level assigned"),
+        list(name = "USUBJID", dataset = "ADSL", role = "subject identifier")
+      ),
+      analysisPopulation = list(
+        name = "All treated patients (Phase I)",
+        filter = "SAFFL = 'Y' (all who received any study drug)"
+      ),
+      analysisDataset = "ADXD",
+      resultGroups = result_groups,
+      documentation = documentation,
+      analysisResultsData = list(
+        statistics = list(
+          list(name = "target_dlt_rate", value = design$target_dlt_rate),
+          list(name = "n_doses", value = design$n_doses),
+          list(name = "cohort_size", value = design$cohort_size),
+          list(name = "max_n", value = design$max_n),
+          list(name = "escalation_boundary", value = design$escalation_boundary),
+          list(name = "deescalation_boundary", value = design$deescalation_boundary),
+          list(name = "n_sim", value = sim$n_sim),
+          list(name = "prob_select_dose1", value = safe_index(prob_select, 1)),
+          list(name = "prob_select_dose2", value = safe_index(prob_select, 2)),
+          list(name = "prob_select_dose3_mtd", value = safe_index(prob_select, 3)),
+          list(name = "prob_select_dose4", value = safe_index(prob_select, 4)),
+          list(name = "prob_select_dose5", value = safe_index(prob_select, 5)),
+          list(name = "prob_no_safe_dose", value = oc$prob_no_safe_dose),
+          list(name = "expected_n_dlts", value = oc$expected_n_dlts),
+          list(name = "expected_sample_size", value = oc$expected_sample_size),
+          list(name = "prob_early_stop", value = oc$prob_early_stop),
+          list(name = "rpd_dose_level", value = expansion$rpd),
+          list(name = "rpd_dose_mg", value = expansion$rpd_dose, unit = "mg"),
+          list(name = "expansion_cohort_size", value = expansion$n_expansion),
+          list(name = "expected_dlt_rate_at_rpd", value = expansion$expected_dlt_rate_at_rpd)
+        )
+      )
+    )
+  )
+
+  ars_json <- jsonlite::toJSON(ars_envelope, auto_unbox = TRUE, pretty = TRUE)
+  writeLines(ars_json, ars_output)
+  cat(sprintf("Wrote ARS-compatible output to: %s\n", ars_output))
 }

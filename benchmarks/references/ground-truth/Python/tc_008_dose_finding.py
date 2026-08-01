@@ -134,6 +134,8 @@ def main():
     parser.add_argument("--params", type=str, default=None, help="Path to design params JSON")
     parser.add_argument("--draws", type=str, default=None, help="Path to simulation draws CSV")
     parser.add_argument("--out", type=str, default=None, help="Output JSON path")
+    parser.add_argument("--ars-output", type=str, default=None,
+                        help="Output ARS-compatible JSON envelope path")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--n-sim", type=int, default=2000)
     args = parser.parse_args()
@@ -238,6 +240,119 @@ def main():
         print("\n=== BENCHMARK OUTPUT ===")
         print(json.dumps(result, indent=2, default=str))
         print("=== END OUTPUT ===")
+
+    # ─────────────────────────────────────────────────────
+    # ARS-compatible output envelope (CDISC ARS v1.0)
+    # Phase I dose-finding design — ITT/PP distinction does not apply.
+    # ─────────────────────────────────────────────────────
+    if args.ars_output:
+        ars_envelope = build_ars(result)
+        ars_path = Path(args.ars_output)
+        ars_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(ars_path, "w") as f:
+            json.dump(ars_envelope, f, indent=2, default=str)
+        print(f"Wrote ARS-compatible output to: {ars_path}")
+
+
+def build_ars(result: dict) -> dict:
+    """Build an ARS v1.0 envelope for TC-008 dose-finding study design.
+
+    Mirrors build_tc008() from scripts/ars-extend-level3.py. The 'result' dict
+    structure matches what build_tc008 expects as 'data'.
+    """
+    design = result.get("design", {})
+    sim = result.get("simulation", {})
+    oc = sim.get("operating_characteristics", {})
+    expansion = result.get("expansion_cohort", {})
+    true_rates = design.get("true_dlt_rates", [])
+    prob_select = oc.get("prob_select_rpd", [])
+    n_doses = design.get("n_doses", 5)
+    rpd = expansion.get("rpd", 3)
+
+    def _safe_index(lst, idx):
+        if lst and isinstance(lst, list) and len(lst) > idx:
+            return lst[idx]
+        return None
+
+    return {
+        "ars_version": "1.0",
+        "analysisResult": {
+            "id": "TC-008",
+            "version": "1.0",
+            "analysisReason": (
+                "Phase I dose-finding study design with BOIN and simulation "
+                "operating characteristics"
+            ),
+            "analysisMethod": {
+                "name": "BOIN (Bayesian Optimal Interval) + Monte Carlo simulation",
+                "codeTemplate": "boin(dlt_data, dose_levels, target=0.30, cohort=3, max_n=30)",
+                "parameters": {
+                    "target_dlt_rate": design.get("target_dlt_rate"),
+                    "n_doses": design.get("n_doses"),
+                    "cohort_size": design.get("cohort_size"),
+                    "max_n": design.get("max_n"),
+                    "escalation_boundary": design.get("escalation_boundary"),
+                    "deescalation_boundary": design.get("deescalation_boundary"),
+                    "n_sim": sim.get("n_sim"),
+                    "seed": sim.get("seed"),
+                    "expansion_cohort_size": design.get("expansion_cohort_size"),
+                },
+            },
+            "analysisVariables": [
+                {"name": "DLT", "dataset": "ADXD", "role": "dose-limiting toxicity (0/1)"},
+                {"name": "DOSE", "dataset": "ADSL", "role": "dose level assigned"},
+                {"name": "USUBJID", "dataset": "ADSL", "role": "subject identifier"},
+            ],
+            "analysisPopulation": {
+                "name": "All treated patients (Phase I)",
+                "filter": "SAFFL = 'Y' (all who received any study drug)",
+            },
+            "analysisDataset": "ADXD",
+            # Dose levels are the result groups. This is a *design* test case — no
+            # actual patient allocation exists yet. Per-dose sample sizes are
+            # stochastic (BOIN allocates adaptively); we set n=0 to indicate the
+            # design stage. Expected total N and selection probabilities are
+            # captured in the statistics block.
+            "resultGroups": [
+                {"id": f"Dose_{i+1}", "n": 0} for i in range(n_doses)
+            ],
+            "documentation": (
+                "Level 3 Phase I dose-finding design. ITT/PP distinction "
+                "does not apply — all treated patients form the analysis set. "
+                f"BOIN identifies Dose {rpd} "
+                f"({expansion.get('rpd_dose')} mg) as RP2D with "
+                f"{_safe_index(prob_select, rpd - 1)} "
+                "selection probability. True DLT rates: "
+                f"{true_rates}. Dose {rpd} (true rate "
+                f"{_safe_index(true_rates, rpd - 1)}) "
+                "is the true MTD (closest to target 0.30)."
+            ),
+            "analysisResultsData": {
+                "statistics": [
+                    {"name": "target_dlt_rate", "value": design.get("target_dlt_rate")},
+                    {"name": "n_doses", "value": design.get("n_doses")},
+                    {"name": "cohort_size", "value": design.get("cohort_size")},
+                    {"name": "max_n", "value": design.get("max_n")},
+                    {"name": "escalation_boundary", "value": design.get("escalation_boundary")},
+                    {"name": "deescalation_boundary", "value": design.get("deescalation_boundary")},
+                    {"name": "n_sim", "value": sim.get("n_sim")},
+                    {"name": "prob_select_dose1", "value": _safe_index(prob_select, 0)},
+                    {"name": "prob_select_dose2", "value": _safe_index(prob_select, 1)},
+                    {"name": "prob_select_dose3_mtd", "value": _safe_index(prob_select, 2)},
+                    {"name": "prob_select_dose4", "value": _safe_index(prob_select, 3)},
+                    {"name": "prob_select_dose5", "value": _safe_index(prob_select, 4)},
+                    {"name": "prob_no_safe_dose", "value": oc.get("prob_no_safe_dose")},
+                    {"name": "expected_n_dlts", "value": oc.get("expected_n_dlts")},
+                    {"name": "expected_sample_size", "value": oc.get("expected_sample_size")},
+                    {"name": "prob_early_stop", "value": oc.get("prob_early_stop")},
+                    {"name": "rpd_dose_level", "value": expansion.get("rpd")},
+                    {"name": "rpd_dose_mg", "value": expansion.get("rpd_dose"), "unit": "mg"},
+                    {"name": "expansion_cohort_size", "value": expansion.get("n_expansion")},
+                    {"name": "expected_dlt_rate_at_rpd", "value": expansion.get("expected_dlt_rate_at_rpd")},
+                ],
+            },
+        },
+    }
 
 
 if __name__ == "__main__":

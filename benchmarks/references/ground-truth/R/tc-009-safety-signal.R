@@ -48,6 +48,7 @@ data_adsl <- NA
 data_adae <- NA
 data_adlb <- NA
 out_path <- NA
+ars_output <- NA
 
 i <- 1
 while (i <= length(args)) {
@@ -55,6 +56,7 @@ while (i <= length(args)) {
   else if (args[i] == "--data-adae" && i + 1 <= length(args)) { data_adae <- args[i + 1]; i <- i + 2 }
   else if (args[i] == "--data-adlb" && i + 1 <= length(args)) { data_adlb <- args[i + 1]; i <- i + 2 }
   else if (args[i] == "--out" && i + 1 <= length(args)) { out_path <- args[i + 1]; i <- i + 2 }
+  else if (args[i] == "--ars-output" && i + 1 <= length(args)) { ars_output <- args[i + 1]; i <- i + 2 }
   else { i <- i + 1 }
 }
 
@@ -459,4 +461,127 @@ if (!is.na(out_path) && nzchar(out_path)) {
   write_output_tc009(result, out_path)
 } else {
   print_output_tc009(result)
+}
+
+# ─────────────────────────────────────────────────────
+# ARS-compatible output envelope (CDISC ARS v1.0)
+# Mirrors build_tc009 from scripts/ars-extend-level3.py
+# ─────────────────────────────────────────────────────
+if (!is.na(ars_output) && nzchar(ars_output)) {
+  sd <- result$study_design
+  overview <- result$ae_overview
+  by_arm <- overview$by_arm
+  active_ov <- by_arm$Active
+  placebo_ov <- by_arm$Placebo
+  g3 <- result$grade3_plus
+  g3_by <- g3$by_arm
+  hys <- result$lab_abnormalities$hys_law
+  qtc <- result$lab_abnormalities$qtc_prolongation
+  irae <- result$ae_special_interest$irae
+  ttg3 <- result$time_to_grade3
+  rec <- result$recommendation
+  sig <- rec$signals_summary
+
+  ars_envelope <- list(
+    ars_version = "1.0",
+    analysisResult = list(
+      id = "TC-009",
+      version = "1.0",
+      analysisReason = paste0(
+        "Safety signal evaluation and DMC report — 8-domain safety ",
+        "analysis with totality-of-evidence recommendation"
+      ),
+      analysisMethod = list(
+        name = paste0(
+          "AE frequency + exposure-adjusted rates + KM/Cox PH + ",
+          "MGPS disproportionality + Fisher exact"
+        ),
+        codeTemplate = paste0(
+          "survfit(Surv(TTG3, 1-CNSR) ~ TRT01A); coxph(...); ",
+          "fisher.test(matrix); mgps(ADAE)"
+        ),
+        parameters = list(
+          n_domains = 8,
+          ae_hierarchy = "SOC → PT (MedDRA)",
+          km_ci_method = "Brookmeyer-Crowley (log-log transform)",
+          cox_ties = "Efron",
+          mgps_threshold = "EBGM >= 2.0 AND observed >= 3",
+          signal_definition = "risk difference 95% CI excludes 0 OR MGPS EBGM >= 2.0"
+        )
+      ),
+      analysisVariables = list(
+        list(name = "AESOC", dataset = "ADAE", role = "System Organ Class"),
+        list(name = "AEDECOD", dataset = "ADAE", role = "Preferred Term"),
+        list(name = "AESER", dataset = "ADAE", role = "serious AE flag"),
+        list(name = "AESEV", dataset = "ADAE", role = "severity (Grade 3+)"),
+        list(name = "AVAL", dataset = "ADTTE", role = "time to first Grade 3+ AE"),
+        list(name = "CNSR", dataset = "ADTTE", role = "censoring"),
+        list(name = "TRT01A", dataset = "ADSL", role = "treatment"),
+        list(name = "SAFFL", dataset = "ADSL", role = "safety flag"),
+        list(name = "LBSTRESN", dataset = "ADLB", role = "lab result (Hy's Law / QTc)")
+      ),
+      analysisPopulation = list(
+        name = "Safety (SAFFL=Y)",
+        filter = "SAFFL = 'Y' — all randomized who received any study treatment"
+      ),
+      analysisDataset = "ADAE",
+      resultGroups = list(
+        list(id = "Active", n = sd$n_per_arm$Active),
+        list(id = "Placebo", n = sd$n_per_arm$Placebo)
+      ),
+      documentation = paste0(
+        "Level 3 DMC safety report. 8 domains: (1) AE overview, ",
+        "(2) exposure-adjusted AE rates, (3) Grade 3+ AEs, ",
+        "(4) lab abnormalities (Hy's Law, QTc), (5) time-to-first ",
+        "Grade 3+ AE (KM + Cox PH + log-rank), (6) irAE, ",
+        "(7) MGPS disproportionality, (8) DMC recommendation. ",
+        "Phase III oncology — ITT is sole primary population; ",
+        "no per-protocol analysis per FDA/EMA standards."
+      ),
+      analysisResultsData = list(
+        statistics = list(
+          list(name = "n_total", value = sd$n_subjects),
+          list(name = "n_active", value = sd$n_per_arm$Active),
+          list(name = "n_placebo", value = sd$n_per_arm$Placebo),
+          list(name = "any_ae_active", value = active_ov$n_any_ae),
+          list(name = "any_ae_placebo", value = placebo_ov$n_any_ae),
+          list(name = "sae_active", value = active_ov$n_sae),
+          list(name = "sae_placebo", value = placebo_ov$n_sae),
+          list(name = "disc_active", value = active_ov$n_disc),
+          list(name = "disc_placebo", value = placebo_ov$n_disc),
+          list(name = "died_active", value = active_ov$n_died),
+          list(name = "died_placebo", value = placebo_ov$n_died),
+          list(name = "g3_active", value = g3_by$Active$n),
+          list(name = "g3_placebo", value = g3_by$Placebo$n),
+          list(name = "g3_risk_difference", value = g3$risk_difference),
+          list(name = "g3_fisher_p", value = g3$fisher_p),
+          list(name = "hys_law_active", value = hys$n_active),
+          list(name = "hys_law_placebo", value = hys$n_placebo),
+          list(name = "hys_law_fisher_p", value = hys$fisher_p),
+          list(name = "qtc_active", value = qtc$n_active),
+          list(name = "qtc_placebo", value = qtc$n_placebo),
+          list(name = "qtc_fisher_p", value = qtc$fisher_p),
+          list(name = "irae_active", value = irae$n_active),
+          list(name = "irae_placebo", value = irae$n_placebo),
+          list(name = "irae_fisher_p", value = irae$fisher_p),
+          list(name = "ttg3_median_active", value = ttg3$median_active$median, unit = "days"),
+          list(name = "ttg3_median_placebo", value = ttg3$median_placebo$median, unit = "days"),
+          list(name = "ttg3_cox_hr", value = ttg3$cox_hr),
+          list(name = "ttg3_cox_ci_lower", value = ttg3$cox_ci$lower),
+          list(name = "ttg3_cox_ci_upper", value = ttg3$cox_ci$upper),
+          list(name = "ttg3_logrank_p", value = ttg3$logrank_p),
+          list(name = "n_signals", value = sig$n_signals),
+          list(name = "signal_hys_law", value = sig$hys_law),
+          list(name = "signal_qtc", value = sig$qtc),
+          list(name = "signal_irae", value = sig$irae),
+          list(name = "signal_grade3_plus", value = sig$grade3_plus),
+          list(name = "recommendation", value = rec$overall)
+        )
+      )
+    )
+  )
+
+  ars_json <- jsonlite::toJSON(ars_envelope, auto_unbox = TRUE, pretty = TRUE, na = "null")
+  writeLines(ars_json, ars_output)
+  cat(sprintf("Wrote ARS-compatible output to: %s\n", ars_output))
 }

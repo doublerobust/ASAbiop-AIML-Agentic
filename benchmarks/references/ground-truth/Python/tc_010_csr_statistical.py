@@ -127,6 +127,118 @@ def cat_test(a_events, a_n, b_events, b_n):
     }
 
 
+# ─── ARS v1.0 envelope builder ───
+def build_ars(result):
+    """Build a CDISC ARS v1.0 envelope from the TC-010 result dict.
+
+    Mirrors the build_tc010() function from scripts/ars-extend-level3.py.
+    Phase III oncology superiority trial — ITT is the sole primary analysis
+    population; no per-protocol analysis per FDA/EMA standards.
+    """
+    sd = result.get("study_design", {})
+    disp = result.get("section_11_1_disposition", {})
+    demo = result.get("section_11_2_demographics", {})
+    eff = result.get("section_11_4_efficacy", {})
+    pfs = eff.get("primary_pfs", {})
+    osr = eff.get("secondary_os", {})
+    orr = eff.get("secondary_orr_dcr", {})
+    safety = result.get("section_11_5_safety", {})
+    sby = safety.get("by_arm", {})
+
+    return {
+        "ars_version": "1.0",
+        "analysisResult": {
+            "id": "TC-010",
+            "version": "1.0",
+            "analysisReason": "ICH E3 CSR statistical sections — disposition, "
+                              "demographics, primary/secondary efficacy, subgroup "
+                              "forest, sensitivity, safety",
+            "analysisMethod": {
+                "name": "KM + Cox PH (Efron) + log-rank + RECIST 1.1 + descriptive stats",
+                "codeTemplate": "survfit(Surv(AVAL, 1-CNSR) ~ TRT01A); coxph(...); "
+                                "prop.test(x, n); t.test(AGE ~ TRT01A)",
+                "parameters": {
+                    "csr_standard": "ICH E3",
+                    "primary_endpoint": sd.get("primary_endpoint"),
+                    "secondary_endpoints": sd.get("secondary_endpoints"),
+                    "km_ci_method": "Brookmeyer-Crowley (log-log transform)",
+                    "cox_ties": "Efron",
+                    "response_criteria": "RECIST 1.1",
+                    "itt_primary": True,
+                    "pp_analysis": "not performed (FDA/EMA oncology standard)",
+                },
+            },
+            "analysisVariables": [
+                {"name": "AVAL", "dataset": "ADTTE", "role": "analysis time (PFS/OS)"},
+                {"name": "CNSR", "dataset": "ADTTE", "role": "censoring (0=event)"},
+                {"name": "BOR", "dataset": "ADRS", "role": "best overall response"},
+                {"name": "AESOC", "dataset": "ADAE", "role": "System Organ Class"},
+                {"name": "AEDECOD", "dataset": "ADAE", "role": "Preferred Term"},
+                {"name": "TRT01A", "dataset": "ADSL", "role": "treatment"},
+                {"name": "ITTFL", "dataset": "ADSL", "role": "ITT flag"},
+                {"name": "SAFFL", "dataset": "ADSL", "role": "safety flag"},
+                {"name": "AGE", "dataset": "ADSL", "role": "age (baseline balance)"},
+                {"name": "SEX", "dataset": "ADSL", "role": "sex (baseline balance)"},
+            ],
+            "analysisPopulation": {
+                "name": "ITT (primary) + Safety (secondary)",
+                "filter": "ITTFL = 'Y' (primary efficacy); SAFFL = 'Y' (safety)",
+            },
+            "analysisDataset": "ADTTE/ADRS/ADAE",
+            "resultGroups": [
+                {"id": "Active", "n": sd.get("n_subjects", 400) // 2 if sd.get("n_subjects") else None},
+                {"id": "Placebo", "n": sd.get("n_subjects", 400) // 2 if sd.get("n_subjects") else None},
+            ],
+            "documentation": "Level 3 ICH E3 CSR statistical sections. Phase III "
+                              "oncology superiority trial — ITT is the sole primary "
+                              "analysis population; no per-protocol analysis performed "
+                              "per FDA/EMA standards. Covers Section 9 (methods) and "
+                              "Section 11 (disposition, demographics, primary PFS, "
+                              "secondary OS/ORR/DCR, subgroup forest, sensitivity, safety).",
+            "analysisResultsData": {
+                "statistics": [
+                    {"name": "n_randomized", "value": disp.get("n_randomized")},
+                    {"name": "n_treated", "value": disp.get("n_treated")},
+                    {"name": "n_completed", "value": disp.get("n_completed_total")},
+                    {"name": "n_discontinued", "value": disp.get("n_discontinued_total")},
+                    {"name": "n_major_deviations", "value": disp.get("n_major_deviations_total")},
+                    {"name": "age_balance_p", "value": demo.get("age_balance_test", {}).get("p")},
+                    {"name": "sex_balance_p", "value": demo.get("sex_balance_test", {}).get("p")},
+                    {"name": "pfs_median_active", "value": pfs.get("by_arm", {}).get("Active", {}).get("median"), "unit": "days"},
+                    {"name": "pfs_median_placebo", "value": pfs.get("by_arm", {}).get("Placebo", {}).get("median"), "unit": "days"},
+                    {"name": "pfs_cox_hr", "value": pfs.get("cox", {}).get("hr")},
+                    {"name": "pfs_cox_ci_lower", "value": pfs.get("cox", {}).get("ci_lower")},
+                    {"name": "pfs_cox_ci_upper", "value": pfs.get("cox", {}).get("ci_upper")},
+                    {"name": "pfs_cox_p", "value": pfs.get("cox", {}).get("p")},
+                    {"name": "pfs_logrank_p", "value": pfs.get("logrank_p")},
+                    {"name": "pfs_events_active", "value": pfs.get("by_arm", {}).get("Active", {}).get("n_events")},
+                    {"name": "pfs_events_placebo", "value": pfs.get("by_arm", {}).get("Placebo", {}).get("n_events")},
+                    {"name": "os_cox_hr", "value": osr.get("cox", {}).get("hr")},
+                    {"name": "os_cox_ci_lower", "value": osr.get("cox", {}).get("ci_lower")},
+                    {"name": "os_cox_ci_upper", "value": osr.get("cox", {}).get("ci_upper")},
+                    {"name": "os_cox_p", "value": osr.get("cox", {}).get("p")},
+                    {"name": "os_logrank_p", "value": osr.get("logrank_p")},
+                    {"name": "orr_active_pct", "value": orr.get("by_arm", {}).get("Active", {}).get("orr_pct"), "unit": "%"},
+                    {"name": "orr_placebo_pct", "value": orr.get("by_arm", {}).get("Placebo", {}).get("orr_pct"), "unit": "%"},
+                    {"name": "orr_risk_difference", "value": orr.get("risk_difference", {}).get("rd")},
+                    {"name": "orr_fisher_p", "value": orr.get("risk_difference", {}).get("fisher_p")},
+                    {"name": "dcr_active_pct", "value": orr.get("by_arm", {}).get("Active", {}).get("dcr_pct"), "unit": "%"},
+                    {"name": "dcr_placebo_pct", "value": orr.get("by_arm", {}).get("Placebo", {}).get("dcr_pct"), "unit": "%"},
+                    {"name": "sensitivity_pfs_hr", "value": eff.get("sensitivity_pfs", {}).get("cox", {}).get("hr")},
+                    {"name": "sensitivity_pfs_p", "value": eff.get("sensitivity_pfs", {}).get("cox", {}).get("p")},
+                    {"name": "any_ae_active", "value": sby.get("Active", {}).get("n_any_ae")},
+                    {"name": "any_ae_placebo", "value": sby.get("Placebo", {}).get("n_any_ae")},
+                    {"name": "sae_active", "value": sby.get("Active", {}).get("n_sae")},
+                    {"name": "sae_placebo", "value": sby.get("Placebo", {}).get("n_sae")},
+                    {"name": "g3_active", "value": sby.get("Active", {}).get("n_grade3_plus")},
+                    {"name": "g3_placebo", "value": sby.get("Placebo", {}).get("n_grade3_plus")},
+                    {"name": "n_deaths_total", "value": safety.get("death_summary", {}).get("n_deaths_total")},
+                ],
+            },
+        },
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description="TC-010 Python Ground Truth")
     parser.add_argument("--data-adsl", default="cross-lang-results/shared/adsl_tc010.csv")
@@ -135,6 +247,8 @@ def main():
     parser.add_argument("--data-adae", default="cross-lang-results/shared/adae_tc010.csv")
     parser.add_argument("--data-adlb", default="cross-lang-results/shared/adlb_tc010.csv")
     parser.add_argument("--output", default="cross-lang-results/python-output/TC-010.json")
+    parser.add_argument("--ars-output", default=None,
+                        help="Write CDISC ARS v1.0 envelope to this path")
     args = parser.parse_args()
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
@@ -454,6 +568,15 @@ def main():
     print(f"  ORR: Active={orr_result['by_arm']['Active']['orr_pct']}%, "
           f"Placebo={orr_result['by_arm']['Placebo']['orr_pct']}%", file=sys.stderr)
     print("[TC-010 Py] Done.", file=sys.stderr)
+
+    # ── ARS envelope output ──
+    if args.ars_output:
+        ars_envelope = build_ars(result)
+        ars_path = Path(args.ars_output)
+        ars_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(ars_path, "w") as f:
+            json.dump(ars_envelope, f, indent=2, default=str)
+        print(f"[TC-010 Py] Wrote ARS envelope to: {ars_path}", file=sys.stderr)
 
 
 if __name__ == "__main__":
