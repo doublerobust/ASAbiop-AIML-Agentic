@@ -77,7 +77,20 @@ Additional confirmed findings:
 
 - ✅ Daily development cron **paused** (job `dc5bd90b7093`).
 - ✅ This document created and committed.
-- ⏳ Next: Phase A fix 1 (comparator) — small, high-value; do before any other work.
+- ✅ **Phase A implemented and pushed (commit `ad746c0`)**:
+  - Comparator bug fixed (relative tolerance only when explicit); reproduced original
+    failure now scores 0.0
+  - TC-006 Schoenfeld formula fixed in R + Python + spec (508 events, was 127);
+    ground truth + ARS envelopes regenerated, R↔Python agree
+  - 4 checked-in outputs fixed to satisfy their own schemas (TC-013/014 R packages,
+    TC-017 R percentages, TC-023 Py ECOG level + silent empty-subgroup bug)
+  - `scripts/mutation-test.py` — 28/28 PASS, 0 FAIL (TC-035 no ground truth, N/A)
+  - `scripts/validate-checked-in-outputs.py` — 64/64 PASS
+  - `scripts/regression-check-fixed-tcs.py` — PASS
+  - Real `.github/workflows/verify.yml` CI (schema + mutation + regression gates)
+- ⏳ Independent QC (different model) in progress.
+- ⏳ Next after QC passes: resume cron with rewritten prompt (validity work only),
+  or move to Phase B (independent statistical review, SAS decision).
 
 ## 4. What Is NOT Changing
 
