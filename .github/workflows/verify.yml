@@ -25,14 +25,14 @@ jobs:
       - name: Install Python deps
         working-directory: benchmarks/scoring-harness
         run: |
-          pip install --quiet click pyyaml rich jsonschema numpy scipy pandas
           pip install --quiet -r requirements.txt
+          pip install --quiet jsonschema numpy scipy pandas
 
       - name: Install R deps
         working-directory: benchmarks
         run: |
-          Rscript -e 'if (!requireNamespace("jsonlite", quietly=TRUE)) install.packages("jsonlite", repos="https://cloud.r-project.org")'
-          Rscript -e 'if (!requireNamespace("optparse", quietly=TRUE)) install.packages("optparse", repos="https://cloud.r-project.org")'
+          Rscript -e 'options(repos = c(CRAN = "https://cloud.r-project.org")); if (!requireNamespace("jsonlite", quietly=TRUE)) install.packages("jsonlite")'
+          Rscript -e 'options(repos = c(CRAN = "https://cloud.r-project.org")); if (!requireNamespace("optparse", quietly=TRUE)) install.packages("optparse")'
 
       - name: Schema validation — checked-in ground truth
         working-directory: benchmarks

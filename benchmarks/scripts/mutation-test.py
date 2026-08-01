@@ -84,9 +84,12 @@ def validate_schema(data: dict, schema: dict) -> bool:
         return False
 
 
-def mutate_numbers(obj, pct=0.5, offset=0.5, _path=""):
+def mutate_numbers(obj, pct=0.5, offset=2.0, _path=""):
     """Recursively perturb every numeric leaf: value -> value*(1+pct) + offset.
-    Preserves types/keys so the mutated output stays structurally valid."""
+    Offset 2.0 ensures mutations exceed even large absolute tolerances
+    (e.g., cumdose_stats at abs=50) so every mutated field is individually
+    caught, not just the aggregate. Preserves types/keys so the mutated
+    output stays structurally valid."""
     if isinstance(obj, dict):
         return {k: mutate_numbers(v, pct, offset, f"{_path}.{k}") for k, v in obj.items()}
     if isinstance(obj, list):
